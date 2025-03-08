@@ -1,0 +1,780 @@
+body,
+html {
+    margin: 0;
+    padding: 0;
+    font-family: sans-serif, Tahoma;
+}
+
+.container {
+    margin-left: auto;
+    margin-right: auto;
+    width: 1200px;
+}
+
+.header .container {
+    height: 60px;
+    display: flex;
+    padding-top: 5px;
+    width: 100%;
+    z-index: 1000;
+    position: fixed;
+    background-color: white;
+    transition: box-shadow 0.3s ease;
+}
+
+.header.scrolled .container {
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+#searchForm {
+    display: none;
+    position: absolute;
+    top: 80%;
+    /* Tùy chỉnh vị trí form */
+    right: 10%;
+    background-color: white;
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+/* Định dạng cho ô input tìm kiếm */
+#search {
+    width: 170px;
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.header {
+    .boxHeader {
+        position: fixed;
+        top: 0;
+        right: 335px;
+        width: 110px;
+        height: auto;
+        border-radius: 10px;
+        background-color: #fff;
+        border: 1px solid #ccc;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        transition: transform 0.5s ease, opacity 0.5s ease;
+        transform: scale(0);
+        opacity: 0;
+        z-index: 10;
+        text-align: center;
+        padding-top: 10px;
+        padding-left: 10px;
+        padding-right: 10px;
+
+        h4 {
+            margin-top: 10px;
+            margin-bottom: 0;
+        }
+
+        span {
+            margin-left: 7px;
+            color: gray;
+            font-weight: bold;
+            width: 100%;
+            height: 20px;
+            font-size: 15px;
+            font-family: "Segoe UI Semibold";
+        }
+
+        a {
+            float: left;
+            text-decoration: none;
+        }
+
+        span:hover {
+            color: black;
+        }
+
+        .imageContainer {
+            position: relative;
+            width: 50px;
+            height: 45px;
+            margin-left: 28px;
+            overflow: hidden;
+            border: 2px solid lightgray;
+            border-radius: 25px;
+        }
+
+        .imageContainer img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+
+    }
+
+    .boxHeader.activeHeader {
+        transform: scale(1);
+        /* Đặt kích thước về 100% khi active */
+        opacity: 1;
+    }
+
+    #layoutHeader {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.7);
+        display: none;
+        z-index: 5;
+        /* Đặt dưới info-box */
+    }
+
+    #layoutHeader.activeHeader {
+        display: block;
+        /* Hiển thị overlay khi cần */
+    }
+
+    .active-iconHeader {
+        color: darkmagenta;
+    }
+
+}
+
+.header .left {
+    width: 70%;
+    float: left;
+    justify-content: center;
+}
+
+.header .right {
+    width: 30%;
+    float: right;
+}
+
+.header .container ul {
+    display: flex;
+    list-style-type: none;
+}
+
+.header .container .left ul {
+    justify-content: center;
+    margin-left: 200px;
+}
+
+.header .container .left ul li a {
+    text-decoration: none;
+    color: black;
+    font-size: 15px;
+    margin-left: 70px;
+}
+
+.header .container .right ul li a {
+    text-decoration: none;
+    font-size: 15px;
+    color: black;
+    margin-left: 50px;
+}
+
+.header .User img {
+    border-radius: 100%;
+    width: 22px;
+    height: 18px;
+    border: 2px solid lightgray;
+}
+
+.info-box {
+    position: fixed;
+    top: 1px;
+    right: -320px;
+    /* Bắt đầu bên ngoài màn hình */
+    width: 280px;
+    max-height: 550px;
+    height: 100%;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    transition: right 0.5s ease;
+    padding-right: 15px;
+    z-index: 1000;
+
+    .row1 {
+        display: flex;
+        width: 260px;
+        margin-left: 15px;
+        border: 2px solid lightgray;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        border-radius: 10px;
+        padding: 5px;
+        margin-bottom: 20px;
+    }
+
+    .row2 {
+        display: flex;
+        margin-left: 15px;
+        width: 260px;
+        border: 2px solid lightgray;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        border-radius: 10px;
+        padding: 5px;
+        margin-bottom: 20px;
+    }
+
+    .name {
+        width: 100px;
+        font-family: "Segoe UI Semibold";
+    }
+
+    .omega {
+        margin-top: 25px;
+        margin-left: 25px;
+    }
+
+    .listProduct {
+        height: 400px;
+        ;
+    }
+
+    h3 {
+        margin-left: 15px;
+        border-bottom: 3px solid lightgray;
+        width: 170px;
+    }
+
+    img {
+        max-width: 100px;
+        max-height: 100px;
+    }
+
+    .sumPrice {
+        display: flex;
+        margin-top: 7px;
+    }
+
+    .price {
+        margin-left: 10px;
+        color: orangered;
+    }
+
+    .totalPrice {
+        display: flex;
+        font-size: 20px;
+        width: 300px;
+        border-bottom: 1px solid lightgray;
+    }
+
+    .totalPrice .title {
+        width: 100px;
+    }
+
+    .totalPrice .price {
+        margin-left: 75px;
+        font-weight: bold;
+    }
+
+    .listProduct button {
+        background-color: transparent;
+        border: none;
+        margin-top: 35px;
+        cursor: pointer;
+        font-size: 24px;
+    }
+
+    .listProduct button:hover {
+        color: #EAE2B7;
+    }
+
+    .other_choose button {
+        margin-top: 20px;
+        border-radius: 10px;
+        cursor: pointer;
+        text-align: center;
+        font-size: 15px;
+        font-weight: 550;
+        background-color: transparent;
+    }
+
+    .view_cart {
+        margin-left: 15px;
+        height: 25px;
+        width: 120px;
+        margin-right: 20px;
+    }
+
+    .check_out {
+        height: 25px;
+        width: 120px;
+    }
+
+    .other_choose button:hover {
+        opacity: 1;
+        background-color: #01161E;
+        color: whitesmoke;
+    }
+}
+
+.info-box.active {
+    right: 0;
+    /* Hiển thị bên trong màn hình */
+}
+
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    /* Màu đen mờ */
+    display: none;
+    z-index: 1000;
+    /* Đặt dưới info-box */
+}
+
+.overlay.active {
+    display: block;
+    /* Hiển thị overlay khi cần */
+}
+
+.active-icon {
+    color: #ffdd57;
+}
+
+.navigation_titlePage {
+    position: relative;
+}
+
+.navigation_titlePage .alpha img {
+    position: relative;
+    margin-top: 50px;
+    height: 300px;
+    width: 100%;
+    object-fit: cover;
+}
+
+.navigation_titlePage .omega {
+    position: absolute;
+    top: 65px;
+    padding: 80px 0;
+    left: 0;
+    text-align: center;
+    width: 100%;
+    background-color: rgba(255, 255, 255, 0.5);
+    /*rgba(255,255,255,0.5):trắng khói*/
+    pointer-events: none;
+    z-index: 2;
+}
+
+.navigation_titlePage .container {
+    font-family: sans-serif, Tahoma;
+    width: 100%;
+    height: auto;
+    margin-right: auto;
+    margin-left: auto;
+}
+
+.navigation_titlePage .omega .title {
+    font-size: 48px;
+    font-weight: 500;
+}
+
+.navigation_titlePage .omega .path {
+    display: flex;
+    justify-content: center;
+}
+
+.navigation_titlePage .path ul {
+    list-style-type: none;
+    float: right;
+    padding-right: 20px;
+    padding-left: 20px;
+    padding-top: 1px;
+    font-size: 15px;
+}
+
+.navigation_titlePage .path .home {
+    font-weight: 600;
+    margin-top: 15px;
+    font-size: 16px;
+}
+
+.navigation_titlePage .path .contact {
+    margin-top: 15px;
+    font-size: 16px;
+    font-weight: 300;
+}
+
+.content_section_2 {
+    .container {
+        display: flex;
+        gap: 20px;
+        width: 100%;
+        height: 300px;
+        background-color: #f2f2f2;
+        justify-content: center;
+        flex-wrap: wrap;
+    }
+
+    .item {
+        position: relative;
+        width: 300px;
+        height: 250px;
+        background: #e0e0e0;
+        margin-left: 40px;
+        margin-right: 40px;
+        margin-top: 25px;
+        border-radius: 10px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        overflow: hidden;
+        text-align: center;
+        transition: transform 0.3s;
+    }
+
+    h2 {
+        color: #333D29;
+    }
+
+    .item:hover {
+        transform: scale(1.025);
+    }
+
+    .card {
+        position: relative;
+        padding: 20px;
+    }
+
+    .circle {
+        position: absolute;
+        border-radius: 50%;
+        background: rgba(0, 150, 255, 0.2);
+        width: 80px;
+        height: 80px;
+        top: -20px;
+        left: 50%;
+        transform: translateX(-50%);
+    }
+
+    .content_div {
+        color: #343a40;
+    }
+
+    .circle1 {
+        background: rgba(0, 200, 100, 0.2);
+        width: 100px;
+        height: 100px;
+        top: -40px;
+    }
+
+    i {
+        position: relative;
+        top: 80px;
+        font-size: 50px;
+        color: #595959;
+        transition: opacity 0.3s;
+    }
+
+    .content {
+        display: none;
+        margin-top: -40px;
+        padding: 15px;
+    }
+
+    .item:hover .content {
+        display: block;
+        animation: fadeIn 0.3s ease forwards;
+    }
+
+    .item:hover i {
+        opacity: 0;
+    }
+}
+
+.footer_bottom .container {
+    display: flex;
+    background-color: #01161E;
+    width: 100%;
+}
+
+.footer_bottom .content {
+    margin-top: 16px;
+    color: #CAD2C5;
+}
+
+.footer_bottom ul {
+    list-style-type: none;
+    color: #CAD2C5;
+    margin-right: 5px;
+    margin-left: 80px;
+}
+
+.footer .container {
+    display: flex;
+    height: auto;
+    width: 100%;
+    padding-top: 30px;
+    justify-content: center;
+}
+
+.footer ul {
+    list-style-type: none;
+}
+
+.footer .profile .content {
+    max-width: 250px;
+    margin-top: 20px;
+}
+
+.footer .line {
+    padding-top: 1px;
+    background-color: black;
+}
+
+.footer .profile .title {
+    color: #333D29;
+    font-size: 20px;
+}
+
+.footer .link {
+    margin-left: 50px;
+    margin-right: 100px;
+}
+
+.footer .link .title {
+    color: #333D29;
+    margin-left: 40px;
+    font-size: 20px;
+}
+
+.footer .help {
+    margin-left: 100px;
+    margin-right: 50px;
+}
+
+.footer .help .title {
+    color: #333D29;
+    margin-left: 40px;
+    font-size: 20px;
+}
+
+.footer .profile {
+    color: #333D29;
+    margin-top: 50px;
+    margin-right: 100px;
+}
+
+.footer ul {
+    margin-top: 50px;
+}
+
+.footer ul li {
+    margin-top: 50px;
+    font-weight: bold;
+}
+
+.footer ul li>a {
+    text-decoration: none;
+    color: #333D29;
+}
+
+.sub_navbar {
+    width: 100%;
+    height: 60px;
+    background-color: #5D7B6F;
+    margin-top: 50px;
+}
+
+.sub_navbar .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 20px;
+}
+
+.sub_nav_left,
+.sub_nav_right {
+    display: flex;
+    align-items: center;
+}
+
+.sub_nav_left {
+    margin-left: 80px;
+}
+
+.sub_nav_right {
+    margin-right: 80px;
+}
+
+.sub_nav_left span,
+.sub_nav_right span {
+    margin-right: 10px;
+    color: white;
+    line-height: 60px;
+}
+
+.sub_nav_left .category_select,
+.sub_nav_right .show_select,
+.sub_nav_right .sort_select {
+    margin-right: 15px;
+    padding: 10px 10px;
+    font-size: 16px;
+    border: none;
+    border-radius: 4px;
+    height: 40px;
+    background-color: white;
+}
+
+.sub_nav_left .results_display {
+    margin-left: 10px;
+    color: white;
+    line-height: 60px;
+}
+
+.container-fluid {
+    margin: 50px 150px;
+}
+
+.product-list .row {
+    display: flex;
+    flex-wrap: wrap;
+    margin: 20px;
+}
+
+/* -------san pham ---------*/
+.product-list .col-sm-3 {
+    flex: 0 0 25%;
+    max-width: 25%;
+    box-sizing: border-box;
+    padding: 15px;
+}
+
+.product-block {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+}
+
+.product-tumb img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+}
+
+.product-detail {
+    padding: 15px;
+    text-align: left;
+    /* Căn lề trái */
+}
+
+.product-detail h4 {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    color: #333;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.product-detail h4 a {
+    text-decoration: none;
+    color: inherit;
+}
+
+.product-detail h4 a:hover {
+    color: #007bff;
+}
+
+.product-bottom_detail .price {
+    font-size: 14px;
+    color: #000;
+    margin-top: 8px;
+}
+
+.product-bottom_detail .price .original-price {
+    text-decoration: line-through;
+    color: #000;
+    margin-right: 8px;
+}
+
+.product-bottom_detail .price .discount-price {
+    font-size: 16px;
+    font-weight: bold;
+    color: #e74c3c;
+}
+
+.product-actions {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 8px;
+}
+
+.heart-icon {
+    font-size: 20px;
+    cursor: pointer;
+}
+
+.heart-icon.red {
+    color: #e74c3c;
+    /* Trái tim đỏ */
+}
+
+.stars-icon {
+    font-size: 16px;
+    color: #f39c12;
+}
+
+.sold-quantity {
+    margin-top: 10px;
+    font-size: 14px;
+    color: #555;
+}
+
+.product-block:hover {
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+.pagination-container {
+    margin-top: 20px;
+    text-align: center;
+}
+
+.pagination {
+    list-style: none;
+    padding: 0;
+    display: inline-flex;
+    gap: 5px;
+}
+
+.pagination .page-item {
+    display: inline-block;
+}
+
+.pagination .page-link {
+    display: block;
+    padding: 8px 15px;
+    color: #5D7B6F;
+    text-decoration: none;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.pagination .page-link:hover {
+    background-color: #5D7B6F;
+    color: #fff;
+}
+
+.pagination .page-item.active .page-link {
+    background-color: #5D7B6F;
+    color: #fff;
+    border-color: #5D7B6F;
+}
+
+.pagination .page-item.disabled .page-link {
+    color: #ccc;
+    pointer-events: none;
+    cursor: default;
+}

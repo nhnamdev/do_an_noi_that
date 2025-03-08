@@ -1,0 +1,727 @@
+body, html {
+    margin: 0;
+    padding: 0;
+    font-family: sans-serif, Tahoma;
+}
+
+.container {
+    margin-left: auto;
+    margin-right: auto;
+    width: 1200px;
+}
+#searchForm {
+    display: none;
+    position: absolute;
+    top: 80%; /* Tùy chỉnh vị trí form */
+    right: 10%;
+    background-color: white;
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+/* Định dạng cho ô input tìm kiếm */
+#search {
+    width: 170px;
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.header .container {
+    height: 60px;
+    display: flex;
+    padding-top: 5px;
+    width: 100%;
+    z-index: 1000;
+    position: fixed;
+    background-color: white;
+    transition: box-shadow 0.3s ease;
+}
+
+.header.scrolled .container {
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.header {
+    .boxHeader {
+        position: fixed;
+        top: 0;
+        right: 335px;
+        width: 110px;
+        height: auto;
+        border-radius: 10px;
+        background-color: #fff;
+        border: 1px solid #ccc;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        transition: transform 0.5s ease, opacity 0.5s ease;
+        transform: scale(0);
+        opacity: 0;
+        z-index: 10;
+        text-align: center;
+        padding-top: 10px;
+        padding-left: 10px;
+        padding-right: 10px;
+
+        h4 {
+            margin-top: 10px;
+            margin-bottom: 0;
+        }
+
+        span {
+            margin-left: 7px;
+            color: gray;
+            font-weight: bold;
+            width: 100%;
+            height: 20px;
+            font-size: 15px;
+            font-family: "Segoe UI Semibold";
+        }
+
+        a {
+            float: left;
+            text-decoration: none;
+        }
+        span:hover{
+            color: black;
+        }
+        .imageContainer {
+            position: relative;
+            width: 50px;
+            height: 45px;
+            margin-left: 28px;
+            overflow: hidden;
+            border: 2px solid lightgray;
+            border-radius: 25px;
+        }
+
+        .imageContainer img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+
+    }
+
+    .boxHeader.activeHeader {
+        transform: scale(1); /* Đặt kích thước về 100% khi active */
+        opacity: 1;
+    }
+
+    #layoutHeader {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.7);
+        display: none;
+        z-index: 5; /* Đặt dưới info-box */
+    }
+
+    #layoutHeader.activeHeader {
+        display: block; /* Hiển thị overlay khi cần */
+    }
+
+    .active-iconHeader {
+        color: darkmagenta;
+    }
+
+}
+
+.header .left {
+    width: 70%;
+    float: left;
+    justify-content: center;
+}
+
+.header .right {
+    width: 30%;
+    float: right;
+}
+
+.header .container ul {
+    display: flex;
+    list-style-type: none;
+}
+
+.header .container .left ul {
+    justify-content: center;
+    margin-left: 200px;
+}
+
+.header .container .left ul li a {
+    text-decoration: none;
+    color: black;
+    font-size: 15px;
+    margin-left: 70px;
+}
+
+.header .container .right ul li a {
+    text-decoration: none;
+    font-size: 15px;
+    color: black;
+    margin-left: 50px;
+}
+
+.header .User img {
+    border-radius: 100%;
+    width: 22px;
+    height: 18px;
+    border: 2px solid lightgray;
+}
+#searchForm {
+    display: none;
+    position: absolute;
+    top: 80%; /* Tùy chỉnh vị trí form */
+    right: 10%;
+    background-color: white;
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+/* Định dạng cho ô input tìm kiếm */
+#search {
+    width: 170px;
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+.info-box {
+    position: fixed;
+    top: 1px;
+    right: -320px; /* Bắt đầu bên ngoài màn hình */
+    width: 280px;
+    max-height: 550px;
+    height: 100%;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    transition: right 0.5s ease;
+    padding-right: 15px;
+    z-index: 1000;
+
+    .row1 {
+        display: flex;
+        width: 260px;
+        margin-left: 15px;
+        border: 2px solid lightgray;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        border-radius: 10px;
+        padding: 5px;
+        margin-bottom: 20px;
+    }
+
+    .row2 {
+        display: flex;
+        margin-left: 15px;
+        width: 260px;
+        border: 2px solid lightgray;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        border-radius: 10px;
+        padding: 5px;
+        margin-bottom: 20px;
+    }
+
+    .name {
+        width: 100px;
+        font-family: "Segoe UI Semibold";
+    }
+
+    .omega {
+        margin-top: 25px;
+        margin-left: 25px;
+    }
+
+    .listProduct {
+        height: 400px;;
+    }
+
+    h3 {
+        margin-left: 15px;
+        border-bottom: 3px solid lightgray;
+        width: 170px;
+    }
+
+    img {
+        max-width: 100px;
+        max-height: 100px;
+    }
+
+    .sumPrice {
+        display: flex;
+        margin-top: 7px;
+    }
+
+    .price {
+        margin-left: 10px;
+        color: orangered;
+    }
+
+    .totalPrice {
+        display: flex;
+        font-size: 20px;
+        width: 300px;
+        border-bottom: 1px solid lightgray;
+    }
+
+    .totalPrice .title {
+        width: 100px;
+    }
+
+    .totalPrice .price {
+        margin-left: 75px;
+        font-weight: bold;
+    }
+
+    .listProduct button {
+        background-color: transparent;
+        border: none;
+        margin-top: 35px;
+        cursor: pointer;
+        font-size: 24px;
+    }
+
+    .listProduct button:hover {
+        color: #EAE2B7;
+    }
+
+    .other_choose button {
+        margin-top: 20px;
+        border-radius: 10px;
+        cursor: pointer;
+        text-align: center;
+        font-size: 15px;
+        font-weight: 550;
+        background-color: transparent;
+    }
+
+    .view_cart {
+        margin-left: 15px;
+        height: 25px;
+        width: 120px;
+        margin-right: 20px;
+    }
+
+    .check_out {
+        height: 25px;
+        width: 120px;
+    }
+
+    .other_choose button:hover {
+        opacity: 1;
+        background-color: #01161E;
+        color: whitesmoke;
+    }
+}
+
+.info-box.active {
+    right: 0; /* Hiển thị bên trong màn hình */
+}
+
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7); /* Màu đen mờ */
+    display: none;
+    z-index: 1000; /* Đặt dưới info-box */
+}
+
+.overlay.active {
+    display: block; /* Hiển thị overlay khi cần */
+}
+
+.active-icon {
+    color: #ffdd57;
+}
+
+.navigation_titlePage .alpha img {
+    position: relative;
+    margin-top: 50px;
+    height: 300px;
+    width: 100%;
+    object-fit: cover;
+}
+
+.navigation_titlePage .omega {
+    position: absolute;
+    top: 65px;
+    padding: 80px 0;
+    left: 0;
+    text-align: center;
+    width: 100%;
+    background-color: rgba(255, 255, 255, 0.5); /*rgba(255,255,255,0.5):trắng khói*/
+    pointer-events: none;
+    z-index: 2;
+}
+
+.navigation_titlePage .container {
+    font-family: sans-serif, Tahoma;
+    width: 100%;
+    height: auto;
+    margin-right: auto;
+    margin-left: auto;
+}
+
+.navigation_titlePage .omega .title {
+    font-size: 48px;
+    font-weight: 500;
+}
+
+.navigation_titlePage .omega .path {
+    display: flex;
+    justify-content: center;
+}
+
+.navigation_titlePage .path ul {
+    list-style-type: none;
+    float: right;
+    padding-right: 20px;
+    padding-left: 20px;
+    padding-top: 1px;
+    font-size: 15px;
+}
+
+.navigation_titlePage .path .home {
+    font-weight: 600;
+    margin-top: 15px;
+    font-size: 16px;
+}
+
+.navigation_titlePage .path .contact {
+    margin-top: 15px;
+    font-size: 16px;
+    font-weight: 300;
+}
+
+.content_section_1 .container {
+    margin-left: auto;
+    margin-right: auto;
+    height: auto;
+    width: 100%;
+}
+
+.content_section_1 .labelTitle {
+    margin-top: 70px;
+    font-size: 36px;
+    font-weight: 600;
+    font-family: sans-serif;
+    text-align: center;
+}
+
+.content_section_1 .more_information {
+    text-align: center;
+    margin-top: 20px;
+    font-family: "Segoe UI", Tahoma;
+    color: #9F9F9F;
+    font-size: 15px;
+    font-weight: 350;
+}
+
+.content_section_1 .content {
+    display: flex;
+    margin-top: 120px;
+}
+
+.content_section_1 .content .alpha {
+    margin-left: 200px;
+    margin-right: 100px;
+}
+
+.content_section_1 .content .alpha .address {
+    display: flex;
+    margin-bottom: 10px;
+}
+
+.content_section_1 .content .alpha .phone {
+    display: flex;
+    margin-bottom: 30px;
+}
+
+.content_section_1 .content .alpha .workingTime {
+    display: flex;
+}
+
+.content_section_1 .content .alpha .address ul {
+    list-style-type: none;
+    margin-top: 26px;
+    font-size: 32px;
+}
+
+.content_section_1 .content .alpha .phone ul {
+    list-style-type: none;
+    margin-top: 38px;
+    font-size: 35px;
+}
+
+.content_section_1 .content .alpha .workingTime ul {
+    list-style-type: none;
+    margin-top: 20px;
+    font-size: 28px;
+}
+
+.content_section_1 .alpha .address .title {
+    margin-top: 33px;
+    margin-left: 30px;
+    font-size: 25px;
+    font-weight: 600;
+    height: 70px;
+    width: 100%;
+}
+
+.content_section_1 .alpha .content {
+    font-size: 15px;
+    margin-top: 5px;
+    font-weight: normal;
+}
+
+.content_section_1 .alpha .phone .title {
+    margin-top: 50px;
+    margin-left: 35px;
+    font-size: 25px;
+    font-weight: 600;
+    height: 70px;
+    width: 100%;
+}
+
+.content_section_1 .alpha .workingTime .title {
+    margin-top: 25px;
+    margin-left: 30px;
+    font-size: 25px;
+    font-weight: 600;
+    height: 70px;
+    width: 100%;
+}
+
+.content_section_1 .omega form {
+    display: table-caption;
+    margin-left: 50px;
+}
+
+.content_section_1 .omega form input {
+    width: 530px;
+    height: 70px;
+    border-radius: 15px;
+    padding-left: 15px;
+    border: 2px solid #5D7B6F;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.content_section_1 .omega label {
+    font-size: 16px;
+    font-weight: 600;
+    font-family: "Segoe UI Semibold";
+}
+
+.content_section_1 .omega form .message-container {
+    display: table-caption;
+}
+
+.content_section_1 .omega form .message-container textarea {
+    width: 530px;
+    height: 110px;
+    border-radius: 15px;
+    padding-left: 15px;
+    padding-top: 20px;
+    border: 2px solid #5D7B6F;
+    resize: none;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.content_section_1 .omega form .submit_btn {
+    width: 240px;
+    height: 50px;
+    border-radius: 15px;
+    border: 2px solid #5D7B6F;
+    background-color: #E5E5E5;
+    cursor: pointer;
+    margin-top: 10px;
+    margin-bottom: 60px;
+    font-family: "Segoe UI Semibold";
+}
+
+
+.content_section_1 .omega form .submit_btn:hover {
+    background-color: #333D29;
+    color: white;
+    cursor: pointer;
+}
+
+.content_section_2 {
+    .container {
+        display: flex;
+        gap: 20px;
+        width: 100%;
+        height: 300px;
+        background-color: #f2f2f2;
+        justify-content: center;
+        flex-wrap: wrap;
+    }
+
+    .item {
+        position: relative;
+        width: 300px;
+        height: 250px;
+        background: #e0e0e0;
+        margin-left: 40px;
+        margin-right: 40px;
+        margin-top: 25px;
+        border-radius: 10px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        overflow: hidden;
+        text-align: center;
+        transition: transform 0.3s;
+    }
+
+    h2 {
+        color: #333D29;
+    }
+
+    .item:hover {
+        transform: scale(1.025);
+    }
+
+    .card {
+        position: relative;
+        padding: 20px;
+    }
+
+    .circle {
+        position: absolute;
+        border-radius: 50%;
+        background: rgba(0, 150, 255, 0.2);
+        width: 80px;
+        height: 80px;
+        top: -20px;
+        left: 50%;
+        transform: translateX(-50%);
+    }
+
+    .content_div {
+        color: #343a40;
+    }
+
+    .circle1 {
+        background: rgba(0, 200, 100, 0.2);
+        width: 100px;
+        height: 100px;
+        top: -40px;
+    }
+
+    i {
+        position: relative;
+        top: 80px;
+        font-size: 50px;
+        color: #595959;
+        transition: opacity 0.3s;
+    }
+
+    .content {
+        display: none;
+        margin-top: -40px;
+        padding: 15px;
+    }
+
+    .item:hover .content {
+        display: block;
+        animation: fadeIn 0.3s ease forwards;
+    }
+
+    .item:hover i {
+        opacity: 0;
+    }
+}
+
+.footer_bottom .container {
+    display: flex;
+    background-color: #01161E;
+    width: 100%;
+}
+
+.footer_bottom .content {
+    margin-top: 16px;
+    color: #CAD2C5;
+}
+
+.footer_bottom ul {
+    list-style-type: none;
+    color: #CAD2C5;
+    margin-right: 5px;
+    margin-left: 80px;
+}
+
+.footer .container {
+    display: flex;
+    height: auto;
+    width: 100%;
+    padding-top: 30px;
+    justify-content: center;
+}
+
+.footer ul {
+    list-style-type: none;
+}
+
+.footer .profile .content {
+    max-width: 250px;
+    margin-top: 20px;
+}
+
+.footer .line {
+    padding-top: 1px;
+    background-color: black;
+}
+
+.footer .profile .title {
+    color: #333D29;
+    font-size: 20px;
+}
+
+.footer .link {
+    margin-left: 50px;
+    margin-right: 100px;
+}
+
+.footer .link .title {
+    color: #333D29;
+    margin-left: 40px;
+    font-size: 20px;
+}
+
+.footer .help {
+    margin-left: 100px;
+    margin-right: 50px;
+}
+
+.footer .help .title {
+    color: #333D29;
+    margin-left: 40px;
+    font-size: 20px;
+}
+
+.footer .profile {
+    color: #333D29;
+    margin-top: 50px;
+    margin-right: 100px;
+}
+
+.footer ul {
+    margin-top: 50px;
+}
+
+.footer ul li {
+    margin-top: 50px;
+    font-weight: bold;
+}
+
+.footer ul li > a {
+    text-decoration: none;
+    color: #333D29;
+}
