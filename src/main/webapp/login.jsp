@@ -36,7 +36,7 @@
             <div class="right">
                 <ul class="navbar-right">
                     <li class="User">
-                        <a href="my_account.jsp"><i class="fa fa-user"></i></a>
+                        <a href="login.jsp"><i class="fa fa-user"></i></a>
                     </li>
                     </li>
                     <li class="Search">
@@ -90,7 +90,6 @@
                         <input type="checkbox" onclick="togglePassword()"> Hiện mật khẩu
                     </label>
                 </div>
-
 
                 <button type="submit">Đăng nhập</button>
                 <div class="lostpass">

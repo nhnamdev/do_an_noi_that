@@ -89,7 +89,7 @@
                                 tin</span></a>
                     <a href="oderInformation.jsp" id="infoBtn"
                        class="info-button"><span>Đơn hàng</span></a>
-                    <a href="my_account.jsp" id="logoutBtn" class="logout-button"><span>Đăng
+                    <a href="login.jsp" id="logoutBtn" class="logout-button"><span>Đăng
                                 xuất</span></a>
                 </div>
                 <div id="layoutHeader"></div>

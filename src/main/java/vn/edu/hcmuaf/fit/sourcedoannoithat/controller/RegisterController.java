@@ -65,7 +65,7 @@ public class RegisterController extends HttpServlet {
 
             if (isSuccess) {
                 request.setAttribute("success", "Đăng ký tài khoản thành công!");
-                request.getRequestDispatcher("my_account.jsp").forward(request, response);
+                request.getRequestDispatcher("login.jsp").forward(request, response);
             } else {
                 request.setAttribute("error", "Đăng ký thất bại. Vui lòng thử lại!");
                 request.getRequestDispatcher("register.jsp").forward(request, response);

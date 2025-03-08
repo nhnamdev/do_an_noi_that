@@ -30,7 +30,7 @@
             <div class="right">
                 <ul class="navbar-right">
                     <li class="User">
-                        <a href="my_account.jsp"><i class="fa fa-user"></i></a></li>
+                        <a href="login.jsp"><i class="fa fa-user"></i></a></li>
                     </li>
                     <li class="Search">
                         <a href="#" id="searchIcon"><i class="fa fa-search"></i></a>
@@ -95,7 +95,7 @@
                     <button type="submit">Lấy lại mật khẩu</button>
                 </div>
             </form>
-            <a id="quaylai" href="my_account.jsp">Quay lại</a>
+            <a id="quaylai" href="login.jsp">Quay lại</a>
         </div>
     </div>
 </div>

@@ -26,7 +26,7 @@
                     <ul class="navbar-right">
                         <c:if test="${sessionScope.loginModel==null}">
                             <li class="User">
-                                <a href="my_account.jsp"><i class="fa fa-user"></i></a></li>
+                                <a href="login.jsp"><i class="fa fa-user"></i></a></li>
                         </c:if>
                         <c:if test="${sessionScope.loginModel!=null}">
                             <li class="User">

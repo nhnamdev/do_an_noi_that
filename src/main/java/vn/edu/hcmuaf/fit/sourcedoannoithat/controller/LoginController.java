@@ -31,7 +31,7 @@ public class LoginController extends HttpServlet {
                     password == null || password.trim().isEmpty()) {
 
                 request.setAttribute("error", "Vui lòng điền đầy đủ thông tin!");
-                request.getRequestDispatcher("my_account.jsp").forward(request, response);
+                request.getRequestDispatcher("login.jsp").forward(request, response);
                 return;
             }
 
@@ -61,17 +61,17 @@ public class LoginController extends HttpServlet {
                 } else if (role == 1) {
                     response.sendRedirect("admin");
                 } else {
-                    response.sendRedirect("my_account.jsp");
+                    response.sendRedirect("login.jsp");
                 }
             } else {
                 request.setAttribute("error", "Tên đăng nhập hoặc mật khẩu không đúng!");
-                request.getRequestDispatcher("my_account.jsp").forward(request, response);
+                request.getRequestDispatcher("login.jsp").forward(request, response);
             }
 
         } catch (Exception e) {
             e.printStackTrace();
             request.setAttribute("error", "Có lỗi xảy ra: " + e.getMessage());
-            request.getRequestDispatcher("my_account.jsp").forward(request, response);
+            request.getRequestDispatcher("login.jsp").forward(request, response);
         }
     }
 }
