@@ -4,5 +4,5 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 
 @WebServlet("/SProduct")
-public class SProductController extends HttpServlet {
+public class ProductDetailController extends HttpServlet {
 }

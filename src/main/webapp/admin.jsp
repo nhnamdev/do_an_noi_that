@@ -1,29 +1,11 @@
-<%@ page import="vn.edu.hcmuaf.fit.sourcedoannoithat.dao.model.AccountManagement" %>
+
 <%@ page import="java.util.ArrayList" %>
 <%@ page import="java.util.List" %>
 <%@ page import="vn.edu.hcmuaf.fit.sourcedoannoithat.dao.ProfileDao" %>
-<%@ page import="vn.edu.hcmuaf.fit.sourcedoannoithat.dao.model.ProductShop" %>
 <%@ page import="vn.edu.hcmuaf.fit.sourcedoannoithat.dao.SearchDao" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%
-    Integer role = (Integer) session.getAttribute("role");
-    if (role == null || role != 1) {
-        response.sendRedirect("index.jsp");
-        return;
-    }
-%>
-<%
-    String searchQuery = request.getParameter("search");
-    List<AccountManagement> acc = null;
-
-    if (searchQuery != null && !searchQuery.trim().isEmpty()) {
-        ProfileDao productDAO = new ProfileDao();
-        acc = productDAO.searchAccounts(searchQuery);
-    }
-%>
 <!DOCTYPE html>
-
 <html lang="vi">
 
 <head>
@@ -227,12 +209,12 @@
                     response.sendRedirect("admin.jsp");
                     return;
                 }
-                List<AccountManagement> profile;
+                List<AccountManagement> user;
                 String searchKeyword = request.getParameter("search");
                 ProfileDao profileDao = new ProfileDao();
                 if (searchKeyword != null && !searchKeyword.isEmpty()) {
-                    profile = profileDao.searchAccounts(searchKeyword);
-                    if (profile.isEmpty()) {
+                    user = profileDao.searchAccounts(searchKeyword);
+                    if (user.isEmpty()) {
             %>
             <tr>
                 <td colspan="7">Không tìm thấy tài khoản nào.</td>
@@ -240,9 +222,9 @@
             <%
                     }
                 } else {
-                    profile = profileDao.getAccountAdmin();
+                    user = profileDao.getAccountAdmin();
                 }
-                for (AccountManagement pr : profile) {
+                for (AccountManagement pr : user) {
             %>
             <tr>
                 <td><%= pr.getId() %>

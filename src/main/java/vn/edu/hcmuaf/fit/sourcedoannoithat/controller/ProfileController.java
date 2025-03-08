@@ -3,7 +3,7 @@ package vn.edu.hcmuaf.fit.sourcedoannoithat.controller;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpSession;
 import vn.edu.hcmuaf.fit.sourcedoannoithat.dao.ProfileDao;
-import vn.edu.hcmuaf.fit.sourcedoannoithat.dao.model.Profile;
+import vn.edu.hcmuaf.fit.sourcedoannoithat.dao.model.User;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
@@ -12,7 +12,7 @@ import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
 
-@WebServlet("/index")
+@WebServlet("/account")
 public class ProfileController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -27,10 +27,10 @@ public class ProfileController extends HttpServlet {
         }
 
         ProfileDao profileDao = new ProfileDao();
-        Profile profile = profileDao.getProfile(userId);
+        User user = profileDao.getProfile(userId);
 
-        if (profile != null) {
-            req.setAttribute("profile", profile);
+        if (user != null) {
+            req.setAttribute("profile", user);
             req.getRequestDispatcher("index.jsp").forward(req, resp);
         } else {
             req.setAttribute("error", "Không tìm thấy thông tin người dùng.");
@@ -53,9 +53,9 @@ public class ProfileController extends HttpServlet {
             String address = req.getParameter("userAddressInput");
             String email = req.getParameter("userEmailInput");
 
-            Profile profile = new Profile(name, birthday, numberPhone, address, email);
+            User user = new User(name, birthday, numberPhone, address, email);
             ProfileDao profileDao = new ProfileDao();
-            boolean isUpdated = profileDao.updateProfile(profile, userId);
+            boolean isUpdated = profileDao.updateProfile(user, userId);
 
             if (isUpdated) {
                 resp.sendRedirect("index.jsp");

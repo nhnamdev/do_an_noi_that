@@ -1,9 +1,7 @@
 package vn.edu.hcmuaf.fit.sourcedoannoithat.dao;
 
 import vn.edu.hcmuaf.fit.sourcedoannoithat.dao.db.DBConnect;
-import vn.edu.hcmuaf.fit.sourcedoannoithat.dao.model.AccountManagement;
 import vn.edu.hcmuaf.fit.sourcedoannoithat.dao.model.Order;
-import vn.edu.hcmuaf.fit.sourcedoannoithat.dao.model.Profile;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;

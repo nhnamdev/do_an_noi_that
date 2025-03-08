@@ -1,9 +1,7 @@
 package vn.edu.hcmuaf.fit.sourcedoannoithat.dao;
 
 import vn.edu.hcmuaf.fit.sourcedoannoithat.dao.db.DBConnect;
-import vn.edu.hcmuaf.fit.sourcedoannoithat.dao.model.AccountManagement;
-import vn.edu.hcmuaf.fit.sourcedoannoithat.dao.model.ProductShop;
-import vn.edu.hcmuaf.fit.sourcedoannoithat.dao.model.Profile;
+import vn.edu.hcmuaf.fit.sourcedoannoithat.dao.model.User;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -17,7 +15,7 @@ public class ProfileDao {
     PreparedStatement ps = null; // ném câu lệnh querry sang navicat
     ResultSet rs = null; // Nhận kq trả về
 
-    public Profile getProfile(int id) {
+    public User getProfile(int id) {
         try {
             String query = "select * from profile_client where id = ?";
             connection = new DBConnect().getConnection();
@@ -25,7 +23,7 @@ public class ProfileDao {
             ps.setInt(1, id);
             rs = ps.executeQuery();
             if (rs.next()) {
-                Profile p = new Profile(rs.getString(4), rs.getString(5), rs.getString(6), rs.getString(7), rs.getString(9));
+                User p = new User(rs.getString(4), rs.getString(5), rs.getString(6), rs.getString(7), rs.getString(9));
                 return p;
             }
         } catch (Exception e) {
@@ -42,16 +40,16 @@ public class ProfileDao {
         return null;
     }
 
-    public boolean updateProfile(Profile profile, int id) {
+    public boolean updateProfile(User user, int id) {
         String query = "UPDATE profile_client SET name = ?, birthday = ?, phoneNumber = ?, address = ?,email=?  WHERE id = ?";
         try {
             connection = new DBConnect().getConnection();
             ps = connection.prepareStatement(query);
-            ps.setString(1, profile.getName());
-            ps.setString(2, profile.getBirthday());
-            ps.setString(3, profile.getPhoneNumber());
-            ps.setString(4, profile.getAddress());
-            ps.setString(5, profile.getEmail());
+            ps.setString(1, user.getName());
+            ps.setString(2, user.getBirthday());
+            ps.setString(3, user.getPhoneNumber());
+            ps.setString(4, user.getAddress());
+            ps.setString(5, user.getEmail());
             ps.setInt(6, id);
 
             int rowsAffected = ps.executeUpdate();
@@ -120,7 +118,7 @@ public class ProfileDao {
 
     public static void main(String[] args) {
         ProfileDao profileDao = new ProfileDao();
-        Profile profile = new Profile("Hồ Hải 3", "08/01/2001", "0793450530", "BÙI HỮU NGHĨA STREET", "hominhhai2k@gmail.com");
+        User user = new User("Hồ Hải 3", "08/01/2001", "0793450530", "BÙI HỮU NGHĨA STREET", "hominhhai2k@gmail.com");
         System.out.println(profileDao.searchAccounts("chu"));
     }
 }

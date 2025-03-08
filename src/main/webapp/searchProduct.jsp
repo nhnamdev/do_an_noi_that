@@ -27,49 +27,7 @@
 
 <body>
 <div class="home">
-    <div class="header">
-        <div class="container">
-            <div class="left">
-                <ul class="navbar-left">
-                    <li class="Home"><a href="index.jsp">Trang chủ</a></li>
-                    <li class="Shop"><a href="shop.jsp">Cửa hàng</a></li>
-                    <li class="AboutUs"><a href="About_us.jsp">Thông tin</a></li>
-                    <li class="ContactUs"><a href="contact.jsp">Liên hệ</a></li>
-                </ul>
-            </div>
-            <div class="right">
-                <ul class="navbar-right">
-                    <li class="User">
-                        <img src="img/avt.jpg" alt="">
-                    </li>
-                    <li class="Search">
-                        <a href="#" id="searchIcon"><i class="fa fa-search"></i></a>
-                        <form action="searchProduct.jsp" method="get" id="searchForm">
-                            <input id="search" name="search" type="search" placeholder="Tìm kiếm" required>
-                            <button type="submit" style="display:none;">Search</button>
-                        </form>
-                    </li>
-                    <li class="Favorite"><a href="favorite.jsp"><i
-                            class="fa fa-bookmark"></i></a></li>
-                    <li class="Shopping"><a href=""><i class="fa fa-shopping-cart"></i></a></li>
-                </ul>
-                <div class="boxHeader" id="boxHeader">
-                    <div class="imageContainer">
-                        <img id="imageHeader" src="img/avt.jpg" alt="">
-                    </div>
-                    <h4>${sessionScope.userName}</h4>
-                    <hr>
-                    <a href="personal.jsp" id="infoBtn" class="info-button"><span>Xem thông
-                                tin</span></a>
-                    <a href="oderInformation.jsp" id="infoBtn"
-                       class="info-button"><span>Đơn hàng</span></a>
-                    <a href="my_account.jsp" id="logoutBtn" class="logout-button"><span>Đăng
-                                xuất</span></a>
-                </div>
-                <div id="layoutHeader"></div>
-            </div>
-        </div>
-    </div>
+    <jsp:include page="/WEB-INF/header.jsp" />
     <script src="js/showSearch.js"></script>
     <script src="js/showHeader.js"></script>
     <script src="js/actionOfProfile.js"></script>
@@ -168,13 +126,13 @@
                     <div class="col-sm-3 p-3 col-md-3">
                         <div class="product-block">
                             <div class="product-tumb">
-                                <a href="SProduct.jsp?id=<%= product.getId() %>">
+                                <a href="ProductDetail.jsp?id=<%= product.getId() %>">
                                     <img src="<%= product.getImg() %>" alt="">
                                 </a>
                             </div>
                             <div class="product-detail">
                                 <h4>
-                                    <a href="SProduct.jsp?id=<%= product.getId() %>"><%= product.getName() %></a>
+                                    <a href="ProductDetail.jsp?id=<%= product.getId() %>"><%= product.getName() %></a>
                                 </h4>
                                 <div class="product-bottom_detail">
                                     <div class="price">
@@ -264,7 +222,7 @@
     </div>
     <div class="footer">
         <div class="container">
-            <div class="profile">
+            <div class="user">
                 <div class="title">Thông tin</div>
                 <div class="content">Cửa hàng nội thất HTĐ của chúng tôi mang đến nhiều sản phẩm chất lượng,
                     từ sofa, bàn ghế đến decor độc đáo. Chúng tôi cam kết giúp bạn tạo không gian sống tiện

@@ -140,7 +140,7 @@
 </div>
 <div class="footer">
     <div class="container">
-        <div class="profile">
+        <div class="user">
             <div class="title">Thông tin</div>
             <div class="content">Cửa hàng nội thất HTĐ của chúng tôi mang đến nhiều sản phẩm chất lượng,
                 từ sofa, bàn ghế đến decor độc đáo. Chúng tôi cam kết giúp bạn tạo không gian sống tiện

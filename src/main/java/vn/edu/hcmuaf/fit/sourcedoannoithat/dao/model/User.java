@@ -2,68 +2,81 @@ package vn.edu.hcmuaf.fit.sourcedoannoithat.dao.model;
 
 import java.io.Serializable;
 
-public class AccountManagement implements Serializable {
+public class User implements Serializable {
     private int id;
-    private String username;
     private String name;
-    private String email;
+    private String birthday;
     private String phoneNumber;
     private String address;
+    private String email;
 
-    public AccountManagement(int id,String username, String name, String email, String phoneNumber, String address) {
-        this.id = id;
-        this.username = username;
+    public User() {
+    }
+
+    public User(String name, String birthday, String phoneNumber, String address, String email) {
         this.name = name;
-        this.email = email;
+        this.birthday = birthday;
         this.phoneNumber = phoneNumber;
         this.address = address;
+        this.email = email;
     }
+
     public int getId() {
         return id;
     }
+
     public void setId(int id) {
         this.id = id;
     }
-    public String getUsername() {
-        return username;
-    }
-    public void setUsername(String username) {
-        this.username = username;
-    }
+
     public String getName() {
         return name;
     }
+
     public void setName(String name) {
         this.name = name;
     }
-    public String getEmail() {
-        return email;
+
+    public String getBirthday() {
+        return birthday;
     }
-    public void setEmail(String email) {
-        this.email = email;
+
+    public void setBirthday(String birthday) {
+        this.birthday = birthday;
     }
+
     public String getPhoneNumber() {
         return phoneNumber;
     }
+
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
     }
+
     public String getAddress() {
         return address;
     }
+
     public void setAddress(String address) {
         this.address = address;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     @Override
     public String toString() {
         return
-                "id=" + id +
-                ", username='" + username + '\'' +
-                ", name='" + name + '\'' +
-                ", email='" + email + '\'' +
+                "name='" + name + '\'' +
+                ", birthday='" + birthday + '\'' +
                 ", phoneNumber='" + phoneNumber + '\'' +
                 ", address='" + address + '\'' +
-                '\n';
+                ", email='" + email + '\'' +
+                '}';
     }
 }

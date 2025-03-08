@@ -18,7 +18,7 @@
       <div class="left">
         <ul class="navbar-left">
           <li class="Home"><a href="index.jsp">Trang chủ</a></li>
-          <li class="Shop"><a href="SProduct.jsp">Cửa hàng</a></li>
+          <li class="Shop"><a href="ProductDetail.jsp">Cửa hàng</a></li>
           <li class="AboutUs"><a href="About_us.jsp">Thông tin</a></li>
           <li class="ContactUs"><a href="contact.jsp">Liên hệ</a></li>
         </ul>
@@ -240,7 +240,7 @@
   </div>
   <div class="footer">
     <div class="container">
-      <div class="profile">
+      <div class="user">
         <div class="title">Thông tin</div>
         <div class="content">Cửa hàng nội thất HTĐ của chúng tôi mang đến nhiều sản phẩm chất lượng,
           từ sofa, bàn ghế đến decor độc đáo. Chúng tôi cam kết giúp bạn tạo không gian sống tiện

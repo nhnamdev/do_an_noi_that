@@ -7,7 +7,6 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.mindrot.jbcrypt.BCrypt;
 import vn.edu.hcmuaf.fit.sourcedoannoithat.dao.RegisterDao;
-import vn.edu.hcmuaf.fit.sourcedoannoithat.dao.model.RegisterModel;
 
 import java.io.IOException;
 

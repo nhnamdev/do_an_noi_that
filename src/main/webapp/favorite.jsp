@@ -171,13 +171,13 @@
                     <div class="col-sm-3 p-3 col-md-3">
                         <div class="product-block">
                             <div class="product-tumb">
-                                <a href="SProduct.jsp?id=<%= product.getId() %>">
+                                <a href="ProductDetail.jsp?id=<%= product.getId() %>">
                                     <img src="<%= product.getImg() %>" alt="">
                                 </a>
                             </div>
                             <div class="product-detail">
                                 <h4>
-                                    <a href="SProduct.jsp?id=<%= product.getId() %>"><%= product.getName() %>
+                                    <a href="ProductDetail.jsp?id=<%= product.getId() %>"><%= product.getName() %>
                                     </a>
                                 </h4>
                                 <div class="product-bottom_detail">
@@ -264,7 +264,7 @@
 </div>
 <div class="footer">
     <div class="container">
-        <div class="profile">
+        <div class="user">
             <div class="title">Thông tin</div>
             <div class="content">Cửa hàng nội thất HTĐ của chúng tôi mang đến nhiều sản phẩm chất lượng,
                 từ sofa, bàn ghế đến decor độc đáo. Chúng tôi cam kết giúp bạn tạo không gian sống tiện

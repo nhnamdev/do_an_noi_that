@@ -172,7 +172,7 @@
                         </div>
                         <script src="js/showList.js"></script>
                     </div>
-                    <div class="profile">
+                    <div class="user">
                         <h1><%=sp.getName()%>
                         </h1>
                         <p class="price"><%=sp.getPrice()%>đ</p>
@@ -323,7 +323,7 @@
     </div>
     <div class="footer">
         <div class="container">
-            <div class="profile">
+            <div class="user">
                 <h2 class="title">Thông tin</h2>
                 <div class="content">Cửa hàng nội thất HTĐ của chúng tôi mang đến nhiều sản phẩm chất lượng,
                     từ sofa, bàn ghế đến decor độc đáo. Chúng tôi cam kết giúp bạn tạo không gian sống tiện
