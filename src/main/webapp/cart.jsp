@@ -230,7 +230,7 @@
                     <ul class="content">
                         <li class="active propClone"><a href="index.jsp">Trang chủ</a></li>
                         <li class="propClone"><a href="shop.jsp">Cửa hàng</a></li>
-                        <li class="propClone"><a href="About_us.jsp">About</a></li>
+                        <li class="propClone"><a href="about.jsp">About</a></li>
                         <li class="propClone"><a href="contact.jsp">Liên hệ</a></li>
                     </ul>
                 </div>

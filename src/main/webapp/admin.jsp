@@ -188,6 +188,8 @@
                 <button type="submit" class="btn search-btn">Tìm</button>
             </form>
         </div>
+
+
         <table>
             <thead>
             <tr>
@@ -201,56 +203,37 @@
             </tr>
             </thead>
             <tbody>
-            <%
-                String accountIdToDelete = request.getParameter("deleteId");
-                if (accountIdToDelete != null) {
-                    ProfileDao profileDao = new ProfileDao();
-                    profileDao.deleteAccount(Integer.parseInt(accountIdToDelete));
-                    response.sendRedirect("admin.jsp");
-                    return;
-                }
-                List<AccountManagement> user;
-                String searchKeyword = request.getParameter("search");
-                ProfileDao profileDao = new ProfileDao();
-                if (searchKeyword != null && !searchKeyword.isEmpty()) {
-                    user = profileDao.searchAccounts(searchKeyword);
-                    if (user.isEmpty()) {
-            %>
-            <tr>
-                <td colspan="7">Không tìm thấy tài khoản nào.</td>
-            </tr>
-            <%
-                    }
-                } else {
-                    user = profileDao.getAccountAdmin();
-                }
-                for (AccountManagement pr : user) {
-            %>
-            <tr>
-                <td><%= pr.getId() %>
-                </td>
-                <td><%= pr.getUsername() %>
-                </td>
-                <td><%= pr.getName() %>
-                </td>
-                <td><%= pr.getEmail() %>
-                </td>
-                <td><%= pr.getPhoneNumber() %>
-                </td>
-                <td><%= pr.getAddress() %>
-                </td>
-                <td>
-                    <div class="action-buttons">
-                        <a href="admin.jsp?deleteId=<%= pr.getId() %>" class="btn reject" style="text-decoration: none;"
-                           onclick="return confirm('Bạn có chắc chắn muốn xóa tài khoản này?');">xóa</a>
-                    </div>
-                </td>
-            </tr>
-            <%
-                }
-            %>
+            <c:choose>
+                <c:when test="${not empty userList}">
+                    <c:forEach var="user" items="${userList}">
+                        <tr>
+                            <td>${user.id}</td>
+                            <td>${user.username}</td>
+                            <td>${user.name}</td>
+                            <td>${user.email}</td>
+                            <td>${user.phoneNumber}</td>
+                            <td>${user.address}</td>
+                            <td>
+                                <div class="action-buttons">
+                                    <a href="admin.jsp?deleteId=${user.id}" class="btn reject"
+                                       style="text-decoration: none;"
+                                       onclick="return confirm('Bạn có chắc chắn muốn xóa tài khoản này?');">
+                                        Xóa
+                                    </a>
+                                </div>
+                            </td>
+                        </tr>
+                    </c:forEach>
+                </c:when>
+                <c:otherwise>
+                    <tr>
+                        <td colspan="7">Không tìm thấy tài khoản nào.</td>
+                    </tr>
+                </c:otherwise>
+            </c:choose>
             </tbody>
         </table>
+
         <script src="js/customer-management.js"></script>
     </div>
     <div id="productsManagement" class="detail">
@@ -301,6 +284,8 @@
         </div>
 
         <div id="productTableContainer">
+
+
             <table id="productTable">
                 <thead>
                 <tr>
@@ -311,60 +296,42 @@
                     <th>Đã bán</th>
                     <th>Hành Động</th>
                 </tr>
+                </thead>
                 <tbody>
-                <%
-                    String searchKW = request.getParameter("search");
-                    String pageParam = request.getParameter("page");
-                    int pages = (pageParam != null) ? Integer.parseInt(pageParam) : 1;
-                    int pageSize = 10;
-
-                    SearchDao productDao = new SearchDao();
-                    int totalProducts = 0;
-
-                    List<ProductShop> listP;
-                    if (searchKW != null && !searchKW.isEmpty()) {
-                        totalProducts = productDao.getTotalProductsBySearch(searchKW);
-                        listP = productDao.searchProducts(searchKW);
-                    } else {
-                        totalProducts = productDao.getTotalProducts();
-                        listP = productDao.getProductsByPage(pages, pageSize);
-                    }
-
-
-                    int totalPages = (int) Math.ceil((double) totalProducts / pageSize);
-
-
-                    String productIdToDelete = request.getParameter("deletepId");
-                    if (productIdToDelete != null) {
-                        productDao.deleteProduct(Integer.parseInt(productIdToDelete));
-                        response.sendRedirect("admin.jsp");
-                        return;
-                    }
-
-                    for (ProductShop product : listP) {
-                %>
-                <tr>
-                    <td><%= product.getId() %>
-                    </td>
-                    <td><%= product.getName() %>
-                    </td>
-                    <td><%= product.getPrice() %>
-                    </td>
-                    <td><%= product.getImg() %>
-                    </td>
-                    <td><%= product.getQuantitySold() %>
-                    </td>
-                    <td>
-                        <a href="admin.jsp?deletepId=<%= product.getId() %>"
-                           onclick="return confirm('Bạn có chắc chắn muốn xóa sản phẩm này?');"
-                           class="btn deleteButton">Xóa</a>
-                    </td>
-                </tr>
-                <%
-                    }
-                %>
+                <c:choose>
+                    <c:when test="${not empty productList}">
+                        <c:forEach var="product" items="${productList}">
+                            <tr>
+                                <td>${product.id}</td>
+                                <td>${product.name}</td>
+                                <td>${product.price}</td>
+                                <td><img src="${product.img}" alt="Hình ảnh" width="50"></td>
+                                <td>${product.quantitySold}</td>
+                                <td>
+                                    <a href="admin.jsp?deletepId=${product.id}"
+                                       onclick="return confirm('Bạn có chắc chắn muốn xóa sản phẩm này?');"
+                                       class="btn deleteButton">Xóa</a>
+                                </td>
+                            </tr>
+                        </c:forEach>
+                    </c:when>
+                    <c:otherwise>
+                        <tr>
+                            <td colspan="6">Không tìm thấy sản phẩm nào.</td>
+                        </tr>
+                    </c:otherwise>
+                </c:choose>
                 </tbody>
             </table>
+
+            <!-- Phân trang -->
+            <div class="pagination">
+                <c:forEach var="i" begin="1" end="${totalPages}">
+                    <a href="admin.jsp?page=${i}&search=${searchKeyword}"
+                       class="${i == currentPage ? 'active' : ''}">${i}</a>
+                </c:forEach>
+            </div>
+
 
         </div>
         <div id="paginationInfo">

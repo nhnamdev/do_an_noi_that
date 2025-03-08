@@ -113,47 +113,42 @@
 
             <div class="container-fluid">
                 <div class="row">
-                    <%
-                        if (products != null && !products.isEmpty()) {
-                            for (ProductShop product : paginatedProducts) {
-                    %>
-                    <div class="col-sm-3 p-3 col-md-3">
-                        <div class="product-block">
-                            <div class="product-tumb">
-                                <a href="ProductDetail.jsp?id=<%= product.getId() %>">
-                                    <img src="<%= product.getImg() %>" alt="">
-                                </a>
-                            </div>
-                            <div class="product-detail">
-                                <h4>
-                                    <a href="ProductDetail.jsp?id=<%= product.getId() %>"><%= product.getName() %>
-                                    </a>
-                                </h4>
-                                <div class="product-bottom_detail">
-                                    <div class="price">
-                                        <span class="discount-price"><%= product.getPrice() %></span>
-                                    </div>
-                                    <div class="product-actions">
-                                        <button class="favourite-btn" data-product-id="${product.id}" onclick="addToFavorites('<%= product.getId() %>')">
-                                            ❤️
-                                        </button>
-                                    </div>
-                                    <div class="sold-quantity">
-                                        Đã bán: <%= product.getQuantitySold() %>
+                    <c:choose>
+                        <c:when test="${not empty paginatedProducts}">
+                            <c:forEach var="product" items="${paginatedProducts}">
+                                <div class="col-sm-3 p-3 col-md-3">
+                                    <div class="product-block">
+                                        <div class="product-tumb">
+                                            <a href="ProductDetail.jsp?id=${product.id}">
+                                                <img src="${product.img}" alt="">
+                                            </a>
+                                        </div>
+                                        <div class="product-detail">
+                                            <h4>
+                                                <a href="ProductDetail.jsp?id=${product.id}">${product.name}</a>
+                                            </h4>
+                                            <div class="product-bottom_detail">
+                                                <div class="price">
+                                                    <span class="discount-price">${product.price}</span>
+                                                </div>
+                                                <div class="product-actions">
+                                                    <button class="favourite-btn" data-product-id="${product.id}" onclick="addToFavorites('${product.id}')">
+                                                        ❤️
+                                                    </button>
+                                                </div>
+                                                <div class="sold-quantity">
+                                                    Đã bán: ${product.quantitySold}
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                        </div>
-                    </div>
-                    <%
-                        }
-                    } else {
-                    %>
-                    <p>Không tìm thấy sản phẩm nào.</p>
-                    <%
-                        }
-                    %>
-
+                            </c:forEach>
+                        </c:when>
+                        <c:otherwise>
+                            <p>Không tìm thấy sản phẩm nào.</p>
+                        </c:otherwise>
+                    </c:choose>
                 </div>
             </div>
             <script>
@@ -184,78 +179,58 @@
                             alert('An error occurred while updating favorites');
                         });
                 }
-
-                function addToFavorites(productId) {
-                    console.log(productId);
-                    fetch('<%= request.getContextPath() %>/addToFavorites', {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/x-www-form-urlencoded'
-                        },
-                        body: 'productId=' + encodeURIComponent(productId)
-                    })
-                        .then(response => response.json())
-                        .then(data => {
-                            console.log(data);
-                            if (data.success) {
-                                alert('Đã bỏ yêu thích!');
-                            } else {
-                                alert('Đã thêm sản phẩm yêu thích!.');
-                            }
-                        })
-                        .catch(error => console.error('Error:', error));
-                }
             </script>
 
             <div class="pagination-container">
                 <ul class="pagination">
-                    <%
-                        if (currentPage > 1) {
-                    %>
-                    <li class="page-item">
-                        <a href="?page=1" class="page-link">Đầu</a>
-                    </li>
-                    <li class="page-item">
-                        <a href="?page=<%= currentPage - 1 %>" class="page-link">Trang trước</a>
-                    </li>
-                    <%
-                        }
+                    <!-- Nút "Đầu" và "Trang trước" -->
+                    <c:if test="${currentPage > 1}">
+                        <li class="page-item">
+                            <a href="?page=1" class="page-link">Đầu</a>
+                        </li>
+                        <li class="page-item">
+                            <a href="?page=${currentPage - 1}" class="page-link">Trang trước</a>
+                        </li>
+                    </c:if>
 
-                        int displayPages = 2;
-                        int startPage = Math.max(1, currentPage - displayPages);
-                        int endPage = Math.min(pageCount, currentPage + displayPages);
-                        if (startPage > 1) {
-                    %>
-                    <li class="page-item"><span class="page-link">...</span></li>
-                    <%
-                        }
+                    <!-- Tính toán trang bắt đầu và trang kết thúc -->
+                    <c:set var="displayPages" value="2" />
+                    <c:set var="startPage" value="${currentPage - displayPages}" />
+                    <c:set var="endPage" value="${currentPage + displayPages}" />
 
-                        for (int p = startPage; p <= endPage; p++) {
-                    %>
-                    <li class="page-item <%= p == currentPage ? "active" : "" %>">
-                        <a href="?page=<%= p %>" class="page-link"><%= p %></a>
-                    </li>
-                    <%
-                        }
+                    <c:if test="${startPage < 1}">
+                        <c:set var="startPage" value="1" />
+                    </c:if>
+                    <c:if test="${endPage > pageCount}">
+                        <c:set var="endPage" value="${pageCount}" />
+                    </c:if>
 
-                        // Hiển thị dấu ba chấm nếu cần
-                        if (endPage < pageCount) {
-                    %>
-                    <li class="page-item"><span class="page-link">...</span></li>
-                    <%
-                        }
+                    <!-- Hiển thị dấu "..." nếu cần -->
+                    <c:if test="${startPage > 1}">
+                        <li class="page-item"><span class="page-link">...</span></li>
+                    </c:if>
 
-                        if (currentPage < pageCount) {
-                    %>
-                    <li class="page-item">
-                        <a href="?page=<%= currentPage + 1 %>" class="page-link">Trang sau</a>
-                    </li>
-                    <li class="page-item">
-                        <a href="?page=<%= pageCount %>" class="page-link">Cuối</a>
-                    </li>
-                    <%
-                        }
-                    %>
+                    <!-- Hiển thị các trang -->
+                    <c:forEach var="p" begin="${startPage}" end="${endPage}">
+                        <li class="page-item ${p == currentPage ? 'active' : ''}">
+                            <a href="?page=${p}" class="page-link">${p}</a>
+                        </li>
+                    </c:forEach>
+
+                    <!-- Hiển thị dấu "..." nếu cần -->
+                    <c:if test="${endPage < pageCount}">
+                        <li class="page-item"><span class="page-link">...</span></li>
+                    </c:if>
+
+                    <!-- Nút "Trang sau" và "Cuối" -->
+                    <c:if test="${currentPage < pageCount}">
+                        <li class="page-item">
+                            <a href="?page=${currentPage + 1}" class="page-link">Trang sau</a>
+                        </li>
+                        <li class="page-item">
+                            <a href="?page=${pageCount}" class="page-link">Cuối</a>
+                        </li>
+                    </c:if>
                 </ul>
             </div>
         </div>
@@ -313,7 +288,7 @@
                         <ul class="content">
                             <li class="active propClone"><a href="index.jsp">Trang chủ</a></li>
                             <li class="propClone"><a href="shop.jsp">Cửa hàng</a></li>
-                            <li class="propClone"><a href="About_us.jsp">Thông tin</a></li>
+                            <li class="propClone"><a href="about.jsp">Thông tin</a></li>
                             <li class="propClone"><a href="contact.jsp">Liên hệ</a></li>
                         </ul>
                     </div>

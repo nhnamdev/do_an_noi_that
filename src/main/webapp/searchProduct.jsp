@@ -111,44 +111,40 @@
 
             <div class="container-fluid">
                 <div class="row">
-                    <%
-                        if (products != null && !products.isEmpty()) {
-                            for (ProductShop product : products) {
-                    %>
-                    <div class="col-sm-3 p-3 col-md-3">
-                        <div class="product-block">
-                            <div class="product-tumb">
-                                <a href="ProductDetail.jsp?id=<%= product.getId() %>">
-                                    <img src="<%= product.getImg() %>" alt="">
-                                </a>
-                            </div>
-                            <div class="product-detail">
-                                <h4>
-                                    <a href="ProductDetail.jsp?id=<%= product.getId() %>"><%= product.getName() %></a>
-                                </h4>
-                                <div class="product-bottom_detail">
-                                    <div class="price">
-                                        <span class="discount-price"><%= product.getPrice() %></span>
-                                    </div>
-                                    <div class="product-actions">
-                                        <span class="heart-icon red">&#9829;</span>
-                                    </div>
-                                    <div class="sold-quantity">
-                                        Đã bán: <%= product.getQuantitySold() %>
+                    <c:choose>
+                        <c:when test="${not empty products}">
+                            <c:forEach var="product" items="${products}">
+                                <div class="col-sm-3 p-3 col-md-3">
+                                    <div class="product-block">
+                                        <div class="product-tumb">
+                                            <a href="ProductDetail.jsp?id=${product.id}">
+                                                <img src="${product.img}" alt="">
+                                            </a>
+                                        </div>
+                                        <div class="product-detail">
+                                            <h4>
+                                                <a href="ProductDetail.jsp?id=${product.id}">${product.name}</a>
+                                            </h4>
+                                            <div class="product-bottom_detail">
+                                                <div class="price">
+                                                    <span class="discount-price">${product.price}</span>
+                                                </div>
+                                                <div class="product-actions">
+                                                    <span class="heart-icon red">&#9829;</span>
+                                                </div>
+                                                <div class="sold-quantity">
+                                                    Đã bán: ${product.quantitySold}
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                        </div>
-                    </div>
-                    <%
-                        }
-                    } else {
-                    %>
-                    <p>Không tìm thấy sản phẩm nào.</p>
-                    <%
-                        }
-                    %>
-                    </div>
+                            </c:forEach>
+                        </c:when>
+                        <c:otherwise>
+                            <p>Không tìm thấy sản phẩm nào.</p>
+                        </c:otherwise>
+                    </c:choose>
                 </div>
             </div>
 
@@ -227,7 +223,7 @@
                     <ul class="content">
                         <li class="active propClone"><a href="index.jsp">Trang chủ</a></li>
                         <li class="propClone"><a href="shop.jsp">Cửa hàng</a></li>
-                        <li class="propClone"><a href="About_us.jsp">Thông tin</a></li>
+                        <li class="propClone"><a href="about.jsp">Thông tin</a></li>
                         <li class="propClone"><a href="contact.jsp">Liên hệ</a></li>
                     </ul>
                 </div>

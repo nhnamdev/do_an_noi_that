@@ -1,21 +1,11 @@
-<%@ page import="vn.edu.hcmuaf.fit.sourcedoannoithat.dao.model.SProduct" %>
+
 <%@ page import="vn.edu.hcmuaf.fit.sourcedoannoithat.dao.SProductDao" %>
 <%@ page import="java.util.List" %>
 <%@ page import="java.util.ArrayList" %>
 <%@ page import="vn.edu.hcmuaf.fit.sourcedoannoithat.dao.model.Product" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%
-    String productId = request.getParameter("id");
-    SProductDao orderDao = new SProductDao();
-    SProduct sp = orderDao.getSProduct(Integer.parseInt(productId));
 
-    session.setAttribute("productId", sp.getId());
-    session.setAttribute("productName", sp.getName());
-    session.setAttribute("productPrice", sp.getPrice());
-    session.setAttribute("imageProduct", sp.getIndexImages(0));
-
-%>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -29,49 +19,7 @@
 
 <body>
 <div class="singleProduct">
-    <div class="header">
-        <div class="container">
-            <div class="left">
-                <ul class="navbar-left">
-                    <li class="Home"><a href="index.jsp">Trang chủ</a></li>
-                    <li class="Shop"><a href="shop.jsp">Cửa hàng</a></li>
-                    <li class="AboutUs"><a href="About_us.jsp">Thông tin</a></li>
-                    <li class="ContactUs"><a href="contact.jsp">Liên hệ</a></li>
-                </ul>
-            </div>
-            <div class="right">
-                <ul class="navbar-right">
-                    <li class="User">
-                        <img src="img/avt.jpg" alt="">
-                    </li>
-                    <li class="Search">
-                        <a href="#" id="searchIcon"><i class="fa fa-search"></i></a>
-                        <form action="searchProduct.jsp" method="get" id="searchForm">
-                            <input id="search" name="search" type="search" placeholder="Tìm kiếm" required>
-                            <button type="submit" style="display:none;">Search</button>
-                        </form>
-                    </li>
-                    <li class="Favorite"><a href="favorite.jsp"><i
-                            class="fa fa-bookmark"></i></a></li>
-                    <li class="Shopping"><a href="#"><i class="fa fa-shopping-cart"></i></a></li>
-                </ul>
-                <div class="boxHeader" id="boxHeader">
-                    <div class="imageContainer">
-                        <img id="imageHeader" src="img/avt.jpg" alt="">
-                    </div>
-                    <h4>${sessionScope.userName}</h4>
-                    <hr>
-                    <a href="account.jsp" id="infoBtn" class="info-button"><span>Xem thông
-                                tin</span></a>
-                    <a href="oderInformation.jsp" id="infoBtn"
-                       class="info-button"><span>Đơn hàng</span></a>
-                    <a href="login.jsp" id="logoutBtn" class="logout-button"><span>Đăng
-                                xuất</span></a>
-                </div>
-                <div id="layoutHeader"></div>
-            </div>
-        </div>
-    </div>
+    <jsp:include page="/WEB-INF/header.jsp" />
     <script src="js/showSearch.js"></script>
     <script src="js/showHeader.js"></script>
     <script src="js/actionOfProfile.js"></script>
@@ -137,61 +85,61 @@
                 <li><i class="fa fa-chevron-right"></i></li>
                 <div class="line_right"></div>
             </ul>
-            <div class="title"><%=sp.getName()%>
-            </div>
+            <div class="title">${sp.name}</div>
+
         </div>
     </div>
     <div class="content_section">
         <div class="container">
+
+
             <div class="alpha">
                 <div class="card">
                     <div class="image">
                         <div class="cube-container">
                             <div class="cube initial-position">
-                                <img class="cube-face-image image-1" src="<%=sp.getIndexImages(0)%>"
+                                <img class="cube-face-image image-1" src="${sp.indexImages[0]}"
                                      style="width: 100%; max-width: 300px; height: 300px; object-fit: cover;">
-                                <img class="cube-face-image image-2" src="<%=sp.getIndexImages(1)%>"
+                                <img class="cube-face-image image-2" src="${sp.indexImages[1]}"
                                      style="width: 100%; max-width: 300px; height: 300px; object-fit: cover;">
-                                <img class="cube-face-image image-3" src="<%=sp.getIndexImages(2)%>"
+                                <img class="cube-face-image image-3" src="${sp.indexImages[2]}"
                                      style="width: 100%; max-width: 300px; height: 300px; object-fit: cover;">
-                                <img class="cube-face-image image-4" src="<%=sp.getIndexImages(0)%>"
+                                <img class="cube-face-image image-4" src="${sp.indexImages[0]}"
                                      style="width: 100%; max-width: 300px; height: 300px; object-fit: cover;">
-                                <img class="cube-face-image image-5" src="<%=sp.getIndexImages(2)%>"
+                                <img class="cube-face-image image-5" src="${sp.indexImages[2]}"
                                      style="width: 100%; max-width: 300px; height: 300px; object-fit: cover;">
-                                <img class="cube-face-image image-6" src="<%=sp.getIndexImages(1)%>"
+                                <img class="cube-face-image image-6" src="${sp.indexImages[1]}"
                                      style="width: 100%; max-width: 300px; height: 300px; object-fit: cover;">
                             </div>
                         </div>
                         <div class="image-buttons">
-                            <input type="image" class="show-image-1" src="<%=sp.getIndexImages(0)%>">
-                            <input type="image" class="show-image-2" src="<%=sp.getIndexImages(1)%>">
-                            <input type="image" class="show-image-3" src="<%=sp.getIndexImages(2)%>">
-                            <input type="image" class="show-image-4" src="<%=sp.getIndexImages(0)%>">
-                            <input type="image" class="show-image-5" src="<%=sp.getIndexImages(2)%>">
-                            <input type="image" class="show-image-6" src="<%=sp.getIndexImages(1)%>">
+                            <input type="image" class="show-image-1" src="${sp.indexImages[0]}">
+                            <input type="image" class="show-image-2" src="${sp.indexImages[1]}">
+                            <input type="image" class="show-image-3" src="${sp.indexImages[2]}">
+                            <input type="image" class="show-image-4" src="${sp.indexImages[0]}">
+                            <input type="image" class="show-image-5" src="${sp.indexImages[2]}">
+                            <input type="image" class="show-image-6" src="${sp.indexImages[1]}">
                         </div>
                         <script src="js/showList.js"></script>
                     </div>
                     <div class="user">
-                        <h1><%=sp.getName()%>
-                        </h1>
-                        <p class="price"><%=sp.getPrice()%>đ</p>
+                        <h1>${sp.name}</h1>
+                        <p class="price">${sp.price}đ</p>
                         <h3>Mô tả</h3>
-                        <p><%=sp.getDescription()%>
-                        </p>
+                        <p>${sp.description}</p>
                         <h3>Thông số kĩ thuật:</h3>
                         <div class="specification">
                             <ul class="spe">
                                 <div class="kichthuoc">
                                     <li>Chiều dài: 200 cm</li>
-                                    <li> Chiều sâu: 90 cm</li>
-                                    <li> Chiều cao: 85 cm</li>
+                                    <li>Chiều sâu: 90 cm</li>
+                                    <li>Chiều cao: 85 cm</li>
                                     <li>Chiều cao chỗ ngồi: 45 cm</li>
                                     <li>Tổng trọng lượng: 50 kg</li>
                                 </div>
                                 <div class="chatlieu">
                                     <li>Khung: Gỗ tự nhiên (gỗ thông hoặc gỗ sồi)</li>
-                                    <li> Bọc: Vải nỉ cao cấp hoặc da tổng hợp</li>
+                                    <li>Bọc: Vải nỉ cao cấp hoặc da tổng hợp</li>
                                     <li>Đệm: Bọt polyurethane có độ đàn hồi cao</li>
                                 </div>
                             </ul>
@@ -221,10 +169,10 @@
                                 }
                             </script>
                             <form action="cart.jsp" method="post" onsubmit="setQuantity()">
-                                <input type="hidden" name="productId" value="<%= sp.getId() %>">
-                                <input type="hidden" name="productName" value="<%= sp.getName() %>">
-                                <input type="hidden" name="productPrice" value="<%= sp.getPrice() %>">
-                                <input type="hidden" name="productImage" value="<%= sp.getIndexImages(0) %>">
+                                <input type="hidden" name="productId" value="${sp.id}">
+                                <input type="hidden" name="productName" value="${sp.name}">
+                                <input type="hidden" name="productPrice" value="${sp.price}">
+                                <input type="hidden" name="productImage" value="${sp.indexImages[0]}">
                                 <input type="hidden" id="quantityInput" name="quantity" value="1">
                                 <button type="submit" class="buy">Mua</button>
                                 <button type="submit" class="add">Thêm vào giỏ hàng</button>
@@ -233,6 +181,7 @@
                     </div>
                 </div>
             </div>
+
             <div class="omega">
                 <div class="relatedProduct">
                     <div class="title">Sản phẩm liên quan</div>
@@ -336,7 +285,7 @@
                     <ul class="content">
                         <li class="active propClone"><a href="index.jsp">Trang chủ</a></li>
                         <li class="propClone"><a href="shop.jsp">Cửa hàng</a></li>
-                        <li class="propClone"><a href="About_us.jsp">Thông tin</a></li>
+                        <li class="propClone"><a href="about.jsp">Thông tin</a></li>
                         <li class="propClone"><a href="contact.jsp">Liên hệ</a></li>
                     </ul>
                 </div>

@@ -23,7 +23,7 @@
                 <ul class="navbar-left">
                     <li class="Home"><a href="index.jsp">Trang chủ</a></li>
                     <li class="Shop"><a href="shop.jsp">Cửa hàng</a></li>
-                    <li class="AboutUs"><a href="About_us.jsp">Thông tin</a></li>
+                    <li class="AboutUs"><a href="about.jsp">Thông tin</a></li>
                     <li class="ContactUs"><a href="contact.jsp">Liên hệ</a></li>
                 </ul>
             </div>
@@ -153,7 +153,7 @@
                 <ul class="content">
                     <li class="active propClone"><a href="index.jsp">Trang chủ</a></li>
                     <li class="propClone"><a href="shop.jsp">Cửa hàng</a></li>
-                    <li class="propClone"><a href="About_us.jsp">Thông tin</a></li>
+                    <li class="propClone"><a href="about.jsp">Thông tin</a></li>
                     <li class="propClone"><a href="contact.jsp">Liên hệ</a></li>
                 </ul>
             </div>

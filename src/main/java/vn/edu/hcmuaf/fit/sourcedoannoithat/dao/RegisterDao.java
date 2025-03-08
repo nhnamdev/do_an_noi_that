@@ -11,64 +11,8 @@ public class RegisterDao {
     Connection connection = null;
     PreparedStatement ps = null;
     ResultSet rs = null;
-    public boolean registerUser(RegisterModel user) {
-        String query = "INSERT INTO profile_client (username, passw,name,birthday,role,phoneNumber,address,email) VALUES( ?, ?, ?, ?,0,?,?,?)";
 
-        try {
-            connection = new DBConnect().getConnection();
-            ps = connection.prepareStatement(query);
-            ps.setString(3, user.getFullName());
-            ps.setString(4,user.getBirthDay());
-            ps.setString(5,user.getPhoneNumber());
-            ps.setString(6,user.getAddress());
-            ps.setString(7,user.getEmail());
-            ps.setString(1, user.getUsername());
-            ps.setString(2, user.getPassword()); // Trong thực tế nên mã hóa mật khẩu
 
-            int rowsAffected = ps.executeUpdate();
-            if (rowsAffected > 0) {
-                return true;
-            } else {
-                return false;
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-            return false;
-        } finally {
-            try {
-                if (ps != null) ps.close();
-                if (connection != null) connection.close();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-        }
-    }
-    public boolean checkAccountExists(String username) {
-        String query = "SELECT COUNT(*) FROM profile_client WHERE username = ?";
-
-        try {
-            connection = new DBConnect().getConnection();
-            ps = connection.prepareStatement(query);
-            ps.setString(1, username);
-
-            rs = ps.executeQuery();
-            if (rs.next()) {
-                int count = rs.getInt(1);
-                return count == 0;
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            try {
-                if (rs != null) rs.close();
-                if (ps != null) ps.close();
-                if (connection != null) connection.close();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-        }
-        return true;
-    }
 
 
 }
