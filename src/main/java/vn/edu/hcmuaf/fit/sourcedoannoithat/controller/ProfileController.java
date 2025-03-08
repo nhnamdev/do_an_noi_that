@@ -60,7 +60,7 @@ public class ProfileController extends HttpServlet {
             if (isUpdated) {
                 resp.sendRedirect("index.jsp");
             } else {
-                resp.sendRedirect("personal.jsp");
+                resp.sendRedirect("account.jsp");
             }
         } catch (Exception e) {
             e.printStackTrace();

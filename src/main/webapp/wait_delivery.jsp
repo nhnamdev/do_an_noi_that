@@ -86,12 +86,12 @@
                     <img src="img/avt.jpg" alt="">
                     <div class="user-info">
                         <p class="username">${sessionScope.userName}</p>
-                        <a href="personal.jsp" class="edit-user">Sửa Hồ Sơ</a>
+                        <a href="account.jsp" class="edit-user">Sửa Hồ Sơ</a>
                     </div>
                 </div>
                 <div class="menu-item-1">
                     <i class="fa fa-user" aria-hidden="true"></i>
-                    <a href="personal.jsp">Tài Khoản Của Tôi</a>
+                    <a href="account.jsp">Tài Khoản Của Tôi</a>
 
                 </div>
                 <div class="menu-item-2">

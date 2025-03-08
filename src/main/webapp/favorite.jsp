@@ -1,7 +1,7 @@
 <%@ page import="vn.edu.hcmuaf.fit.sourcedoannoithat.dao.model.Product" %>
 <%@ page import="java.util.List" %>
 <%@ page import="java.util.ArrayList" %>
-<%@ page import="vn.edu.hcmuaf.fit.sourcedoannoithat.dao.model.ProductShop" %>
+
 <%@ page import="vn.edu.hcmuaf.fit.sourcedoannoithat.dao.FavouriteDao" %><%--
   Created by IntelliJ IDEA.
   User: homin
@@ -10,15 +10,7 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%
-    List<ProductShop> products = null;
 
-    if (request.getSession().getAttribute("userIdLogin") != null) {
-        FavouriteDao productDAO = new FavouriteDao();
-        int userId = Integer.valueOf(request.getSession().getAttribute("userIdLogin").toString());
-        products = productDAO.getFavoriteProducts(userId);
-    }
-%>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -32,47 +24,7 @@
 
 <body>
 <div class="home">
-    <div class="header">
-        <div class="container">
-            <div class="left">
-                <ul class="navbar-left">
-                    <li class="Home"><a href="index.jsp">Trang chủ</a></li>
-                    <li class="Shop"><a href="shop.jsp">Cửa hàng</a></li>
-                    <li class="AboutUs"><a href="About_us.jsp">Thông tin</a></li>
-                    <li class="ContactUs"><a href="contact.jsp">Liên hệ</a></li>
-                </ul>
-            </div>
-            <div class="right">
-                <ul class="navbar-right">
-                    <li class="User">
-                        <img src="img/avt.jpg" alt="">
-                    </li>
-                    <li class="Search">
-                        <a href="#" id="searchIcon"><i class="fa fa-search"></i></a>
-                        <form id="searchForm">
-                            <input id="search" type="search" placeholder="Tìm kiếm" required>
-                        </form>
-                    </li>
-                    <li class="Favorite"><a href="#"><i class="fa fa-bookmark"></i></a></li>
-                    <li class="Shopping"><a href="#"><i class="fa fa-shopping-cart"></i></a></li>
-                </ul>
-                <div class="boxHeader" id="boxHeader">
-                    <div class="imageContainer">
-                        <img id="imageHeader" src="img/avt.jpg" alt="">
-                    </div>
-                    <h4>${sessionScope.userName}</h4>
-                    <hr>
-                    <a href="personal.jsp" id="infoBtn" class="info-button"><span>Xem thông
-                                tin</span></a>
-                    <a href="oderInformation.jsp" id="infoBtn"
-                       class="info-button"><span>Đơn hàng</span></a>
-                    <a href="my_account.jsp" id="logoutBtn" class="logout-button"><span>Đăng
-                                xuất</span></a>
-                </div>
-                <div id="layoutHeader"></div>
-            </div>
-        </div>
-    </div>
+    <jsp:include page="/WEB-INF/header.jsp" />
     <script src="js/showSearch.js"></script>
     <script src="js/showHeader.js"></script>
     <script src="js/actionOfProfile.js"></script>

@@ -90,7 +90,7 @@
 
           <button type="submit">Đăng ký</button>
           <div class="lostpass" style="margin-left: 150px;">
-            <a href="my_account.jsp">Đăng nhập </a>
+            <a href="login.jsp">Đăng nhập </a>
           </div>
         </form>
 

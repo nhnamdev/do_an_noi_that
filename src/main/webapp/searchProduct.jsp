@@ -1,18 +1,10 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ page import="java.util.List" %>
-<%@ page import="vn.edu.hcmuaf.fit.sourcedoannoithat.dao.model.ProductShop" %>
+
 <%@ page import="vn.edu.hcmuaf.fit.sourcedoannoithat.dao.SearchDao" %>
 <%@ page import="vn.edu.hcmuaf.fit.sourcedoannoithat.dao.model.Product" %>
 <%@ page import="java.util.ArrayList" %>
-<%
-    String searchQuery = request.getParameter("search");
-    List<ProductShop> products = null;
 
-    if (searchQuery != null && !searchQuery.trim().isEmpty()) {
-        SearchDao productDAO = new SearchDao();
-        products = productDAO.searchProducts(searchQuery);
-    }
-%>
 <!DOCTYPE html>
 <html lang="en">
 
