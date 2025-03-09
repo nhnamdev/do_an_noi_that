@@ -23,36 +23,7 @@
 <body>
 
 <div>
-    <div class="header">
-        <div class="container">
-            <div class="left">
-                <ul class="navbar-left">
-                    <li class="Home"><a href="index.jsp">Trang chủ</a></li>
-                    <li class="Shop"><a href="shop.jsp">Cửa hàng</a></li>
-                    <li class="AboutUs"><a href="About_us.jsp">Thông tin</a></li>
-                    <li class="ContactUs"><a href="contact.jsp">Liên hệ</a></li>
-                </ul>
-            </div>
-            <div class="right">
-                <ul class="navbar-right">
-                    <li class="User">
-                        <a href="login.jsp"><i class="fa fa-user"></i></a>
-                    </li>
-                    </li>
-                    <li class="Search">
-                        <a href="#" id="searchIcon"><i class="fa fa-search"></i></a>
-                        <form id="searchForm">
-                            <input id="search" type="search" placeholder="Tìm kiếm" required>
-                        </form>
-                    </li>
-                    <li class="Favorite"><a href="favorite.jsp"><i
-                            class="fa fa-bookmark"></i></a></li>
-                    <li class="Shopping"><a href="#"><i class="fa fa-shopping-cart"></i></a></li>
-                </ul>
-                <div id="layoutHeader"></div>
-            </div>
-        </div>
-    </div>
+    <jsp:include page="/components/header.jsp" />
     <script src="js/showSearch.js"></script>
     <script src="js/showHeader.js"></script>
     <script src="js/actionOfProfile.js"></script>

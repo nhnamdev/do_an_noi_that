@@ -17,45 +17,7 @@
 </head>
 <body>
 <div>
-    <div class="header">
-        <div class="container">
-            <div class="left">
-                <ul class="navbar-left">
-                    <li class="Home"><a href="index.jsp">Trang chủ</a></li>
-                    <li class="Shop"><a href="shop.jsp">Cửa hàng</a></li>
-                    <li class="AboutUs"><a href="About_us.jsp">Thông tin</a></li>
-                    <li class="ContactUs"><a href="contact.jsp">Liên hệ</a></li>
-                </ul>
-            </div>
-            <div class="right">
-                <ul class="navbar-right">
-                    <li class="User">
-                        <a href="login.jsp"><i class="fa fa-user"></i></a></li>
-                    </li>
-                    <li class="Search">
-                        <a href="#" id="searchIcon"><i class="fa fa-search"></i></a>
-                        <form id="searchForm">
-                            <input id="search" type="search" placeholder="Tìm kiếm" required>
-                        </form>
-                    </li>
-                    <li class="Favorite"><a href="#"><i class="fa fa-bookmark"></i></a></li>
-                    <li class="Shopping"><a href="#"><i class="fa fa-shopping-cart"></i></a></li>
-                </ul>
-                <script>
-                    // Lấy phần tử icon và form tìm kiếm
-                    const searchIcon = document.getElementById("searchIcon");
-                    const searchForm = document.getElementById("searchForm");
-
-                    // Thêm sự kiện click cho icon tìm kiếm
-                    searchIcon.addEventListener("click", function (event) {
-                        event.preventDefault(); // Ngăn chặn hành động mặc định của link
-                        searchForm.style.display = (searchForm.style.display === "block") ? "none" : "block";
-                    });
-
-                </script>
-            </div>
-        </div>
-    </div>
+    <jsp:include page="/components/header.jsp" />
     <div class="overlay" id="overlay"></div>
     <script src="../page_SingleProduct/showCart.js"></script>
     <div class="navigation_titlePage">

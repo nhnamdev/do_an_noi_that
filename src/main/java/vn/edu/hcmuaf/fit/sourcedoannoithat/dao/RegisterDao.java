@@ -71,5 +71,28 @@ public class RegisterDao {
         return true;
     }
 
+    public static void main(String[] args) {
+        // Tạo một đối tượng RegisterModel với dữ liệu giả lập
+        RegisterModel user = new RegisterModel();
+        user.setUsername("testuser");
+        user.setPassword("password123"); // Nên mã hóa mật khẩu
+        user.setFullName("Test User");
+        user.setBirthDay("1990-01-01");
+        user.setPhoneNumber("0123456789");
+        user.setAddress("123 Test Street");
+        user.setEmail("testuser@example.com");
+
+        // Gọi phương thức registerUser để kiểm tra
+        RegisterDao registerDao = new RegisterDao();
+        boolean result = registerDao.registerUser(user);
+
+        // In kết quả ra màn hình
+        if (result) {
+            System.out.println("Đăng ký thành công!");
+        } else {
+            System.out.println("Đăng ký thất bại!");
+        }
+    }
+
 
 }

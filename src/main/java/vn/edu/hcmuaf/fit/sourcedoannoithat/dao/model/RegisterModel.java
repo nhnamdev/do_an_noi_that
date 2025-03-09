@@ -25,6 +25,9 @@ public class RegisterModel implements Serializable {
         this.username = username;
         this.password = password;
     }
+    public RegisterModel() {
+
+    }
 
     public String getFullName() {
         return fullName;
@@ -60,5 +63,33 @@ public class RegisterModel implements Serializable {
 
     public String getPassword() {
         return password;
+    }
+
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
+    }
+
+    public void setBirthDay(String birthDay) {
+        this.birthDay = birthDay;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 }

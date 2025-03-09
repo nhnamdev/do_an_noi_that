@@ -8,7 +8,7 @@ public class DBConnect {
     public Connection getConnection() throws Exception {
         Class.forName("com.mysql.cj.jdbc.Driver");
 
-        String url = "jdbc:mysql://localhost:3307/dtb_nhom6";
+        String url = "jdbc:mysql://localhost:3306/s";
         String user = "root";
         String password = "";
 
@@ -23,4 +23,20 @@ public class DBConnect {
 
         return connection;
     }
+    public static void main(String[] args) {
+        try {
+            DBConnect dbConnect = new DBConnect();
+            Connection connection = dbConnect.getConnection();
+
+            if (connection != null) {
+                System.out.println("Kết nối thành công!");
+                connection.close(); // Đóng kết nối sau khi kiểm tra
+            } else {
+                System.out.println("Kết nối thất bại!");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
 }
