@@ -17,6 +17,7 @@
     <meta charset="UTF-8">
     <title>Đang giao hàng</title>
     <link rel="stylesheet" href="css/waitingOrder_styles.css">
+    <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
 </head>
 

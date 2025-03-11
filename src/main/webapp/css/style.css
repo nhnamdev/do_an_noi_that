@@ -18,7 +18,7 @@ body, html {
     width: 100%;
     z-index: 1000;
     position: fixed;
-    background-color: #FBEBB5;
+    background-color:#ffffff ;
     transition: box-shadow 0.3s ease;
 }
 
@@ -131,7 +131,7 @@ body, html {
 
 .header .container .left ul {
     justify-content: center;
-    margin-left: 200px;
+    margin-left: 140px;
 }
 
 .header .container .left ul li a {
@@ -178,7 +178,7 @@ body, html {
 /* Slider 1*/
 .slider1 {
     width: 100%;
-    height: 1000px;
+    height: 660px;
     display: flex;
     background-color: #FBEBB5;
 }
@@ -649,3 +649,42 @@ body, html {
     text-decoration: none;
     color: #333D29;
 }
+
+/* logo  */
+.logo-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+}
+
+.logo a {
+    text-decoration: none;
+}
+
+.logo img {
+
+    height: auto;
+    display: block;
+    max-width: 84%;
+    margin-bottom: 140px;
+    position: relative;
+    bottom: 14px;
+}
+/* logo  */
+/* Ảnh home index*/
+.easypin {
+    width: 100%;
+    height: 100vh;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+}
+.easypin img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+}
+/* Ảnh home index*/

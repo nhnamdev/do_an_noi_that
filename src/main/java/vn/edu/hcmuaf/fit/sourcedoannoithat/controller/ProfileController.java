@@ -18,27 +18,8 @@ public class ProfileController extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         req.setCharacterEncoding("UTF-8");
         resp.setCharacterEncoding("UTF-8");
-        HttpSession session = req.getSession();
-        Integer userId = (Integer) session.getAttribute("userIdLogin");
-        if (userId == null) {
-            req.setAttribute("error", "Bạn cần đăng nhập để truy cập trang này.");
-            req.getRequestDispatcher("login.jsp").forward(req, resp);
-            return;
-        }
-
-        ProfileDao profileDao = new ProfileDao();
-        Profile profile = profileDao.getProfile(userId);
-
-        if (profile != null) {
-            req.setAttribute("profile", profile);
-            req.getRequestDispatcher("index.jsp").forward(req, resp);
-        } else {
-            req.setAttribute("error", "Không tìm thấy thông tin người dùng.");
-            req.getRequestDispatcher("error.jsp").forward(req, resp);
-        }
+        req.getRequestDispatcher("index.jsp").forward(req, resp);
     }
-
-
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         try {

@@ -18,13 +18,11 @@
         <script src="js/showSearch.js"></script>
 
         <div class="slider1">
-            <div class="text">
-                <h1>Ghế đôi</h1>
-                <a href="#" class="shop-now">Mua ngay</a>
-            </div>
-            <div class="img">
-                <img src="assets_duc/img/ghesalon.jpg" height="650" width="650" alt="Sliding Image"
-                     class="image-slide-in"/>
+            <div class="easypin">
+                <a href="index">
+                    <img src="https://noithat-nhadep.monamedia.net/wp-content/uploads/2024/04/slider-home-furniture.jpg"
+                         alt="Home Furniture">
+                </a>
             </div>
         </div>
         <div class="slider2">
