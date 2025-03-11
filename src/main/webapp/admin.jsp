@@ -37,7 +37,9 @@
 
 <body>
 <div class="sidebar">
-    <jsp:include page="/components/header.jsp" />
+    <div class="header">
+        <h3>Admin - Nhóm 6</h3>
+    </div>
     <!--hộp thư -->
     <button class="btn" onclick="mailBoxList();changeColor(this)">Hộp thư</button>
     <ul id="mailBoxList" class="nested-list">
