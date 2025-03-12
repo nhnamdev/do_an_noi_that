@@ -31,8 +31,19 @@
       <div class="right">
         <ul class="navbar-right">
           <c:if test="${sessionScope.loginModel==null}">
+
             <li class="User">
-              <a href="login.jsp"><i class="fa fa-user"></i></a></li>
+              <ul class="menu">
+                <li class="menu-item">
+                  <a class="login-register" href="login.jsp" style="margin-left: 10px">
+                    <svg width="24" height="24" viewBox="0 0 32 32" fill="currentColor">
+                      <path d="M16 3.205c-7.067 0-12.795 5.728-12.795 12.795s5.728 12.795 12.795 12.795 12.795-5.728 12.795-12.795c0-7.067-5.728-12.795-12.795-12.795zM16 4.271c6.467 0 11.729 5.261 11.729 11.729 0 2.845-1.019 5.457-2.711 7.49-1.169-0.488-3.93-1.446-5.638-1.951-0.146-0.046-0.169-0.053-0.169-0.66 0-0.501 0.206-1.005 0.407-1.432 0.218-0.464 0.476-1.244 0.569-1.944 0.259-0.301 0.612-0.895 0.839-2.026 0.199-0.997 0.106-1.36-0.026-1.7-0.014-0.036-0.028-0.071-0.039-0.107-0.050-0.234 0.019-1.448 0.189-2.391 0.118-0.647-0.030-2.022-0.921-3.159-0.562-0.719-1.638-1.601-3.603-1.724l-1.078 0.001c-1.932 0.122-3.008 1.004-3.57 1.723-0.89 1.137-1.038 2.513-0.92 3.159 0.172 0.943 0.239 2.157 0.191 2.387-0.010 0.040-0.025 0.075-0.040 0.111-0.131 0.341-0.225 0.703-0.025 1.7 0.226 1.131 0.579 1.725 0.839 2.026 0.092 0.7 0.35 1.48 0.569 1.944 0.159 0.339 0.234 0.801 0.234 1.454 0 0.607-0.023 0.614-0.159 0.657-1.767 0.522-4.579 1.538-5.628 1.997-1.725-2.042-2.768-4.679-2.768-7.555 0-6.467 5.261-11.729 11.729-11.729z"></path>
+                    </svg>
+                    <span>Đăng nhập / Đăng ký</span>
+                  </a>
+                </li>
+              </ul>
+            </li>
           </c:if>
           <c:if test="${sessionScope.loginModel!=null}">
             <li class="User">
@@ -41,6 +52,8 @@
                      style="width: 22px; height: 18px;border-radius: 100%;border: 2px solid lightgray;">
               </a>
             </li>
+            <li class="Favorite"><a href="favorite.jsp"><i class="fa fa-bookmark"></i></a></li>
+            <li class="Shopping"><a href="#"><i class="fa fa-shopping-cart"></i></a></li>
           </c:if>
           <li class="Search">
             <a href="#" id="searchIcon"><i class="fa fa-search"></i></a>
@@ -49,8 +62,6 @@
               <button type="submit" style="display:none;">Search</button>
             </form>
           </li>
-          <li class="Favorite"><a href="favorite.jsp"><i class="fa fa-bookmark"></i></a></li>
-          <li class="Shopping"><a href="#"><i class="fa fa-shopping-cart"></i></a></li>
         </ul>
 
 
