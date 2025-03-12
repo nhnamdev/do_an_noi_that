@@ -1,4 +1,12 @@
+:root {
+    --color-primary: #6bae0e; /* Màu xanh la */
+}
 /* Reset Css */
+
+
+
+
+
 body, html {
     margin: 0;
     padding: 0;
@@ -140,6 +148,7 @@ body, html {
     font-size: 15px;
     margin-left: 70px;
 }
+
 
 .header .container .right ul li a {
     text-decoration: none;
@@ -572,6 +581,7 @@ body, html {
 .footer_bottom .content {
     margin-top: 16px;
     color: #CAD2C5;
+    padding: 0;
 }
 
 .footer_bottom ul {
@@ -587,6 +597,7 @@ body, html {
     width: 100%;
     padding-top: 30px;
     justify-content: center;
+    background-color: #fafafa;
 }
 
 .footer ul {
@@ -596,6 +607,7 @@ body, html {
 .footer .profile .content {
     max-width: 250px;
     margin-top: 20px;
+    padding-left: 0;
 }
 
 .footer .line {
@@ -632,7 +644,7 @@ body, html {
 
 .footer .profile {
     color: #333D29;
-    margin-top: 50px;
+    margin-top: 0px;
     margin-right: 100px;
 }
 
@@ -641,15 +653,23 @@ body, html {
 }
 
 .footer ul li {
-    margin-top: 50px;
+    margin-top: 34px;
     font-weight: bold;
 }
 
 .footer ul li > a {
     text-decoration: none;
-    color: #333D29;
-}
+    color: #555;
+    font-weight: 300;
 
+}
+.footer ul li div > a{
+    text-decoration: none;
+    color: #000000;
+}
+.footer ul li > a:hover{
+color: var(--color-primary);
+}
 /* logo  */
 .logo-wrapper {
     display: flex;
@@ -688,3 +708,71 @@ body, html {
     display: block;
 }
 /* Ảnh home index*/
+
+/* Định dạng tổng quát cho footer */
+.footer_bottom {
+    background-color: #fff;
+    color: #555;
+    padding: 20px 0;
+    font-family: Arial, sans-serif;
+}
+
+/* Chia footer thành 2 cột */
+.footer-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1200px;
+    margin: auto;
+    padding: 0 20px;
+}
+
+/* Bên trái footer */
+.footer-left p {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 14px;
+}
+
+.footer-left img {
+    height: 20px;
+}
+
+/* Menu footer bên phải */
+.footer-right .footer-menu {
+    list-style: none;
+    display: flex;
+    gap: 20px;
+    padding: 0;
+    margin: 0;
+}
+
+.footer-right .footer-menu li {
+    display: inline;
+}
+
+.footer-right .footer-menu a {
+    text-decoration: none;
+    color: #555;
+    font-size: 14px;
+    transition: color 0.3s;
+}
+
+.footer-right .footer-menu a:hover {
+    color: #f1c40f;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .footer-container {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .footer-right .footer-menu {
+        flex-direction: column;
+        gap: 10px;
+        margin-top: 10px;
+    }
+}
