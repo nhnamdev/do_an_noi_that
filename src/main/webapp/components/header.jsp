@@ -11,15 +11,17 @@
     <div class="container">
       <div class="left">
         <ul class="navbar-left">
-          <li><div class="order-1 logo-wrapper">
-            <a class="logo nasa-logo-retina" href="index" title="Mona Media" rel="Trang chủ">
+          <li>
+            <div class="order-1 logo-wrapper">
+              <a class="logo nasa-logo-retina" href="index" title="Mona Media" rel="Trang chủ">
               <img src="//noithat-nhadep.monamedia.net/wp-content/uploads/2024/04/1-e1713930644851.png"
                    alt="Mona Media"
                    class="header_logo"
                    srcset="//noithat-nhadep.monamedia.net/wp-content/uploads/2024/04/1-e1713930644851.png 1x,
                          //noithat-nhadep.monamedia.net/wp-content/uploads/2024/04/1-e1713930644851.png 2x">
-            </a>
-          </div></li>
+              </a>
+            </div>
+          </li>
           <li class="Home"><a href="index">Trang chủ</a></li>
           <li class="Shop"><a href="shop.jsp">Cửa hàng</a></li>
           <li class="AboutUs"><a href="About_us.jsp">Thông tin</a></li>

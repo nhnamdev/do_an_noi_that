@@ -280,49 +280,7 @@
             </div>
         </div>
     </div>
-    <div class="footer">
-        <div class="container">
-            <div class="profile">
-                <h2 class="title">Thông tin</h2>
-                <div class="content">Cửa hàng nội thất HTĐ của chúng tôi mang đến nhiều sản phẩm chất lượng,
-                    từ sofa, bàn ghế đến decor độc đáo. Chúng tôi cam kết giúp bạn tạo không gian sống tiện
-                    nghi và phong cách. Hãy cùng làm mới ngôi nhà của bạn!
-                </div>
-            </div>
-            <div class="link">
-                <h2 class="title">Liên kết</h2>
-                <div class="link_href">
-                    <ul class="content">
-                        <li class="active propClone"><a href="index.jsp">Trang chủ</a></li>
-                        <li class="propClone"><a href="shop.jsp">Cửa hàng</a></li>
-                        <li class="propClone"><a href="About_us.jsp">Thông tin</a></li>
-                        <li class="propClone"><a href="contact.jsp">Liên hệ</a></li>
-                    </ul>
-                </div>
-            </div>
-            <div class="help">
-                <h2 class="title">Hỗ trợ</h2>
-                <div class="link_href">
-                    <ul class="content">
-                        <li class="active propClone"><a href="checkout.jsp">Thanh Toán</a></li>
-                        <li class="propClone"><a href="returnProduct.jsp">Đổi/Trả</a></li>
-                        <li class="propClone"><a href="privacy_policy.jsp">Chính sách bảo
-                            mật</a></li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="footer_bottom">
-        <div class="container">
-            <div class="icon">
-                <ul class="icons">
-                    <li><i class="fa fa-copyright"></i></li>
-                </ul>
-            </div>
-            <div class="content"> Bản quyền của nhóm 6 - bộ môn Lập trình Web</div>
-        </div>
-    </div>
+    <jsp:include page="components/footer.jsp" />
 </div>
 </body>
 

@@ -95,7 +95,7 @@
       </div>
     </div>
   </div>
-  <div class="slider2">
+  <div class="slider2" style="height: 100%">
     <ol style="--length: 5" role="list">
       <li style="--i: 1">
         <h3>HẢI ĐỨC THÔNG</h3>
@@ -154,90 +154,7 @@
     </ol>
 
   </div>
-  <div class="content_section_2">
-    <div class="container">
-      <div class="item">
-        <div class="card">
-          <i class="fa fa-truck"></i>
-        </div>
-        <div class="content">
-          <div class="free_delivery">
-            <h2 class="title">Miễn Phí Giao Hàng</h2>
-            <div class="content_div">Đối với các đơn hàng có giá trị trên 2.000K sẽ được miễn phí phí
-              vận
-              chuyển
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="item">
-        <div class="card">
-          <i class="fa fa-rotate-left"></i>
-        </div>
-        <div class="content">
-          <div class="return">
-            <h2 class="title">Hỗ Trợ Đổi/Trả Hàng</h2>
-            <div class="content_div">Nếu hàng hóa có vấn đề sẽ hỗ trợ đổi trả trong vòng 90 ngày</div>
-          </div>
-        </div>
-      </div>
-      <div class="item">
-        <div class="card">
-          <i class="fa fa-credit-card"></i>
-        </div>
-        <div class="content">
-          <div class="secure_payment">
-            <h2 class="title">Thanh Toán An Toàn</h2>
-            <div class="content_div">100% thanh toán an toàn và bảo mật thông tin khách hàng</div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="footer">
-    <div class="container">
-      <div class="profile">
-        <div class="title">Thông tin</div>
-        <div class="content">Cửa hàng nội thất HTĐ của chúng tôi mang đến nhiều sản phẩm chất lượng,
-          từ sofa, bàn ghế đến decor độc đáo. Chúng tôi cam kết giúp bạn tạo không gian sống tiện
-          nghi và phong cách. Hãy cùng làm mới ngôi nhà của bạn!
-        </div>
-      </div>
-      <div class="link">
-        <div class="title">Liên kết</div>
-        <div class="link_href">
-          <ul class="content">
-            <li class="active propClone"><a href="index.jsp">Trang chủ</a></li>
-            <li class="propClone"><a href="shop.jsp">Cửa hàng</a></li>
-            <li class="propClone"><a href="About_us.jsp">Thông tin</a></li>
-            <li class="propClone"><a href="contact.jsp">Liên hệ</a></li>
-          </ul>
-        </div>
-      </div>
-      <div class="help">
-        <div class="title">Hỗ trợ</div>
-        <div class="link_href">
-          <ul class="content">
-            <li class="active propClone"><a href="checkout.jsp">Thanh Toán</a></li>
-            <li class="propClone"><a href="returnProduct.jsp">Đổi/Trả</a></li>
-            <li class="propClone"><a href="privacy_policy.jsp">Chính sách bảo
-              mật</a>
-            </li>
-          </ul>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="footer_bottom">
-    <div class="container">
-      <div class="icon">
-        <ul class="icons">
-          <li><i class="fa fa-copyright"></i></li>
-        </ul>
-      </div>
-      <div class="content"> Bản quyền của nhóm 6 - bộ môn Lập trình Web</div>
-    </div>
-  </div>
+  <jsp:include page="components/footer.jsp" />
 </div>
 </body>
 

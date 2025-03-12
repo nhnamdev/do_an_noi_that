@@ -150,49 +150,7 @@
       </div>
     </div>
   </div>
-  <div class="footer">
-    <div class="container">
-      <div class="profile">
-        <div class="title">Thông tin</div>
-        <div class="content">Cửa hàng nội thất HTĐ của chúng tôi mang đến nhiều sản phẩm chất lượng,
-          từ sofa, bàn ghế đến decor độc đáo. Chúng tôi cam kết giúp bạn tạo không gian sống tiện
-          nghi và phong cách. Hãy cùng làm mới ngôi nhà của bạn!
-        </div>
-      </div>
-      <div class="link">
-        <div class="title">Liên kết</div>
-        <div class="link_href">
-          <ul class="content">
-            <li class="active propClone"><a href="../page_Home/index.html">Trang chủ</a></li>
-            <li class="propClone"><a href="../page_Shop/shop.html">Cửa hàng</a></li>
-            <li class="propClone"><a href="../page_AboutUs/About_us.html">Thông tin</a></li>
-            <li class="propClone"><a href="../page_ContactUs/contact.html">Liên hệ</a></li>
-          </ul>
-        </div>
-      </div>
-      <div class="help">
-        <div class="title">Hỗ trợ</div>
-        <div class="link_href">
-          <ul class="content">
-            <li class="active propClone"><a href="../page_CheckOut/checkout.html">Thanh Toán</a></li>
-            <li class="propClone"><a href="../page_ReturnProduct/returnProduct.html">Đổi/Trả</a></li>
-            <li class="propClone"><a href="../page_PrivacyPolicy/privacy_policy.html">Chính sách bảo
-              mật</a></li>
-          </ul>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="footer_bottom">
-    <div class="container">
-      <div class="icon">
-        <ul class="icons">
-          <li><i class="fa fa-copyright"></i></li>
-        </ul>
-      </div>
-      <div class="content"> Bản quyền của nhóm 6 - bộ môn Lập trình Web</div>
-    </div>
-  </div>
+  <jsp:include page="components/footer.jsp" />
 </div>
 </body>
 </html>
