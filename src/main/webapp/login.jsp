@@ -14,10 +14,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Đăng ký</title>
+    <title>Đăng nhập</title>
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
-    <link rel="stylesheet" href="css/my_account.css">
+    <link rel="stylesheet" href="css/login.css">
     <link rel="stylesheet" href="css/style.css">
 </head>
 
@@ -47,10 +47,11 @@
             </div>
         </div>
     </div>
-    <div class="slider2">
+    <div class="slider2" style="background-color: #fff; height: 590px">
         <div class="login">
-            <form action="login" method="post">
-                <h2>Đăng nhập</h2>
+            <h2 style="margin-left: 120px;">Đăng nhập</h2>
+            <form action="login" method="post" style="margin-right: 32px;width: 426px;border: 2px dashed #cccccc;padding-left: 30px; padding-bottom: 20px">
+
                 <label>Tên đăng nhập</label>
                 <input class="dangnhap-matkhau" name="username" type="text">
                 <label>Mật khẩu</label>
@@ -63,12 +64,13 @@
                     </label>
                 </div>
 
-                <button type="submit">Đăng nhập</button>
-                <div class="lostpass">
-                    <a href="my_account_lostpass.jsp">Quên mật khẩu?</a>
-                    <a href="register.jsp">Đăng ký tài khoản?</a>
-                </div>
+                <button type="submit" style="margin-left: 54px;">Đăng nhập</button>
+
             </form>
+            <div class="lostpass" style="margin-left: 48px;">
+                <a href="my_account_lostpass.jsp">Quên mật khẩu?</a>
+                <a href="register.jsp">Đăng ký tài khoản?</a>
+            </div>
         </div>
 
 
@@ -99,53 +101,15 @@
 
         </div>
     </div>
-    <script>
-        function togglePassword() {
-            const passwordField = document.getElementById("password");
-            passwordField.type = passwordField.type === "password" ? "text" : "password";
-        }
-    </script>
-</div>
-<div class="content_section_2">
-    <div class="container">
-        <div class="item">
-            <div class="card">
-                <i class="fa fa-truck"></i>
-            </div>
-            <div class="content">
-                <div class="free_delivery">
-                    <h2 class="title">Miễn Phí Giao Hàng</h2>
-                    <div class="content_div">Đối với các đơn hàng có giá trị trên 2.000K sẽ được miễn phí phí vận
-                        chuyển
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="item">
-            <div class="card">
-                <i class="fa fa-rotate-left"></i>
-            </div>
-            <div class="content">
-                <div class="return">
-                    <h2 class="title">Hỗ Trợ Đổi/Trả Hàng</h2>
-                    <div class="content_div">Nếu hàng hóa có vấn đề sẽ hỗ trợ đổi trả trong vòng 90 ngày</div>
-                </div>
-            </div>
-        </div>
-        <div class="item">
-            <div class="card">
-                <i class="fa fa-credit-card"></i>
-            </div>
-            <div class="content">
-                <div class="secure_payment">
-                    <h2 class="title">Thanh Toán An Toàn</h2>
-                    <div class="content_div">100% thanh toán an toàn và bảo mật thông tin khách hàng</div>
-                </div>
-            </div>
-        </div>
-    </div>
+
 </div>
 <jsp:include page="components/footer.jsp" />
+<script>
+    function togglePassword() {
+        const passwordField = document.getElementById("password");
+        passwordField.type = passwordField.type === "password" ? "text" : "password";
+    }
+</script>
 </body>
 
 </html>

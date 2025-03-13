@@ -197,7 +197,7 @@
                     <div class="title">Sản phẩm liên quan</div>
                     <div class="section-products">
                         <div class="container">
-                            <div class="row">
+                            <div class="row" style="margin-left: 0">
                                 <!-- Single Product -->
                                 <div class="col1">
                                     <div id="product-1" class="single-product">
