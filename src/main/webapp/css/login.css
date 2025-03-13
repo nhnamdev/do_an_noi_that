@@ -449,16 +449,19 @@ body, html {
 }
 
 .slider2 .login button {
+    cursor: pointer;
+    color: #ffffff;
+    border: 1px solid;
+    background-color: #6bae0e;
     font-size: 15px;
     border-radius: 10px;
     width: 64%;
     height: 50px;
     margin-top: 2rem;
-
 }
 
 .slider2 .login button:hover {
-    background-color: #cccccc;
+    background-color: #74bf0a;
 }
 
 .slider2 .login a {
