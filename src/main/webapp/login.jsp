@@ -48,9 +48,9 @@
         </div>
     </div>
     <div class="slider2" style="background-color: #fff; height: 590px">
-        <div class="login">
+        <div class="login" style="margin: auto; width: 460px;">
             <h2 style="margin-left: 120px;">Đăng nhập</h2>
-            <form action="login" method="post" style="margin-right: 32px;width: 426px;border: 2px dashed #cccccc;padding-left: 30px; padding-bottom: 20px">
+            <form action="login" method="post" style="margin-right: 32px;width: 426px;border: 2px dashed #6bae0e;padding-left: 30px; padding-bottom: 20px">
 
                 <label>Tên đăng nhập</label>
                 <input class="dangnhap-matkhau" name="username" type="text">

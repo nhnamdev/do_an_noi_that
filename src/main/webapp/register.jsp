@@ -41,8 +41,9 @@
       </div>
     </div>
   </div>
-  <div class="slider2">
-    <div class="register">
+  <div class="slider2" style="background-color: #fff; height: 910px">
+    <div class="register" style="margin: 64px auto auto auto;border: 2px dashed #6bae0e; height: 646px;">
+      <h3 style="text-align: center; ">Đăng Ký</h3>
       <div class="login">
         <%
           String success = (String) request.getAttribute("success");

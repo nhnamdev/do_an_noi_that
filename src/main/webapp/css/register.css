@@ -182,8 +182,8 @@ body, html {
 
 .slider2 .login {
     width: 608px;
-    height: 603px;
-    margin-left: 38%;
+    height: 646px;
+    margin-left: 4%;
     display: inline-block;
 
 }
@@ -233,7 +233,7 @@ body, html {
 
 
 .slider2 .register {
-    width: 608px;
+    width: 390px;
     height: 603px;
     margin-top: 30px;
     margin-right: 15%;
