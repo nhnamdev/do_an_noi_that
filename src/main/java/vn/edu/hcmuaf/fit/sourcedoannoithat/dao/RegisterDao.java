@@ -13,7 +13,7 @@ public class RegisterDao {
     PreparedStatement ps = null;
     ResultSet rs = null;
     public boolean registerUser(RegisterModel user) {
-        String query = "INSERT INTO profile_client (username, passw,name,birthday,role,phoneNumber,address,email) VALUES( ?, ?, ?, ?,0,?,?,?)";
+        String query = "INSERT INTO profile_client (username, password,name,birthday,role,phoneNumber,address,email) VALUES( ?, ?, ?, ?,0,?,?,?)";
 
         try {
             connection = new DBConnect().getConnection();
