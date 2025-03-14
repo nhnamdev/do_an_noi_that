@@ -14,7 +14,7 @@ public class LoginDao {
     ResultSet rs = null;
 
     public boolean checkLogin(RegisterModel login) {
-        String query = "SELECT passw FROM profile_client WHERE username = ?";
+        String query = "SELECT password FROM profile_client WHERE username = ?";
 
         try  {
             connection = new DBConnect().getConnection();
@@ -22,7 +22,7 @@ public class LoginDao {
             ps.setString(1, login.getUsername());
             ResultSet resultSet = ps.executeQuery();
             if (resultSet.next()) {
-                String hashedPasswordFromDB = resultSet.getString("passw");
+                String hashedPasswordFromDB = resultSet.getString("password");
                 return BCrypt.checkpw(login.getPassword(), hashedPasswordFromDB);
             }
             return false;
