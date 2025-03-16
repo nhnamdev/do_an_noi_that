@@ -10,7 +10,7 @@
   <div class="header">
     <div class="container">
       <div class="left">
-        <ul class="navbar-left">
+        <ul class="navbar-left" style="height: 50px">
           <li>
             <div class="order-1 logo-wrapper">
               <a class="logo nasa-logo-retina" href="index" title="Mona Media" rel="Trang chủ">

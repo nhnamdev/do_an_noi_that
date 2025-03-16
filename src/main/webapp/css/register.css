@@ -244,11 +244,15 @@ body, html {
 
 
 .slider2 .register button {
+    cursor: pointer;
+    color: #ffffff;
+    border: 1px solid;
+    background-color: #6bae0e;
     font-size: 15px;
     border-radius: 10px;
-    width: 61%;
+    width: 58%;
     height: 50px;
-    margin-top: 1rem;
+    margin-top: 2rem;
 }
 /* Update quên mật khẩu và đăng ký*/
 .slider2 .login .lostpass{
@@ -583,4 +587,9 @@ body, html {
 }
 
 
+.a_dangnhap{
+    color: var(--color-primary);
+    position: relative;
+    right: 10px;
 
+}
