@@ -68,8 +68,8 @@
 
             </form>
             <div class="lostpass" style="margin-left: 48px;">
-                <a href="my_account_lostpass.jsp">Quên mật khẩu?</a>
-                <a href="register.jsp">Đăng ký tài khoản?</a>
+                <a class="a_quenmatkhau" href="my_account_lostpass.jsp">Quên mật khẩu?</a>
+                <a class="a_dangki" href="register.jsp">Đăng ký tài khoản?</a>
             </div>
         </div>
 

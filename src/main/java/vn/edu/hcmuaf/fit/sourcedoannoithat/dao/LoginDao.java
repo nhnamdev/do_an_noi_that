@@ -11,7 +11,7 @@ import java.sql.ResultSet;
 public class LoginDao {
     Connection connection = null;
     PreparedStatement ps = null;
-    ResultSet rs = null;
+
 
     public boolean checkLogin(RegisterModel login) {
         String query = "SELECT password FROM profile_client WHERE username = ?";
