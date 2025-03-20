@@ -1,7 +1,5 @@
 <%@ page import="vn.edu.hcmuaf.fit.sourcedoannoithat.dao.model.SProduct" %>
 <%@ page import="vn.edu.hcmuaf.fit.sourcedoannoithat.dao.SProductDao" %>
-<%@ page import="java.util.List" %>
-<%@ page import="java.util.ArrayList" %>
 <%@ page import="vn.edu.hcmuaf.fit.sourcedoannoithat.dao.model.Product" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
@@ -30,7 +28,7 @@
 
 <body>
 <div class="singleProduct">
-    <jsp:include page="/components/header.jsp" />
+    <jsp:include page="/components/header.jsp"/>
     <script src="js/showSearch.js"></script>
     <script src="js/showHeader.js"></script>
     <script src="js/actionOfProfile.js"></script>
@@ -280,7 +278,7 @@
             </div>
         </div>
     </div>
-    <jsp:include page="components/footer.jsp" />
+    <jsp:include page="components/footer.jsp"/>
 </div>
 </body>
 

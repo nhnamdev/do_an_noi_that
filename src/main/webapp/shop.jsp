@@ -1,290 +1,403 @@
-<%@ page import="vn.edu.hcmuaf.fit.sourcedoannoithat.dao.model.ProductShop" %>
-<%@ page import="vn.edu.hcmuaf.fit.sourcedoannoithat.dao.SearchDao" %>
-<%@ page import="java.util.List" %>
-<%@ page import="vn.edu.hcmuaf.fit.sourcedoannoithat.dao.model.Product" %>
-<%@ page import="java.util.ArrayList" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ page import="java.util.stream.IntStream" %><%--
-  Created by IntelliJ IDEA.
-  User: homin
-  Date: 1/8/2025
-  Time: 11:53 AM
-  To change this template use File | Settings | File Templates.
---%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%
-    List<ProductShop> products = null;
-    SearchDao productDAO = new SearchDao();
-    products = productDAO.getAllProducts();
-    // Phân trang
-    int totalProducts = products.size();
-    int itemsPerPage = 8; // 8 sản phẩm mỗi trang
-    int pageCount = (int) Math.ceil(products.size() / (double) itemsPerPage);
-    int currentPage = request.getParameter("page") != null ? Integer.parseInt(request.getParameter("page")) : 1;
-    if (currentPage < 1) {
-        currentPage = 1;
-    } else if (currentPage > pageCount) {
-        currentPage = pageCount;
-    }
-    int startItem = (currentPage - 1) * itemsPerPage;
-    int endItem = Math.min(startItem + itemsPerPage, products.size());
-    List<ProductShop> paginatedProducts = products.subList(startItem, endItem);
-%>
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="f" uri="http://java.sun.com/jsp/jstl/fmt" %>
+
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Đồ án web</title>
+    <title>Cửa hàng</title>
     <link rel="stylesheet" href="css/shop_styles.css">
-    <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
-
 </head>
-
 <body>
-<div class="home">
-    <jsp:include page="/components/header.jsp" />
-    <script src="js/showSearch.js"></script>
-    <script src="js/showHeader.js"></script>
-    <script src="js/actionOfProfile.js"></script>
-    <div class="overlay" id="overlay"></div>
-    <div class="info-box" id="infoBox">
+<div class="wrapper">
+    <jsp:include page="/components/header.jsp"/>
+    <div id="content">
         <div class="container">
-            <h3>Thông tin giỏ hàng</h3>
-            <div class="listProduct">
-                <c:choose>
-                    <c:when test="${not empty sessionScope.cartProducts}">
-                        <c:forEach var="item" items="${sessionScope.cartProducts}">
-                            <div class="row1">
-                                <div class="alpha">
-                                    <img src="${item.image}" alt="">
-                                </div>
-                                <div class="omega">
-                                    <div class="name">${item.name}</div>
-                                    <div class="sumPrice">
-                                        <div class="quantity">${item.quantity} X</div>
-                                        <div class="price">${item.price * item.quantity}đ</div>
+            <div class="overlay" id="overlay"></div>
+            <div class="info-box" id="infoBox">
+                <div class="container">
+                    <h3>Thông tin giỏ hàng</h3>
+                    <div class="listProduct">
+                        <c:choose>
+                            <c:when test="${not empty sessionScope.cartProducts}">
+                                <c:forEach var="item" items="${sessionScope.cartProducts}">
+                                    <div class="row1">
+                                        <div class="alpha">
+                                            <img src="${item.image}" alt="">
+                                        </div>
+                                        <div class="omega">
+                                            <div class="name">${item.name}</div>
+                                            <div class="sumPrice">
+                                                <div class="quantity">${item.quantity} X</div>
+                                                <div class="price">${item.price * item.quantity}đ</div>
+                                            </div>
+                                        </div>
+                                        <div class="beta">
+                                            <button class="close-button">
+                                                <i class="fa fa-times-circle"></i>
+                                            </button>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="beta">
-                                    <button class="close-button">
-                                        <i class="fa fa-times-circle"></i>
-                                    </button>
-                                </div>
-                            </div>
-                        </c:forEach>
-                    </c:when>
-                    <c:otherwise>
-                        <div class="empty-cart">Giỏ hàng của bạn đang trống.</div>
-                    </c:otherwise>
-                </c:choose>
-            </div>
-            <div class="totalPrice">
-                <div class="title">Tổng tiền</div>
-                <div class="price">
-                    <%
-                        double totalPrice = 0;
-                        List<Product> cartProducts = (List<Product>) session.getAttribute("cartProducts");
-                        if (cartProducts == null) {
-                            cartProducts = new ArrayList<Product>();
-                        }
-                        for (Product item : cartProducts) {
-                            totalPrice += item.getPrice() * item.getQuantity();
-                        }
-
-                    %>
-                    <%= totalPrice %>đ
-                </div>
-            </div>
-            <div class="other_choose">
-                <button class="view_cart" onclick="window.location.href='cart.jsp'">Giỏ hàng</button>
-                <button class="check_out" onclick="window.location.href='checkout.jsp'">Thanh toán</button>
-            </div>
-        </div>
-    </div>
-    <script src="js/showCart.js"></script>
-    <div class="navigation_titlePage">
-        <div class="container">
-            <div class="alpha">
-                <img src="img/background.jpg" alt="">
-            </div>
-            <div class="omega">
-                <h1 class="title">Cửa hàng</h1>
-                <div class="path">
-                    <div class="home">Trang chủ</div>
-                    <div class="icon">
-                        <ul class="icons">
-                            <li><i class="fa fa-chevron-right"></i></li>
-                        </ul>
+                                </c:forEach>
+                            </c:when>
+                            <c:otherwise>
+                                <div class="empty-cart">Giỏ hàng của bạn đang trống.</div>
+                            </c:otherwise>
+                        </c:choose>
                     </div>
-                    <div class="contact">Cửa hàng</div>
+                    <div class="totalPrice">
+                        <div class="title">Tổng tiền</div>
+                        <div class="price">
+                            <%--                    <%--%>
+                            <%--                        double totalPrice = 0;--%>
+                            <%--                        List<Product> cartProducts = (List<Product>) session.getAttribute("cartProducts");--%>
+                            <%--                        if (cartProducts == null) {--%>
+                            <%--                            cartProducts = new ArrayList<Product>();--%>
+                            <%--                        }--%>
+                            <%--                        for (Product item : cartProducts) {--%>
+                            <%--                            totalPrice += item.getPrice() * item.getQuantity();--%>
+                            <%--                        }--%>
+
+                            <%--                    %>--%>
+                            <%--                    <%= totalPrice %>đ--%>
+                        </div>
+                    </div>
+                    <div class="other_choose">
+                        <button class="view_cart" onclick="window.location.href='cart.jsp'">Giỏ hàng</button>
+                        <button class="check_out" onclick="window.location.href='checkout.jsp'">Thanh toán</button>
+                    </div>
                 </div>
             </div>
-        </div>
-    </div>
-    <div class="content_section_1">
-        <div class="sub_navbar">
-            <div class="container">
-                <div class="sub_nav_left">
-                    <span class="filter_text"></span>
+            <div class="content_section_1">
+                <div class="breadcrumb-wrapper">
+                    <div class="breadcrumb">
+                        <div class="container">
+                            <ul>
+                                <li><a href="#">Trang chủ</a></li>
+                                <li><i class="fas fa-angle-right"></i></li>
+                                <li>Tất cả sản phẩm</li>
+                            </ul>
+                        </div>
+                    </div>
                 </div>
-            </div>
-        </div>
-
-        <div class="product-list">
-
-            <div class="container-fluid">
-                <div class="row">
-                    <%
-                        if (products != null && !products.isEmpty()) {
-                            for (ProductShop product : paginatedProducts) {
-                    %>
-                    <div class="col-sm-3 p-3 col-md-3">
-                        <div class="product-block">
-                            <div class="product-tumb">
-                                <a href="SProduct.jsp?id=<%= product.getId() %>">
-                                    <img src="<%= product.getImg() %>" alt="">
-                                </a>
+                <div class="sort-feature">
+                    <div class="sort-dropdown">
+                        <div class="sort-btn">
+                            Sắp xếp theo <span class="arrow-down"></span>
+                        </div>
+                        <div class="sort-dropdown-content">
+                            <a href="#" class="active">Mặc định</a>
+                            <a href="#">Phổ biến nhất</a>
+                            <a href="#">Mới nhất</a>
+                            <a href="#">Giá: Tăng dần</a>
+                            <a href="#">Giá: Giảm dần</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="shop-container">
+                    <!-- Sidebar-->
+                    <div class="sidebar">
+                        <div class="filter-box">
+                            <h3>Danh mục sản phẩm</h3>
+                            <ul class="category-list">
+                                <li>
+                                    <a href="">GIƯỜNG NGỦ</a>
+                                </li>
+                                <li>
+                                    <a href="">BÀN GHẾ</a>
+                                    <ul class="subcategory">
+                                        <li><a href="">Bàn ăn</a></li>
+                                        <li><a href="">Bàn phòng khách</a></li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <a href="">TỦ</a>
+                                    <ul class="subcategory">
+                                        <li><a href="">Tủ quần áo</a></li>
+                                        <li><a href="">Tủ sách</a></li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <a href="">ĐÈN</a>
+                                    <ul class="subcategory">
+                                        <li><a href="">Đèn trần</a></li>
+                                        <li><a href="">Đèn bàn</a></li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="filter-box">
+                            <h3>Giá</h3>
+                            <div class="price-filter">
+                                <div class="price-range">
+                                    <input type="range" min="0" max="10000000" step="100000" id="priceRange">
+                                </div>
+                                <div class="price-inputs">
+                                    <input type="text" placeholder="Từ" id="minPrice">
+                                    <span>-</span>
+                                    <input type="text" placeholder="Đến" id="maxPrice">
+                                </div>
+                                <button class="apply-price" id="applyPriceFilter">Áp dụng</button>
                             </div>
-                            <div class="product-detail">
-                                <h4>
-                                    <a href="SProduct.jsp?id=<%= product.getId() %>"><%= product.getName() %>
-                                    </a>
-                                </h4>
-                                <div class="product-bottom_detail">
-                                    <div class="price">
-                                        <span class="discount-price"><%= product.getPrice() %></span>
+                        </div>
+                    </div>
+                    <!-- Danh sách sản phẩm -->
+                    <div class="product-list">
+                        <div class="container-fluid">
+                            <div class="row">
+                                <div class="col-sm-3 p-3 col-md-3">
+                                    <div class="product-block" data-product-id="1">
+                                        <div class="product-tumb">
+                                            <span class="discount-percent">-5%</span>
+                                            <a href="">
+                                                <img src="assets_duc/img/sofa-don-vai-1.png" alt="Sofa đơn vải 1">
+                                            </a>
+                                            <span class="favorite-product" title="Thêm vào yêu thích">
+                                                <i class="fa-regular fa-heart"></i>
+                                            </span>
+                                        </div>
+                                        <div class="product-detail">
+                                            <div class="product-category">Sofa</div>
+                                            <h4>
+                                                <a href="">Sofa đơn vải cao cấp</a>
+                                            </h4>
+                                            <div class="product-bottom_detail">
+                                                <div class="price">
+                                                    <span class="original-price">600.000đ</span>
+                                                    <span class="discount-price">500.000đ</span>
+                                                </div>
+                                                <div class="product-actions">
+                                                    <button class="add-to-cart-btn">
+                                                        <i class="fa fa-shopping-cart"></i> Thêm vào giỏ
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
-                                    <div class="product-actions">
-                                        <button class="favourite-btn" data-product-id="${product.id}" onclick="addToFavorites('<%= product.getId() %>')">
-                                            ❤️
-                                        </button>
+                                </div>
+                                <div class="col-sm-3 p-3 col-md-3">
+                                    <div class="product-block" data-product-id="1">
+                                        <div class="product-tumb">
+                                            <span class="discount-percent">-5%</span>
+                                            <a href="">
+                                                <img src="assets_duc/img/sofa-don-vai-1.png" alt="Sofa đơn vải 1">
+                                            </a>
+                                            <span class="favorite-product" title="Thêm vào yêu thích">
+                                                <i class="fa-regular fa-heart"></i>
+                                            </span>
+                                        </div>
+                                        <div class="product-detail">
+                                            <div class="product-category">Sofa</div>
+                                            <h4>
+                                                <a href="">Sofa đơn vải cao cấp</a>
+                                            </h4>
+                                            <div class="product-bottom_detail">
+                                                <div class="price">
+                                                    <span class="original-price">600.000đ</span>
+                                                    <span class="discount-price">500.000đ</span>
+                                                </div>
+                                                <div class="product-actions">
+                                                    <button class="add-to-cart-btn">
+                                                        <i class="fa fa-shopping-cart"></i> Thêm vào giỏ
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
-                                    <div class="sold-quantity">
-                                        Đã bán: <%= product.getQuantitySold() %>
+                                </div>
+                                <div class="col-sm-3 p-3 col-md-3">
+                                    <div class="product-block" data-product-id="1">
+                                        <div class="product-tumb">
+                                            <span class="discount-percent">-5%</span>
+                                            <a href="">
+                                                <img src="assets_duc/img/sofa-don-vai-1.png" alt="Sofa đơn vải 1">
+                                            </a>
+                                            <span class="favorite-product" title="Thêm vào yêu thích">
+                                                <i class="fa-regular fa-heart"></i>
+                                            </span>
+                                        </div>
+                                        <div class="product-detail">
+                                            <div class="product-category">Sofa</div>
+                                            <h4>
+                                                <a href="">Sofa đơn vải cao cấp</a>
+                                            </h4>
+                                            <div class="product-bottom_detail">
+                                                <div class="price">
+                                                    <span class="original-price">600.000đ</span>
+                                                    <span class="discount-price">500.000đ</span>
+                                                </div>
+                                                <div class="product-actions">
+                                                    <button class="add-to-cart-btn">
+                                                        <i class="fa fa-shopping-cart"></i> Thêm vào giỏ
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-3 p-3 col-md-3">
+                                    <div class="product-block" data-product-id="1">
+                                        <div class="product-tumb">
+                                            <span class="discount-percent">-5%</span>
+                                            <a href="">
+                                                <img src="assets_duc/img/sofa-don-vai-1.png" alt="Sofa đơn vải 1">
+                                            </a>
+                                            <span class="favorite-product" title="Thêm vào yêu thích">
+                                                <i class="fa-regular fa-heart"></i>
+                                            </span>
+                                        </div>
+                                        <div class="product-detail">
+                                            <div class="product-category">Sofa</div>
+                                            <h4>
+                                                <a href="">Sofa đơn vải cao cấp</a>
+                                            </h4>
+                                            <div class="product-bottom_detail">
+                                                <div class="price">
+                                                    <span class="original-price">600.000đ</span>
+                                                    <span class="discount-price">500.000đ</span>
+                                                </div>
+                                                <div class="product-actions">
+                                                    <button class="add-to-cart-btn">
+                                                        <i class="fa fa-shopping-cart"></i> Thêm vào giỏ
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-3 p-3 col-md-3">
+                                    <div class="product-block" data-product-id="1">
+                                        <div class="product-tumb">
+                                            <span class="discount-percent">-5%</span>
+                                            <a href="">
+                                                <img src="assets_duc/img/sofa-don-vai-1.png" alt="Sofa đơn vải 1">
+                                            </a>
+                                            <span class="favorite-product" title="Thêm vào yêu thích">
+                                                <i class="fa-regular fa-heart"></i>
+                                            </span>
+                                        </div>
+                                        <div class="product-detail">
+                                            <div class="product-category">Sofa</div>
+                                            <h4>
+                                                <a href="">Sofa đơn vải cao cấp</a>
+                                            </h4>
+                                            <div class="product-bottom_detail">
+                                                <div class="price">
+                                                    <span class="original-price">600.000đ</span>
+                                                    <span class="discount-price">500.000đ</span>
+                                                </div>
+                                                <div class="product-actions">
+                                                    <button class="add-to-cart-btn">
+                                                        <i class="fa fa-shopping-cart"></i> Thêm vào giỏ
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-3 p-3 col-md-3">
+                                    <div class="product-block" data-product-id="1">
+                                        <div class="product-tumb">
+                                            <span class="discount-percent">-5%</span>
+                                            <a href="">
+                                                <img src="assets_duc/img/sofa-don-vai-1.png" alt="Sofa đơn vải 1">
+                                            </a>
+                                            <span class="favorite-product" title="Thêm vào yêu thích">
+                                                <i class="fa-regular fa-heart"></i>
+                                            </span>
+                                        </div>
+                                        <div class="product-detail">
+                                            <div class="product-category">Sofa</div>
+                                            <h4>
+                                                <a href="">Sofa đơn vải cao cấp</a>
+                                            </h4>
+                                            <div class="product-bottom_detail">
+                                                <div class="price">
+                                                    <span class="original-price">600.000đ</span>
+                                                    <span class="discount-price">500.000đ</span>
+                                                </div>
+                                                <div class="product-actions">
+                                                    <button class="add-to-cart-btn">
+                                                        <i class="fa fa-shopping-cart"></i> Thêm vào giỏ
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-3 p-3 col-md-3">
+                                    <div class="product-block" data-product-id="1">
+                                        <div class="product-tumb">
+                                            <span class="discount-percent">-5%</span>
+                                            <a href="">
+                                                <img src="assets_duc/img/sofa-don-vai-1.png" alt="Sofa đơn vải 1">
+                                            </a>
+                                            <span class="favorite-product" title="Thêm vào yêu thích">
+                                                <i class="fa-regular fa-heart"></i>
+                                            </span>
+                                        </div>
+                                        <div class="product-detail">
+                                            <div class="product-category">Sofa</div>
+                                            <h4>
+                                                <a href="">Sofa đơn vải cao cấp</a>
+                                            </h4>
+                                            <div class="product-bottom_detail">
+                                                <div class="price">
+                                                    <span class="original-price">600.000đ</span>
+                                                    <span class="discount-price">500.000đ</span>
+                                                </div>
+                                                <div class="product-actions">
+                                                    <button class="add-to-cart-btn">
+                                                        <i class="fa fa-shopping-cart"></i> Thêm vào giỏ
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-3 p-3 col-md-3">
+                                    <div class="product-block" data-product-id="1">
+                                        <div class="product-tumb">
+                                            <span class="discount-percent">-5%</span>
+                                            <a href="">
+                                                <img src="assets_duc/img/sofa-don-vai-1.png" alt="Sofa đơn vải 1">
+                                            </a>
+                                            <span class="favorite-product" title="Thêm vào yêu thích">
+                                                <i class="fa-regular fa-heart"></i>
+                                            </span>
+                                        </div>
+                                        <div class="product-detail">
+                                            <div class="product-category">Sofa</div>
+                                            <h4>
+                                                <a href="">Sofa đơn vải cao cấp</a>
+                                            </h4>
+                                            <div class="product-bottom_detail">
+                                                <div class="price">
+                                                    <span class="original-price">600.000đ</span>
+                                                    <span class="discount-price">500.000đ</span>
+                                                </div>
+                                                <div class="product-actions">
+                                                    <button class="add-to-cart-btn">
+                                                        <i class="fa fa-shopping-cart"></i> Thêm vào giỏ
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <%
-                        }
-                    } else {
-                    %>
-                    <p>Không tìm thấy sản phẩm nào.</p>
-                    <%
-                        }
-                    %>
-
                 </div>
             </div>
-            <script>
-                function toggleFavorite(productId) {
-                    // Send AJAX request to server
-                    fetch('favorite?action=toggle&productId=' + productId, {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                        }
-                    })
-                        .then(response => response.json())
-                        .then(data => {
-                            if (data.success) {
-                                // Toggle heart icon color
-                                const heartIcon = document.querySelector(`[data-product-id="${productId}"] .heart-icon`);
-                                if (heartIcon) {
-                                    heartIcon.classList.toggle('active');
-                                }
-                                // Show success message
-                                alert(data.message);
-                            } else {
-                                alert('Please login to add favorites');
-                            }
-                        })
-                        .catch(error => {
-                            console.error('Error:', error);
-                            alert('An error occurred while updating favorites');
-                        });
-                }
-
-                function addToFavorites(productId) {
-                    console.log(productId);
-                    fetch('<%= request.getContextPath() %>/addToFavorites', {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/x-www-form-urlencoded'
-                        },
-                        body: 'productId=' + encodeURIComponent(productId)
-                    })
-                        .then(response => response.json())
-                        .then(data => {
-                            console.log(data);
-                            if (data.success) {
-                                alert('Đã bỏ yêu thích!');
-                            } else {
-                                alert('Đã thêm sản phẩm yêu thích!.');
-                            }
-                        })
-                        .catch(error => console.error('Error:', error));
-                }
-            </script>
-
-            <div class="pagination-container">
-                <ul class="pagination">
-                    <%
-                        if (currentPage > 1) {
-                    %>
-                    <li class="page-item">
-                        <a href="?page=1" class="page-link">Đầu</a>
-                    </li>
-                    <li class="page-item">
-                        <a href="?page=<%= currentPage - 1 %>" class="page-link">Trang trước</a>
-                    </li>
-                    <%
-                        }
-
-                        int displayPages = 2;
-                        int startPage = Math.max(1, currentPage - displayPages);
-                        int endPage = Math.min(pageCount, currentPage + displayPages);
-                        if (startPage > 1) {
-                    %>
-                    <li class="page-item"><span class="page-link">...</span></li>
-                    <%
-                        }
-
-                        for (int p = startPage; p <= endPage; p++) {
-                    %>
-                    <li class="page-item <%= p == currentPage ? "active" : "" %>">
-                        <a href="?page=<%= p %>" class="page-link"><%= p %></a>
-                    </li>
-                    <%
-                        }
-
-                        // Hiển thị dấu ba chấm nếu cần
-                        if (endPage < pageCount) {
-                    %>
-                    <li class="page-item"><span class="page-link">...</span></li>
-                    <%
-                        }
-
-                        if (currentPage < pageCount) {
-                    %>
-                    <li class="page-item">
-                        <a href="?page=<%= currentPage + 1 %>" class="page-link">Trang sau</a>
-                    </li>
-                    <li class="page-item">
-                        <a href="?page=<%= pageCount %>" class="page-link">Cuối</a>
-                    </li>
-                    <%
-                        }
-                    %>
-                </ul>
-            </div>
         </div>
-
-        <jsp:include page="components/footer.jsp" />
+    </div>
+    <jsp:include page="/components/footer.jsp"/>
+</div>
+<script src="js/shop.js"></script>
 </body>
-
 </html>
