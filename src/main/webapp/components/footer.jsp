@@ -94,6 +94,9 @@
     </div>
   </div>
 </footer>
+<!--- ChatBot AI--->
+<script async data-taggo-botid="67dc1e1e248cff85ede211ca" src="https://widget.taggo.chat/v2.js"></script>
+<!--- ChatBot AI--->
 
 </body>
 </html>
