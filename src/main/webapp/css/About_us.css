@@ -717,3 +717,36 @@ body, html {
     color: #333D29;
 }
 
+/*CSSSSSSSSSSSSSSSSSS*/
+.column {
+    padding: 20px;
+    background-color: white;
+    border-radius: 4px;
+
+}
+
+.column-33 {
+    width: 33%;
+}
+
+.column-66 {
+    width: 66%;
+}
+
+.heading {
+    font-size: 24px;
+    margin-bottom: 10px;
+}
+
+.text {
+    font-size: 16px;
+    line-height: 1.6;
+    color: #333;
+}
+
+.banner {
+    height: 350px;
+    background-size: cover;
+    background-position: center;
+    border-radius: 8px;
+}
