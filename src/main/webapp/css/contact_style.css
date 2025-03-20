@@ -9,6 +9,7 @@ body, html {
     margin-right: auto;
     width: 1200px;
 }
+
 #searchForm {
     display: none;
     position: absolute;
@@ -82,9 +83,11 @@ body, html {
             float: left;
             text-decoration: none;
         }
-        span:hover{
+
+        span:hover {
             color: black;
         }
+
         .imageContainer {
             position: relative;
             width: 50px;
@@ -171,6 +174,7 @@ body, html {
     height: 18px;
     border: 2px solid lightgray;
 }
+
 #searchForm {
     display: none;
     position: absolute;
@@ -189,6 +193,7 @@ body, html {
     border: 1px solid #ccc;
     border-radius: 4px;
 }
+
 .info-box {
     position: fixed;
     top: 1px;
@@ -429,44 +434,27 @@ body, html {
 }
 
 .content_section_1 .content .alpha {
-    margin-left: 200px;
-    margin-right: 100px;
+    margin-left: 50px;
+    margin-top: 30px;
+    margin-right: 50px;
+    width: 33%;
 }
 
-.content_section_1 .content .alpha .address {
-    display: flex;
-    margin-bottom: 10px;
-}
 
-.content_section_1 .content .alpha .phone {
-    display: flex;
-    margin-bottom: 30px;
-}
-
-.content_section_1 .content .alpha .workingTime {
+.content_section_1 .content .omega .address {
     display: flex;
 }
 
-.content_section_1 .content .alpha .address ul {
-    list-style-type: none;
-    margin-top: 26px;
-    font-size: 32px;
+.content_section_1 .content .phone {
+    display: flex;
+}
+.content_section_1 .profile-Shop{
+    display: flex;
+    margin-left: 15px;
 }
 
-.content_section_1 .content .alpha .phone ul {
-    list-style-type: none;
-    margin-top: 38px;
-    font-size: 35px;
-}
-
-.content_section_1 .content .alpha .workingTime ul {
-    list-style-type: none;
-    margin-top: 20px;
-    font-size: 28px;
-}
-
-.content_section_1 .alpha .address .title {
-    margin-top: 33px;
+.content_section_1 .address .title {
+    margin-top: 50px;
     margin-left: 30px;
     font-size: 25px;
     font-weight: 600;
@@ -474,13 +462,13 @@ body, html {
     width: 100%;
 }
 
-.content_section_1 .alpha .content {
+.content_section_1 .content {
     font-size: 15px;
     margin-top: 5px;
     font-weight: normal;
 }
 
-.content_section_1 .alpha .phone .title {
+.content_section_1 .omega .phone .title {
     margin-top: 50px;
     margin-left: 35px;
     font-size: 25px;
@@ -489,14 +477,6 @@ body, html {
     width: 100%;
 }
 
-.content_section_1 .alpha .workingTime .title {
-    margin-top: 25px;
-    margin-left: 30px;
-    font-size: 25px;
-    font-weight: 600;
-    height: 70px;
-    width: 100%;
-}
 
 .content_section_1 .omega form {
     display: table-caption;
