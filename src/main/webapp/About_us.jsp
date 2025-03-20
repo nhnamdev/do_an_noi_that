@@ -131,9 +131,10 @@
             TOZ giao hàng rất nhanh. Văn phòng mình cần thi công gấp, vừa gọi điện lúc sáng thì chiều các bạn đã mang hàng đến lắp đặt. Nhân viên nhiệt tình, cẩn thận.
           </blockquote>
           <div class="testimonial-info">
-            <!-- Nếu có ảnh đại diện cho testimonial này, bạn có thêm thẻ img ở đây -->
+
+            <img class="testimonial-img" src="https://noithattoz.com/wp-content/uploads/2020/03/906590_933333016686391_1136874957417962322_o-1-300x300.jpg" alt="Mr. Minh">
             <div>
-              <h3 class="testimonial-name">Mrs. Nga Lê</h3>
+              <h3 class="testimonial-name">Mr. Minh</h3>
               <p class="testimonial-title">HR Manager, Bloomgo</p>
             </div>
           </div>
