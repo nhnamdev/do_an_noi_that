@@ -10,10 +10,10 @@
   <div class="header">
     <div class="container">
       <div class="left">
-        <ul class="navbar-left" style="height: 50px">
+        <ul class="navbar-left" style="height: 50px;padding: 0;">
           <li>
             <div class="order-1 logo-wrapper">
-              <a class="logo nasa-logo-retina" href="index" title="Mona Media" rel="Trang chủ">
+              <a class="logo nasa-logo-retina" href="index" title="Mona Media" rel="Trang chủ" style="margin-left: 80px;">
               <img src="//noithat-nhadep.monamedia.net/wp-content/uploads/2024/04/1-e1713930644851.png"
                    alt="Mona Media"
                    class="header_logo"
@@ -29,7 +29,7 @@
         </ul>
       </div>
       <div class="right">
-        <ul class="navbar-right">
+        <ul class="navbar-right" style="padding: 0">
           <c:if test="${sessionScope.loginModel==null}">
 
             <li class="User">
@@ -56,7 +56,7 @@
             <li class="Shopping"><a href="#"><i class="fa fa-shopping-cart"></i></a></li>
           </c:if>
           <li class="Search">
-            <a href="#" id="searchIcon"><i class="fa fa-search"></i></a>
+            <a href="#" id="searchIcon" style="margin-left: 0"><i class="fa fa-search"></i></a>
             <form action="searchProduct.jsp" method="get" id="searchForm">
               <input id="search" name="search" type="search" placeholder="Tìm kiếm" required>
               <button type="submit" style="display:none;">Search</button>
