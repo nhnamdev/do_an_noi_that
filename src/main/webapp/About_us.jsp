@@ -1,10 +1,4 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: homin
-  Date: 1/8/2025
-  Time: 12:06 PM
-  To change this template use File | Settings | File Templates.
---%>
+
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!DOCTYPE html>
 <html lang="en">
@@ -95,65 +89,69 @@
       </div>
     </div>
   </div>
-  <div class="slider2" style="height: 100%">
-    <ol style="--length: 5" role="list">
-      <li style="--i: 1">
-        <h3>HẢI ĐỨC THÔNG</h3>
-        <p>Thành lập vào tháng 06/2022 như một phần của Đại Học Nông Lâm
-          - một công ty với gần 02 năm kinh nghiệm trong lĩnh
-          vực sản xuất và xuất khẩu nội thất, HTĐ không ngừng
-          phát triển và vươn xa ra thị trường quốc tế như Mỹ, Nhật,
-          Hàn Quốc,... Với sứ mệnh mang đến các <i>sản phẩm 100% sản
-            xuất tại Việt Nam</i>, HTĐ <strong>cam kết</strong> duy trì tiêu chuẩn quốc
-          tế về chất lượng, đảm bảo an toàn sức khỏe với chi phí hợp lý.</p>
-      </li>
-      <li style="--i: 2">
-        <h3>NỘI THẤT</h3>
-        <p>Mỗi sản phẩm của HTĐ không chỉ là đồ nội thất,
-          mà còn là những <strong>câu chuyện</strong>, cảm xúc được <strong>gửi gắm</strong>
-          trong từng chi tiết, với mong muốn truyền tải thông
-          điệp <strong>"trao gửi yêu thương trong từng không gian sống.
-            "</strong> Bằng cách kết hợp giữa tính tiện ích và sự thân thiện
-          với môi trường, HTĐ luôn hướng đến việc tạo ra những sản
-          phẩm mang đậm dấu ấn riêng biệt trong từng không gian sống.</p>
-      </li>
-      <li style="--i: 3">
-        <h3>HƯỚNG ĐẾN GIÁ TRỊ BỀN VỮNG</h3>
-        <p><i>“Tính bền vững”</i> là một khái niệm định nghĩa sự phát triển về
-          mọi mặt nhưng vẫn đảm bảo sự tồn tại phát triển ở trạng thái
-          cân bằng. Mang khái niệm <strong>“bền vững”</strong> vào trong sản phẩm - dịch
-          vụ nội thất là bước đi tiên phong và đầy thách thức mà HTĐ luôn
-          không ngừng nỗ lực nhằm lan toả, truyền cảm hứng về một lối sống
-          tích cực, tiêu dùng bền vững hơn <i>vì một tương lai của hành tinh
-            xanh.</i></p>
-      </li>
-      <li style="--i: 4">
-        <h3>THÂN THIỆN VỚI MÔI TRƯỜNG</h3>
-        <p>HTĐ với xuất phát điểm mong muốn lan tỏa thông điệp
-          <strong>"Sống xanh"</strong>, luôn cam kết rằng mỗi sản phẩm nội thất
-          mang đến cho khách hàng đều bắt nguồn từ nguồn nguyên
-          liệu gỗ <strong>đạt chuẩn FSC</strong> – được khai thác từ các khu rừng
-          có quy trình trồng lại. HTĐ nhận thức rõ rằng, là một
-          doanh nghiệp nói chung và trong lĩnh vực nội thất nói
-          riêng, trách nhiệm với cộng đồng và môi trường xanh là
-          điều cần thiết. Giá trị tích cực này không chỉ là của
-          riêng HTĐ, mà mỗi khách hàng khi sử dụng sản phẩm của
-          HTĐ đều góp phần nhân rộng và duy trì giá trị bền vững
-          này cho tương lai.
-        </p>
-      </li>
-      <li style="--i: 5">
-        <h3>AN TOÀN SỨC KHỎE</h3>
-        <p>
-          Nguyên liệu an toàn, thân thiện với môi trường -
-          Sơn và chất phủ không chứa VOC -
-          Thiết kế thông thoáng, không chứa formaldehyde -
-          Công nghệ chống nấm mốc và vi khuẩn.
-        </p>
-      </li>
-    </ol>
+  <div class="slider2" style="height: 100%; width: 1200px; margin: 0 auto">
 
+      <div class="column column-33">
+        <h3 class="heading"style="margin: 0" >Chào mừng</h3>
+        <p class="text">
+          Chào mừng bạn đến với website của chúng tôi – nơi tự hào cung cấp những sản phẩm nội thất tuyệt đẹp và chất lượng hàng đầu.
+          Chúng tôi tận hưởng việc thể hiện sự sáng tạo và đam mê trong việc tạo ra không gian sống đẹp, tiện nghi và thoải mái cho khách hàng.
+        </p>
+        <p class="text">
+          Chúng tôi cam kết cung cấp cho bạn những sản phẩm chất lượng cao từ những nguyên liệu tốt nhất và công nghệ sản xuất tiên tiến nhất.
+          Từ các bộ sofa êm ái, bàn ăn hiện đại, đèn trang trí sáng tạo đến giường ngủ thoải mái và tủ quần áo thông minh,
+          chúng tôi không ngừng nỗ lực để đáp ứng mọi nhu cầu của bạn.
+        </p>
+      </div>
+      <div class="column column-66">
+        <div class="banner" style="background-image: url('https://noithat-nhadep.monamedia.net/wp-content/uploads/2024/04/slider-home-furniture.jpg');margin-top: 70px;">
+        </div>
+      </div>
   </div>
+  <section class="testimonials">
+    <div class="container">
+      <h2 class="section-title"><span>KHÁCH HÀNG NÓI GÌ VỀ CHÚNG TÔI</span></h2>
+
+      <div class="testimonials-content">
+        <article class="testimonial">
+          <p class="testimonial-text">
+            Là Startup mới đi vào hoạt động, không có nhiều chi phí để setup văn phòng. Nhờ TOZ, Vinafly đã hoàn thiện được khu văn phòng với giá thành siêu hợp lý. Cảm ơn các bạn.
+          </p>
+          <div class="testimonial-info">
+            <img class="testimonial-img" src="https://noithattoz.com/wp-content/uploads/2020/03/906590_933333016686391_1136874957417962322_o-1-300x300.jpg" alt="Mr.Thắng">
+            <div>
+              <h3 class="testimonial-name">Mr.Thắng</h3>
+              <p class="testimonial-title">CEO, Vinafly</p>
+            </div>
+          </div>
+        </article>
+
+        <article class="testimonial">
+          <blockquote class="testimonial-text">
+            TOZ giao hàng rất nhanh. Văn phòng mình cần thi công gấp, vừa gọi điện lúc sáng thì chiều các bạn đã mang hàng đến lắp đặt. Nhân viên nhiệt tình, cẩn thận.
+          </blockquote>
+          <div class="testimonial-info">
+
+            <img class="testimonial-img" src="https://noithattoz.com/wp-content/uploads/2020/03/906590_933333016686391_1136874957417962322_o-1-300x300.jpg" alt="Mr. Minh">
+            <div>
+              <h3 class="testimonial-name">Mr. Minh</h3>
+              <p class="testimonial-title">HR Manager, Bloomgo</p>
+            </div>
+          </div>
+        </article>
+      </div>
+
+      <div class="client-logos">
+        <img src="https://noithattoz.com/wp-content/uploads/2020/03/5s.png" alt="Logo 5s">
+        <img src="https://noithattoz.com/wp-content/uploads/2020/03/blomgo.png" alt="Logo Bloomgo">
+        <img src="https://noithattoz.com/wp-content/uploads/2020/05/logo-dddd.png" alt="Logo DDDD">
+        <img src="https://noithattoz.com/wp-content/uploads/2020/03/vpbank.png" alt="Logo VPBank">
+        <img src="https://noithattoz.com/wp-content/uploads/2020/03/vin.png" alt="Logo Vin">
+        <img src="https://noithattoz.com/wp-content/uploads/2020/03/riki-logo.png" alt="Logo Riki">
+      </div>
+    </div>
+  </section>
+
   <jsp:include page="components/footer.jsp" />
 </div>
 </body>
