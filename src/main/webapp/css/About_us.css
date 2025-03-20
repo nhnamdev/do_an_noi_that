@@ -750,3 +750,82 @@ body, html {
     background-position: center;
     border-radius: 8px;
 }
+
+/* Phần testimonials */
+.testimonials {
+    padding: 30px 0;
+    background-color: #f7f5f4;
+}
+
+.section-title {
+    text-align: center;
+    margin-bottom: 40px;
+    font-size: 2em;
+    text-transform: uppercase;
+    color: #333;
+}
+
+.testimonials-content {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+    margin-bottom: 40px;
+}
+
+.testimonial {
+    background: #fff;
+    padding: 20px;
+    flex: 1 1 400px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.testimonial-text {
+    font-size: 1em;
+    margin-bottom: 20px;
+    color: #555;
+}
+
+.testimonial-info {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.testimonial-img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.testimonial-name {
+    margin: 0;
+    font-size: 1.1em;
+    color: #333;
+}
+
+.testimonial-title {
+    margin: 0;
+    font-size: 0.9em;
+    color: #777;
+}
+
+/* Phần logo khách hàng */
+.client-logos {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    gap: 20px;
+    align-items: center;
+    justify-items: center;
+}
+
+.client-logos img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+}
+
+
+
+
