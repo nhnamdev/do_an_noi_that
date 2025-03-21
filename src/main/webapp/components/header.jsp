@@ -56,7 +56,7 @@
             <li class="Shopping"><a href="#"><i class="fa fa-shopping-cart"></i></a></li>
           </c:if>
           <li class="Search">
-            <a href="#" id="searchIcon" style="margin-left: 0"><i class="fa fa-search"></i></a>
+            <a href="#" id="searchIcon"><i class="fa fa-search"></i></a>
             <form action="searchProduct.jsp" method="get" id="searchForm">
               <input id="search" name="search" type="search" placeholder="Tìm kiếm" required>
               <button type="submit" style="display:none;">Search</button>
