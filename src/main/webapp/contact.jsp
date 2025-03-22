@@ -19,11 +19,13 @@
     <link rel="stylesheet" href="css/contact_style.css">
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css"/>
+    <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js"></script>
 </head>
 
 <body>
 <div class="contactUs">
-    <jsp:include page="/components/header.jsp" />
+    <jsp:include page="/components/header.jsp"/>
     <script src="js/showSearch.js"></script>
     <script src="js/showHeader.js"></script>
     <script src="js/actionOfProfile.js"></script>
@@ -104,39 +106,31 @@
             <div class="content">
                 <div class="alpha">
                     <div class="profileShop">
-                        <div class="address">
-                            <ul class="bottom-icons">
-                                <li><i class="fa fa-compass"></i></li>
-                            </ul>
-                            <div class="title">Địa chỉ
-                                <div class="content">Tòa RD306, Trường Đại học Nông Lâm TP.HCM<br> Khu phố 6, Phường
-                                    Linh
-                                    Trung, TP. Thủ Đức,<br> TP. Hồ Chí Minh
-                                </div>
-                            </div>
-                        </div>
-                        <div class="phone">
-                            <ul class="bottom-icons">
-                                <li><i class="fa fa-mobile"></i></li>
-                            </ul>
-                            <div class="title">Số hotline
-                                <div class="content">Mobile: +(84) 793450529<br>Mobile: +(84) 933454194<br>Mobile:
-                                    +(84)
-                                    327562363
-                                </div>
-                            </div>
-                        </div>
-                        <div class="workingTime">
-                            <ul class="bottom-icons">
-                                <li><i class="fa fa-hourglass-half"></i></li>
-                            </ul>
-                            <div class="title">Thời gian làm việc
-                                <div class="content">Thứ bảy: 12:15 - 14:45</div>
-                            </div>
-                        </div>
+                        <iframe
+                                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3918.2587181495715!2d106.78530537590657!3d10.867916257497754!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31752763da4787b9%3A0x5e4f93c5d6c4da68!2zxJDhuqFpIGjhu41jIE7DtG5nIEzDom0!5e0!3m2!1svi!2s!4v1742479268570!5m2!1svi!2s"
+                                width="100%" height="660"
+                                style="border:0; margin-top: 20px ;margin-left:10px ;margin-bottom: 10px;"
+                                allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade">
+                        </iframe>
                     </div>
                 </div>
                 <div class="omega">
+                    <div class="profile-Shop">
+                        <div class="phone">
+                            <div class="title">Số hotline
+                                <div class="content">Mobile: +(84) 793451527
+                                </div>
+                            </div>
+                        </div>
+                        <div class="address">
+                            <div class="title">Địa chỉ
+                                <div class="content">Trường Đại học Nông Lâm TP.HCM, Phường
+                                    Linh Trung, TP. Hồ Chí Minh
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
                     <form id="contact_form" method="post" action="contact" pix-confirm="hidden_pix_6">
                         <div class="inputName">
                             <label class="fullName">Họ và tên</label>
@@ -204,7 +198,7 @@
             </div>
         </div>
     </div>
-    <jsp:include page="components/footer.jsp" />
+    <jsp:include page="components/footer.jsp"/>
 </div>
 </body>
 

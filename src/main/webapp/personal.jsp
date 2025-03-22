@@ -20,7 +20,7 @@
 <body>
 <div class="personal">
 
-    <jsp:include page="/components/header.jsp" />
+    <jsp:include page="/components/header.jsp"/>
     <script src="js/showSearch.js"></script>
     <script src="js/showHeader.js"></script>
     <script src="js/actionOfProfile.js"></script>
@@ -101,98 +101,111 @@
     </div>
     <div class="content_section">
         <div class="container">
-            <div class="title">
-                <div>Tài khoản của bạn</div>
+            <div class="alpha">
+                <div class="avt">
+                    <img src="img/avt.jpg" alt="">
+                    <div class="welcomeName">
+                        <h5>Welcome<br><strong>${sessionScope.userName}</strong></h5>
+                    </div>
+                </div>
+                <div class="homePage" id="homePage"><h5><i class="fa fa-home"></i>TRANG TÀI KHOẢN</h5></div>
+                <div class="order"><h5><i class="fa fa-box"></i> ĐƠN HÀNG</h5>
+                    <a href="cart.jsp" class="button"></a>
+                </div>
+                <div class="address"><h5><i class="fa fa-location-dot"></i> ĐỊA CHỈ</h5>
+                    <a href="contact.jsp" class="button"></a>
+                </div>
+                <div class="account" id="account"><h5><i class="fa fa-person"></i> TÀI KHOẢN</h5></div>
+                <div class="logOut"><h5><i class="fa fa-right-from-bracket"></i> ĐĂNG XUẤT</h5>
+                    <a href="login.jsp" class="button"></a>
+                </div>
             </div>
-            <div class="line"></div>
-            <div class="container rounded bg-white mt-5 mb-5">
-                <div class="row">
-                    <div class="col-md-3 border-right">
-                        <div class="d-flex flex-column align-items-center text-center p-3 py-5">
-                            <div class="imageContainer">
-                                <img id="image" src="img/avt.jpg" alt="">
-                                <div class="overlayCamera">
-                                    <i class="fa fa-camera" id="uploadIcon"></i>
+            <div class="omega">
+                <div class="container rounded bg-white mt-5 mb-5">
+                    <div class="row" style="display:none" id="md5Section">
+                        <div class="col-md-5 border-right">
+                            <div class="p-3 py-5">
+                                <div class="d-flex justify-content-between align-items-center mb-3">
+                                    <h2 class="text-right">Cài đặt thông tin</h2>
                                 </div>
-                            </div>
-                            <input type="file" id="fileInputIcon" accept="image/*" style="display: none;">
-                            <script>
-                                const uploadBtnAvt = document.getElementById('uploadIcon');
-                                const fileInputAvt = document.getElementById('fileInputIcon');
-                                const imageAvt = document.getElementById('image');
-                                uploadBtnAvt.addEventListener('click', () => {
-                                    fileInputAvt.click();
-                                });
-                                fileInputAvt.addEventListener('change', (event) => {
-                                    const file = event.target.files[0];
-                                    if (file) {
-                                        const reader = new FileReader();
-                                        reader.onload = function (e) {
-                                            imageAvt.src = e.target.result;
-                                        }
-                                        reader.readAsDataURL(file);
-                                    }
-                                });
-                            </script>
-                            <h3 class="font-weight-bold">${sessionScope.userName}</h3>
-                            <div class="service">
-                                <ul>
-                                    <li>
-                                        <i class="fa-solid fa-shopping-cart"></i>
-                                        <h4>Sản phẩm trong giỏ: <%
-                                            int cartSize = (cartProducts != null) ? cartProducts.size() : 0; // Kiểm tra null và lấy kích thước
-                                        %>
-                                            <%= cartSize %></h4>
-                                    </li>
-
-                                </ul>
+                                <form action="index" method="post">
+                                    <div class="col-md-6 editable">
+                                        <h5 class="labels">Tên khách hàng:</h5>
+                                        <p id="userName">${sessionScope.userName}</p>
+                                        <input type="text" name="userNameInput" id="userNameInput"
+                                               style="display:none;"/>
+                                    </div>
+                                    <div class="col-md-6 editable">
+                                        <h5 class="labels">Ngày sinh:</h5>
+                                        <p id="userBirthday">${sessionScope.userBirthday}</p>
+                                        <input type="text" name="userBirthdayInput" id="userBirthdayInput"
+                                               style="display:none;"/>
+                                    </div>
+                                    <div class="col-md-12 editable">
+                                        <h5 class="labels">Số điện thoại:</h5>
+                                        <p id="userPhone">${sessionScope.userPhone}</p>
+                                        <input type="text" name="userPhoneInput" id="userPhoneInput"
+                                               style="display:none;"/>
+                                    </div>
+                                    <div class="col-md-12 editable">
+                                        <h5 class="labels">Địa chỉ:</h5>
+                                        <p id="userAddress">${sessionScope.userAddress}</p>
+                                        <input type="text" name="userAddressInput" id="userAddressInput"
+                                               style="display:none;"/>
+                                    </div>
+                                    <div class="col-md-12 editable">
+                                        <h5 class="labels">Email:</h5>
+                                        <p id="userEmail">
+                                            <a href="mailto:${sessionScope.userEmail}">
+                                                ${sessionScope.userEmail}
+                                            </a>
+                                        </p>
+                                        <input type="email" name="userEmailInput" id="userEmailInput"
+                                               style="display:none;"/>
+                                    </div>
+                                    <button class="saveBtn" type="submit" style="display:none;">Lưu thông tin</button>
+                                    <button class="editBtn" type="button">Chỉnh sửa</button>
+                                </form>
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-5 border-right">
-                        <div class="p-3 py-5">
-                            <div class="d-flex justify-content-between align-items-center mb-3">
-                                <h2 class="text-right">Cài đặt thông tin</h2>
+                    <div class="homePage" style="display:none" id="homePageSection">
+                        <h5>Xin chào <strong>${sessionScope.userName}</strong>(Không phải
+                            <Strong>${sessionScope.userName}</Strong>? Hãy <u>thoát ra</u> và đăng nhập vào tài khoản
+                            của bạn) </h5>
+                        <div class="content">
+                            <div class="box"><h5><i class="fa fa-box"></i> <br> ĐƠN HÀNG</h5>
+                                <a href="cart.jsp" class="button"></a>
                             </div>
-                            <form action="index" method="post">
-                                <div class="col-md-6 editable">
-                                    <h5 class="labels">Tên khách hàng:</h5>
-                                    <p id="userName">${sessionScope.userName}</p>
-                                    <input type="text" name="userNameInput" id="userNameInput" style="display:none;"/>
-                                </div>
-                                <div class="col-md-6 editable">
-                                    <h5 class="labels">Ngày sinh:</h5>
-                                    <p id="userBirthday">${sessionScope.userBirthday}</p>
-                                    <input type="text" name="userBirthdayInput" id="userBirthdayInput" style="display:none;"/>
-                                </div>
-                                <div class="col-md-12 editable">
-                                    <h5 class="labels">Số điện thoại:</h5>
-                                    <p id="userPhone">${sessionScope.userPhone}</p>
-                                    <input type="text" name="userPhoneInput" id="userPhoneInput" style="display:none;"/>
-                                </div>
-                                <div class="col-md-12 editable">
-                                    <h5 class="labels">Địa chỉ:</h5>
-                                    <p id="userAddress">${sessionScope.userAddress}</p>
-                                    <input type="text" name="userAddressInput" id="userAddressInput" style="display:none;"/>
-                                </div>
-                                <div class="col-md-12 editable">
-                                    <h5 class="labels">Email:</h5>
-                                    <p id="userEmail">
-                                        <a href="mailto:${sessionScope.userEmail}">
-                                            ${sessionScope.userEmail}
-                                        </a>
-                                    </p>
-                                    <input type="email" name="userEmailInput" id="userEmailInput" style="display:none;"/>
-                                </div>
-                                <button class="saveBtn" type="submit" style="display:none;">Lưu thông tin</button>
-                                <button class="editBtn" type="button">Chỉnh sửa</button>
-                            </form>
+                            <div class="box"><h5><i class="fa fa-location-dot"></i> <br> ĐỊA CHỈ</h5>
+                                <a href="contact.jsp" class="button"></a>
+                            </div>
+                            <div class="box" id="account1"><h5><i class="fa fa-person"></i> <br> TÀI KHOẢN</h5>
+                            </div>
+                            <div class="box"><h5><i class="fa fa-right-from-bracket"></i> <br> ĐĂNG XUẤT</h5>
+                                <a href="login.jsp" class="button"></a>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+    <script>
+        document.getElementById("homePage").addEventListener("click", function () {
+            document.getElementById("md5Section").style.display = "none";
+            document.getElementById("homePageSection").style.display = "block";
+        });
+
+        document.getElementById("account").addEventListener("click", function () {
+            document.getElementById("homePageSection").style.display = "none";
+            document.getElementById("md5Section").style.display = "block";
+        });
+        document.getElementById("account1").addEventListener("click", function () {
+            document.getElementById("homePageSection").style.display = "none";
+            document.getElementById("md5Section").style.display = "block";
+        });
+    </script>
     <script>
         document.querySelector('.editBtn').addEventListener('click', function () {
             document.querySelectorAll('.editable').forEach((editable) => {
@@ -224,7 +237,7 @@
         });
     </script>
 
-    <jsp:include page="components/footer.jsp" />
+    <jsp:include page="components/footer.jsp"/>
 </div>
 </body>
 
