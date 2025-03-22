@@ -1,10 +1,4 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: Administrator
-  Date: 11/12/2024
-  Time: 02:57:05 PM
-  To change this template use File | Settings | File Templates.
---%>
+
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix = "c" uri = "http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix = "fmt" uri = "http://java.sun.com/jsp/jstl/fmt" %>
@@ -15,7 +9,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Đăng nhập</title>
-
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
     <link rel="stylesheet" href="css/login.css">
     <link rel="stylesheet" href="css/style.css">
@@ -26,8 +19,6 @@
 <div>
     <jsp:include page="/components/header.jsp" />
     <script src="js/showSearch.js"></script>
-    <script src="js/showHeader.js"></script>
-    <script src="js/actionOfProfile.js"></script>
     <div class="navigation_titlePage">
         <div class="container">
             <div class="alpha">
@@ -51,8 +42,12 @@
         <div class="login" style="margin: auto; width: 460px;">
             <h2 style="margin-left: 120px;">Đăng nhập</h2>
             <form action="login" method="post" style="margin-right: 32px;width: 426px;border: 2px dashed #6bae0e;padding-left: 30px; padding-bottom: 20px">
-
-                <label>Tên đăng nhập</label>
+                <c:if test="${not empty error}">
+                    <div style="color: red; font-weight: bold;">
+                            ${error}
+                    </div>
+                </c:if>
+                <label style="margin-top: 5px ">Tên đăng nhập</label>
                 <input class="dangnhap-matkhau" name="username" type="text">
                 <label>Mật khẩu</label>
                 <input class="dangnhap-matkhau" name="password" id="password" type="password" placeholder="">
@@ -63,42 +58,15 @@
                         <input type="checkbox" onclick="togglePassword()"> Hiện mật khẩu
                     </label>
                 </div>
+                <!-- Google reCAPTCHA -->
+                <div class="g-recaptcha" data-sitekey="6Lek8vsqAAAAAGlMWAnGATelPA7HXTFyfZZaRK1K"></div>
 
                 <button type="submit" style="margin-left: 54px;">Đăng nhập</button>
-
             </form>
             <div class="lostpass" style="margin-left: 48px;">
                 <a class="a_quenmatkhau" href="my_account_lostpass.jsp">Quên mật khẩu?</a>
                 <a class="a_dangki" href="register.jsp">Đăng ký tài khoản?</a>
             </div>
-        </div>
-
-
-
-        <div class="register">
-            <div class="login">
-                <h2>Đăng ký</h2>
-                <label>Địa chỉ email</label>
-                <textarea cols="50" rows="2" required></textarea>
-                <label>Số điện thoại</label>
-                <textarea cols="50" rows="2" required></textarea>
-                <label>Địa chỉ </label>
-                <textarea cols="50" rows="2" required></textarea>
-                <label>Tên đăng nhập</label>
-                <textarea cols="50" rows="2" required></textarea>
-
-                <label>Mật khẩu</label>
-                <textarea cols="50" rows="2" required></textarea>
-                <label>Xác nhận mật khẩu</label>
-                <textarea cols="50" rows="2" required></textarea>
-                <label><input type="checkbox" name="agree" value="yes"> Tôi đồng ý tạo tài khoản</label>
-
-                <div class="button">
-                    <button>Đăng ký</button>
-                </div>
-
-            </div>
-
         </div>
     </div>
 
@@ -110,6 +78,7 @@
         passwordField.type = passwordField.type === "password" ? "text" : "password";
     }
 </script>
+<script src="https://www.google.com/recaptcha/api.js" async defer></script>
 </body>
 
 </html>
