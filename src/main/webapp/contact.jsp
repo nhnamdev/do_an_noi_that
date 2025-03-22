@@ -159,45 +159,6 @@
             </div>
         </div>
     </div>
-    <div class="content_section_2">
-        <div class="container">
-            <div class="item">
-                <div class="card">
-                    <i class="fa fa-truck"></i>
-                </div>
-                <div class="content">
-                    <div class="free_delivery">
-                        <h2 class="title">Miễn Phí Giao Hàng</h2>
-                        <div class="content_div">Đối với các đơn hàng có giá trị trên 2.000K sẽ được miễn phí phí
-                            vận chuyển
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="item">
-                <div class="card">
-                    <i class="fa fa-rotate-left"></i>
-                </div>
-                <div class="content">
-                    <div class="return">
-                        <h2 class="title">Hỗ Trợ Đổi/Trả Hàng</h2>
-                        <div class="content_div">Nếu hàng hóa có vấn đề sẽ hỗ trợ đổi trả trong vòng 90 ngày</div>
-                    </div>
-                </div>
-            </div>
-            <div class="item">
-                <div class="card">
-                    <i class="fa fa-credit-card"></i>
-                </div>
-                <div class="content">
-                    <div class="secure_payment">
-                        <h2 class="title">Thanh Toán An Toàn</h2>
-                        <div class="content_div">100% thanh toán an toàn và bảo mật thông tin khách hàng</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
     <jsp:include page="components/footer.jsp"/>
 </div>
 </body>

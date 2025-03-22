@@ -19,7 +19,6 @@
 <body>
 <div>
   <jsp:include page="/components/header.jsp" />
-  <script src="js/showHeader.js"></script>
   <div class="overlay" id="overlay"></div>
   <script src="js/showCart.js"></script>
   <div class="navigation_titlePage">
