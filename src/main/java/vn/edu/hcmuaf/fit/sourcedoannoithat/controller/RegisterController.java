@@ -14,12 +14,10 @@ import java.io.IOException;
 @WebServlet("/register")
 public class RegisterController extends HttpServlet {
     private RegisterDao registerDao = new RegisterDao();
-
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         // Set character encoding
         request.setCharacterEncoding("UTF-8");
         response.setCharacterEncoding("UTF-8");
-
         try {
             // Lấy thông tin từ form
             String fullName = request.getParameter("full_name");
@@ -43,7 +41,6 @@ public class RegisterController extends HttpServlet {
                 request.getRequestDispatcher("register.jsp").forward(request, response);
                 return;
             }
-
             // Kiểm tra mật khẩu
             if (!password.equals(confirmPassword)) {
                 request.setAttribute("error", "Mật khẩu không khớp!");
@@ -61,6 +58,7 @@ public class RegisterController extends HttpServlet {
             // Tạo model với mật khẩu đã mã hóa
             RegisterModel user = new RegisterModel(fullName, birthDay, email, phoneNumber, address, username, hashedPassword);
             boolean isSuccess = registerDao.registerUser(user);
+
 
 
             if (isSuccess) {
