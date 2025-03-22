@@ -68,6 +68,27 @@ public class RegisterController extends HttpServlet {
             request.getRequestDispatcher("register.jsp").forward(request, response);
         }
     }
+    // ✅ Hàm kiểm tra dữ liệu đầu vào bằng Regex
+    private String validateInput(String fullName, String birthDay, String email, String phoneNumber, String address, String username, String password, String confirmPassword) {
+        Pattern nameRegex = Pattern.compile("^[A-Za-zÀ-Ỹà-ỹ\\s]{2,}$");
+        Pattern birthDateRegex = Pattern.compile("^(0[1-9]|[12][0-9]|3[01])[-/.](0[1-9]|1[0-2])[-/.](19|20)\\d{2}$");
+        Pattern emailRegex = Pattern.compile("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$");
+        Pattern phoneRegex = Pattern.compile("^0\\d{9}$");
+//        Pattern addressRegex = Pattern.compile("^[A-Za-z0-9\\s,.-]{5,}$");
+        Pattern usernameRegex = Pattern.compile("^[a-zA-Z0-9_]{5,20}$");
+        Pattern passwordRegex = Pattern.compile("^(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{6,}$");
 
+        if (!nameRegex.matcher(fullName).matches()) return "Họ và tên không hợp lệ!";
+        if (!birthDateRegex.matcher(birthDay).matches()) return "Ngày sinh phải có định dạng dd/mm/yyyy.";
+        if (!emailRegex.matcher(email).matches()) return "Email không hợp lệ!";
+        if (!phoneRegex.matcher(phoneNumber).matches()) return "Sdt phải có 10 chữ số và bắt đầu bằng 0!";
+        if (!usernameRegex.matcher(username).matches()) return "Tên đăng nhập không hợp lệ!";
+//        if (!usernameRegex.matcher(username).matches()) return "Tên đăng nhập từ 5-20 ký tự, chỉ chứa chữ, số, dấu gạch dưới!";
+        if (!passwordRegex.matcher(password).matches()) return "Mật khẩu không hợp lệ!";
+//        if (!passwordRegex.matcher(password).matches()) return "Mật khẩu phải có ít nhất 6 ký tự, 1 chữ hoa, 1 số, 1 ký tự đặc biệt!";
+        if (!password.equals(confirmPassword)) return "Mật khẩu xác nhận không khớp!";
+
+        return null; // Không có lỗi
+    }
 
 }
