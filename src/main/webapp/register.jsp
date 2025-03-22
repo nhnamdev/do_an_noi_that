@@ -44,7 +44,7 @@
           </div>
         </c:if>
         <form action="register" method="post">
-          <label for="fullname">Họ và tên:</label>
+          <label for="fullname" style="margin-top: 0;">Họ và tên:</label>
           <input type="text" id="fullname" name="full_name" required class="hienthi">
 
           <label for="birthdate">Ngày sinh:</label>
@@ -68,7 +68,7 @@
           <label for="confirm_password">Xác nhận mật khẩu:</label>
           <input type="password" id="confirm_password" name="confirm_password" required class="hienthi">
 
-          <div class="hienmatkhau">
+          <div class="hienmatkhau" style="margin-top: 22px;">
             <input type="checkbox" id="show_password" onclick="togglePassword()">
             <label>Hiện mật khẩu</label>
             <input type="checkbox" id="agree_terms" required>
@@ -86,63 +86,6 @@
     </div>
   </div>
   <script>
-    document.addEventListener("DOMContentLoaded", function () {
-      let form = document.querySelector("form");
-
-      if (form) {
-        form.addEventListener("submit", function (event) {
-          if (!validateForm()) {
-            event.preventDefault(); // ✅ Ngăn chặn form gửi đi
-          }
-        });
-      }
-    });
-    function validateForm() {
-      let isValid = true;
-
-      function getInputValue(id) {
-        let element = document.getElementById(id);
-        return element ? element.value.trim() : "";
-      }
-
-      let fullName = getInputValue("fullname");
-      let birthDate = getInputValue("birthdate");
-      let email = getInputValue("email");
-      let phone = getInputValue("phone");
-      let address = getInputValue("address");
-      let username = getInputValue("username");
-      let password = getInputValue("password");
-      let confirmPassword = getInputValue("confirm_password");
-
-      // Regex kiểm tra
-      let nameRegex = /^[A-Za-zÀ-Ỹà-ỹ\s]{2,}$/;
-      let birthDateRegex = /^(0[1-9]|[12][0-9]|3[01])[-/.](0[1-9]|1[0-2])[-/.](19|20)\d{2}$/;
-      let emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-      let phoneRegex = /^0\d{9}$/;
-      let addressRegex = /^[A-Za-z0-9\s,.\-]{5,}$/;
-      let usernameRegex = /^[a-zA-Z0-9_]{5,20}$/;
-      let passwordRegex = /^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,}$/;
-
-      // Hàm hiển thị lỗi và chặn gửi form
-      function showError(message) {
-        alert(message);
-        isValid = false;
-      }
-
-      // Kiểm tra input
-      if (!fullName || !nameRegex.test(fullName)) showError("Họ và tên không hợp lệ!");
-      if (!birthDate || !birthDateRegex.test(birthDate)) showError("Ngày sinh phải có định dạng dd/mm/yyyy hoặc dd-mm-yyyy.");
-      if (!email || !emailRegex.test(email)) showError("Email không hợp lệ!");
-      if (!phone || !phoneRegex.test(phone)) showError("Số điện thoại phải có 10 chữ số và bắt đầu bằng 0!");
-      if (!address || !addressRegex.test(address)) showError("Địa chỉ không hợp lệ!");
-      if (!username || !usernameRegex.test(username)) showError("Tên đăng nhập từ 5-20 ký tự, chỉ chứa chữ, số, dấu gạch dưới!");
-      if (!password || !passwordRegex.test(password)) showError("Mật khẩu phải có ít nhất 6 ký tự, 1 chữ hoa, 1 số, 1 ký tự đặc biệt!");
-      if (password !== confirmPassword) showError("Mật khẩu xác nhận không khớp!");
-
-      return isValid; // Trả về false nếu có lỗi, chặn form gửi đi
-    }
-
-
 
     function togglePassword() {
       // Lấy cả hai trường mật khẩu và xác nhận mật khẩu

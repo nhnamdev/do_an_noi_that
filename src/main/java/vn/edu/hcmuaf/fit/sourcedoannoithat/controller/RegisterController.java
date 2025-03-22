@@ -10,14 +10,17 @@ import vn.edu.hcmuaf.fit.sourcedoannoithat.dao.RegisterDao;
 import vn.edu.hcmuaf.fit.sourcedoannoithat.dao.model.RegisterModel;
 
 import java.io.IOException;
+import java.util.regex.Pattern;
 
 @WebServlet("/register")
 public class RegisterController extends HttpServlet {
     private RegisterDao registerDao = new RegisterDao();
+
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         // Set character encoding
         request.setCharacterEncoding("UTF-8");
         response.setCharacterEncoding("UTF-8");
+
         try {
             // Lấy thông tin từ form
             String fullName = request.getParameter("full_name");
@@ -29,37 +32,28 @@ public class RegisterController extends HttpServlet {
             String password = request.getParameter("password");
             String confirmPassword = request.getParameter("confirm_password");
 
-            // Validate dữ liệu
-            if (fullName == null || fullName.trim().isEmpty() ||
-                    birthDay == null || birthDay.trim().isEmpty() ||
-                    email == null || email.trim().isEmpty() ||
-                    phoneNumber == null || phoneNumber.trim().isEmpty() ||
-                    username == null || username.trim().isEmpty() ||
-                    password == null || password.trim().isEmpty()) {
+            // Kiểm tra dữ liệu hợp lệ
+            String errorMessage = validateInput(fullName, birthDay, email, phoneNumber, address, username, password, confirmPassword);
 
-                request.setAttribute("error", "Vui lòng điền đầy đủ thông tin bắt buộc!");
+            if (errorMessage != null) {
+                request.setAttribute("error", errorMessage);
                 request.getRequestDispatcher("register.jsp").forward(request, response);
                 return;
             }
-            // Kiểm tra mật khẩu
-            if (!password.equals(confirmPassword)) {
-                request.setAttribute("error", "Mật khẩu không khớp!");
-                request.getRequestDispatcher("register.jsp").forward(request, response);
-                return;
-            }
+
             // Kiểm tra xem tài khoản đã tồn tại chưa
             if (!registerDao.checkAccountExists(username)) {
                 request.setAttribute("error", "Tên đăng nhập đã tồn tại!");
                 request.getRequestDispatcher("register.jsp").forward(request, response);
                 return;
             }
-            // Mã hóa mật khẩu -- thêm mat khẩu mã hóa
+
+            // Mã hóa mật khẩu
             String hashedPassword = BCrypt.hashpw(password, BCrypt.gensalt());
+
             // Tạo model với mật khẩu đã mã hóa
             RegisterModel user = new RegisterModel(fullName, birthDay, email, phoneNumber, address, username, hashedPassword);
             boolean isSuccess = registerDao.registerUser(user);
-
-
 
             if (isSuccess) {
                 request.setAttribute("success", "Đăng ký tài khoản thành công!");
@@ -74,4 +68,6 @@ public class RegisterController extends HttpServlet {
             request.getRequestDispatcher("register.jsp").forward(request, response);
         }
     }
+
+
 }
