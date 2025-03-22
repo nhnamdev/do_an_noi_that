@@ -1,11 +1,6 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: Administrator
-  Date: 25/12/2024
-  Time: 05:48:55 PM
-  To change this template use File | Settings | File Templates.
---%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix = "c" uri = "http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix = "fmt" uri = "http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -20,7 +15,6 @@
 <div>
   <jsp:include page="/components/header.jsp" />
   <div class="overlay" id="overlay"></div>
-  <script src="js/showCart.js"></script>
   <div class="navigation_titlePage">
     <div class="container">
       <div class="alpha">
@@ -44,21 +38,13 @@
     <div class="register" style="margin: 64px auto auto auto;border: 2px dashed #6bae0e; height: 646px;">
       <h3 style="text-align: center; ">Đăng Ký</h3>
       <div class="login">
-        <%
-          String success = (String) request.getAttribute("success");
-          String error = (String) request.getAttribute("error");
-          if(success != null) {
-        %>
-        <script>
-          alert("<%= success %>");
-        </script>
-        <% } else if(error != null) { %>
-        <script>
-          alert("<%= error %>");
-        </script>
-        <% } %>
+        <c:if test="${not empty error}">
+          <div style="color: red; font-weight: bold;">
+              ${error}
+          </div>
+        </c:if>
         <form action="register" method="post">
-          <label for="fullname">Họ và tên:</label>
+          <label for="fullname" style="margin-top: 0;">Họ và tên:</label>
           <input type="text" id="fullname" name="full_name" required class="hienthi">
 
           <label for="birthdate">Ngày sinh:</label>
@@ -82,7 +68,7 @@
           <label for="confirm_password">Xác nhận mật khẩu:</label>
           <input type="password" id="confirm_password" name="confirm_password" required class="hienthi">
 
-          <div class="hienmatkhau">
+          <div class="hienmatkhau" style="margin-top: 22px;">
             <input type="checkbox" id="show_password" onclick="togglePassword()">
             <label>Hiện mật khẩu</label>
             <input type="checkbox" id="agree_terms" required>
@@ -100,6 +86,7 @@
     </div>
   </div>
   <script>
+
     function togglePassword() {
       // Lấy cả hai trường mật khẩu và xác nhận mật khẩu
       const passwordField = document.getElementById("password");
@@ -110,6 +97,9 @@
       passwordField.type = type;
       confirmPasswordField.type = type;
     }
+
+
+
   </script>
 
   <jsp:include page="components/footer.jsp" />
