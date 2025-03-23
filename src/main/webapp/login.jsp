@@ -43,7 +43,7 @@
             <h2 style="margin-left: 120px;">Đăng nhập</h2>
             <form action="login" method="post" style="margin-right: 32px;width: 426px;border: 2px dashed #6bae0e;padding-left: 30px; padding-bottom: 20px">
                 <c:if test="${not empty error}">
-                    <div style="color: red; font-weight: bold;">
+                    <div style="color: red; font-weight: bold; width: 360px;">
                             ${error}
                     </div>
                 </c:if>

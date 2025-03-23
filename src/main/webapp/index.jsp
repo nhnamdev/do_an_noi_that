@@ -13,10 +13,7 @@
 <div>
     <div class="contactUs">
         <jsp:include page="components/header.jsp" />
-
-        <script src="js/showHeader.js"></script>
         <script src="js/showSearch.js"></script>
-
         <div class="slider1">
             <div class="easypin">
                 <a href="index">

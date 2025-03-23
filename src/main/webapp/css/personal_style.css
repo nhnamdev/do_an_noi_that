@@ -551,20 +551,14 @@ body, html {
     font-weight: 300;
 }
 
-.content_section .line {
-    max-width: 100px;
-    background-color: #01161E;
-    margin-left: 550px;
-    padding: 3px 0;
-    margin-top: 40px;
-    margin-bottom: 40px;
-}
-
 .content_section {
     padding-bottom: 30px;
-
-    .row {
+    margin-top: 30px;
+    height: 500px;
+    .container{
         display: flex;
+    }
+    .row {
         width: 100%;
         justify-content: center;
         transition: transform 0.5s;
@@ -575,79 +569,6 @@ body, html {
         transform: scale(1.02);
     }
 
-    .col-md-3 {
-        width: 22%;
-        background-color: #f4f4f4;
-        border-radius: 4px;
-
-        .imageContainer {
-            position: relative;
-            width: 105px;
-            height: 100px;
-            margin-top: 30px;
-            margin-left: 80px;
-            overflow: hidden;
-            border: 2px solid lightgray;
-            border-radius: 100%;
-            transition: transform 0.3s;
-        }
-
-        .imageContainer img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: transform 0.3s; /* Animation cho hiệu ứng zoom */
-        }
-
-        .overlayCamera {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.5); /* Lớp background đen mờ */
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            opacity: 0; /* Ẩn lớp overlay */
-            transition: opacity 0.3s; /* Animation cho hiệu ứng xuất hiện */
-        }
-
-        .imageContainer:hover .overlayCamera {
-            opacity: 1; /* Hiện lớp overlay khi hover */
-        }
-
-        .imageContainer:hover img {
-            transform: scale(1.1); /* Zoom ảnh khi hover */
-        }
-
-        .fa-camera {
-            color: white;
-            font-size: 30px;
-            cursor: pointer;
-        }
-
-        h3 {
-            text-align: center;
-        }
-
-        .service {
-            ul {
-                list-style-type: none;
-
-            }
-
-            li {
-                display: flex;
-            }
-
-            i {
-                margin-top: 20px;
-                margin-right: 10px;
-            }
-        }
-
-    }
 
     .col-md-5 {
         padding-left: 15px;
@@ -699,12 +620,141 @@ body, html {
         cursor: pointer;
     }
 }
-
-
-.content_section .title {
-    margin-top: 70px;
-    font-size: 36px;
-    font-weight: 600;
-    font-family: sans-serif;
-    text-align: center;
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@600&display=swap');
+.content_section .alpha{
+    width: 25%;
+    padding: 20px;
+    cursor: pointer;
+    .avt {
+        display: flex;
+        border:1px solid lightgray;
+    }
+    .homePage {
+        display: flex;
+        border:1px solid lightgray;
+        height: 45px;
+        align-items: center;
+        margin-top: 30px;
+        text-align: center;
+        font-family: 'Poppins', sans-serif;
+        color:gray;
+        h5{
+            margin-left: 20px;
+        }
+    }
+    .homePage:hover{
+        background-color: whitesmoke;
+        cursor: pointer;
+    }
+    .order {
+        display: flex;
+        border:1px solid lightgray;
+        align-items: center;
+        height: 45px;
+        text-align: center;
+        font-family: 'Poppins', sans-serif;
+        color:gray;
+        h5{
+            margin-left: 20px;
+        }
+    }
+    .order:hover {
+        background-color: whitesmoke;
+        cursor: pointer;
+    }
+    .address {
+        align-items: center;
+        display: flex;
+        border:1px solid lightgray;
+        height: 45px;
+        text-align: center;
+        font-family: 'Poppins', sans-serif;
+        color:gray;
+        h5{
+            margin-left: 20px;
+        }
+    }
+    .address:hover{
+        background-color: whitesmoke;
+        cursor: pointer;
+    }
+    .account {
+        display: flex;
+        border:1px solid lightgray;
+        height: 45px;
+        text-align: center;
+        align-items: center;
+        font-family: 'Poppins', sans-serif;
+        color:gray;
+        h5{
+            margin-left: 20px;
+        }
+    }
+    .account:hover{
+        background-color: whitesmoke;
+        cursor: pointer;
+    }
+    .logOut {
+        display: flex;
+        border:1px solid lightgray;
+        height: 45px;
+        text-align: center;
+        align-items: center;
+        font-family: 'Poppins', sans-serif;
+        color:gray;
+        h5{
+            margin-left: 20px;
+        }
+    }
+    .logOut:hover{
+        background-color: whitesmoke;
+        cursor: pointer;
+    }
+    h5 {
+        color:#6c757d;
+        font-family: 'Poppins', sans-serif;
+    }
+    strong{
+        color:#343a40;
+    }
+    img {
+        margin-left: 20px;
+        margin-right: 20px;
+        margin-top: 20px;
+        height: 50px;
+        width: 50px;
+    }
 }
+.content_section .omega {
+    width: 75%;
+    padding: 20px;
+    .content{
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 20px;
+    }
+    h5 {
+        color:#6c757d;
+        font-family: 'Poppins', sans-serif;
+    }
+    strong,u{
+        color:#343a40;
+    }
+    .box {
+        border:1px solid lightgray;
+        align-items: center;
+        height: 90px;
+        text-align: center;
+        font-family: 'Poppins', sans-serif;
+        color:gray;
+        h5{
+            margin-left: 20px;
+        }
+    }
+    .box:hover {
+        background-color: whitesmoke;
+        cursor: pointer;
+    }
+
+}
+
