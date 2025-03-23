@@ -12,40 +12,67 @@ import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
 
-@WebServlet("/index")
+@WebServlet("/updateProfile")
 public class ProfileController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        resp.setContentType("application/json");
         req.setCharacterEncoding("UTF-8");
         resp.setCharacterEncoding("UTF-8");
-        req.getRequestDispatcher("index.jsp").forward(req, resp);
+        resp.getWriter().write("{\"status\": \"error\", \"message\": \"GET request is not allowed\"}");
     }
+
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         try {
             req.setCharacterEncoding("UTF-8");
             resp.setCharacterEncoding("UTF-8");
+            resp.setContentType("application/json");
+
             HttpSession session = req.getSession();
             Integer userId = (Integer) session.getAttribute("userIdLogin");
 
-            String name = req.getParameter("userNameInput");
-            String birthday = req.getParameter("userBirthdayInput");
-            String numberPhone = req.getParameter("userPhoneInput");
-            String address = req.getParameter("userAddressInput");
-            String email = req.getParameter("userEmailInput");
+            // Lấy dữ liệu từ request
+            String newName = req.getParameter("userNameInput");
+            String newBirthday = req.getParameter("userBirthdayInput");
+            String newNumberPhone = req.getParameter("userPhoneInput");
+            String newAddress = req.getParameter("userAddressInput");
+            String newEmail = req.getParameter("userEmailInput");
 
-            Profile profile = new Profile(name, birthday, numberPhone, address, email);
-            ProfileDao profileDao = new ProfileDao();
-            boolean isUpdated = profileDao.updateProfile(profile, userId);
+            // Lấy dữ liệu hiện tại từ session
+            String currentName = (String) session.getAttribute("userName");
+            String currentBirthday = (String) session.getAttribute("userBirthday");
+            String currentNumberPhone = (String) session.getAttribute("userPhone");
+            String currentAddress = (String) session.getAttribute("userAddress");
+            String currentEmail = (String) session.getAttribute("userEmail");
 
-            if (isUpdated) {
-                resp.sendRedirect("index.jsp");
-            } else {
-                resp.sendRedirect("personal.jsp");
+            boolean isChanged =
+                    (newName != null && !newName.equals(currentName)) ||
+                            (newBirthday != null && !newBirthday.equals(currentBirthday)) ||
+                            (newNumberPhone != null && !newNumberPhone.equals(currentNumberPhone)) ||
+                            (newAddress != null && !newAddress.equals(currentAddress)) ||
+                            (newEmail != null && !newEmail.equals(currentEmail));
+
+            if (isChanged) {
+                Profile profile = new Profile(newName, newBirthday, newNumberPhone, newAddress, newEmail);
+                ProfileDao profileDao = new ProfileDao();
+                boolean isUpdated = profileDao.updateProfile(profile, userId);
+
+                if (isUpdated) {
+                    session.setAttribute("userName", newName);
+                    session.setAttribute("userBirthday", newBirthday);
+                    session.setAttribute("userPhone", newNumberPhone);
+                    session.setAttribute("userAddress", newAddress);
+                    session.setAttribute("userEmail", newEmail);
+
+                    resp.getWriter().write("{\"status\": \"success\"}");
+                } else {
+                    resp.getWriter().write("{\"status\": \"error\", \"message\": \"Update failed\"}");
+                }
             }
         } catch (Exception e) {
             e.printStackTrace();
-            resp.getWriter().write("Có lỗi xảy ra: " + e.getMessage());
+            resp.getWriter().write("{\"status\": \"error\", \"message\": \"" + e.getMessage() + "\"}");
         }
     }
 }

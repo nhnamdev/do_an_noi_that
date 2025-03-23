@@ -14,6 +14,7 @@
     <link href="https://fonts.googleapis.com/css?family=Fira+Sans+Condensed:300,400,600i&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/personal_style.css">
     <link rel="stylesheet" href="css/style.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
 </head>
 
@@ -207,33 +208,66 @@
         });
     </script>
     <script>
-        document.querySelector('.editBtn').addEventListener('click', function () {
-            document.querySelectorAll('.editable').forEach((editable) => {
-                const p = editable.querySelector('p');
-                const input = editable.querySelector('input');
-                if (p && input) {
-                    input.value = p.innerText;
-                    p.style.display = 'none';
-                    input.style.display = 'block';
-                }
+        $(document).ready(function () {
+            $(".saveBtn").click(function (e) {
+                e.preventDefault();
+
+                let formData = {
+                    userNameInput: $("#userNameInput").val(),
+                    userBirthdayInput: $("#userBirthdayInput").val(),
+                    userPhoneInput: $("#userPhoneInput").val(),
+                    userAddressInput: $("#userAddressInput").val(),
+                    userEmailInput: $("#userEmailInput").val()
+                };
+
+                $.ajax({
+                    type: "POST",
+                    url: "updateProfile",
+                    data: formData,
+                    dataType: "json",
+                    success: function (response) {
+                        console.log("Phản hồi từ server:", response);
+                        if (response.status === "success") {
+                            alert("Cập nhật thành công!");
+                            $(".editable").each(function () {
+                                let p = $(this).find("p");
+                                let input = $(this).find("input");
+                                if (p.length && input.length) {
+                                    p.text(input.val());
+                                    p.show();
+                                    input.hide();
+                                }
+                            });
+                            $(".saveBtn").hide();
+                            $(".editBtn").show();
+                        } else {
+                            alert("Cập nhật thất bại! Lỗi: " + (response.message || "Không rõ"));
+                        }
+                    },
+                    error: function () {
+                        alert("Lỗi kết nối đến server!");
+                    }
+                });
             });
 
-            document.querySelector('.saveBtn').style.display = 'block';
-            this.style.display = 'none';
-        });
-
-        document.querySelector('.saveBtn').addEventListener('click', function () {
-            document.querySelectorAll('.editable').forEach((editable) => {
-                const p = editable.querySelector('p');
-                const input = editable.querySelector('input');
-                if (p && input) {
-                    p.innerText = input.value;
-                    input.style.display = 'none';
-                    p.style.display = 'block';
-                }
+            $(".editBtn").click(function () {
+                $(".editable").each(function () {
+                    let p = $(this).find("p");
+                    let input = $(this).find("input");
+                    if (p.length && input.length) {
+                        input.val(p.text());
+                        p.hide();
+                        input.show();
+                    }
+                });
+                $(".saveBtn").show();
+                $(this).hide();
             });
-            this.style.display = 'none';
-            document.querySelector('.editBtn').style.display = 'block';
+
+            $("#homePage, #account1").click(function () {
+                $("#md5Section").toggle();
+                $("#homePageSection").toggle();
+            });
         });
     </script>
 
