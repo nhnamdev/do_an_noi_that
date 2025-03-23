@@ -36,33 +36,11 @@
 </head>
 
 <body>
-<div class="sidebar">
-    <div class="header">
-        <h3>Admin - Nhóm 6</h3>
-    </div>
-    <!--hộp thư -->
-    <button class="btn" onclick="mailBoxList();changeColor(this)">Hộp thư</button>
-    <ul id="mailBoxList" class="nested-list">
-        <li onclick="showDetail('mailBox2')">Thống kê phản hồi</li>
-        <li onclick="showDetail('mailBox3')">Tin nhắn</li>
-    </ul>
-    <!--quản lý -->
-    <button class="btn" onclick="manageList();changeColor(this)">Quản lý</button>
-    <ul id="manageList" class="nested-list">
-        <li onclick="showDetail('manageList1'); showProductList(); selectItem(this)">Đơn hàng</li>
-        <ul id="showProductList" class="nested-list">
-            <li onclick="showDetail('showPL1')">Yêu cầu hoàn tiền/hủy đơn</li>
-            <li onclick="showDetail('showPL2')">Thông báo tình trạng đơn hàng</li>
-        </ul>
-        <li onclick="showDetail('manageList2')">Khách hàng</li>
-    </ul>
-    <button class="btn" onclick="showDetail('productsManagement'); changeColor(this)">Kho hàng</button>
-    <button class="btn" onclick="showDetail('warranty-container');changeColor(this)">Bảo hành</button>
-</div>
+<jsp:include page="/admin/sidebarAdmin.jsp" />
 <div class="content">
     <div id="mailBox2" class="detail">
         <h2>Thống kê phản hồi</h2>
-        <form action="admin" method="get">
+        <form action="" method="get">
             <label for="filterDate">Chọn ngày:</label>
             <input type="date" name="filterDate" id="filterDate"/>
 
@@ -182,7 +160,7 @@
                     <td>
                         <div class="action-buttons">
                             <c:if test="${o.pending == 0}">
-                                <form action="admin" method="post">
+                                <form action="" method="post">
                                     <input type="hidden" name="name" value="${o.name}">
                                     <input type="hidden" name="pid" value="${o.id}">
                                     <button type="submit" class="btn approve">Duyệt</button>
@@ -301,7 +279,7 @@
         <div id="addProductPanel">
             <div class="panel-content">
                 <h3>Thêm Sản Phẩm</h3>
-                <form action="admin" method="post">
+                <form action="" method="post">
                     <label for="productName">Tên Sản Phẩm:</label>
                     <input type="text" id="productName" name="name" required/>
 
@@ -395,19 +373,24 @@
                 if (totalProducts > 0) {
                     if (pages > 1) {
             %>
-            <a href="admin.jsp?page=<%= pages - 1 %>&search=<%= searchKW != null ? searchKW : "" %>" class="btn">Trước</a>
+            <a href="admin.jsp?page=<%= pages - 1 %>&search=<%= (searchKW != null) ? searchKW : "admin.jsp" %>">Trước</a>
+
             <%
                 }
 
                 for (int i = 1; i <= totalPages; i++) {
             %>
-            <a href="admin.jsp?page=<%= i %>&search=<%= searchKW != null ? searchKW : "" %>" class="btn <%= (i == pages) ? "active" : "" %>"><%= i %></a>
+            <a href="admin.jsp?page=<%= i %>&search=<%= (searchKW != null) ? searchKW : "admin.jsp" %>"
+               class="<%= (i == pages) ? "active" : "" %>">
+                <%= i %>
+            </a>
+
             <%
                 }
 
                 if (pages < totalPages) {
             %>
-            <a href="admin.jsp?page=<%= pages + 1 %>&search=<%= searchKW != null ? searchKW : "" %>" class="btn">Tiếp</a>
+            <a href="admin.jsp?page=<%= pages + 1 %>&search=<%= (searchKW != null) ? searchKW : "admin.jsp" %>">Tiếp</a>
             <%
                 }
             } else {
@@ -417,10 +400,11 @@
                 }
             %>
         </div>
+
     </div>
 
     <div id="warranty-container" class="detail">
-        <div class="warranty-section">
+        <div class="admin.jspsection">
             <h2>Danh Sách Nội Thất Bảo Hành</h2>
             <table class="warranty-table">
                 <thead>
@@ -455,5 +439,4 @@
 <script src="js/revenue.js"></script>
 <script src="js/productManagement.js"></script>
 </body>
-
 </html>
