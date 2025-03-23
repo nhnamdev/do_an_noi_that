@@ -3,7 +3,7 @@
 <%@ taglib prefix="f" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="vi">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -72,6 +72,7 @@
                     </div>
                 </div>
             </div>
+            <script src="js/showCart.js"></script>
             <div class="content_section_1">
                 <div class="breadcrumb-wrapper">
                     <div class="breadcrumb">
@@ -130,18 +131,29 @@
                                 </li>
                             </ul>
                         </div>
-                        <div class="filter-box">
-                            <h3>Giá</h3>
-                            <div class="price-filter">
-                                <div class="price-range">
-                                    <input type="range" min="0" max="10000000" step="100000" id="priceRange">
-                                </div>
-                                <div class="price-inputs">
-                                    <input type="text" placeholder="Từ" id="minPrice">
-                                    <span>-</span>
-                                    <input type="text" placeholder="Đến" id="maxPrice">
-                                </div>
-                                <button class="apply-price" id="applyPriceFilter">Áp dụng</button>
+                        <div class="filter-box price-filter">
+                            <h3>Chọn khoảng giá</h3>
+                            <div class="price-range-options">
+                                <label class="price-checkbox">
+                                    <input type="checkbox" name="price-range" value="0-1000000">
+                                    <span>Dưới 1 triệu</span>
+                                </label>
+                                <label class="price-checkbox">
+                                    <input type="checkbox" name="price-range" value="1000000-2000000">
+                                    <span>Từ 1 triệu - 2 triệu</span>
+                                </label>
+                                <label class="price-checkbox">
+                                    <input type="checkbox" name="price-range" value="2000000-3000000">
+                                    <span>Từ 2 triệu - 3 triệu</span>
+                                </label>
+                                <label class="price-checkbox">
+                                    <input type="checkbox" name="price-range" value="3000000-5000000">
+                                    <span>Từ 3 triệu - 5 triệu</span>
+                                </label>
+                                <label class="price-checkbox">
+                                    <input type="checkbox" name="price-range" value="5000000+">
+                                    <span>Trên 5 triệu</span>
+                                </label>
                             </div>
                         </div>
                     </div>

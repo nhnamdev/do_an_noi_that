@@ -127,13 +127,13 @@
                     <div class="col-sm-3 p-3 col-md-3">
                         <div class="product-block">
                             <div class="product-tumb">
-                                <a href="SProduct.jsp?id=<%= product.getId() %>">
+                                <a href="productDetail.jsp?id=<%= product.getId() %>">
                                     <img src="<%= product.getImg() %>" alt="">
                                 </a>
                             </div>
                             <div class="product-detail">
                                 <h4>
-                                    <a href="SProduct.jsp?id=<%= product.getId() %>"><%= product.getName() %></a>
+                                    <a href="productDetail.jsp?id=<%= product.getId() %>"><%= product.getName() %></a>
                                 </h4>
                                 <div class="product-bottom_detail">
                                     <div class="price">
