@@ -3,6 +3,7 @@
 :root {
     --color-primary: #6bae0e; /* Màu xanh la */
 }
+
 /* Reset Css */
 body, html {
     margin: 0;
@@ -396,24 +397,6 @@ body, html {
     padding-right: 30px;
 }
 
-.filter-box {
-    background: #fff;
-    padding: 20px;
-    margin-bottom: 20px;
-    border-radius: 8px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
-}
-
-.filter-box h3 {
-    margin-top: 0;
-    font-size: 18px;
-    color: #333;
-    border-bottom: 1px solid #eee;
-    padding-bottom: 10px;
-    margin-bottom: 15px;
-    font-weight: 600;
-}
-
 .category-list {
     list-style: none;
     padding: 0;
@@ -475,50 +458,55 @@ li {
 }
 
 /* Price filter */
-.price-range {
-    margin-bottom: 15px;
+.price-range-options {
+    display: flex;
+    flex-direction: column;
 }
 
-.price-range input {
-    width: 100%;
-    margin-top: 10px;
-}
-
-.price-inputs {
+.price-checkbox {
     display: flex;
     align-items: center;
-    margin-bottom: 15px;
-}
-
-.price-inputs input {
-    width: 45%;
-    padding: 10px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    font-size: 14px;
-}
-
-.price-inputs span {
-    margin: 0 10px;
-    color: #999;
-}
-
-.apply-price {
-    background: #5D7B6F;
-    color: white;
-    border: none;
-    padding: 10px 15px;
-    border-radius: 4px;
+    margin-bottom: 10px;
     cursor: pointer;
-    width: 100%;
-    font-weight: 500;
-    text-transform: uppercase;
-    font-size: 14px;
-    transition: background 0.3s;
 }
 
-.apply-price:hover {
-    background: #4a6258;
+.price-checkbox input {
+    margin-right: 10px;
+}
+
+.price-checkbox input[type="checkbox"] {
+    appearance: none;
+    width: 18px;
+    height: 18px;
+    border: 2px solid #5D7B6F;
+    border-radius: 4px;
+    outline: none;
+    transition: all 0.3s;
+    position: relative;
+    cursor: pointer;
+}
+
+.price-checkbox input[type="checkbox"]:checked {
+    background-color: #5D7B6F;
+}
+
+.price-checkbox input[type="checkbox"]:checked::after {
+    content: '✔';
+    color: white;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 12px;
+}
+
+.price-checkbox span {
+    color: #666;
+    transition: color 0.3s ease;
+}
+
+.price-checkbox:hover span {
+    color: #5D7B6F;
 }
 
 /* Product list */
@@ -619,6 +607,7 @@ li {
     cursor: pointer;
     z-index: 10;
 }
+
 .favorite-product i {
     font-size: 20px;
 }
