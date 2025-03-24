@@ -1,6 +1,29 @@
 // Hàm hiển thị một phần tử chi tiết cụ thể và ẩn các phần khác
+// function showDetail(sectionId) {
+//     const details = document.querySelectorAll('.detail');
+//     const  content = document.getElementById("main_contentt")
+//     content.style.display = 'none';
+//     details.forEach(detail => {
+//         detail.style.display = 'none';
+//
+//     });
+//
+//     const selectedDetail = document.getElementById(sectionId);
+//     if (selectedDetail) {
+//         selectedDetail.style.display = 'block';
+//     }
+// }
 function showDetail(sectionId) {
     const details = document.querySelectorAll('.detail');
+    const content = document.getElementById("main_contentt");
+
+    // Kiểm tra xem có phần tử nào cần hiển thị không
+    if (sectionId) {
+        content.style.display = 'none'; // Chỉ ẩn nếu có phần khác hiển thị
+    } else {
+        content.style.display = 'block'; // Nếu không có, đảm bảo nội dung chính vẫn hiện
+    }
+
     details.forEach(detail => {
         detail.style.display = 'none';
     });
@@ -10,6 +33,7 @@ function showDetail(sectionId) {
         selectedDetail.style.display = 'block';
     }
 }
+
 
 // Hàm ẩn/hiện danh sách chức năng (toggle)
 function toggleFunctionList() {
@@ -75,7 +99,16 @@ function selectItem(item) {
     }
 }
 
-// Hiển thị phần Doanh thu khi tải trang
+// // Hiển thị phần Doanh thu khi tải trang
+// window.onload = function () {
+//     showDetail('revenue'); // Hiển thị phần Doanh thu
+// };
 window.onload = function () {
-    showDetail('revenue'); // Hiển thị phần Doanh thu
+    const revenueSection = document.getElementById('revenue');
+
+    if (revenueSection) {
+        showDetail('revenue'); // Chỉ hiển thị nếu phần revenue tồn tại
+    } else {
+        document.getElementById("main_contentt").style.display = 'block'; // Nếu không, hiển thị nội dung chính
+    }
 };
