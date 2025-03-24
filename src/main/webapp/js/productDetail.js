@@ -49,4 +49,24 @@ document.addEventListener('DOMContentLoaded', function () {
             updateMainImage(currentIndex);
         });
     }
+    // Xử lý phần tabs thông tin
+    const tabButtons = document.querySelectorAll('.tab-btn');
+    const tabContents = document.querySelectorAll('.tab-pane');
+
+    tabButtons.forEach(button => {
+        button.addEventListener('click', function () {
+            // Xóa class active từ tất cả nút tab
+            tabButtons.forEach(btn => btn.classList.remove('active'));
+
+            // Xóa class active từ tất cả nội dung tab
+            tabContents.forEach(content => content.classList.remove('active'));
+
+            // Thêm class active cho nút được click
+            this.classList.add('active');
+
+            // Hiển thị nội dung tab tương ứng
+            const tabId = this.getAttribute('data-tab');
+            document.getElementById(tabId).classList.add('active');
+        });
+    });
 });
