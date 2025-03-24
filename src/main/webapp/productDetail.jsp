@@ -128,17 +128,6 @@
                         <div class="product-info-right">
                             <h2>Ghe sofa da cam</h2>
                             <div class="rating-container">
-                                <div class="rating">
-                                    <span class="rating-score">4.7</span>
-                                    <div class="stars">
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star-half-alt"></i>
-                                    </div>
-                                </div>
-                                <div class="separator">|</div>
                                 <div class="sold">1 Đã Bán</div>
                             </div>
                             <div class="product-price">
