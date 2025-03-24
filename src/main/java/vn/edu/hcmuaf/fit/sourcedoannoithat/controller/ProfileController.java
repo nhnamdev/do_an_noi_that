@@ -2,6 +2,7 @@ package vn.edu.hcmuaf.fit.sourcedoannoithat.controller;
 
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpSession;
+import org.json.JSONObject;
 import vn.edu.hcmuaf.fit.sourcedoannoithat.dao.ProfileDao;
 import vn.edu.hcmuaf.fit.sourcedoannoithat.dao.model.Profile;
 
@@ -65,7 +66,18 @@ public class ProfileController extends HttpServlet {
                     session.setAttribute("userAddress", newAddress);
                     session.setAttribute("userEmail", newEmail);
 
-                    resp.getWriter().write("{\"status\": \"success\"}");
+                    JSONObject jsonResponse = new JSONObject();
+                    jsonResponse.put("status", "success");
+                    JSONObject updatedUserJson = new JSONObject();
+                    updatedUserJson.put("userName", newName);
+                    updatedUserJson.put("userBirthday", newBirthday);
+                    updatedUserJson.put("userPhone", newNumberPhone);
+                    updatedUserJson.put("userAddress", newAddress);
+                    updatedUserJson.put("userEmail", newEmail);
+
+                    jsonResponse.put("updatedUser", updatedUserJson);
+
+                    resp.getWriter().write(jsonResponse.toString());
                 } else {
                     resp.getWriter().write("{\"status\": \"error\", \"message\": \"Update failed\"}");
                 }

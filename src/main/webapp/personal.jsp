@@ -110,15 +110,20 @@
                     </div>
                 </div>
                 <div class="homePage" id="homePage"><h5><i class="fa fa-home"></i>TRANG TÀI KHOẢN</h5></div>
-                <div class="order"><h5><i class="fa fa-box"></i> ĐƠN HÀNG</h5>
-                    <a href="cart.jsp" class="button"></a>
-                </div>
-                <div class="address"><h5><i class="fa fa-location-dot"></i> ĐỊA CHỈ</h5>
-                    <a href="contact.jsp" class="button"></a>
-                </div>
+                <a href="cart.jsp" class="button">
+                    <div class="order"><h5><i class="fa fa-box"></i> ĐƠN HÀNG</h5>
+                    </div>
+                </a>
+                <a href="contact.jsp" class="button">
+                    <div class="address"><h5><i class="fa fa-location-dot"></i> ĐỊA CHỈ</h5>
+                    </div>
+                </a>
                 <div class="account" id="account"><h5><i class="fa fa-person"></i> TÀI KHOẢN</h5></div>
-                <div class="logOut"><h5><i class="fa fa-right-from-bracket"></i> ĐĂNG XUẤT</h5>
-                    <a href="login.jsp" class="button"></a>
+                <div class="logOut" onclick="document.getElementById('logoutForm').submit();">
+                    <h5><i class="fa fa-right-from-bracket"></i> ĐĂNG XUẤT</h5>
+                    <form id="logoutForm" action="logout" method="post">
+                        <button type="submit" class="button" style="display: none;"></button>
+                    </form>
                 </div>
             </div>
             <div class="omega">
@@ -170,21 +175,21 @@
                             </div>
                         </div>
                     </div>
-                    <div class="homePage" style="display:none" id="homePageSection">
+                    <div class="homePageSection" style="display:none" id="homePageSection">
                         <h5>Xin chào <strong>${sessionScope.userName}</strong>(Không phải
                             <Strong>${sessionScope.userName}</Strong>? Hãy <u>thoát ra</u> và đăng nhập vào tài khoản
                             của bạn) </h5>
                         <div class="content">
-                            <div class="box"><h5><i class="fa fa-box"></i> <br> ĐƠN HÀNG</h5>
-                                <a href="cart.jsp" class="button"></a>
-                            </div>
-                            <div class="box"><h5><i class="fa fa-location-dot"></i> <br> ĐỊA CHỈ</h5>
-                                <a href="contact.jsp" class="button"></a>
-                            </div>
+                            <a href="cart.jsp" class="button">
+                            <div class="box"><h5><i class="fa fa-box"></i> <br> ĐƠN HÀNG</h5></div>
+                            </a>
+                            <a href="contact.jsp" class="button">
+                                <div class="box"><h5><i class="fa fa-location-dot"></i> <br> ĐỊA CHỈ</h5></div>
+                            </a>
                             <div class="box" id="account1"><h5><i class="fa fa-person"></i> <br> TÀI KHOẢN</h5>
                             </div>
-                            <div class="box"><h5><i class="fa fa-right-from-bracket"></i> <br> ĐĂNG XUẤT</h5>
-                                <a href="login.jsp" class="button"></a>
+                            <div class="box" onclick="document.getElementById('logoutForm').submit();">
+                                <h5><i class="fa fa-right-from-bracket"></i> <br> ĐĂNG XUẤT</h5>
                             </div>
                         </div>
                     </div>
@@ -226,9 +231,10 @@
                     data: formData,
                     dataType: "json",
                     success: function (response) {
-                        console.log("Phản hồi từ server:", response);
                         if (response.status === "success") {
                             alert("Cập nhật thành công!");
+                            $(".avt .welcomeName strong").text(response.updatedUser.userName);
+                            $("#homePageSection h5 strong").text(response.updatedUser.userName);
                             $(".editable").each(function () {
                                 let p = $(this).find("p");
                                 let input = $(this).find("input");
@@ -264,10 +270,6 @@
                 $(this).hide();
             });
 
-            $("#homePage, #account1").click(function () {
-                $("#md5Section").toggle();
-                $("#homePageSection").toggle();
-            });
         });
     </script>
 

@@ -30,14 +30,266 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Đồ án web</title>
-    <link rel="stylesheet" href="css/admin_style.css">
+<%--    <link rel="stylesheet" href="css/admin_style.css">--%>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+
+<%--tesst--%>
+    <meta content="width=device-width, initial-scale=1.0, shrink-to-fit=no" name="viewport" />
+    <link rel="icon" href="assets/img/kaiadmin/favicon.ico" type="image/x-icon" />
+    <!-- Fonts and icons -->
+    <script src="assets/js/plugin/webfont/webfont.min.js"></script>
+    <script>
+        WebFont.load({
+            google: { families: ["Public Sans:300,400,500,600,700"] },
+            custom: {
+                families: [
+                    "Font Awesome 5 Solid",
+                    "Font Awesome 5 Regular",
+                    "Font Awesome 5 Brands",
+                    "simple-line-icons",
+                ],
+                urls: ["assets/css/fonts.min.css"],
+            },
+            active: function () {
+                sessionStorage.fonts = true;
+            },
+        });
+    </script>
+    <!-- CSS Files -->
+    <link rel="stylesheet" href="assets/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="assets/css/plugins.min.css" />
+    <link rel="stylesheet" href="assets/css/kaiadmin.min.css" />
+    <!-- CSS Just for demo purpose, don't include it in your project -->
+    <link rel="stylesheet" href="assets/css/demo.css" />
+<%--    tesst--%>
+    <link rel="stylesheet" href="css/admin_style.css">
 </head>
 
 <body>
 <jsp:include page="/admin/sidebarAdmin.jsp" />
 <div class="content">
+    <%--CONTENT MAIN ADMIN --%>
+        <div class="page-inner detail" id="main_contentt" >
+            <div class="d-flex align-items-left align-items-md-center flex-column flex-md-row pt-2 pb-4">
+                <div>
+                    <h3 class="fw-bold mb-3">Dashboard</h3>
+                    <h6 class="op-7 mb-2">Admin Dashboard</h6>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-6 col-md-3">
+                    <div class="card card-stats card-round">
+                        <div class="card-body">
+                            <div class="row align-items-center">
+                                <div class="col-icon">
+                                    <div class="icon-big text-center icon-primary bubble-shadow-small">
+                                        <i class="fas fa-users"></i>
+                                    </div>
+                                </div>
+                                <div class="col col-stats ms-3 ms-sm-0">
+                                    <div class="numbers">
+                                        <p class="card-category">Visitors</p>
+                                        <h4 class="card-title">1,294</h4>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-md-3">
+                    <div class="card card-stats card-round">
+                        <div class="card-body">
+                            <div class="row align-items-center">
+                                <div class="col-icon">
+                                    <div class="icon-big text-center icon-info bubble-shadow-small">
+                                        <i class="fas fa-user-check"></i>
+                                    </div>
+                                </div>
+                                <div class="col col-stats ms-3 ms-sm-0">
+                                    <div class="numbers">
+                                        <p class="card-category">Subscribers</p>
+                                        <h4 class="card-title">1303</h4>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-md-3">
+                    <div class="card card-stats card-round">
+                        <div class="card-body">
+                            <div class="row align-items-center">
+                                <div class="col-icon">
+                                    <div class="icon-big text-center icon-success bubble-shadow-small">
+                                        <i class="fas fa-luggage-cart"></i>
+                                    </div>
+                                </div>
+                                <div class="col col-stats ms-3 ms-sm-0">
+                                    <div class="numbers">
+                                        <p class="card-category">Sales</p>
+                                        <h4 class="card-title">$ 1,345</h4>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-md-3">
+                    <div class="card card-stats card-round">
+                        <div class="card-body">
+                            <div class="row align-items-center">
+                                <div class="col-icon">
+                                    <div class="icon-big text-center icon-secondary bubble-shadow-small">
+                                        <i class="far fa-check-circle"></i>
+                                    </div>
+                                </div>
+                                <div class="col col-stats ms-3 ms-sm-0">
+                                    <div class="numbers">
+                                        <p class="card-category">Order</p>
+                                        <h4 class="card-title">576</h4>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card card-round">
+                        <div class="card-header">
+                            <div class="card-head-row card-tools-still-right">
+                                <div class="card-title">Transaction History</div>
+                                <div class="card-tools">
+                                    <div class="dropdown">
+                                        <button class="btn btn-icon btn-clean me-0" type="button" id="dropdownMenuButton"
+                                                data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            <i class="fas fa-ellipsis-h"></i>
+                                        </button>
+                                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                            <a class="dropdown-item" href="#">Action</a>
+                                            <a class="dropdown-item" href="#">Another action</a>
+                                            <a class="dropdown-item" href="#">Something else here</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-body p-0">
+                            <div class="table-responsive">
+                                <!-- Projects table -->
+                                <table class="table align-items-center mb-0">
+                                    <thead class="thead-light">
+                                    <tr>
+                                        <th scope="col">Payment Number</th>
+                                        <th scope="col" class="text-end">Date & Time</th>
+                                        <th scope="col" class="text-end">Amount</th>
+                                        <th scope="col" class="text-end">Status</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr>
+                                        <th scope="row">
+                                            <button class="btn btn-icon btn-round btn-success btn-sm me-2">
+                                                <i class="fa fa-check"></i>
+                                            </button>
+                                            Payment from #10231
+                                        </th>
+                                        <td class="text-end">Mar 19, 2020, 2.45pm</td>
+                                        <td class="text-end">$250.00</td>
+                                        <td class="text-end">
+                                            <span class="badge badge-success">Completed</span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">
+                                            <button class="btn btn-icon btn-round btn-success btn-sm me-2">
+                                                <i class="fa fa-check"></i>
+                                            </button>
+                                            Payment from #10231
+                                        </th>
+                                        <td class="text-end">Mar 19, 2020, 2.45pm</td>
+                                        <td class="text-end">$250.00</td>
+                                        <td class="text-end">
+                                            <span class="badge badge-success">Completed</span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">
+                                            <button class="btn btn-icon btn-round btn-success btn-sm me-2">
+                                                <i class="fa fa-check"></i>
+                                            </button>
+                                            Payment from #10231
+                                        </th>
+                                        <td class="text-end">Mar 19, 2020, 2.45pm</td>
+                                        <td class="text-end">$250.00</td>
+                                        <td class="text-end">
+                                            <span class="badge badge-success">Completed</span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">
+                                            <button class="btn btn-icon btn-round btn-success btn-sm me-2">
+                                                <i class="fa fa-check"></i>
+                                            </button>
+                                            Payment from #10231
+                                        </th>
+                                        <td class="text-end">Mar 19, 2020, 2.45pm</td>
+                                        <td class="text-end">$250.00</td>
+                                        <td class="text-end">
+                                            <span class="badge badge-success">Completed</span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">
+                                            <button class="btn btn-icon btn-round btn-success btn-sm me-2">
+                                                <i class="fa fa-check"></i>
+                                            </button>
+                                            Payment from #10231
+                                        </th>
+                                        <td class="text-end">Mar 19, 2020, 2.45pm</td>
+                                        <td class="text-end">$250.00</td>
+                                        <td class="text-end">
+                                            <span class="badge badge-success">Completed</span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">
+                                            <button class="btn btn-icon btn-round btn-success btn-sm me-2">
+                                                <i class="fa fa-check"></i>
+                                            </button>
+                                            Payment from #10231
+                                        </th>
+                                        <td class="text-end">Mar 19, 2020, 2.45pm</td>
+                                        <td class="text-end">$250.00</td>
+                                        <td class="text-end">
+                                            <span class="badge badge-success">Completed</span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">
+                                            <button class="btn btn-icon btn-round btn-success btn-sm me-2">
+                                                <i class="fa fa-check"></i>
+                                            </button>
+                                            Payment from #10231
+                                        </th>
+                                        <td class="text-end">Mar 19, 2020, 2.45pm</td>
+                                        <td class="text-end">$250.00</td>
+                                        <td class="text-end">
+                                            <span class="badge badge-success">Completed</span>
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    <%--CONTENT MAIN ADMIN --%>
+
     <div id="mailBox2" class="detail">
         <h2>Thống kê phản hồi</h2>
         <form action="" method="get">
@@ -251,7 +503,6 @@
     </div>
     <div id="productsManagement" class="detail">
         <h2>Kho hàng</h2>
-
         <div class="header-actions">
             <div class="search-bar">
                 <form action="admin.jsp" method="get">
@@ -262,7 +513,6 @@
             <button id="addProductButton">Thêm Sản Phẩm</button>
             <button id="exportFileButton">Xuất File</button>
         </div>
-
         <div id="editForm" style="display: none;">
             <form>
                 <label for="editProductName">Tên Sản Phẩm:</label>
@@ -275,7 +525,6 @@
                 <button type="button" id="cancelEdit">Hủy</button>
             </form>
         </div>
-
         <div id="addProductPanel">
             <div class="panel-content">
                 <h3>Thêm Sản Phẩm</h3>
@@ -438,5 +687,17 @@
 <script src="js/survey.js"></script>
 <script src="js/revenue.js"></script>
 <script src="js/productManagement.js"></script>
+<!--   Core JS Files   -->
+<script src="assets/js/core/jquery-3.7.1.min.js"></script>
+<script src="assets/js/core/popper.min.js"></script>
+<script src="assets/js/core/bootstrap.min.js"></script>
+<!-- jQuery Scrollbar -->
+<script src="assets/js/plugin/jquery-scrollbar/jquery.scrollbar.min.js"></script>
+<!-- Datatables -->
+<script src="assets/js/plugin/datatables/datatables.min.js"></script>
+<!-- Bootstrap Notify -->
+<script src="assets/js/plugin/bootstrap-notify/bootstrap-notify.min.js"></script>
+<!-- Kaiadmin JS -->
+<script src="assets/js/kaiadmin.min.js"></script>
 </body>
 </html>

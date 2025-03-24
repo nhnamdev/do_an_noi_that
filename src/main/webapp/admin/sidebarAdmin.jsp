@@ -1,10 +1,4 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: Nam
-  Date: 3/23/2025
-  Time: 10:19 AM
-  To change this template use File | Settings | File Templates.
---%>
+
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
@@ -16,6 +10,7 @@
         <h3>Admin</h3>
     </div>
     <!--hộp thư -->
+    <button class="btn" onclick="showDetail('main_contentt')">Trang chu</button>
     <button class="btn" onclick="mailBoxList();changeColor(this)">Hộp thư</button>
     <ul id="mailBoxList" class="nested-list">
         <li onclick="showDetail('mailBox2')">Thống kê phản hồi</li>
