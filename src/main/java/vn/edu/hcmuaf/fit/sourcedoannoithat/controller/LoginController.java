@@ -57,6 +57,7 @@ public class LoginController extends HttpServlet {
                 session.setAttribute("loginModel", loginModel);
                 Integer userId = loginDao.getIdByUsername(username);
                 session.setAttribute("userIdLogin", userId);
+                session.setAttribute("userNameAccount",username);
                 ProfileDao profileDao = new ProfileDao();
                 Profile profile = profileDao.getProfile(userId);
                 if (profile != null) {

@@ -118,7 +118,15 @@
                     <div class="address"><h5><i class="fa fa-location-dot"></i> ĐỊA CHỈ</h5>
                     </div>
                 </a>
+                <a href="returnProduct.jsp" class="button">
+                    <div class="address"><h5><i class="fa fa-arrow-rotate-left"></i> ĐỔI/TRẢ</h5>
+                    </div>
+                </a>
                 <div class="account" id="account"><h5><i class="fa fa-person"></i> TÀI KHOẢN</h5></div>
+                <a href="changePassword.jsp" class="button">
+                    <div class="address"><h5><i class="fa fa-lock"></i> ĐỔI MẬT KHẨU</h5>
+                    </div>
+                </a>
                 <div class="logOut" onclick="document.getElementById('logoutForm').submit();">
                     <h5><i class="fa fa-right-from-bracket"></i> ĐĂNG XUẤT</h5>
                     <form id="logoutForm" action="logout" method="post">
@@ -175,7 +183,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="homePageSection" style="display:none" id="homePageSection">
+                    <div class="homePageSection" id="homePageSection">
                         <h5>Xin chào <strong>${sessionScope.userName}</strong>(Không phải
                             <Strong>${sessionScope.userName}</Strong>? Hãy <u>thoát ra</u> và đăng nhập vào tài khoản
                             của bạn) </h5>
@@ -186,8 +194,13 @@
                             <a href="contact.jsp" class="button">
                                 <div class="box"><h5><i class="fa fa-location-dot"></i> <br> ĐỊA CHỈ</h5></div>
                             </a>
-                            <div class="box" id="account1"><h5><i class="fa fa-person"></i> <br> TÀI KHOẢN</h5>
-                            </div>
+                            <a href="returnProduct.jsp" class="button">
+                                <div class="box"><h5><i class="fa fa-arrow-rotate-left"></i> <br> ĐỔI/TRẢ</h5></div>
+                            </a>
+                            <div class="box" id="account1"><h5><i class="fa fa-person"></i> <br> TÀI KHOẢN</h5></div>
+                            <a href="changePassword.jsp" class="button">
+                                <div class="box"><h5><i class="fa fa-lock"></i> <br> ĐỔI MẬT KHẨU</h5></div>
+                            </a>
                             <div class="box" onclick="document.getElementById('logoutForm').submit();">
                                 <h5><i class="fa fa-right-from-bracket"></i> <br> ĐĂNG XUẤT</h5>
                             </div>
