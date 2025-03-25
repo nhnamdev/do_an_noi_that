@@ -2,7 +2,7 @@ package vn.edu.hcmuaf.fit.sourcedoannoithat.dao;
 
 import vn.edu.hcmuaf.fit.sourcedoannoithat.dao.db.DBConnect;
 import vn.edu.hcmuaf.fit.sourcedoannoithat.dao.model.AccountManagement;
-import vn.edu.hcmuaf.fit.sourcedoannoithat.dao.model.ProductShop;
+import org.mindrot.jbcrypt.BCrypt;
 import vn.edu.hcmuaf.fit.sourcedoannoithat.dao.model.Profile;
 
 import java.sql.Connection;
@@ -40,6 +40,56 @@ public class ProfileDao {
             }
         }
         return null;
+    }
+
+    public boolean checkOldPassW(String oldPassw,int id) {
+        String query = "SELECT password FROM profile_client WHERE id = ?";
+        try {
+            connection = new DBConnect().getConnection();
+            ps = connection.prepareStatement(query);
+            ps.setInt(1, id);
+            rs = ps.executeQuery();
+            if (rs.next()) {
+                String hashedPasswordFromDB = rs.getString("password");
+                return BCrypt.checkpw(oldPassw, hashedPasswordFromDB);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (rs != null) rs.close();
+                if (ps != null) ps.close();
+                if (connection != null) connection.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        return false;
+    }
+
+    public boolean changePassw(String newPassw,int id) {
+        String query = "UPDATE profile_client SET password = ? WHERE id = ?";
+
+        try {
+            String hashedPassword = BCrypt.hashpw(newPassw, BCrypt.gensalt());
+            connection = new DBConnect().getConnection();
+            ps = connection.prepareStatement(query);
+            ps.setString(1, hashedPassword);
+            ps.setInt(2, id);
+            int rowsAffected = ps.executeUpdate();
+            return rowsAffected > 0;
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (rs != null) rs.close();
+                if (ps != null) ps.close();
+                if (connection != null) connection.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        return false;
     }
 
     public boolean updateProfile(Profile profile, int id) {
@@ -121,6 +171,9 @@ public class ProfileDao {
     public static void main(String[] args) {
         ProfileDao profileDao = new ProfileDao();
         Profile profile = new Profile("Hồ Hải 3", "08/01/2001", "0793450530", "BÙI HỮU NGHĨA STREET", "hominhhai2k@gmail.com");
+        System.out.println(profileDao.checkOldPassW("123456",3));
+        System.out.println(profileDao.changePassw("1234567",3));
         System.out.println(profileDao.searchAccounts("chu"));
     }
+
 }

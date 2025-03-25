@@ -15,6 +15,7 @@ import java.io.IOException;
 
 @WebServlet("/updateProfile")
 public class ProfileController extends HttpServlet {
+    ProfileDao profileDao = new ProfileDao();
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         resp.setContentType("application/json");
@@ -41,6 +42,7 @@ public class ProfileController extends HttpServlet {
             String newEmail = req.getParameter("userEmailInput");
 
             // Lấy dữ liệu hiện tại từ session
+            Integer idUser = (Integer) session.getAttribute("userIdLogin");
             String currentName = (String) session.getAttribute("userName");
             String currentBirthday = (String) session.getAttribute("userBirthday");
             String currentNumberPhone = (String) session.getAttribute("userPhone");
@@ -54,9 +56,17 @@ public class ProfileController extends HttpServlet {
                             (newAddress != null && !newAddress.equals(currentAddress)) ||
                             (newEmail != null && !newEmail.equals(currentEmail));
 
+            String oldPW = req.getParameter("oldPassword");
+            String newPW = req.getParameter("newPassword");
+            boolean isOldPassWord = profileDao.checkOldPassW(oldPW,idUser);
+            boolean isChangePassWord = profileDao.changePassw(newPW,idUser);
+            if (isOldPassWord && isChangePassWord) {
+                resp.sendRedirect("login.jsp");
+            } else {
+                resp.sendRedirect("changePassword.jsp");
+            }
             if (isChanged) {
                 Profile profile = new Profile(newName, newBirthday, newNumberPhone, newAddress, newEmail);
-                ProfileDao profileDao = new ProfileDao();
                 boolean isUpdated = profileDao.updateProfile(profile, userId);
 
                 if (isUpdated) {
