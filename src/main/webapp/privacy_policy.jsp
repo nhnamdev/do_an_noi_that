@@ -76,7 +76,7 @@
       </div>
       <div class="other_choose">
         <button class="view_cart" onclick="window.location.href='cart.jsp'">Giỏ hàng</button>
-        <button class="check_out" onclick="window.location.href='checkout.jsp'">Thanh toán</button>
+        <button class="check_out" onclick="window.location.href='cartCheckout.jsp'">Thanh toán</button>
       </div>
     </div>
   </div>
