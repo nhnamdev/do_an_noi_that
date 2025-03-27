@@ -14,7 +14,26 @@ public class HomeController extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        try {
+            DBConnect dbConnect
+                    = new
+                    DBConnect(); Connection
+                    connection =
+                    dbConnect.getConnection(); if
+            (connection !=
+                            null) {
+                request.getRequestDispatcher("index.jsp").forward(request,
+                        response);
+            }
+            else {
+                request.getRequestDispatcher("errorDb.jsp").forward(request,
+                        response);
+            }
+        } catch (Exception e) {
 
+            request.getRequestDispatcher("errorDb.jsp").forward(request,
+                    response);
+        }
 
     }
 
