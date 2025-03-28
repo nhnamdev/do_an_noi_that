@@ -263,9 +263,22 @@
                             alert("Cập nhật thất bại! Lỗi: " + (response.message || "Không rõ"));
                         }
                     },
-                    error: function () {
-                        alert("Lỗi kết nối đến server!");
-                    }
+                    error: function (xhr, status, error) {
+                        // Hiển thị lỗi chi tiết hơn
+                        let errorMessage = "Lỗi kết nối đến server!";
+                        if (xhr.status === 404) {
+                            errorMessage = "Không tìm thấy URL (404). Vui lòng kiểm tra lại endpoint.";
+                        } else if (xhr.status === 500) {
+                            errorMessage = "Lỗi máy chủ (500). Vui lòng thử lại sau.";
+                        } else if (status === 'timeout') {
+                            errorMessage = "Thời gian chờ kết nối hết hạn. Vui lòng kiểm tra kết nối mạng.";
+                        } else if (xhr.responseText) {
+                            errorMessage = "Lỗi từ server: " + xhr.responseText;
+                        }
+                        console.error("Chi tiết lỗi từ server:", xhr.responseText);
+                        alert(errorMessage);
+                    },
+                    timeout: 10000 // Đặt timeout nếu server mất quá lâu để phản hồi
                 });
             });
 

@@ -77,7 +77,12 @@ public class ProfileDao {
             ps.setString(1, hashedPassword);
             ps.setInt(2, id);
             int rowsAffected = ps.executeUpdate();
-            return rowsAffected > 0;
+            if (rowsAffected > 0) {
+                return true;
+            } else {
+                System.out.println("Không thay đổi được mật khẩu.");
+                return false;
+            }
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
@@ -171,9 +176,8 @@ public class ProfileDao {
     public static void main(String[] args) {
         ProfileDao profileDao = new ProfileDao();
         Profile profile = new Profile("Hồ Hải 3", "08/01/2001", "0793450530", "BÙI HỮU NGHĨA STREET", "hominhhai2k@gmail.com");
-        System.out.println(profileDao.checkOldPassW("123456",3));
-        System.out.println(profileDao.changePassw("1234567",3));
-        System.out.println(profileDao.searchAccounts("chu"));
+        //System.out.println(profileDao.checkOldPassW("123456",3));
+        System.out.println(profileDao.changePassw("123456",3));
     }
 
 }
