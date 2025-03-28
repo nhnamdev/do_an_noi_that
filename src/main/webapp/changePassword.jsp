@@ -43,15 +43,15 @@
               ${error}
           </div>
         </c:if>
-        <form action="updateProfile" method="post">
-          <label for="username">Tên đăng nhập:</label>
+        <form action="ChangePassW" method="post">
+          <label>Tên đăng nhập:</label>
           <input type="text" id="username" name="username" value="${sessionScope.userNameAccount}" required class="hienthi">
 
-          <label for="oldPassword">Mật khẩu cũ:</label>
-          <input type="password" id="oldPassword" name="password" required class="hienthi">
+          <label>Mật khẩu cũ:</label>
+          <input type="password" id="oldPassword" name="oldPassword" required class="hienthi">
 
-          <label for="newPassword">Mật khẩu mới:</label>
-          <input type="password" id="newPassword" name="confirm_password" required class="hienthi">
+          <label>Mật khẩu mới:</label>
+          <input type="password" id="newPassword" name="newPassword" required class="hienthi">
 
           <div class="hienmatkhau" style="margin-top: 22px;">
             <input type="checkbox" id="show_password" onclick="togglePassword()">

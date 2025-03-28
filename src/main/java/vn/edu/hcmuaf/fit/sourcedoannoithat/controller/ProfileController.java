@@ -42,7 +42,6 @@ public class ProfileController extends HttpServlet {
             String newEmail = req.getParameter("userEmailInput");
 
             // Lấy dữ liệu hiện tại từ session
-            Integer idUser = (Integer) session.getAttribute("userIdLogin");
             String currentName = (String) session.getAttribute("userName");
             String currentBirthday = (String) session.getAttribute("userBirthday");
             String currentNumberPhone = (String) session.getAttribute("userPhone");
@@ -56,15 +55,6 @@ public class ProfileController extends HttpServlet {
                             (newAddress != null && !newAddress.equals(currentAddress)) ||
                             (newEmail != null && !newEmail.equals(currentEmail));
 
-            String oldPW = req.getParameter("oldPassword");
-            String newPW = req.getParameter("newPassword");
-            boolean isOldPassWord = profileDao.checkOldPassW(oldPW,idUser);
-            boolean isChangePassWord = profileDao.changePassw(newPW,idUser);
-            if (isOldPassWord && isChangePassWord) {
-                resp.sendRedirect("login.jsp");
-            } else {
-                resp.sendRedirect("changePassword.jsp");
-            }
             if (isChanged) {
                 Profile profile = new Profile(newName, newBirthday, newNumberPhone, newAddress, newEmail);
                 boolean isUpdated = profileDao.updateProfile(profile, userId);
