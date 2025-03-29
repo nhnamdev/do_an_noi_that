@@ -20,5 +20,60 @@ public class LogEntry {
         this.dataAfter = dataAfter;
     }
 
-    // Getters và Setters
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getLevel() {
+        return level;
+    }
+
+    public void setLevel(String level) {
+        this.level = level;
+    }
+
+    public Timestamp getEventTime() {
+        return eventTime;
+    }
+
+    public void setEventTime(Timestamp eventTime) {
+        this.eventTime = eventTime;
+    }
+
+    public String getLocation() {
+        return location;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
+    }
+
+    public String getDataBefore() {
+        return dataBefore;
+    }
+
+    public void setDataBefore(String dataBefore) {
+        this.dataBefore = dataBefore;
+    }
+
+    public String getDataAfter() {
+        return dataAfter;
+    }
+
+    public void setDataAfter(String dataAfter) {
+        this.dataAfter = dataAfter;
+    }
+// Getters và Setters
 }
