@@ -18,57 +18,6 @@
   <script src="js/showSearch.js"></script>
   <script src="js/actionOfProfile.js"></script>
   <div class="overlay" id="overlay"></div>
-  <div class="info-box" id="infoBox">
-    <div class="container">
-      <h3>Thông tin giỏ hàng</h3>
-      <div class="listProduct">
-        <div class="row1">
-          <div class="alpha">
-            <img src="img/sofa15.jpg" alt>
-          </div>
-          <div class="omega">
-            <div class="name">Asgaard sofa</div>
-            <div class="sumPrice">
-              <div class="quantity">1 X</div>
-              <div class="price">220.000</div>
-            </div>
-          </div>
-          <div class="beta">
-            <button class="close-button">
-              <i class="fa fa-times-circle"></i>
-            </button>
-          </div>
-        </div>
-        <div class="row2">
-          <div class="alpha">
-            <img src="img/sofa16.jpg" alt>
-          </div>
-          <div class="omega">
-            <div class="name">Upholstered Sofa</div>
-            <div class="sumPrice">
-              <div class="quantity">2 X</div>
-              <div class="price">450.000</div>
-            </div>
-          </div>
-          <div class="beta">
-            <button class="close-button">
-              <i class="fa fa-times-circle"></i>
-            </button>
-          </div>
-        </div>
-      </div>
-      <div class="totalPrice">
-        <div class="title">Tổng tiền</div>
-        <div class="price">1.120.000đ</div>
-      </div>
-      <div class="other_choose">
-        <button class="view_cart" onclick="window.location.href='../page_Cart/cart.html'">Giỏ hàng</button>
-        <button class="check_out" onclick="window.location.href='../page_CheckOut/checkout.html'">Thanh toán
-        </button>
-      </div>
-    </div>
-  </div>
-  <script src="js/showCart.js"></script>
   <div class="navigation_titlePage">
     <div class="container">
       <div class="alpha">
