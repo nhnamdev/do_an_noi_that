@@ -53,7 +53,7 @@
               </a>
             </li>
             <li class="Favorite"><a href="favorite.jsp"><i class="fa fa-bookmark"></i></a></li>
-            <li class="Shopping"><a href="#"><i class="fa fa-shopping-cart"></i></a></li>
+            <li class="Shopping"><a href="cart.jsp"><i class="fa fa-shopping-cart"></i></a></li>
           </c:if>
           <li class="Search">
             <a href="#" id="searchIcon"><i class="fa fa-search"></i></a>
