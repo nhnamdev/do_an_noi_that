@@ -30,11 +30,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Đồ án web</title>
-<%--    <link rel="stylesheet" href="css/admin_style.css">--%>
+    <%--    <link rel="stylesheet" href="css/admin_style.css">--%>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
 
-<%--tesst--%>
+    <%--tesst--%>
     <meta content="width=device-width, initial-scale=1.0, shrink-to-fit=no" name="viewport" />
     <link rel="icon" href="assets/img/kaiadmin/favicon.ico" type="image/x-icon" />
     <!-- Fonts and icons -->
@@ -62,8 +62,12 @@
     <link rel="stylesheet" href="assets/css/kaiadmin.min.css" />
     <!-- CSS Just for demo purpose, don't include it in your project -->
     <link rel="stylesheet" href="assets/css/demo.css" />
-<%--    tesst--%>
+    <%--    tesst--%>
     <link rel="stylesheet" href="css/admin_style.css">
+    <%--DATATABLE--%>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.28/jspdf.plugin.autotable.min.js"></script>
+    <%--DATATABLE--%>
 </head>
 
 <body>
@@ -155,6 +159,7 @@
                     </div>
                 </div>
             </div>
+<%--            Transaction History--%>
             <div class="row">
                 <div class="col-md-12">
                     <div class="card card-round">
@@ -163,15 +168,8 @@
                                 <div class="card-title">Transaction History</div>
                                 <div class="card-tools">
                                     <div class="dropdown">
-                                        <button class="btn btn-icon btn-clean me-0" type="button" id="dropdownMenuButton"
-                                                data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                            <i class="fas fa-ellipsis-h"></i>
-                                        </button>
-                                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                            <a class="dropdown-item" href="#">Action</a>
-                                            <a class="dropdown-item" href="#">Another action</a>
-                                            <a class="dropdown-item" href="#">Something else here</a>
-                                        </div>
+                                        <button id="btnExportPDF" class="btn btn-primary">Print</button>
+
                                     </div>
                                 </div>
                             </div>
@@ -179,7 +177,8 @@
                         <div class="card-body p-0">
                             <div class="table-responsive">
                                 <!-- Projects table -->
-                                <table class="table align-items-center mb-0">
+                                <table id="transactionTable" class="table align-items-center mb-0">
+
                                     <thead class="thead-light">
                                     <tr>
                                         <th scope="col">Payment Number</th>
@@ -287,9 +286,10 @@
                     </div>
                 </div>
             </div>
+<%--            End Transaction History--%>
         </div>
-    <%--CONTENT MAIN ADMIN --%>
-
+    <%--END CONTENT MAIN ADMIN --%>
+<%--Thống kê phản hồi--%>
     <div id="mailBox2" class="detail">
         <h2>Thống kê phản hồi</h2>
         <form action="" method="get">
@@ -319,6 +319,7 @@
         </div>
 
     </div>
+<%--        End Thống kê phản hồi--%>
     <div id="mailBox3" class="detail">
         <h2>Tin nhắn</h2>
         <div class="chat-container">
@@ -699,5 +700,23 @@
 <script src="assets/js/plugin/bootstrap-notify/bootstrap-notify.min.js"></script>
 <!-- Kaiadmin JS -->
 <script src="assets/js/kaiadmin.min.js"></script>
+<%--DATATABLE --%>
+<script>
+    document.getElementById("btnExportPDF").addEventListener("click", function () {
+        const { jsPDF } = window.jspdf;
+        const doc = new jsPDF();
+
+        doc.text("Transaction History", 14, 10);
+
+        doc.autoTable({
+            html: "#transactionTable",
+            startY: 20,
+            theme: "grid",
+        });
+
+        doc.save("Transaction_History.pdf");
+    });
+</script>
+
 </body>
 </html>
