@@ -6,6 +6,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import vn.edu.hcmuaf.fit.sourcedoannoithat.dao.LogDAO;
 import vn.edu.hcmuaf.fit.sourcedoannoithat.dao.LoginDao;
 import vn.edu.hcmuaf.fit.sourcedoannoithat.dao.ProfileDao;
 import vn.edu.hcmuaf.fit.sourcedoannoithat.dao.RegisterDao;
@@ -22,6 +23,7 @@ import java.util.Scanner;
 import org.json.JSONObject;
 @WebServlet("/login")
 public class LoginController extends HttpServlet {
+    LogDAO logDAO = new LogDAO();
     private LoginDao loginDao = new LoginDao();
     private static final String SECRET_KEY = "6Lek8vsqAAAAAFPIGu-R9RS3RNck2axw1BWy3fU6";
     @Override
@@ -53,6 +55,7 @@ public class LoginController extends HttpServlet {
             boolean isValidUser = loginDao.checkLogin(loginModel);
 
             if (isValidUser) {
+                logDAO.insertLog(username, "alert", "login", "", "");
                 HttpSession session = request.getSession();
                 session.setAttribute("loginModel", loginModel);
                 Integer userId = loginDao.getIdByUsername(username);
