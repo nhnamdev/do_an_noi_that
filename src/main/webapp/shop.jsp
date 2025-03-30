@@ -105,28 +105,101 @@
                         <div class="filter-box">
                             <h3>Danh mục sản phẩm</h3>
                             <ul class="category-list">
-                                <li>
-                                    <a href="">GIƯỜNG NGỦ</a>
-                                </li>
-                                <li>
-                                    <a href="">BÀN GHẾ</a>
+                                <li class="category-item">
+                                    <div class="category-header">
+                                        <span>PHÒNG NGỦ</span>
+                                        <i class="fa-solid fa-chevron-right"></i>
+                                    </div>
                                     <ul class="subcategory">
-                                        <li><a href="">Bàn ăn</a></li>
-                                        <li><a href="">Bàn phòng khách</a></li>
+                                        <li class="subcategory-item">
+                                            <a href="">Giường ngủ</a>
+                                        </li>
+                                        <li class="subcategory-item">
+                                            <a href="">Tủ đầu giường</a>
+                                        </li>
+                                        <li class="subcategory-item">
+                                            <a href="">Tủ quần áo</a>
+                                        </li>
+                                        <li class="subcategory-item">
+                                            <a href="">Bộ phòng ngủ</a>
+                                        </li>
                                     </ul>
                                 </li>
-                                <li>
-                                    <a href="">TỦ</a>
+                                <li class="category-item">
+                                    <div class="category-header">
+                                        <span>PHÒNG KHÁCH</span>
+                                        <i class="fa-solid fa-chevron-right"></i>
+                                    </div>
                                     <ul class="subcategory">
-                                        <li><a href="">Tủ quần áo</a></li>
-                                        <li><a href="">Tủ sách</a></li>
+                                        <li class="subcategory-item">
+                                            <a href="">Sofa & Ghế</a>
+                                        </li>
+                                        <li class="subcategory-item">
+                                            <a href="">Bàn trà</a>
+                                        </li>
+                                        <li class="subcategory-item">
+                                            <a href="">Kệ tivi</a>
+                                        </li>
+                                        <li class="subcategory-item">
+                                            <a href="">Bộ phòng khách</a>
+                                        </li>
                                     </ul>
                                 </li>
-                                <li>
-                                    <a href="">ĐÈN</a>
+                                <li class="category-item">
+                                    <div class="category-header">
+                                        <span>PHÒNG ĂN</span>
+                                        <i class="fa-solid fa-chevron-right"></i>
+                                    </div>
                                     <ul class="subcategory">
-                                        <li><a href="">Đèn trần</a></li>
-                                        <li><a href="">Đèn bàn</a></li>
+                                        <li class="subcategory-item">
+                                            <a href="">Bàn ăn</a>
+                                        </li>
+                                        <li class="subcategory-item">
+                                            <a href="">Ghế ăn</a>
+                                        </li>
+                                        <li class="subcategory-item">
+                                            <a href="">Tủ bếp & Tủ rượu</a>
+                                        </li>
+                                        <li class="subcategory-item">
+                                            <a href="">Bộ bàn ăn</a>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li class="category-item">
+                                    <div class="category-header">
+                                        <span>VĂN PHÒNG</span>
+                                        <i class="fa-solid fa-chevron-right"></i>
+                                    </div>
+                                    <ul class="subcategory">
+                                        <li class="subcategory-item">
+                                            <a href="">Bàn làm việc</a>
+                                        </li>
+                                        <li class="subcategory-item">
+                                            <a href="">Ghế văn phòng</a>
+                                        </li>
+                                        <li class="subcategory-item">
+                                            <a href="">Kệ sách</a>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li class="category-item">
+                                    <div class="category-header">
+                                        <span>TRANG TRÍ</span>
+                                        <i class="fa-solid fa-chevron-right"></i>
+                                    </div>
+                                    <ul class="subcategory">
+                                        <li class="subcategory-item">
+                                            <a href="">Đèn trang trí</a>
+                                        </li>
+                                        <li class="subcategory-item">
+                                            <a href="">Thảm</a>
+                                        </li>
+                                        <li class="subcategory-item">
+                                            <a href="">Gối trang trí</a>
+                                        </li>
+                                        <li class="subcategory-item">
+                                            <a href="">Trang trí tường</a>
+                                        </li>
                                     </ul>
                                 </li>
                             </ul>
@@ -135,23 +208,23 @@
                             <h3>Chọn khoảng giá</h3>
                             <div class="price-range-options">
                                 <label class="price-checkbox">
-                                    <input type="checkbox" name="price-range" value="0-1000000">
+                                    <input type="checkbox" name="price-range" value="0-1m">
                                     <span>Dưới 1 triệu</span>
                                 </label>
                                 <label class="price-checkbox">
-                                    <input type="checkbox" name="price-range" value="1000000-2000000">
+                                    <input type="checkbox" name="price-range" value="1m-2m">
                                     <span>Từ 1 triệu - 2 triệu</span>
                                 </label>
                                 <label class="price-checkbox">
-                                    <input type="checkbox" name="price-range" value="2000000-3000000">
+                                    <input type="checkbox" name="price-range" value="2m-3m">
                                     <span>Từ 2 triệu - 3 triệu</span>
                                 </label>
                                 <label class="price-checkbox">
-                                    <input type="checkbox" name="price-range" value="3000000-5000000">
+                                    <input type="checkbox" name="price-range" value="3m-5m">
                                     <span>Từ 3 triệu - 5 triệu</span>
                                 </label>
                                 <label class="price-checkbox">
-                                    <input type="checkbox" name="price-range" value="5000000+">
+                                    <input type="checkbox" name="price-range" value="5m+">
                                     <span>Trên 5 triệu</span>
                                 </label>
                             </div>
@@ -173,7 +246,6 @@
                                             </span>
                                         </div>
                                         <div class="product-detail">
-                                            <div class="product-category">Sofa</div>
                                             <h4>
                                                 <a href="">Sofa đơn vải cao cấp</a>
                                             </h4>
@@ -203,7 +275,6 @@
                                             </span>
                                         </div>
                                         <div class="product-detail">
-                                            <div class="product-category">Sofa</div>
                                             <h4>
                                                 <a href="">Sofa đơn vải cao cấp</a>
                                             </h4>
@@ -233,7 +304,6 @@
                                             </span>
                                         </div>
                                         <div class="product-detail">
-                                            <div class="product-category">Sofa</div>
                                             <h4>
                                                 <a href="">Sofa đơn vải cao cấp</a>
                                             </h4>
@@ -263,7 +333,6 @@
                                             </span>
                                         </div>
                                         <div class="product-detail">
-                                            <div class="product-category">Sofa</div>
                                             <h4>
                                                 <a href="">Sofa đơn vải cao cấp</a>
                                             </h4>
@@ -293,7 +362,6 @@
                                             </span>
                                         </div>
                                         <div class="product-detail">
-                                            <div class="product-category">Sofa</div>
                                             <h4>
                                                 <a href="">Sofa đơn vải cao cấp</a>
                                             </h4>
@@ -323,7 +391,6 @@
                                             </span>
                                         </div>
                                         <div class="product-detail">
-                                            <div class="product-category">Sofa</div>
                                             <h4>
                                                 <a href="">Sofa đơn vải cao cấp</a>
                                             </h4>
@@ -353,7 +420,6 @@
                                             </span>
                                         </div>
                                         <div class="product-detail">
-                                            <div class="product-category">Sofa</div>
                                             <h4>
                                                 <a href="">Sofa đơn vải cao cấp</a>
                                             </h4>
@@ -383,7 +449,7 @@
                                             </span>
                                         </div>
                                         <div class="product-detail">
-                                            <div class="product-category">Sofa</div>
+
                                             <h4>
                                                 <a href="">Sofa đơn vải cao cấp</a>
                                             </h4>
