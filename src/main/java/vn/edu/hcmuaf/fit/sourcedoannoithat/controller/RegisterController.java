@@ -93,7 +93,7 @@ public class RegisterController extends HttpServlet {
         Pattern passwordRegex = Pattern.compile("^(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{6,}$");
 
         if (!nameRegex.matcher(fullName).matches()) return "Họ và tên không hợp lệ!";
-        if (!birthDateRegex.matcher(birthDay).matches()) return "Ngày sinh phải có định dạng dd/mm/yyyy.";
+//        if (!birthDateRegex.matcher(birthDay).matches()) return "Ngày sinh phải có định dạng dd/mm/yyyy.";
         if (!emailRegex.matcher(email).matches()) return "Email không hợp lệ!";
         if (!phoneRegex.matcher(phoneNumber).matches()) return "Sdt phải có 10 chữ số và bắt đầu bằng 0!";
         if (!usernameRegex.matcher(username).matches()) return "Tên đăng nhập không hợp lệ!";
