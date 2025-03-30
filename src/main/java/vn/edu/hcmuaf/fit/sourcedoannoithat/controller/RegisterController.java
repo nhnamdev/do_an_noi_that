@@ -8,8 +8,13 @@ import jakarta.servlet.http.HttpServletResponse;
 import org.mindrot.jbcrypt.BCrypt;
 import vn.edu.hcmuaf.fit.sourcedoannoithat.dao.RegisterDao;
 import vn.edu.hcmuaf.fit.sourcedoannoithat.dao.model.RegisterModel;
+import vn.edu.hcmuaf.fit.sourcedoannoithat.utils.EmailUtility;
 
+import javax.mail.MessagingException;
 import java.io.IOException;
+import java.util.Timer;
+import java.util.TimerTask;
+import java.util.UUID;
 import java.util.regex.Pattern;
 
 @WebServlet("/register")
@@ -26,6 +31,7 @@ public class RegisterController extends HttpServlet {
             String fullName = request.getParameter("full_name");
             String birthDay = request.getParameter("birth_day");
             String email = request.getParameter("email");
+            request.getSession().setAttribute("registeredEmail", email);
             String phoneNumber = request.getParameter("phone_number");
             String address = request.getParameter("address");
             String username = request.getParameter("username");
@@ -50,14 +56,22 @@ public class RegisterController extends HttpServlet {
 
             // Mã hóa mật khẩu
             String hashedPassword = BCrypt.hashpw(password, BCrypt.gensalt());
-
-            // Tạo model với mật khẩu đã mã hóa
-            RegisterModel user = new RegisterModel(fullName, birthDay, email, phoneNumber, address, username, hashedPassword);
-            boolean isSuccess = registerDao.registerUser(user);
+            // Tạo mã xác nhận (token) và lưu tạm thời vào cơ sở dữ liệu
+            String otp = EmailUtility.generateOTP();
+            RegisterModel model = new RegisterModel(fullName,birthDay,email,phoneNumber,address,username,hashedPassword);
+            boolean isSuccess = registerDao.registerUser(model,otp);
 
             if (isSuccess) {
+                try {
+                    EmailUtility.sendOTP(email, otp);
+                } catch (MessagingException e) {
+                    e.printStackTrace();
+                    request.setAttribute("error", "Không thể gửi email xác nhận. Vui lòng thử lại.");
+                    request.getRequestDispatcher("register.jsp").forward(request, response);
+                    return;
+                }
                 request.setAttribute("success", "Đăng ký tài khoản thành công!");
-                request.getRequestDispatcher("login.jsp").forward(request, response);
+                request.getRequestDispatcher("ConfirmOTP.jsp").forward(request, response);
             } else {
                 request.setAttribute("error", "Đăng ký thất bại. Vui lòng thử lại!");
                 request.getRequestDispatcher("register.jsp").forward(request, response);
@@ -84,11 +98,23 @@ public class RegisterController extends HttpServlet {
         if (!phoneRegex.matcher(phoneNumber).matches()) return "Sdt phải có 10 chữ số và bắt đầu bằng 0!";
         if (!usernameRegex.matcher(username).matches()) return "Tên đăng nhập không hợp lệ!";
 //        if (!usernameRegex.matcher(username).matches()) return "Tên đăng nhập từ 5-20 ký tự, chỉ chứa chữ, số, dấu gạch dưới!";
-        if (!passwordRegex.matcher(password).matches()) return "Mật khẩu không hợp lệ!";
+       // if (!passwordRegex.matcher(password).matches()) return "Mật khẩu không hợp lệ!";
 //        if (!passwordRegex.matcher(password).matches()) return "Mật khẩu phải có ít nhất 6 ký tự, 1 chữ hoa, 1 số, 1 ký tự đặc biệt!";
         if (!password.equals(confirmPassword)) return "Mật khẩu xác nhận không khớp!";
 
         return null; // Không có lỗi
+    }
+    public void init() throws ServletException {
+        super.init();
+        Timer timer = new Timer(true);
+        TimerTask otpCleanupTask = new TimerTask() {
+            @Override
+            public void run() {
+                System.out.println("🕒 Đang kiểm tra và xóa OTP hết hạn...");
+                registerDao.removeExpiredOTP();
+            }
+        };
+        timer.scheduleAtFixedRate(otpCleanupTask, 0, 60 * 60 * 1000);
     }
 
 }

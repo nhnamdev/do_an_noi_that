@@ -23,7 +23,7 @@ public class MyAccountLostPassDao {
     }
 
     public boolean updatePassword(String email, String hashedPassword) {
-        String query = "UPDATE profile_client SET passw = ? WHERE email = ?";
+        String query = "UPDATE profile_client SET password = ? WHERE email = ?";
         try (Connection connection = new DBConnect().getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(query)) {
 
@@ -36,5 +36,10 @@ public class MyAccountLostPassDao {
             e.printStackTrace();
             return false;
         }
+    }
+
+    public static void main(String[] args) {
+        MyAccountLostPassDao dao = new MyAccountLostPassDao();
+        System.out.println(dao.updatePassword("hominhhai2k@gmail.com","123456"));
     }
 }
