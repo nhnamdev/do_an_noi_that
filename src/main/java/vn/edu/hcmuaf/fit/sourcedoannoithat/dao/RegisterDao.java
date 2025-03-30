@@ -3,17 +3,15 @@ package vn.edu.hcmuaf.fit.sourcedoannoithat.dao;
 import vn.edu.hcmuaf.fit.sourcedoannoithat.dao.db.DBConnect;
 import vn.edu.hcmuaf.fit.sourcedoannoithat.dao.model.RegisterModel;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
+import java.time.LocalDateTime;
 
 public class RegisterDao {
     Connection connection = null;
     PreparedStatement ps = null;
     ResultSet rs = null;
-    public boolean registerUser(RegisterModel user) {
-        String query = "INSERT INTO profile_client (username, password,name,birthday,role,phoneNumber,address,email) VALUES( ?, ?, ?, ?,0,?,?,?)";
+    public boolean registerUser(RegisterModel user,String otp) {
+        String query = "INSERT INTO profile_client (username, password,name,birthday,role,phoneNumber,address,email,otp,active,otpCreateAt) VALUES( ?, ?, ?, ?,0,?,?,?,?,0,NOW())";
 
         try {
             connection = new DBConnect().getConnection();
@@ -25,6 +23,7 @@ public class RegisterDao {
             ps.setString(7,user.getEmail());
             ps.setString(1, user.getUsername());
             ps.setString(2, user.getPassword()); // Trong thực tế nên mã hóa mật khẩu
+            ps.setString(8,otp);
 
             int rowsAffected = ps.executeUpdate();
             if (rowsAffected > 0) {
@@ -70,9 +69,58 @@ public class RegisterDao {
         }
         return true;
     }
+    public boolean verifyOTP(String email, String otp) {
+        String query = "SELECT * FROM profile_client WHERE email = ? AND otp = ?";
 
+        try {
+            connection = new DBConnect().getConnection();
+            ps = connection.prepareStatement(query);
+            ps.setString(1, email);
+            ps.setString(2, otp);
+            rs = ps.executeQuery();
+
+            if (rs.next()) {
+                // Nếu OTP hợp lệ, cập nhật active = 1 và xóa OTP
+                String updateQuery = "UPDATE profile_client SET active = 1, otp = NULL WHERE email = ?";
+                ps = connection.prepareStatement(updateQuery);
+                ps.setString(1, email);
+                int rowsUpdated = ps.executeUpdate();
+                return rowsUpdated > 0;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (rs != null) rs.close();
+                if (ps != null) ps.close();
+                if (connection != null) connection.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        return false;
+    }
+    public void removeExpiredOTP() {
+        String query = "DELETE FROM profile_client WHERE active = 0 AND TIMESTAMPDIFF(HOUR, created_at, NOW()) > 1";
+
+        try {
+            connection = new DBConnect().getConnection();
+            ps = connection.prepareStatement(query);
+            int rowsAffected = ps.executeUpdate();
+            System.out.println("Đã xóa " + rowsAffected + " OTP hết hạn.");
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (rs != null) rs.close();
+                if (ps != null) ps.close();
+                if (connection != null) connection.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+    }
     public static void main(String[] args) {
-        // Tạo một đối tượng RegisterModel với dữ liệu giả lập
         RegisterModel user = new RegisterModel();
         user.setUsername("testuser");
         user.setPassword("password123"); // Nên mã hóa mật khẩu
@@ -84,14 +132,6 @@ public class RegisterDao {
 
         // Gọi phương thức registerUser để kiểm tra
         RegisterDao registerDao = new RegisterDao();
-        boolean result = registerDao.registerUser(user);
-
-        // In kết quả ra màn hình
-        if (result) {
-            System.out.println("Đăng ký thành công!");
-        } else {
-            System.out.println("Đăng ký thất bại!");
-        }
     }
 
 
