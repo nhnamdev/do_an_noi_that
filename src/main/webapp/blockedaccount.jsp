@@ -8,7 +8,7 @@
     <title>Tài khoản bị khóa</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
+            font-family: Poppins, sans-serif;
             display: flex;
             justify-content: center;
             align-items: center;
