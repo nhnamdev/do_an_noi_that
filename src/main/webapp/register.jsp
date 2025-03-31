@@ -39,7 +39,7 @@
       <h3 style="text-align: center; ">Đăng Ký</h3>
       <div class="login">
         <c:if test="${not empty error}">
-          <div style="color: red; font-weight: bold;">
+          <div style="color: red; font-weight: 100;font-size: 10px">
               ${error}
           </div>
         </c:if>
@@ -48,7 +48,7 @@
           <input type="text" id="fullname" name="full_name" required class="hienthi">
 
           <label for="birthdate">Ngày sinh:</label>
-          <input type="text" id="birthdate" name="birth_day" required class="hienthi">
+          <input type="date" id="birthdate" name="birth_day" required class="hienthi">
 
           <label for="email">Địa chỉ email:</label>
           <input type="email" id="email" name="email" required class="hienthi">
@@ -98,7 +98,27 @@
       confirmPasswordField.type = type;
     }
 
+//Block coppy paste
+    document.addEventListener("DOMContentLoaded", function () {
+      let passwordFields = document.querySelectorAll("input[type='password']");
 
+      passwordFields.forEach(function (field) {
+        field.addEventListener("copy", function (e) {
+          e.preventDefault();
+          alert("Không thể sao chép mật khẩu!");
+        });
+
+        field.addEventListener("cut", function (e) {
+          e.preventDefault();
+          alert("Không thể cắt mật khẩu!");
+        });
+
+        field.addEventListener("paste", function (e) {
+          e.preventDefault();
+          alert("Không thể dán vào ô mật khẩu!");
+        });
+      });
+    });
 
   </script>
 

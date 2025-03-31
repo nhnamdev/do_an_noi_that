@@ -10,7 +10,7 @@
         <h3>Admin</h3>
     </div>
     <!--hộp thư -->
-    <button class="btn" onclick="showDetail('main_contentt')">Trang chu</button>
+    <button class="btn" onclick="showDetail('main_contentt')">Trang chủ</button>
     <button class="btn" onclick="mailBoxList();changeColor(this)">Hộp thư</button>
     <ul id="mailBoxList" class="nested-list">
         <li onclick="showDetail('mailBox2')">Thống kê phản hồi</li>
