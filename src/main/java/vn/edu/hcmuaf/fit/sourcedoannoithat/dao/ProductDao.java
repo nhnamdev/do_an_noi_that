@@ -37,11 +37,36 @@ public class ProductDao {
         return productList;
     }
 
+    public Product getProductById(String id) {
+        String query = "SELECT * \n" +
+                "FROM product_shop\n" +
+                "WHERE id=?;";
+        try {
+            conn = new DBConnect().getConnection();
+            ps = conn.prepareStatement(query);
+            ps.setString(1, id);
+            rs = ps.executeQuery();
+            if (rs.next()) {
+                return new Product(
+                        rs.getInt(1),
+                        rs.getString(2),
+                        rs.getDouble(3),
+                        rs.getString(4),
+                        rs.getInt(5)
+                );
+            }
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        return null;
+    }
+
     public static void main(String[] args) {
         ProductDao dao = new ProductDao();
         List<Product> productList = dao.getAllProduct();
         for (Product product : productList) {
             System.out.println(product);
         }
+        System.out.println(dao.getProductById("1"));
     }
 }
