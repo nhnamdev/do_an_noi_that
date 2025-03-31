@@ -239,8 +239,8 @@
                                         <div class="product-block">
                                             <div class="product-tumb">
                                                 <span class="discount-percent">-5%</span>
-                                                <a href="">
-                                                    <img src="${p.img}" alt="Sofa đơn vải 1">
+                                                <a href="detail?pId=${p.id}">
+                                                    <img src="${p.img}" alt="${p.name}">
                                                 </a>
                                                 <span class="favorite-product" title="Thêm vào yêu thích">
                                                 <i class="fa-regular fa-heart"></i>
@@ -248,7 +248,7 @@
                                             </div>
                                             <div class="product-detail">
                                                 <h4>
-                                                    <a href="">${p.name}</a>
+                                                    <a href="detail?pId=${p.id}">${p.name}</a>
                                                 </h4>
                                                 <div class="product-bottom_detail">
                                                     <div class="price">

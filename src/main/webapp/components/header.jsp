@@ -23,7 +23,7 @@
             </div>
           </li>
           <li class="Home"><a href="index">Trang chủ</a></li>
-          <li class="Shop"><a href="shop.jsp">Cửa hàng</a></li>
+          <li class="Shop"><a href="shop">Cửa hàng</a></li>
           <li class="AboutUs"><a href="About_us.jsp">Thông tin</a></li>
           <li class="ContactUs"><a href="contact.jsp">Liên hệ</a></li>
         </ul>

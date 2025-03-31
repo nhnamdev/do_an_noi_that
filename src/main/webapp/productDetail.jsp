@@ -2,28 +2,13 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="f" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
-<%@ page import="vn.edu.hcmuaf.fit.sourcedoannoithat.dao.model.SProduct" %>
-<%@ page import="vn.edu.hcmuaf.fit.sourcedoannoithat.dao.SProductDao" %>
-<%@ page import="vn.edu.hcmuaf.fit.sourcedoannoithat.dao.model.Product" %>
-
-<%--<%--%>
-<%--    String productId = request.getParameter("id");--%>
-<%--    SProductDao orderDao = new SProductDao();--%>
-<%--    SProduct sp = orderDao.getSProduct(Integer.parseInt(productId));--%>
-
-<%--    session.setAttribute("productId", sp.getId());--%>
-<%--    session.setAttribute("productName", sp.getName());--%>
-<%--    session.setAttribute("productPrice", sp.getPrice());--%>
-<%--    session.setAttribute("imageProduct", sp.getIndexImages(0));--%>
-
-<%--%>--%>
 <!DOCTYPE html>
 <html lang="vi">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Chi tiết sản phẩm</title>
+    <title>Chi tiết sản phẩm | ${product.name}</title>
     <link rel="stylesheet" href="css/productDetail.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
 </head>
@@ -87,9 +72,9 @@
                     <div class="breadcrumb">
                         <div class="container">
                             <ul>
-                                <li><a href="#">Trang chủ</a></li>
+                                <li><a href="${pageContext.request.contextPath}/index">Trang chủ</a></li>
                                 <li><i class="fas fa-angle-right"></i></li>
-                                <li>Tất cả sản phẩm</li>
+                                <li><a href="${pageContext.request.contextPath}/shop">Tất cả sản phẩm</a></li>
                                 <li><i class="fas fa-angle-right"></i></li>
                                 <li>Ghế sofa</li>
                             </ul>
@@ -100,38 +85,33 @@
                     <div class="product-detail-container">
                         <div class="product-image-left">
                             <div class="main-image">
-                                <img src="img/sofa1.jpg" alt="Ảnh chính">
+                                <img src="${not empty mainImage ? mainImage : product.image}" alt="${product.name}"
+                                     id="mainImage">
                                 <button class="prev-btn"><i class="fas fa-chevron-left"></i></button>
                                 <button class="next-btn"><i class="fas fa-chevron-right"></i></button>
                             </div>
+
                             <div class="sub-image-container">
                                 <div class="sub-image active">
-                                    <img src="img/sofa1.jpg" alt="Ảnh phụ active">
+                                    <img src="${not empty mainImage ? mainImage : product.image}" alt="${product.name}">
                                 </div>
-                                <div class="sub-image">
-                                    <img src="img/sofa2.jpg" alt="Ảnh phụ">
-                                </div>
-                                <div class="sub-image">
-                                    <img src="img/sofa3.jpg" alt="Ảnh phụ">
-                                </div>
-                                <div class="sub-image">
-                                    <img src="img/sofa4.jpg" alt="Ảnh phụ">
-                                </div>
-                                <div class="sub-image">
-                                    <img src="img/sofa5.jpg" alt="Ảnh phụ">
-                                </div>
-                                <div class="sub-image">
-                                    <img src="img/sofa6.jpg" alt="Ảnh phụ">
-                                </div>
+                                <c:forEach var="image" items="${subImages}" varStatus="status">
+                                    <div class="sub-image">
+                                        <img src="${image}" alt="Ảnh phụ ${status.index + 1}">
+                                    </div>
+                                </c:forEach>
                             </div>
                         </div>
                         <div class="product-info-right">
-                            <h2>Ghe sofa da cam</h2>
+                            <h2>${product.name}</h2>
                             <div class="rating-container">
-                                <div class="sold">1 Đã Bán</div>
+                                <div class="sold">${product.quantitySold} Đã Bán</div>
                             </div>
                             <div class="product-price">
-                                <span class="current-price">200000</span>
+                                <span class="current-price">
+                                    <f:formatNumber type="currency" value="${product.price}"
+                                                    pattern="#,###đ"/>
+                                </span>
                                 <span class="old-price"></span>
                                 <span class="discount-tag"></span>
                             </div>
@@ -149,19 +129,12 @@
                                 </div>
                             </div>
                             <div class="product-describe">
-                                <ul class="product-description">
-                                    <li>Thiết kế từ dòng sản phẩm SF02 mang nét trẻ trung, đẳng cấp thể hiện phong cách,
-                                        quyền lực của chủ nhân.
-                                    </li>
-                                    <li>Chất liệu làm nên bộ ghế từ da cao cấp, ốp gỗ bên ngoài tinh tế</li>
-                                    <li>Bộ ghế gồm có 01 băng dài bề thế, 02 ghế đơn tiện nghi dùng đón tiếp khách hàng,
-                                        đối tác.
-                                    </li>
-                                    <li>Các đường may trang trí nổi của thân và đệm ghế tạo sự trang nhã, quý phái</li>
-                                </ul>
+                                <div class="product-description">
+                                    <p>${detail.productDesribe}</p>
+                                </div>
                             </div>
                             <div class="quantity-section">
-                                <div class="quantity-label">Số lượng: <span>Còn hàng</span></div>
+                                <div class="quantity-label">Tình trạng: <span>${detail.stockStatus}</span></div>
                                 <div class="quantity-controls">
                                     <button class="quantity-btn decrease" onclick="decreaseQuantity()">-</button>
                                     <span id="quantity">1</span>
@@ -213,33 +186,24 @@
                             <table class="detail-info-table">
                                 <tr class="info-row">
                                     <th class="material-label">Chất liệu:</th>
-                                    <td class="material-value">Gỗ Ván Dăm</td>
+                                    <td class="material-value">${detail.material}</td>
                                 </tr>
                                 <tr class="info-row">
                                     <th class="material-label">Thương hiệu:</th>
-                                    <td class="material-value">Index Living Mall</td>
+                                    <td class="material-value">${detail.brand}</td>
                                 </tr>
                                 <tr class="info-row">
                                     <th class="material-label">Màu sắc:</th>
-                                    <td class="material-value">Màu Nâu Đậm</td>
+                                    <td class="material-value">${detail.color}</td>
                                 </tr>
                                 <tr class="info-row">
                                     <th class="material-label">Kích thước:</th>
-                                    <td class="material-value">157cm x 220cm x 90 cm</td>
-                                </tr>
-                                <tr class="info-row">
-                                    <th class="material-label">Bộ sưu tập:</th>
-                                    <td class="material-value">CO-SPENCER</td>
-                                </tr>
-                                <tr class="info-row">
-                                    <th class="material-label">Phong cách:</th>
-                                    <td class="material-value"> Modern Contemporar</td>
+                                    <td class="material-value">${detail.length} x ${detail.width}
+                                        x ${detail.height} </td>
                                 </tr>
                                 <tr class="info-row">
                                     <th class="material-label">Tính năng:</th>
-                                    <td class="material-value">Khả năng chống sự co ngót, mối mọt, độ chịu lực cao và
-                                        chống
-                                        ẩm tuyệt đối
+                                    <td class="material-value">${detail.feature}
                                     </td>
                                 </tr>
                             </table>
