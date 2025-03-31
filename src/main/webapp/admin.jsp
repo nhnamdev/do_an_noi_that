@@ -2,7 +2,7 @@
 <%@ page import="java.util.ArrayList" %>
 <%@ page import="java.util.List" %>
 <%@ page import="vn.edu.hcmuaf.fit.sourcedoannoithat.dao.ProfileDao" %>
-<%@ page import="vn.edu.hcmuaf.fit.sourcedoannoithat.dao.model.ProductShop" %>
+<%@ page import="vn.edu.hcmuaf.fit.sourcedoannoithat.dao.model.Product" %>
 <%@ page import="vn.edu.hcmuaf.fit.sourcedoannoithat.dao.SearchDao" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
@@ -567,7 +567,7 @@
                     SearchDao productDao = new SearchDao();
                     int totalProducts = 0;
 
-                    List<ProductShop> listP;
+                    List<Product> listP;
                     if (searchKW != null && !searchKW.isEmpty()) {
                         totalProducts = productDao.getTotalProductsBySearch(searchKW);
                         listP = productDao.searchProducts(searchKW);
@@ -587,7 +587,7 @@
                         return;
                     }
 
-                    for (ProductShop product : listP) {
+                    for (Product product : listP) {
                 %>
                 <tr>
                     <td><%= product.getId() %>

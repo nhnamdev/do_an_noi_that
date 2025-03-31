@@ -1,8 +1,7 @@
 package vn.edu.hcmuaf.fit.sourcedoannoithat.dao;
 
 import vn.edu.hcmuaf.fit.sourcedoannoithat.dao.db.DBConnect;
-import vn.edu.hcmuaf.fit.sourcedoannoithat.dao.model.AccountManagement;
-import vn.edu.hcmuaf.fit.sourcedoannoithat.dao.model.ProductShop;
+import vn.edu.hcmuaf.fit.sourcedoannoithat.dao.model.Product;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -15,16 +14,18 @@ public class SearchDao {
     PreparedStatement ps = null;
     ResultSet rs = null;
 
-    public List<ProductShop> searchProducts(String keyword) {
+    public List<Product> searchProducts(String keyword) {
         try {
             String query = "SELECT * FROM product_shop WHERE name LIKE ?";
             connection = new DBConnect().getConnection();
             ps = connection.prepareStatement(query);
             ps.setString(1, "%" + keyword + "%");
             rs = ps.executeQuery();
-            List<ProductShop> result = new ArrayList<>();
+            List<Product> result = new ArrayList<>();
             while (rs.next()) {
-                ProductShop p = new ProductShop(rs.getString(2), rs.getDouble(3), rs.getString(4), rs.getInt(5));
+                Product p = new Product(
+                        rs.getInt(1),
+                        rs.getString(2), rs.getDouble(3), rs.getString(4), rs.getInt(5));
                 p.setId(rs.getInt(1));
                 result.add(p);
             }
@@ -37,16 +38,16 @@ public class SearchDao {
 
     }
 
-    public List<ProductShop> getAllProducts() {
+    public List<Product> getAllProducts() {
         try {
             String query = "SELECT * FROM product_shop";
             connection = new DBConnect().getConnection();
             ps = connection.prepareStatement(query);
             rs = ps.executeQuery();
-            List<ProductShop> result = new ArrayList<>();
+            List<Product> result = new ArrayList<>();
             while (rs.next()) {
-                ProductShop p = new ProductShop(rs.getString(2), rs.getDouble(3), rs.getString(4), rs.getInt(5));
-                p.setId(rs.getInt(1));
+                Product p = new Product(
+                        rs.getInt(1), rs.getString(2), rs.getDouble(3), rs.getString(4), rs.getInt(5));
                 result.add(p);
             }
             return result;
@@ -68,7 +69,7 @@ public class SearchDao {
         }
     }
 
-    public ProductShop addProduct(ProductShop product) {
+    public Product addProduct(Product product) {
         String query = "INSERT INTO product_shop (name, price, image, quantitySold) VALUES (?, ?, ?, ?)";
         try {
             connection = new DBConnect().getConnection();
@@ -88,9 +89,9 @@ public class SearchDao {
         return null;
     }
 
-    public List<ProductShop> getProductsByPage(int page, int pageSize) {
+    public List<Product> getProductsByPage(int page, int pageSize) {
         int offset = (page - 1) * pageSize;
-        List<ProductShop> result = new ArrayList<>();
+        List<Product> result = new ArrayList<>();
         try {
             String query = "SELECT * FROM product_shop LIMIT ? OFFSET ?";
             connection = new DBConnect().getConnection();
@@ -99,8 +100,7 @@ public class SearchDao {
             ps.setInt(2, offset);
             rs = ps.executeQuery();
             while (rs.next()) {
-                ProductShop p = new ProductShop(rs.getString(2), rs.getDouble(3), rs.getString(4), rs.getInt(5));
-                p.setId(rs.getInt(1));
+                Product p = new Product(rs.getInt(1), rs.getString(2), rs.getDouble(3), rs.getString(4), rs.getInt(5));
                 result.add(p);
             }
         } catch (Exception e) {
@@ -108,6 +108,7 @@ public class SearchDao {
         }
         return result;
     }
+
     public int getTotalProductsBySearch(String search) {
         int total = 0;
         try {
@@ -139,11 +140,5 @@ public class SearchDao {
             e.printStackTrace();
         }
         return 0;
-    }
-
-
-    public static void main(String[] args) {
-        SearchDao searchDao = new SearchDao();
-        searchDao.addProduct(new ProductShop("Giường ngủ Khung Gỗ Sồi Nga GN022", 1800, "https://zsofa.vn/wp-content/uploads/2021/11/giuong-22.jpg", 20));
     }
 }
