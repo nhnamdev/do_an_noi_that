@@ -49,6 +49,24 @@ public class LoginDao {
         }
         return role;
     }
+
+    public int getUserActive(String username) {
+        String query = "SELECT active FROM profile_client WHERE username = ?";
+        int active = 0;
+
+        try {
+            connection = new DBConnect().getConnection();
+            ps = connection.prepareStatement(query);
+            ps.setString(1, username);
+            ResultSet resultSet = ps.executeQuery();
+            if (resultSet.next()) {
+               active = resultSet.getInt("active");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return active;
+    }
     public int getIdByUsername(String username) {
         String query = "SELECT id FROM profile_client WHERE username = ?";
         int id = 0;
@@ -70,5 +88,6 @@ public class LoginDao {
         LoginDao loginDao = new LoginDao();
         System.out.println(loginDao.getUserRole("haipro0801"));
         System.out.println(loginDao.getIdByUsername("haipro0801"));
+        System.out.println(loginDao.getUserActive("haipro12"));
     }
 }
