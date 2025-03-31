@@ -20,12 +20,15 @@ import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.Scanner;
+
 import org.json.JSONObject;
+
 @WebServlet("/login")
 public class LoginController extends HttpServlet {
     LogDAO logDAO = new LogDAO();
     private LoginDao loginDao = new LoginDao();
     private static final String SECRET_KEY = "6Lek8vsqAAAAAFPIGu-R9RS3RNck2axw1BWy3fU6";
+
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         request.setCharacterEncoding("UTF-8");
@@ -52,46 +55,52 @@ public class LoginController extends HttpServlet {
             }
 
             RegisterModel loginModel = new RegisterModel(username, password);
+            int active = loginDao.getUserActive(username);
             boolean isValidUser = loginDao.checkLogin(loginModel);
+            if (active == 1) {
+                if (isValidUser) {
+                    logDAO.insertLog(username, "alert", "login", "", "");
+                    HttpSession session = request.getSession();
+                    session.setAttribute("loginModel", loginModel);
+                    Integer userId = loginDao.getIdByUsername(username);
+                    session.setAttribute("userIdLogin", userId);
+                    session.setAttribute("userNameAccount", username);
+                    ProfileDao profileDao = new ProfileDao();
+                    Profile profile = profileDao.getProfile(userId);
+                    if (profile != null) {
+                        session.setAttribute("userName", profile.getName());
+                        session.setAttribute("userEmail", profile.getEmail());
+                        session.setAttribute("userBirthday", profile.getBirthday());
+                        session.setAttribute("userPhone", profile.getPhoneNumber());
+                        session.setAttribute("userAddress", profile.getAddress());
+                    }
 
-            if (isValidUser) {
-                logDAO.insertLog(username, "alert", "login", "", "");
-                HttpSession session = request.getSession();
-                session.setAttribute("loginModel", loginModel);
-                Integer userId = loginDao.getIdByUsername(username);
-                session.setAttribute("userIdLogin", userId);
-                session.setAttribute("userNameAccount",username);
-                ProfileDao profileDao = new ProfileDao();
-                Profile profile = profileDao.getProfile(userId);
-                if (profile != null) {
-                    session.setAttribute("userName", profile.getName());
-                    session.setAttribute("userEmail", profile.getEmail());
-                    session.setAttribute("userBirthday", profile.getBirthday());
-                    session.setAttribute("userPhone", profile.getPhoneNumber());
-                    session.setAttribute("userAddress", profile.getAddress());
-                }
+                    int role = loginDao.getUserRole(username);
+                    session.setAttribute("role", role);
 
-                int role = loginDao.getUserRole(username);
-                session.setAttribute("role", role);
-
-                if (role == 0) {
-                    response.sendRedirect("index.jsp");
-                } else if (role == 1) {
-                    response.sendRedirect("admin");
+                    if (role == 0) {
+                        response.sendRedirect("index.jsp");
+                    } else if (role == 1) {
+                        response.sendRedirect("admin");
+                    } else {
+                        response.sendRedirect("login.jsp");
+                    }
                 } else {
-                    response.sendRedirect("login.jsp");
+                    request.setAttribute("error", "Tên đăng nhập hoặc mật khẩu không đúng!");
+                    request.getRequestDispatcher("login.jsp").forward(request, response);
                 }
-            } else {
-                request.setAttribute("error", "Tên đăng nhập hoặc mật khẩu không đúng!");
-                request.getRequestDispatcher("login.jsp").forward(request, response);
+            }else if(active ==0){
+                response.sendRedirect("ConfirmOTP.jsp");
+            }else if(active == -1){
+                response.sendRedirect("blockedaccount.jsp");
             }
-
         } catch (Exception e) {
             e.printStackTrace();
             request.setAttribute("error", "Có lỗi xảy ra: " + e.getMessage());
             request.getRequestDispatcher("login.jsp").forward(request, response);
         }
     }
+
     private boolean verifyRecaptcha(String gRecaptchaResponse) throws IOException {
 
         String url = "https://www.google.com/recaptcha/api/siteverify";
