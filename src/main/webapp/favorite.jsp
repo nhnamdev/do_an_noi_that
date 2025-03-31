@@ -1,7 +1,7 @@
 <%@ page import="vn.edu.hcmuaf.fit.sourcedoannoithat.dao.model.Product" %>
 <%@ page import="java.util.List" %>
 <%@ page import="java.util.ArrayList" %>
-<%@ page import="vn.edu.hcmuaf.fit.sourcedoannoithat.dao.model.ProductShop" %>
+<%@ page import="vn.edu.hcmuaf.fit.sourcedoannoithat.dao.model.Product" %>
 <%@ page import="vn.edu.hcmuaf.fit.sourcedoannoithat.dao.FavouriteDao" %><%--
   Created by IntelliJ IDEA.
   User: homin
@@ -11,7 +11,7 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%
-    List<ProductShop> products = null;
+    List<Product> products = null;
 
     if (request.getSession().getAttribute("userIdLogin") != null) {
         FavouriteDao productDAO = new FavouriteDao();
@@ -125,7 +125,7 @@
                 <div class="row">
                     <%
                         if (products != null && !products.isEmpty()) {
-                            for (ProductShop product : products) {
+                            for (Product product : products) {
                     %>
                     <div class="col-sm-3 p-3 col-md-3">
                         <div class="product-block">

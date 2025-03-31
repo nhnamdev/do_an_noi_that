@@ -234,239 +234,37 @@
                     <div class="product-list">
                         <div class="container-fluid">
                             <div class="row">
-                                <div class="col-sm-3 p-3 col-md-3">
-                                    <div class="product-block" data-product-id="1">
-                                        <div class="product-tumb">
-                                            <span class="discount-percent">-5%</span>
-                                            <a href="">
-                                                <img src="assets_duc/img/sofa-don-vai-1.png" alt="Sofa đơn vải 1">
-                                            </a>
-                                            <span class="favorite-product" title="Thêm vào yêu thích">
+                                <c:forEach items="${listP}" var="p">
+                                    <div class="col-sm-3 p-3 col-md-3">
+                                        <div class="product-block">
+                                            <div class="product-tumb">
+                                                <span class="discount-percent">-5%</span>
+                                                <a href="">
+                                                    <img src="${p.img}" alt="Sofa đơn vải 1">
+                                                </a>
+                                                <span class="favorite-product" title="Thêm vào yêu thích">
                                                 <i class="fa-regular fa-heart"></i>
                                             </span>
-                                        </div>
-                                        <div class="product-detail">
-                                            <h4>
-                                                <a href="">Sofa đơn vải cao cấp</a>
-                                            </h4>
-                                            <div class="product-bottom_detail">
-                                                <div class="price">
-                                                    <span class="original-price">600.000đ</span>
-                                                    <span class="discount-price">500.000đ</span>
-                                                </div>
-                                                <div class="product-actions">
-                                                    <button class="add-to-cart-btn">
-                                                        <i class="fa fa-shopping-cart"></i> Thêm vào giỏ
-                                                    </button>
+                                            </div>
+                                            <div class="product-detail">
+                                                <h4>
+                                                    <a href="">${p.name}</a>
+                                                </h4>
+                                                <div class="product-bottom_detail">
+                                                    <div class="price">
+                                                        <span class="original-price">600.000đ</span>
+                                                        <span class="discount-price">${p.price}</span>
+                                                    </div>
+                                                    <div class="product-actions">
+                                                        <button class="add-to-cart-btn">
+                                                            <i class="fa fa-shopping-cart"></i> Thêm vào giỏ
+                                                        </button>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="col-sm-3 p-3 col-md-3">
-                                    <div class="product-block" data-product-id="1">
-                                        <div class="product-tumb">
-                                            <span class="discount-percent">-5%</span>
-                                            <a href="">
-                                                <img src="assets_duc/img/sofa-don-vai-1.png" alt="Sofa đơn vải 1">
-                                            </a>
-                                            <span class="favorite-product" title="Thêm vào yêu thích">
-                                                <i class="fa-regular fa-heart"></i>
-                                            </span>
-                                        </div>
-                                        <div class="product-detail">
-                                            <h4>
-                                                <a href="">Sofa đơn vải cao cấp</a>
-                                            </h4>
-                                            <div class="product-bottom_detail">
-                                                <div class="price">
-                                                    <span class="original-price">600.000đ</span>
-                                                    <span class="discount-price">500.000đ</span>
-                                                </div>
-                                                <div class="product-actions">
-                                                    <button class="add-to-cart-btn">
-                                                        <i class="fa fa-shopping-cart"></i> Thêm vào giỏ
-                                                    </button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-sm-3 p-3 col-md-3">
-                                    <div class="product-block" data-product-id="1">
-                                        <div class="product-tumb">
-                                            <span class="discount-percent">-5%</span>
-                                            <a href="">
-                                                <img src="assets_duc/img/sofa-don-vai-1.png" alt="Sofa đơn vải 1">
-                                            </a>
-                                            <span class="favorite-product" title="Thêm vào yêu thích">
-                                                <i class="fa-regular fa-heart"></i>
-                                            </span>
-                                        </div>
-                                        <div class="product-detail">
-                                            <h4>
-                                                <a href="">Sofa đơn vải cao cấp</a>
-                                            </h4>
-                                            <div class="product-bottom_detail">
-                                                <div class="price">
-                                                    <span class="original-price">600.000đ</span>
-                                                    <span class="discount-price">500.000đ</span>
-                                                </div>
-                                                <div class="product-actions">
-                                                    <button class="add-to-cart-btn">
-                                                        <i class="fa fa-shopping-cart"></i> Thêm vào giỏ
-                                                    </button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-sm-3 p-3 col-md-3">
-                                    <div class="product-block" data-product-id="1">
-                                        <div class="product-tumb">
-                                            <span class="discount-percent">-5%</span>
-                                            <a href="">
-                                                <img src="assets_duc/img/sofa-don-vai-1.png" alt="Sofa đơn vải 1">
-                                            </a>
-                                            <span class="favorite-product" title="Thêm vào yêu thích">
-                                                <i class="fa-regular fa-heart"></i>
-                                            </span>
-                                        </div>
-                                        <div class="product-detail">
-                                            <h4>
-                                                <a href="">Sofa đơn vải cao cấp</a>
-                                            </h4>
-                                            <div class="product-bottom_detail">
-                                                <div class="price">
-                                                    <span class="original-price">600.000đ</span>
-                                                    <span class="discount-price">500.000đ</span>
-                                                </div>
-                                                <div class="product-actions">
-                                                    <button class="add-to-cart-btn">
-                                                        <i class="fa fa-shopping-cart"></i> Thêm vào giỏ
-                                                    </button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-sm-3 p-3 col-md-3">
-                                    <div class="product-block" data-product-id="1">
-                                        <div class="product-tumb">
-                                            <span class="discount-percent">-5%</span>
-                                            <a href="">
-                                                <img src="assets_duc/img/sofa-don-vai-1.png" alt="Sofa đơn vải 1">
-                                            </a>
-                                            <span class="favorite-product" title="Thêm vào yêu thích">
-                                                <i class="fa-regular fa-heart"></i>
-                                            </span>
-                                        </div>
-                                        <div class="product-detail">
-                                            <h4>
-                                                <a href="">Sofa đơn vải cao cấp</a>
-                                            </h4>
-                                            <div class="product-bottom_detail">
-                                                <div class="price">
-                                                    <span class="original-price">600.000đ</span>
-                                                    <span class="discount-price">500.000đ</span>
-                                                </div>
-                                                <div class="product-actions">
-                                                    <button class="add-to-cart-btn">
-                                                        <i class="fa fa-shopping-cart"></i> Thêm vào giỏ
-                                                    </button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-sm-3 p-3 col-md-3">
-                                    <div class="product-block" data-product-id="1">
-                                        <div class="product-tumb">
-                                            <span class="discount-percent">-5%</span>
-                                            <a href="">
-                                                <img src="assets_duc/img/sofa-don-vai-1.png" alt="Sofa đơn vải 1">
-                                            </a>
-                                            <span class="favorite-product" title="Thêm vào yêu thích">
-                                                <i class="fa-regular fa-heart"></i>
-                                            </span>
-                                        </div>
-                                        <div class="product-detail">
-                                            <h4>
-                                                <a href="">Sofa đơn vải cao cấp</a>
-                                            </h4>
-                                            <div class="product-bottom_detail">
-                                                <div class="price">
-                                                    <span class="original-price">600.000đ</span>
-                                                    <span class="discount-price">500.000đ</span>
-                                                </div>
-                                                <div class="product-actions">
-                                                    <button class="add-to-cart-btn">
-                                                        <i class="fa fa-shopping-cart"></i> Thêm vào giỏ
-                                                    </button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-sm-3 p-3 col-md-3">
-                                    <div class="product-block" data-product-id="1">
-                                        <div class="product-tumb">
-                                            <span class="discount-percent">-5%</span>
-                                            <a href="">
-                                                <img src="assets_duc/img/sofa-don-vai-1.png" alt="Sofa đơn vải 1">
-                                            </a>
-                                            <span class="favorite-product" title="Thêm vào yêu thích">
-                                                <i class="fa-regular fa-heart"></i>
-                                            </span>
-                                        </div>
-                                        <div class="product-detail">
-                                            <h4>
-                                                <a href="">Sofa đơn vải cao cấp</a>
-                                            </h4>
-                                            <div class="product-bottom_detail">
-                                                <div class="price">
-                                                    <span class="original-price">600.000đ</span>
-                                                    <span class="discount-price">500.000đ</span>
-                                                </div>
-                                                <div class="product-actions">
-                                                    <button class="add-to-cart-btn">
-                                                        <i class="fa fa-shopping-cart"></i> Thêm vào giỏ
-                                                    </button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-sm-3 p-3 col-md-3">
-                                    <div class="product-block" data-product-id="1">
-                                        <div class="product-tumb">
-                                            <span class="discount-percent">-5%</span>
-                                            <a href="">
-                                                <img src="assets_duc/img/sofa-don-vai-1.png" alt="Sofa đơn vải 1">
-                                            </a>
-                                            <span class="favorite-product" title="Thêm vào yêu thích">
-                                                <i class="fa-regular fa-heart"></i>
-                                            </span>
-                                        </div>
-                                        <div class="product-detail">
-
-                                            <h4>
-                                                <a href="">Sofa đơn vải cao cấp</a>
-                                            </h4>
-                                            <div class="product-bottom_detail">
-                                                <div class="price">
-                                                    <span class="original-price">600.000đ</span>
-                                                    <span class="discount-price">500.000đ</span>
-                                                </div>
-                                                <div class="product-actions">
-                                                    <button class="add-to-cart-btn">
-                                                        <i class="fa fa-shopping-cart"></i> Thêm vào giỏ
-                                                    </button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+                                </c:forEach>
                             </div>
                         </div>
                     </div>

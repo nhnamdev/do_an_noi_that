@@ -38,7 +38,7 @@ public class AdminController extends HttpServlet {
         List<WarrantyProduct> warrantyProduct = warrantyProductDao.getListWarrantyProduct();
 
         SearchDao searchDao = new SearchDao();
-        List<ProductShop> listP = searchDao.getAllProducts();
+        List<Product> listP = searchDao.getAllProducts();
 
         ProfileDao profileDao = new ProfileDao();
         List<AccountManagement> profile = profileDao.getAccountAdmin();
@@ -60,46 +60,46 @@ public class AdminController extends HttpServlet {
 
         req.getRequestDispatcher("admin.jsp").forward(req, resp);
     }
-
-    @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        req.setCharacterEncoding("UTF-8");
-        resp.setCharacterEncoding("UTF-8");
-
-        String pid = req.getParameter("pid");
-        String name = req.getParameter("name");
-
-        String nameProduct = req.getParameter("name");
-        String priceStr = req.getParameter("price");
-        String image = req.getParameter("image");
-
-        if (nameProduct != null && priceStr != null && image != null) {
-            try {
-                double price = Double.parseDouble(priceStr);
-                ProductShop newProduct = new ProductShop(nameProduct, price, image, 0);
-                SearchDao searchDao = new SearchDao();
-                ProductShop addedProduct = searchDao.addProduct(newProduct);
-
-                if (addedProduct != null) {
-                    req.setAttribute("successMessage", "Sản phẩm đã được thêm thành công!");
-                } else {
-                    req.setAttribute("errorMessage", "Không thể thêm sản phẩm.");
-                }
-            } catch (NumberFormatException e) {
-                req.setAttribute("errorMessage", "Giá không hợp lệ.");
-            }
-        } else {
-            req.setAttribute("errorMessage", "Thông tin sản phẩm không đầy đủ.");
-        }
-        if (pid != null) {
-            try {
-                int orderId = Integer.parseInt(pid);
-                OrderDao orderDao = new OrderDao();
-                orderDao.updatePending(name, orderId);
-            } catch (NumberFormatException e) {
-                req.setAttribute("errorMessage", "Mã đơn hàng không hợp lệ.");
-            }
-        }
-        doGet(req, resp);
-    }
+// ở đây chưa lay product id, trong constructor ở Product đã có parameter id nhưng ở đây chưa lấy ra, tạm thời cmt lại để làm các tác vụ cơ bản trước
+//    @Override
+//    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+//        req.setCharacterEncoding("UTF-8");
+//        resp.setCharacterEncoding("UTF-8");
+//
+//        String pid = req.getParameter("pid");
+//        String name = req.getParameter("name");
+//
+//        String nameProduct = req.getParameter("name");
+//        String priceStr = req.getParameter("price");
+//        String image = req.getParameter("image");
+//
+//        if (nameProduct != null && priceStr != null && image != null) {
+//            try {
+//                double price = Double.parseDouble(priceStr);
+//                Product newProduct = new Product(nameProduct, price, image, 0);
+//                SearchDao searchDao = new SearchDao();
+//                Product addedProduct = searchDao.addProduct(newProduct);
+//
+//                if (addedProduct != null) {
+//                    req.setAttribute("successMessage", "Sản phẩm đã được thêm thành công!");
+//                } else {
+//                    req.setAttribute("errorMessage", "Không thể thêm sản phẩm.");
+//                }
+//            } catch (NumberFormatException e) {
+//                req.setAttribute("errorMessage", "Giá không hợp lệ.");
+//            }
+//        } else {
+//            req.setAttribute("errorMessage", "Thông tin sản phẩm không đầy đủ.");
+//        }
+//        if (pid != null) {
+//            try {
+//                int orderId = Integer.parseInt(pid);
+//                OrderDao orderDao = new OrderDao();
+//                orderDao.updatePending(name, orderId);
+//            } catch (NumberFormatException e) {
+//                req.setAttribute("errorMessage", "Mã đơn hàng không hợp lệ.");
+//            }
+//        }
+//        doGet(req, resp);
+//    }
 }

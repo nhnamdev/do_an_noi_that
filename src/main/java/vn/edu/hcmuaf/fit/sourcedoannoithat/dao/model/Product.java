@@ -1,55 +1,71 @@
 package vn.edu.hcmuaf.fit.sourcedoannoithat.dao.model;
 
 import java.io.Serializable;
+import java.text.DecimalFormat;
 
 public class Product implements Serializable {
     private int id;
     private String name;
-    private int quantity;
     private double price;
-    private String image;
+    private String img;
+    private int quantitySold;
 
-    public Product() {
-
+    public Product(int id, String name, double price, String img, int quantitySold) {
+        this.id = id;
+        this.name = name;
+        this.price = price;
+        this.img = img;
+        this.quantitySold = quantitySold;
     }
+
     public int getId() {
         return id;
     }
+
     public void setId(int id) {
         this.id = id;
     }
+
     public String getName() {
         return name;
     }
+
     public void setName(String name) {
         this.name = name;
     }
-    public int getQuantity() {
-        return quantity;
-    }
-    public void setQuantity(int quantity) {
-        this.quantity = quantity;
-    }
+
     public double getPrice() {
         return price;
     }
+
     public void setPrice(double price) {
         this.price = price;
     }
-    public String getImage() {
-        return image;
+
+    public String getImg() {
+        return img;
     }
-    public void setImage(String image) {
-        this.image = image;
+
+    public void setImg(String img) {
+        this.img = img;
+    }
+
+    public int getQuantitySold() {
+        return quantitySold;
+    }
+
+    public void setQuantitySold(int quantitySold) {
+        this.quantitySold = quantitySold;
     }
 
     @Override
     public String toString() {
-        return "id=" + id +
+        return "Product{" +
+                "id=" + id +
                 ", name='" + name + '\'' +
-                ", quantity=" + quantity +
                 ", price=" + price +
-                ", image='" + image + '\'' +
+                ", img='" + img + '\'' +
+                ", quantitySold=" + quantitySold +
                 '}';
     }
 }
