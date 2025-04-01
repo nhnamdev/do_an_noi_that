@@ -60,18 +60,18 @@
             <div class="totalPrice">
                 <div class="title">Tổng tiền</div>
                 <div class="price">
-                    <%
-                        double totalPrice = 0;
-                        List<Product> cartProducts = (List<Product>) session.getAttribute("cartProducts");
-                        if (cartProducts == null) {
-                            cartProducts = new ArrayList<Product>();
-                        }
-                        for (Product item : cartProducts) {
-                            totalPrice += item.getPrice() * item.getQuantity();
-                        }
+<%--                    <%--%>
+<%--                        double totalPrice = 0;--%>
+<%--                        List<Product> cartProducts = (List<Product>) session.getAttribute("cartProducts");--%>
+<%--                        if (cartProducts == null) {--%>
+<%--                            cartProducts = new ArrayList<Product>();--%>
+<%--                        }--%>
+<%--                        for (Product item : cartProducts) {--%>
+<%--                            totalPrice += item.getPrice() * item.getQuantity();--%>
+<%--                        }--%>
 
-                    %>
-                    <%= totalPrice %>đ
+<%--                    %>--%>
+<%--                    <%= totalPrice %>đ--%>
                 </div>
             </div>
             <div class="other_choose">
