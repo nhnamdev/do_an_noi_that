@@ -23,7 +23,6 @@
 
     <jsp:include page="/components/header.jsp"/>
     <script src="js/showSearch.js"></script>
-    <script src="js/showHeader.js"></script>
     <script src="js/actionOfProfile.js"></script>
     <div class="overlay" id="overlay"></div>
 

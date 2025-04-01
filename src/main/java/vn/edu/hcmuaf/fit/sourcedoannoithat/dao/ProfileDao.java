@@ -177,7 +177,7 @@ public class ProfileDao {
         ProfileDao profileDao = new ProfileDao();
         Profile profile = new Profile("Hồ Hải 3", "08/01/2001", "0793450530", "BÙI HỮU NGHĨA STREET", "hominhhai2k@gmail.com");
         //System.out.println(profileDao.checkOldPassW("123456",3));
-        System.out.println(profileDao.changePassw("123456",3));
+        System.out.println(profileDao.changePassw("123456",2));
     }
 
 }

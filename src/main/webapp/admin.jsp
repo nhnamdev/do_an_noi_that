@@ -492,6 +492,8 @@
                     <div class="action-buttons">
                         <a href="admin.jsp?deleteId=<%= pr.getId() %>" class="btn reject" style="text-decoration: none;"
                            onclick="return confirm('Bạn có chắc chắn muốn xóa tài khoản này?');">xóa</a>
+                        <a href="admin.jsp?lockId=<%= pr.getId() %>" class="btn lock" style="text-decoration: none; background-color: red; color: white;"
+                           onclick="return confirm('Bạn có chắc chắn muốn khóa tài khoản này?');">Khóa tài khoản</a>
                     </div>
                 </td>
             </tr>
