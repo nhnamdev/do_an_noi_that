@@ -78,7 +78,7 @@
                     <div class="breadcrumb">
                         <div class="container">
                             <ul>
-                                <li><a href="#">Trang chủ</a></li>
+                                <li><a href="index">Trang chủ</a></li>
                                 <li><i class="fas fa-angle-right"></i></li>
                                 <li>Tất cả sản phẩm</li>
                             </ul>
@@ -234,7 +234,7 @@
                     <div class="product-list">
                         <div class="container-fluid">
                             <div class="row">
-                                <c:forEach items="${listP}" var="p">
+                                <c:forEach items="${listPagination}" var="p">
                                     <div class="col-sm-3 p-3 col-md-3">
                                         <div class="product-block">
                                             <div class="product-tumb">
@@ -266,6 +266,27 @@
                                     </div>
                                 </c:forEach>
                             </div>
+                        </div>
+                        <%-- phan trang--%>
+                        <div class="pagination">
+                            <ul class="pagination-container">
+                                <li class="pagination-item">
+                                    <a href="#" class="pagination-link pagination-prev" aria-label="Previous page">
+                                        <i class="fa-solid fa-angle-left"></i>
+                                    </a>
+                                </li>
+                                <c:forEach begin="1" end="${endP}" var="i">
+                                    <li class="pagination-item">
+                                        <a href="shop?index=${i}"
+                                           class="pagination-link ${param.index == i || (empty param.index && i == 1) ? 'active' : ''}">${i}</a>
+                                    </li>
+                                </c:forEach>
+                                <li class="pagination-item">
+                                    <a href="#" class="pagination-link pagination-next" aria-label="Next page">
+                                        <i class="fa-solid fa-angle-right"></i>
+                                    </a>
+                                </li>
+                            </ul>
                         </div>
                     </div>
                 </div>
