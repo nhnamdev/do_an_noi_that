@@ -26,60 +26,7 @@
     <script src="js/showHeader.js"></script>
     <script src="js/actionOfProfile.js"></script>
     <div class="overlay" id="overlay"></div>
-    <div class="info-box" id="infoBox">
-        <div class="container">
-            <h3>Thông tin giỏ hàng</h3>
-            <div class="listProduct">
-                <c:choose>
-                    <c:when test="${not empty sessionScope.cartProducts}">
-                        <c:forEach var="item" items="${sessionScope.cartProducts}">
-                            <div class="row1">
-                                <div class="alpha">
-                                    <img src="${item.image}" alt="">
-                                </div>
-                                <div class="omega">
-                                    <div class="name">${item.name}</div>
-                                    <div class="sumPrice">
-                                        <div class="quantity">${item.quantity} X</div>
-                                        <div class="price">${item.price * item.quantity}đ</div>
-                                    </div>
-                                </div>
-                                <div class="beta">
-                                    <button class="close-button">
-                                        <i class="fa fa-times-circle"></i>
-                                    </button>
-                                </div>
-                            </div>
-                        </c:forEach>
-                    </c:when>
-                    <c:otherwise>
-                        <div class="empty-cart">Giỏ hàng của bạn đang trống.</div>
-                    </c:otherwise>
-                </c:choose>
-            </div>
-            <div class="totalPrice">
-                <div class="title">Tổng tiền</div>
-                <div class="price">
-                    <%
-                        double totalPrice = 0;
-                        List<Product> cartProducts = (List<Product>) session.getAttribute("cartProducts");
-                        if (cartProducts == null) {
-                            cartProducts = new ArrayList<Product>();
-                        }
-                        for (Product item : cartProducts) {
-                            totalPrice += item.getPrice() * item.getQuantity();
-                        }
 
-                    %>
-                    <%= totalPrice %>đ
-                </div>
-            </div>
-            <div class="other_choose">
-                <button class="view_cart" onclick="window.location.href='cart.jsp'">Giỏ hàng</button>
-                <button class="check_out" onclick="window.location.href='cartCheckout.jsp'">Thanh toán</button>
-            </div>
-        </div>
-    </div>
     <script src="js/showCart.js"></script>
     <div class="navigation_titlePage">
         <div class="container">

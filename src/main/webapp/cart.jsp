@@ -1,4 +1,4 @@
-<%@ page import="vn.edu.hcmuaf.fit.sourcedoannoithat.dao.model.SProduct" %>
+
 <%@ page import="java.util.ArrayList" %>
 <%@ page import="java.util.List" %>
 <%@ page import="vn.edu.hcmuaf.fit.sourcedoannoithat.dao.model.Product" %>
