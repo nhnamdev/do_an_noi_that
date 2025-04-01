@@ -155,6 +155,31 @@ public class RegisterDao {
         }
         return false;
     }
+    public boolean lockUser(String username) {
+        String query = "UPDATE profile_client SET active = -1 WHERE username = ?" ;
+        try {
+            connection = new DBConnect().getConnection();
+            ps = connection.prepareStatement(query);
+            ps.setString(1, username);
+            int rowsAffected = ps.executeUpdate();
+            if (rowsAffected > 0) {
+                return true;
+            } else {
+                return false;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (ps != null) ps.close();
+                if (connection != null) connection.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        return false;
+    }
+
 
     public void removeExpiredOTP() {
         String query = "DELETE FROM profile_client WHERE active = 0 AND TIMESTAMPDIFF(HOUR, created_at, NOW()) > 1";
@@ -189,6 +214,7 @@ public class RegisterDao {
 
         // Gọi phương thức registerUser để kiểm tra
         RegisterDao registerDao = new RegisterDao();
-        System.out.println(registerDao.verifyOTP("hominhhai2k4@gmail.com", "436014"));
+        //System.out.println(registerDao.verifyOTP("hominhhai2k4@gmail.com", "436014"));
+        System.out.println(registerDao.lockUser("haipro1"));
     }
 }
