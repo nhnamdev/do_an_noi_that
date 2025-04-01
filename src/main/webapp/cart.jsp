@@ -228,7 +228,7 @@
                     </div>
                 </div>
                 <div class="cart-right">
-                    <h3 class="cart-summary-title">CỘNG GIỎ HÀNG</h3>
+                    <h3 class="cart-summary-title">GIỎ HÀNG</h3>
 
                     <div class="summary-row">
                         <span class="summary-label">Tạm tính</span>

@@ -668,15 +668,18 @@ input[type="radio"]:checked {
     border-color: var(--color-primary);
 }
 
-/*  footer  */
+/* ----- FOOTER ----- */
+/* Footer */
 .footer_bottom .container {
     display: flex;
     background-color: #01161E;
+    width: 100%;
 }
 
 .footer_bottom .content {
     margin-top: 16px;
     color: #CAD2C5;
+    padding: 0;
 }
 
 .footer_bottom ul {
@@ -687,12 +690,12 @@ input[type="radio"]:checked {
 }
 
 .footer .container {
-    border-top: 1px solid black;
     display: flex;
     height: auto;
     width: 100%;
     padding-top: 30px;
     justify-content: center;
+    background-color: #fafafa;
 }
 
 .footer ul {
@@ -702,6 +705,7 @@ input[type="radio"]:checked {
 .footer .profile .content {
     max-width: 250px;
     margin-top: 20px;
+    padding-left: 0;
 }
 
 .footer .line {
@@ -738,7 +742,7 @@ input[type="radio"]:checked {
 
 .footer .profile {
     color: #333D29;
-    margin-top: 50px;
+    margin-top: 0px;
     margin-right: 100px;
 }
 
@@ -747,11 +751,156 @@ input[type="radio"]:checked {
 }
 
 .footer ul li {
-    margin-top: 50px;
+    margin-top: 34px;
     font-weight: bold;
 }
 
 .footer ul li > a {
     text-decoration: none;
-    color: #333D29;
+    color: #555;
+    font-weight: 300;
+
 }
+
+.footer ul li div > a {
+    text-decoration: none;
+    color: #000000;
+}
+
+.footer ul li > a:hover {
+    color: var(--color-primary);
+}
+
+/* Định dạng tổng quát cho footer */
+.footer_bottom {
+    background-color: #fff;
+    color: #555;
+    padding: 20px 0;
+    font-family: Arial, sans-serif;
+}
+
+/* Chia footer thành 2 cột */
+.footer-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1200px;
+    margin: auto;
+    padding: 0 20px;
+}
+
+/* Bên trái footer */
+.footer-left p {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 14px;
+}
+
+.footer-left img {
+    height: 20px;
+}
+
+/* Menu footer bên phải */
+.footer-right .footer-menu {
+    list-style: none;
+    display: flex;
+    gap: 20px;
+    padding: 0;
+    margin: 0;
+}
+
+.footer-right .footer-menu li {
+    display: inline;
+}
+
+.footer-right .footer-menu a {
+    text-decoration: none;
+    color: #555;
+    font-size: 14px;
+    transition: color 0.3s;
+}
+
+.footer-right .footer-menu a:hover {
+    color: #f1c40f;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .footer-container {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .footer-right .footer-menu {
+        flex-direction: column;
+        gap: 10px;
+        margin-top: 10px;
+    }
+}
+
+/* Login/Register */
+/* Reset mặc định */
+
+/* Menu container */
+.menu {
+    list-style: none;
+    padding: 0;
+    margin: 20px;
+}
+
+.menu-item {
+    display: inline-block;
+}
+
+/* Nút Đăng nhập / Đăng ký */
+.login-register {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    text-decoration: none;
+    color: #333;
+    font-size: 16px;
+    font-weight: 500;
+    padding: 10px 15px;
+    border-radius: 5px;
+    transition: 0.3s;
+    position: relative;
+    bottom: 32px;
+
+}
+
+.login-register:hover {
+    color: var(--color-primary);
+}
+
+/* SVG Icon */
+.login-register svg {
+    fill: currentColor;
+    transition: 0.3s;
+}
+
+/*.login-register span{*/
+/*    position: relative;*/
+/*    bottom: 6px;*/
+
+/*}*/
+
+.login-register:hover svg {
+    fill: var(--color-primary);
+}
+
+.login-register:hover span {
+    fill: var(--color-primary);
+    color: var(--color-primary);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .login-register {
+        font-size: 14px;
+        padding: 8px 12px;
+    }
+}
+
+/* Login/Register */

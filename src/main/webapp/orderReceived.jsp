@@ -114,7 +114,8 @@
                     </div>
                     <div>
                         <h1 class="confirmation-title">Cảm ơn bạn đã đặt hàng</h1>
-                        <p class="confirmation-message">Một email xác nhận đã được gửi tới <b>duc@gmail.com</b>.<br>Xin
+                        <p class="confirmation-message">Một email xác nhận đã được gửi tới
+                            <b>tanhtran_test@gmail.com</b>.<br>Xin
                             vui lòng kiểm tra email của bạn</p>
                     </div>
                 </div>
