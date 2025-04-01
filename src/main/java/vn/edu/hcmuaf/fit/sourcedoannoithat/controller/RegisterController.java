@@ -53,6 +53,11 @@ public class RegisterController extends HttpServlet {
                 request.getRequestDispatcher("register.jsp").forward(request, response);
                 return;
             }
+            if (!registerDao.checkEmailExists(email)) {
+                request.setAttribute("error", "Email đã tồn tại!");
+                request.getRequestDispatcher("register.jsp").forward(request, response);
+                return;
+            }
 
             // Mã hóa mật khẩu
             String hashedPassword = BCrypt.hashpw(password, BCrypt.gensalt());
