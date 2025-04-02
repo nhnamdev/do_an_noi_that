@@ -66,6 +66,7 @@ function deleteCustomer(button) {
 function viewCustomerDetails(name) {
     alert(`Hiển thị chi tiết cho khách hàng: ${name}`);
 }
+
 // JavaScript for searching members by name or ID
 
 document.querySelector('.search-btn').addEventListener('click', function () {

@@ -41,6 +41,22 @@ public class ProfileDao {
         }
         return null;
     }
+    public int getActiveUser(int id){
+        String query ="SELECT active FROM profile_client WHERE id=?";
+        int active = 0;
+        try {
+            connection = new DBConnect().getConnection();
+            ps = connection.prepareStatement(query);
+            ps.setInt(1, id);
+            ResultSet resultSet = ps.executeQuery();
+            if (resultSet.next()) {
+                active = resultSet.getInt("active");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return active;
+    }
 
     public boolean checkOldPassW(String oldPassw,int id) {
         String query = "SELECT password FROM profile_client WHERE id = ?";
@@ -172,12 +188,35 @@ public class ProfileDao {
             e.printStackTrace();
         }
     }
+    public void lockUser(int accountId) {
+        String query = "UPDATE profile_client SET active = -1 WHERE id = ?" ;
+        try {
+            connection = new DBConnect().getConnection();
+            ps = connection.prepareStatement(query);
+            ps.setInt(1, accountId);
+            ps.executeUpdate();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    public void unlockUser(int accountId) {
+        String query = "UPDATE profile_client SET active = 1 WHERE id = ?" ;
+        try {
+            connection = new DBConnect().getConnection();
+            ps = connection.prepareStatement(query);
+            ps.setInt(1, accountId);
+            ps.executeUpdate();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
     public static void main(String[] args) {
         ProfileDao profileDao = new ProfileDao();
         Profile profile = new Profile("Hồ Hải 3", "08/01/2001", "0793450530", "BÙI HỮU NGHĨA STREET", "hominhhai2k@gmail.com");
         //System.out.println(profileDao.checkOldPassW("123456",3));
-        System.out.println(profileDao.changePassw("123456",2));
+       // System.out.println(profileDao.changePassw("123456",2));
+        profileDao.lockUser(3);
     }
 
 }
