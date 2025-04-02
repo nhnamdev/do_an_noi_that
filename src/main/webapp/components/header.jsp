@@ -22,6 +22,7 @@
       <ul class="navbar-nav me-auto">
         <li class="nav-item"><a class="nav-link" href="index">Trang chủ</a></li>
         <li class="nav-item"><a class="nav-link" href="shop">Cửa hàng</a></li>
+        <li class="nav-item"><a class="nav-link" href="news.jsp">Tin tức</a></li>
         <li class="nav-item"><a class="nav-link" href="About_us.jsp">Thông tin</a></li>
         <li class="nav-item"><a class="nav-link" href="contact.jsp">Liên hệ</a></li>
       </ul>
