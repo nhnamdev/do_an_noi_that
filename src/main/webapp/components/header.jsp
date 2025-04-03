@@ -27,14 +27,14 @@
         <li class="nav-item"><a class="nav-link" href="contact.jsp">Liên hệ</a></li>
       </ul>
       <ul class="navbar-nav ms-auto">
-        <c:if test="${sessionScope.loginModel==null}">
+        <c:if test="${sessionScope.loginModel==null && sessionScope.googleAccount == null}">
           <li class="nav-item">
             <a class="nav-link" href="login.jsp">
               <i class="fas fa-user"></i> Đăng nhập / Đăng ký
             </a>
           </li>
         </c:if>
-        <c:if test="${sessionScope.loginModel!=null}">
+        <c:if test="${sessionScope.loginModel!=null || sessionScope.googleAccount != null}">
           <li class="nav-item">
             <a class="nav-link" href="personal.jsp">
               <img src="img/avt.jpg" class="rounded-circle" width="22">

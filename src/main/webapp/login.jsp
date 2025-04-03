@@ -1,7 +1,6 @@
-
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ taglib prefix = "c" uri = "http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix = "fmt" uri = "http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -17,7 +16,7 @@
 <body>
 
 <div>
-    <jsp:include page="/components/header.jsp" />
+    <jsp:include page="/components/header.jsp"/>
     <script src="js/showSearch.js"></script>
     <div class="navigation_titlePage">
         <div class="container">
@@ -38,10 +37,11 @@
             </div>
         </div>
     </div>
-    <div class="slider2" style="background-color: #fff; height: 590px">
+    <div class="slider2" style="background-color: #fff; height: 700px">
         <div class="login" style="margin: auto; width: 460px;">
             <h2 style="margin-left: 120px;">Đăng nhập</h2>
-            <form action="login" method="post" style="margin-right: 32px;width: 426px;border: 2px dashed #6bae0e;padding-left: 30px; padding-bottom: 20px">
+            <form action="login" method="post"
+                  style="margin-right: 32px;width: 426px;border: 2px dashed #6bae0e;padding-left: 30px; padding-bottom: 20px">
                 <c:if test="${not empty error}">
                     <div style="color: red; font-weight: bold; width: 360px;">
                             ${error}
@@ -60,7 +60,29 @@
                 </div>
                 <!-- Google reCAPTCHA -->
                 <div class="g-recaptcha" data-sitekey="6Lek8vsqAAAAAGlMWAnGATelPA7HXTFyfZZaRK1K"></div>
-
+                <div style="text-align: center; margin-top: 20px; display: flex; align-items: center;">
+                    <hr style="width: 100px; border: 1px solid #000; margin-right: 10px;">
+                    <h5 style="margin: 0; color: gray;">Đăng nhập với</h5>
+                    <hr style="width: 100px; border: 1px solid #000; margin-left: 10px;">
+                </div>
+                <div class="loginOther" style="display: flex; margin-top: 10px;">
+                    <div class="google" style="margin-right: 50px;margin-left: 50px;">
+                        <a href="https://accounts.google.com/o/oauth2/auth?scope=email profile openid
+&redirect_uri=http://localhost:8080/source_do_an_noi_that_war/login
+&response_type=code
+&client_id=313036133777-qlvuragc9njih90ffl86jj1gdlp0450d.apps.googleusercontent.com
+&approval_prompt=force"
+                           style="background-color: #4285F4; color: white; padding: 10px 10px; text-decoration: none; border-radius: 5px; display: inline-block;">
+                            <i class="fab fa-google" style="margin-right: 8px;"></i> Google
+                        </a>
+                    </div>
+                    <div class="facebook">
+                        <a href=""
+                           style="background-color: #3b5998; color: white; padding: 10px 10px; text-decoration: none; border-radius: 5px; display: inline-block;">
+                            <i class="fab fa-facebook-f" style="margin-right: 8px;"></i> Facebook
+                        </a>
+                    </div>
+                </div>
                 <button type="submit" style="margin-left: 54px;">Đăng nhập</button>
             </form>
             <div class="lostpass" style="margin-left: 48px;">
@@ -71,7 +93,7 @@
     </div>
 
 </div>
-<jsp:include page="components/footer.jsp" />
+<jsp:include page="components/footer.jsp"/>
 <script>
     function togglePassword() {
         const passwordField = document.getElementById("password");
