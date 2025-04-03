@@ -46,14 +46,14 @@ public class AdminController extends HttpServlet {
         String selectedName = req.getParameter("name");
         List<String> content = contactDao.getContentByName(selectedName);
 
-        OrderDao orderDao = new OrderDao();
-        List<Order> order = orderDao.getListOrder();
+//        OrderDao orderDao = new OrderDao();
+//        List<Order> order = orderDao.getListOrder();
 
         req.setAttribute("selectedContent", content);
         req.setAttribute("warranty", warrantyProduct);
         req.setAttribute("profile", profile);
         req.setAttribute("listP", listP);
-        req.setAttribute("order", order);
+//        req.setAttribute("order", order);
         req.setAttribute("names", names);
         req.setAttribute("contact", contact);
         req.setAttribute("product", list);

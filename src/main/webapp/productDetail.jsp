@@ -130,7 +130,7 @@
                             </div>
                             <div class="product-describe">
                                 <div class="product-description">
-                                    <p>${detail.productDesribe}</p>
+                                    <p>${detail.productDescribe}</p>
                                 </div>
                             </div>
                             <div class="quantity-section">
@@ -162,10 +162,13 @@
                                 </script>
                             </div>
                             <div class="action-buttons">
-                                <button class="add-to-cart-btn">
-                                    <i class="fas fa-cart-plus"></i> Thêm vào giỏ hàng
-                                </button>
-                                <button class="buy-btn">
+                                <form action="cart/addToCart" method="post">
+                                    <input type="hidden" name="id" value="${product.id}">
+                                    <button type="submit" class="add-to-cart-btn">
+                                        <i class="fas fa-cart-plus"></i> Thêm vào giỏ hàng
+                                    </button>
+                                </form>
+                                <button type="submit" class="buy-btn">
                                     <i class="fas fa-shopping-bag"></i> Mua ngay
                                 </button>
                             </div>
