@@ -2,6 +2,7 @@ package vn.edu.hcmuaf.fit.sourcedoannoithat.dao;
 
 import org.mindrot.jbcrypt.BCrypt;
 import vn.edu.hcmuaf.fit.sourcedoannoithat.dao.db.DBConnect;
+import vn.edu.hcmuaf.fit.sourcedoannoithat.dao.model.FBAccount;
 import vn.edu.hcmuaf.fit.sourcedoannoithat.dao.model.GoogleAccount;
 import vn.edu.hcmuaf.fit.sourcedoannoithat.dao.model.RegisterModel;
 
@@ -48,6 +49,20 @@ public class LoginDao {
             e.printStackTrace();
         }
     }
+    public void addFacebookAccount(FBAccount fbAccount) {
+        String query = "INSERT INTO profile_client (username, password,name,birthday,role,phoneNumber,address,email,otp,active,otpCreateAt) VALUES( null, null, ?, null,0,null,null,?,null,1,NOW())";
+        try {
+            connection = new DBConnect().getConnection();
+            ps = connection.prepareStatement(query);
+            ps.setString(1, fbAccount.getName());
+            ps.setString(2, fbAccount.getEmail());
+            ps.executeUpdate();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     public boolean isUserExist(String email) {
         String query ="SELECT COUNT(*) FROM profile_client WHERE email = ?";
         try{

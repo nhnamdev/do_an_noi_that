@@ -9,6 +9,7 @@ import jakarta.servlet.http.HttpSession;
 import vn.edu.hcmuaf.fit.sourcedoannoithat.dao.LogDAO;
 import vn.edu.hcmuaf.fit.sourcedoannoithat.dao.LoginDao;
 import vn.edu.hcmuaf.fit.sourcedoannoithat.dao.ProfileDao;
+import vn.edu.hcmuaf.fit.sourcedoannoithat.dao.model.FBAccount;
 import vn.edu.hcmuaf.fit.sourcedoannoithat.dao.model.GoogleAccount;
 import vn.edu.hcmuaf.fit.sourcedoannoithat.dao.model.RegisterModel;
 import vn.edu.hcmuaf.fit.sourcedoannoithat.dao.model.Profile;
@@ -27,33 +28,51 @@ public class LoginController extends HttpServlet {
     LogDAO logDAO = new LogDAO();
     private LoginDao loginDao = new LoginDao();
     private static final String SECRET_KEY = "6Lek8vsqAAAAAFPIGu-R9RS3RNck2axw1BWy3fU6";
+
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         String code = request.getParameter("code");
         String error = request.getParameter("error");
-        if(error != null) {
+        if (error != null) {
             request.getRequestDispatcher("login.jsp").forward(request, response);
             return;
         }
-        GoogleLogin gg = new GoogleLogin();
-        String accessToken = gg.getToken(code);
-        GoogleAccount acc = gg.getUserInfo(accessToken);
-        boolean isUserExist = loginDao.isUserExist(acc.getEmail());
-        //check tk da dky chua
-        if (!isUserExist) {
-            loginDao.addGoogleAccount(acc);
+        if (request.getParameter("provider") != null && request.getParameter("provider").equals("google")) {
+            GoogleLogin gg = new GoogleLogin();
+            String accessToken = gg.getToken(code);
+            GoogleAccount acc = gg.getUserInfo(accessToken);
+            boolean isUserExist = loginDao.isUserExist(acc.getEmail());
+            //check tk da dky chua
+            if (!isUserExist) {
+                loginDao.addGoogleAccount(acc);
+            }
+            HttpSession session = request.getSession();
+            session.setAttribute("googleAccount", acc);
+            session.setAttribute("userEmail", acc.getEmail());
+            session.setAttribute("userName", acc.getName());
+            response.sendRedirect("index.jsp");
         }
-        HttpSession session = request.getSession();
-        session.setAttribute("googleAccount",acc);
-        session.setAttribute("userEmail", acc.getEmail());
-        session.setAttribute("userName", acc.getName());
-        response.sendRedirect("index.jsp");
+        if (request.getParameter("provider") != null && request.getParameter("provider").equals("facebook")) {
+            FacebookLogin fb = new FacebookLogin();
+            String accessToken = fb.getToken(code);
+            FBAccount acc = fb.getUserInfo(accessToken);
+            boolean isUserExist = loginDao.isUserExist(acc.getEmail());
+            if (!isUserExist) {
+                loginDao.addFacebookAccount(acc);
+            }
+            HttpSession session = request.getSession();
+            session.setAttribute("facebookAccount", acc);
+            session.setAttribute("userEmail", acc.getEmail());
+            session.setAttribute("userName", acc.getName());
+            response.sendRedirect("index.jsp");
+        }
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         processRequest(request, response);
     }
+
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         request.setCharacterEncoding("UTF-8");
@@ -114,9 +133,9 @@ public class LoginController extends HttpServlet {
                     request.setAttribute("error", "Tên đăng nhập hoặc mật khẩu không đúng!");
                     request.getRequestDispatcher("login.jsp").forward(request, response);
                 }
-            }else if(active ==0){
+            } else if (active == 0) {
                 response.sendRedirect("ConfirmOTP.jsp");
-            }else if(active == -1){
+            } else if (active == -1) {
                 response.sendRedirect("blockedaccount.jsp");
             }
         } catch (Exception e) {
