@@ -1,45 +1,6 @@
-
-<%@ page import="java.util.ArrayList" %>
-<%@ page import="java.util.List" %>
-<%@ page import="vn.edu.hcmuaf.fit.sourcedoannoithat.dao.model.Product" %>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%--<%--%>
-<%--    Integer productId = (Integer) session.getAttribute("productId");--%>
-<%--    String productName = (String) session.getAttribute("productName");--%>
-<%--    Double productPrice = (Double) session.getAttribute("productPrice");--%>
-<%--    String productImg = (String) session.getAttribute("imageProduct");--%>
-<%--    int quantity = Integer.parseInt(request.getParameter("quantity"));--%>
-
-<%--    String productPriceStr = (productPrice != null) ? String.format("%.2f", productPrice) : "Không có giá";--%>
-
-<%--    List<Product> cartProducts = (List<Product>) session.getAttribute("cartProducts");--%>
-<%--    if (cartProducts == null) {--%>
-<%--        cartProducts = new ArrayList<>();--%>
-<%--    }--%>
-
-<%--    boolean productExists = false;--%>
-<%--    for (Product item : cartProducts) {--%>
-<%--        if (item.getId() == productId && item.getName().equals(productName)) {--%>
-<%--            item.setQuantity(item.getQuantity() + quantity);--%>
-<%--            productExists = true;--%>
-<%--            break;--%>
-<%--        }--%>
-<%--    }--%>
-
-<%--    if (!productExists) {--%>
-<%--        Product newProduct = new Product();--%>
-<%--        newProduct.setId(productId);--%>
-<%--        newProduct.setName(productName);--%>
-<%--        newProduct.setPrice(Double.parseDouble(productPriceStr));--%>
-<%--        newProduct.setImage(productImg);--%>
-
-<%--        newProduct.setQuantity(1);--%>
-<%--        cartProducts.add(newProduct);--%>
-<%--    }--%>
-
-<%--    session.setAttribute("cartProducts", cartProducts);--%>
-<%--%>--%>
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="f" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html lang="vi">
 <head>
@@ -47,7 +8,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Giỏ hàng</title>
-    <link rel="stylesheet" href="css/cart.css">
+    <link rel="stylesheet" href="/css/cart.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
 </head>
 <body>
@@ -146,62 +107,83 @@
                         <thead>
                         <tr>
                             <th class="product-column">SẢN PHẨM</th>
-                            <th class="price-column">GIÁ</th>
+                            <th class="price-column">ĐƠN GIÁ</th>
                             <th class="quantity-column">SỐ LƯỢNG</th>
-                            <th class="subtotal-column">TỔNG PHỤ</th>
+                            <th class="subtotal-column">TỔNG</th>
                         </tr>
                         </thead>
                         <tbody>
-                        <tr class="cart-item">
-                            <td class="product-column">
-                                <div class="product-info">
-                                    <img src="img/sofa3.jpg" alt="Bộ bàn ghế ăn gỗ Cao Su" class="product-image">
-                                    <div class="product-details">
-                                        <div class="product-name">Bộ bàn ghế ăn gỗ Cao Su</div>
-                                        <div class="product-variants">
-                                            <span class="product-variant">Màu: đen</span>
-                                            <span class="product-variant">Kích thước: 300x400</span>
-                                            <span class="product-variant">Chất liệu: Gỗ cao su</span>
-                                        </div>
-                                        <button class="remove-btn"><i class="fas fa-times"></i> Xóa</button>
-                                    </div>
-                                </div>
-                            </td>
-                            <td class="price-column">5,471,000đ</td>
-                            <td class="quantity-column">
-                                <div class="quantity-control">
-                                    <button class="quantity-btn minus">-</button>
-                                    <input type="text" class="quantity-input" value="1">
-                                    <button class="quantity-btn plus">+</button>
-                                </div>
-                            </td>
-                            <td class="subtotal-column">5,471,000đ</td>
-                        </tr>
-                        <tr class="cart-item">
-                            <td class="product-column">
-                                <div class="product-info">
-                                    <img src="img/sofa3.jpg" alt="Bộ bàn ghế ăn gỗ Cao Su" class="product-image">
-                                    <div class="product-details">
-                                        <div class="product-name">Bộ bàn ghế ăn gỗ Cao Su</div>
-                                        <div class="product-variants">
-                                            <span class="product-variant">Màu: đen</span>
-                                            <span class="product-variant">Kích thước: 300x400</span>
-                                            <span class="product-variant">Chất liệu: Gỗ cao su</span>
-                                        </div>
-                                        <button class="remove-btn"><i class="fas fa-times"></i> Xóa</button>
-                                    </div>
-                                </div>
-                            </td>
-                            <td class="price-column">5,471,000đ</td>
-                            <td class="quantity-column">
-                                <div class="quantity-control">
-                                    <button class="quantity-btn minus">-</button>
-                                    <input type="text" class="quantity-input" value="1">
-                                    <button class="quantity-btn plus">+</button>
-                                </div>
-                            </td>
-                            <td class="subtotal-column">5,471,000đ</td>
-                        </tr>
+                        <%-- tai sao o day dung choose ma khong phai if, de sau nay co the mo rong code hon,
+                        vi du nhu sau nay muon mo rong them la gio hang khong trong boi vi co san pham het hang
+                        nam trong gio hang nen khong tinh la gio hang trong dc--%>
+                        <c:choose>
+                            <c:when test="${cart == null}">
+                                <td colspan="4" class="empty-cart-message">Giỏ hàng của bạn đang trống.</td>
+                            </c:when>
+                            <c:otherwise>
+                                <c:forEach var="entry" items="${cart}">
+                                    <c:set var="order" value="${entry.value}"/>
+                                    <c:set var="product" value="${order.product}"/>
+                                    <tr class="cart-item">
+                                        <td class="product-column">
+                                            <div class="product-info">
+                                                <img src="${product.img}" alt="${product.name}" class="product-image">
+                                                <div class="product-details">
+                                                    <div class="product-name">${product.name}</div>
+                                                    <button class="remove-btn" onclick="removeProduct(${product.id})">
+                                                        <i class="fas fa-times"></i> Xóa
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td class="price-column">
+                                            <f:formatNumber type="currency" value="${product.price}" pattern="#,###đ"/>
+                                        </td>
+                                        <td class="quantity-column">
+                                            <div class="quantity-control">
+                                                <button class="quantity-btn minus"
+                                                        onclick="updateQuantity(${product.id}, ${order.quantity - 1})">-
+                                                </button>
+                                                <input type="text" class="quantity-input" value="${order.quantity}"
+                                                       onchange="updateQuantity(${product.id}, this.value)">
+                                                <button class="quantity-btn plus"
+                                                        onclick="updateQuantity(${product.id}, ${order.quantity + 1})">+
+                                                </button>
+                                            </div>
+                                        </td>
+                                        <td class="subtotal-column">
+                                            <f:formatNumber type="currency" value="${product.price * order.quantity}"
+                                                            pattern="#,###đ"/>
+                                        </td>
+                                    </tr>
+                                </c:forEach>
+                            </c:otherwise>
+                        </c:choose>
+                        <%--                        <tr class="cart-item">--%>
+                        <%--                            <td class="product-column">--%>
+                        <%--                                <div class="product-info">--%>
+                        <%--                                    <img src="${product.img}" alt="${product.name}" class="product-image">--%>
+                        <%--                                    <div class="product-details">--%>
+                        <%--                                        <div class="product-name">${product.name}</div>--%>
+                        <%--                                        <div class="product-variants">--%>
+                        <%--                                            <span class="product-variant">Màu: đen</span>--%>
+                        <%--                                            <span class="product-variant">Kích thước: 300x400</span>--%>
+                        <%--                                            <span class="product-variant">Chất liệu: Gỗ cao su</span>--%>
+                        <%--                                        </div>--%>
+                        <%--                                        <button class="remove-btn"><i class="fas fa-times"></i> Xóa</button>--%>
+                        <%--                                    </div>--%>
+                        <%--                                </div>--%>
+                        <%--                            </td>--%>
+                        <%--                            <td class="price-column">${product.price}</td>--%>
+                        <%--                            <td class="quantity-column">--%>
+                        <%--                                <div class="quantity-control">--%>
+                        <%--                                    <button class="quantity-btn minus">-</button>--%>
+                        <%--                                    <input type="text" class="quantity-input" value="1">--%>
+                        <%--                                    <button class="quantity-btn plus">+</button>--%>
+                        <%--                                </div>--%>
+                        <%--                            </td>--%>
+                        <%--                            <td class="subtotal-column">${product.price}</td>--%>
+                        <%--                        </tr>--%>
                         </tbody>
                     </table>
                     <div class="coupon-section">
@@ -228,8 +210,7 @@
                     </div>
                 </div>
                 <div class="cart-right">
-                    <h3 class="cart-summary-title">CỘNG GIỎ HÀNG</h3>
-
+                    <h3 class="cart-summary-title">GIỎ HÀNG</h3>
                     <div class="summary-row">
                         <span class="summary-label">Tạm tính</span>
                         <span class="summary-value">5,471,000₫</span>

@@ -130,7 +130,7 @@
                             </div>
                             <div class="product-describe">
                                 <div class="product-description">
-                                    <p>${detail.productDesribe}</p>
+                                    <p>${detail.productDescribe}</p>
                                 </div>
                             </div>
                             <div class="quantity-section">
@@ -147,25 +147,27 @@
                                     function increaseQuantity() {
                                         quantity++;
                                         document.getElementById('quantity').innerText = quantity;
+                                        document.getElementById('quantityInput').value = quantity;
                                     }
 
                                     function decreaseQuantity() {
                                         if (quantity > 1) {
                                             quantity--;
                                             document.getElementById('quantity').innerText = quantity;
+                                            document.getElementById('quantityInput').value = quantity;
                                         }
-                                    }
-
-                                    function setQuantity() {
-                                        document.getElementById('quantityInput').value = quantity;
                                     }
                                 </script>
                             </div>
                             <div class="action-buttons">
-                                <button class="add-to-cart-btn">
-                                    <i class="fas fa-cart-plus"></i> Thêm vào giỏ hàng
-                                </button>
-                                <button class="buy-btn">
+                                <form action="cart/addToCart" method="post">
+                                    <input type="hidden" name="id" value="${product.id}">
+                                    <input type="hidden" name="quantity" id="quantityInput" value="1">
+                                    <button type="submit" class="add-to-cart-btn" onclick="setQuantity()">
+                                        <i class="fas fa-cart-plus"></i> Thêm vào giỏ hàng
+                                    </button>
+                                </form>
+                                <button type="submit" class="buy-btn">
                                     <i class="fas fa-shopping-bag"></i> Mua ngay
                                 </button>
                             </div>

@@ -17,15 +17,15 @@ import java.util.List;
 public class OrderController extends HttpServlet {
     @Override
     public void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        req.setCharacterEncoding("UTF-8");
-        resp.setCharacterEncoding("UTF-8");
-        HttpSession session = req.getSession();
-        Integer userId = (Integer) session.getAttribute("userIdLogin");
-        OrderDao orderDao = new OrderDao();
-        List<Order> list =orderDao.getOrderByUserName(userId);
-
-        req.setAttribute("orderList", list);
-        req.getRequestDispatcher("oderInformation.jsp").forward(req, resp);
+//        req.setCharacterEncoding("UTF-8");
+//        resp.setCharacterEncoding("UTF-8");
+//        HttpSession session = req.getSession();
+//        Integer userId = (Integer) session.getAttribute("userIdLogin");
+//        OrderDao orderDao = new OrderDao();
+//        List<Order> list =orderDao.getOrderByUserName(userId);
+//
+//        req.setAttribute("orderList", list);
+//        req.getRequestDispatcher("oderInformation.jsp").forward(req, resp);
     }
 
     @Override

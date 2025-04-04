@@ -871,7 +871,7 @@ li {
 }
 
 /*  pagination  */
-.pagination {
+.product-list .pagination {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -880,7 +880,7 @@ li {
     width: 100%;
 }
 
-.pagination-container {
+.product-list .pagination-container {
     display: flex;
     list-style: none;
     margin: 0;
@@ -890,17 +890,17 @@ li {
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
 }
 
-.pagination-item {
+.product-list .pagination-item {
     margin: 0;
     padding: 0;
     border-right: 1px solid #f0f0f0;
 }
 
-.pagination-item:last-child {
+.product-list .pagination-item:last-child {
     border-right: none;
 }
 
-.pagination-link {
+.product-list .pagination-link {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -914,19 +914,19 @@ li {
     font-size: 14px;
 }
 
-.pagination-link:hover {
+.product-list .pagination-link:hover {
     background-color: #f9f9f9;
     color: #5D7B6F;
 }
 
-.pagination-link.active {
+.product-list .pagination-link.active {
     background-color: #5D7B6F;
     color: #fff;
     font-weight: 600;
 }
 
-.pagination-prev,
-.pagination-next {
+.product-list .pagination-prev,
+.product-list .pagination-next {
     padding: 0 12px;
 }
 
@@ -1010,22 +1010,43 @@ li {
 }
 
 /* ----- FOOTER ----- */
+/* Footer */
+.footer_bottom .container {
+    display: flex;
+    background-color: #01161E;
+    width: 100%;
+}
+
+.footer_bottom .content {
+    margin-top: 16px;
+    color: #CAD2C5;
+    padding: 0;
+}
+
+.footer_bottom ul {
+    list-style-type: none;
+    color: #CAD2C5;
+    margin-right: 5px;
+    margin-left: 80px;
+}
+
 .footer .container {
     display: flex;
     height: auto;
     width: 100%;
     padding-top: 30px;
     justify-content: center;
+    background-color: #fafafa;
 }
 
 .footer ul {
     list-style-type: none;
-    margin-top: 50px;
 }
 
 .footer .profile .content {
     max-width: 250px;
     margin-top: 20px;
+    padding-left: 0;
 }
 
 .footer .line {
@@ -1062,34 +1083,165 @@ li {
 
 .footer .profile {
     color: #333D29;
-    margin-top: 50px;
+    margin-top: 0px;
     margin-right: 100px;
 }
 
-.footer ul li {
+.footer ul {
     margin-top: 50px;
+}
+
+.footer ul li {
+    margin-top: 34px;
     font-weight: bold;
 }
 
 .footer ul li > a {
     text-decoration: none;
-    color: #333D29;
+    color: #555;
+    font-weight: 300;
+
 }
 
-.footer_bottom .container {
+.footer ul li div > a {
+    text-decoration: none;
+    color: #000000;
+}
+
+.footer ul li > a:hover {
+    color: var(--color-primary);
+}
+
+/* Định dạng tổng quát cho footer */
+.footer_bottom {
+    background-color: #fff;
+    color: #555;
+    padding: 20px 0;
+    font-family: Arial, sans-serif;
+}
+
+/* Chia footer thành 2 cột */
+.footer-container {
     display: flex;
-    background-color: #01161E;
-    width: 100%;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1200px;
+    margin: auto;
+    padding: 0 20px;
 }
 
-.footer_bottom .content {
-    margin-top: 16px;
-    color: #CAD2C5;
+/* Bên trái footer */
+.footer-left p {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 14px;
 }
 
-.footer_bottom ul {
-    list-style-type: none;
-    color: #CAD2C5;
-    margin-right: 5px;
-    margin-left: 80px;
+.footer-left img {
+    height: 20px;
 }
+
+/* Menu footer bên phải */
+.footer-right .footer-menu {
+    list-style: none;
+    display: flex;
+    gap: 20px;
+    padding: 0;
+    margin: 0;
+}
+
+.footer-right .footer-menu li {
+    display: inline;
+}
+
+.footer-right .footer-menu a {
+    text-decoration: none;
+    color: #555;
+    font-size: 14px;
+    transition: color 0.3s;
+}
+
+.footer-right .footer-menu a:hover {
+    color: #f1c40f;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .footer-container {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .footer-right .footer-menu {
+        flex-direction: column;
+        gap: 10px;
+        margin-top: 10px;
+    }
+}
+
+/* Login/Register */
+/* Reset mặc định */
+
+/* Menu container */
+.menu {
+    list-style: none;
+    padding: 0;
+    margin: 20px;
+}
+
+.menu-item {
+    display: inline-block;
+}
+
+/* Nút Đăng nhập / Đăng ký */
+.login-register {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    text-decoration: none;
+    color: #333;
+    font-size: 16px;
+    font-weight: 500;
+    padding: 10px 15px;
+    border-radius: 5px;
+    transition: 0.3s;
+    position: relative;
+    bottom: 32px;
+
+}
+
+.login-register:hover {
+    color: var(--color-primary);
+}
+
+/* SVG Icon */
+.login-register svg {
+    fill: currentColor;
+    transition: 0.3s;
+}
+
+/*.login-register span{*/
+/*    position: relative;*/
+/*    bottom: 6px;*/
+
+/*}*/
+
+.login-register:hover svg {
+    fill: var(--color-primary);
+}
+
+.login-register:hover span {
+    fill: var(--color-primary);
+    color: var(--color-primary);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .login-register {
+        font-size: 14px;
+        padding: 8px 12px;
+    }
+}
+
+/* Login/Register */
