@@ -68,7 +68,7 @@
                 <div class="loginOther" style="display: flex; margin-top: 10px;">
                     <div class="google" style="margin-right: 50px;margin-left: 50px;">
                         <a href="https://accounts.google.com/o/oauth2/auth?scope=email profile openid
-&redirect_uri=http://localhost:8080/source_do_an_noi_that_war/login
+&redirect_uri=http://localhost:8080/source_do_an_noi_that_war/login?provider=google
 &response_type=code
 &client_id=313036133777-qlvuragc9njih90ffl86jj1gdlp0450d.apps.googleusercontent.com
 &approval_prompt=force"
@@ -77,7 +77,9 @@
                         </a>
                     </div>
                     <div class="facebook">
-                        <a href=""
+                        <a href="https://www.facebook.com/v19.0/dialog/oauth?
+client_id=1298925587857868
+&redirect_uri=http://localhost:8080/source_do_an_noi_that_war/login?provider=facebook"
                            style="background-color: #3b5998; color: white; padding: 10px 10px; text-decoration: none; border-radius: 5px; display: inline-block;">
                             <i class="fab fa-facebook-f" style="margin-right: 8px;"></i> Facebook
                         </a>
