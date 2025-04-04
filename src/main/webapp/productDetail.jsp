@@ -147,24 +147,23 @@
                                     function increaseQuantity() {
                                         quantity++;
                                         document.getElementById('quantity').innerText = quantity;
+                                        document.getElementById('quantityInput').value = quantity;
                                     }
 
                                     function decreaseQuantity() {
                                         if (quantity > 1) {
                                             quantity--;
                                             document.getElementById('quantity').innerText = quantity;
+                                            document.getElementById('quantityInput').value = quantity;
                                         }
-                                    }
-
-                                    function setQuantity() {
-                                        document.getElementById('quantityInput').value = quantity;
                                     }
                                 </script>
                             </div>
                             <div class="action-buttons">
                                 <form action="cart/addToCart" method="post">
                                     <input type="hidden" name="id" value="${product.id}">
-                                    <button type="submit" class="add-to-cart-btn">
+                                    <input type="hidden" name="quantity" id="quantityInput" value="1">
+                                    <button type="submit" class="add-to-cart-btn" onclick="setQuantity()">
                                         <i class="fas fa-cart-plus"></i> Thêm vào giỏ hàng
                                     </button>
                                 </form>

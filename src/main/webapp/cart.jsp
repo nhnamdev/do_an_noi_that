@@ -107,41 +107,83 @@
                         <thead>
                         <tr>
                             <th class="product-column">SẢN PHẨM</th>
-                            <th class="price-column">GIÁ</th>
+                            <th class="price-column">ĐƠN GIÁ</th>
                             <th class="quantity-column">SỐ LƯỢNG</th>
-                            <th class="subtotal-column">TỔNG PHỤ</th>
+                            <th class="subtotal-column">TỔNG</th>
                         </tr>
                         </thead>
                         <tbody>
-                        <c:forEach var="entry" items="${cart}">
-                            <c:set var="order" value="${entry.value}"/>
-                            <c:set var="product" value="${order.product}"/>
-                            <tr class="cart-item">
-                                <td class="product-column">
-                                    <div class="product-info">
-                                        <img src="${product.img}" alt="${product.name}" class="product-image">
-                                        <div class="product-details">
-                                            <div class="product-name">${product.name}</div>
-                                            <div class="product-variants">
-                                                <span class="product-variant">Màu: đen</span>
-                                                <span class="product-variant">Kích thước: 300x400</span>
-                                                <span class="product-variant">Chất liệu: Gỗ cao su</span>
+                        <%-- tai sao o day dung choose ma khong phai if, de sau nay co the mo rong code hon,
+                        vi du nhu sau nay muon mo rong them la gio hang khong trong boi vi co san pham het hang
+                        nam trong gio hang nen khong tinh la gio hang trong dc--%>
+                        <c:choose>
+                            <c:when test="${cart == null}">
+                                <td colspan="4" class="empty-cart-message">Giỏ hàng của bạn đang trống.</td>
+                            </c:when>
+                            <c:otherwise>
+                                <c:forEach var="entry" items="${cart}">
+                                    <c:set var="order" value="${entry.value}"/>
+                                    <c:set var="product" value="${order.product}"/>
+                                    <tr class="cart-item">
+                                        <td class="product-column">
+                                            <div class="product-info">
+                                                <img src="${product.img}" alt="${product.name}" class="product-image">
+                                                <div class="product-details">
+                                                    <div class="product-name">${product.name}</div>
+                                                    <button class="remove-btn" onclick="removeProduct(${product.id})">
+                                                        <i class="fas fa-times"></i> Xóa
+                                                    </button>
+                                                </div>
                                             </div>
-                                            <button class="remove-btn"><i class="fas fa-times"></i> Xóa</button>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td class="price-column">${product.price}</td>
-                                <td class="quantity-column">
-                                    <div class="quantity-control">
-                                        <button class="quantity-btn minus">-</button>
-                                        <input type="text" class="quantity-input" value="1">
-                                        <button class="quantity-btn plus">+</button>
-                                    </div>
-                                </td>
-                                <td class="subtotal-column">5,471,000đ</td>
-                            </tr>
-                        </c:forEach>
+                                        </td>
+                                        <td class="price-column">
+                                            <f:formatNumber type="currency" value="${product.price}" pattern="#,###đ"/>
+                                        </td>
+                                        <td class="quantity-column">
+                                            <div class="quantity-control">
+                                                <button class="quantity-btn minus"
+                                                        onclick="updateQuantity(${product.id}, ${order.quantity - 1})">-
+                                                </button>
+                                                <input type="text" class="quantity-input" value="${order.quantity}"
+                                                       onchange="updateQuantity(${product.id}, this.value)">
+                                                <button class="quantity-btn plus"
+                                                        onclick="updateQuantity(${product.id}, ${order.quantity + 1})">+
+                                                </button>
+                                            </div>
+                                        </td>
+                                        <td class="subtotal-column">
+                                            <f:formatNumber type="currency" value="${product.price * order.quantity}"
+                                                            pattern="#,###đ"/>
+                                        </td>
+                                    </tr>
+                                </c:forEach>
+                            </c:otherwise>
+                        </c:choose>
+                        <%--                        <tr class="cart-item">--%>
+                        <%--                            <td class="product-column">--%>
+                        <%--                                <div class="product-info">--%>
+                        <%--                                    <img src="${product.img}" alt="${product.name}" class="product-image">--%>
+                        <%--                                    <div class="product-details">--%>
+                        <%--                                        <div class="product-name">${product.name}</div>--%>
+                        <%--                                        <div class="product-variants">--%>
+                        <%--                                            <span class="product-variant">Màu: đen</span>--%>
+                        <%--                                            <span class="product-variant">Kích thước: 300x400</span>--%>
+                        <%--                                            <span class="product-variant">Chất liệu: Gỗ cao su</span>--%>
+                        <%--                                        </div>--%>
+                        <%--                                        <button class="remove-btn"><i class="fas fa-times"></i> Xóa</button>--%>
+                        <%--                                    </div>--%>
+                        <%--                                </div>--%>
+                        <%--                            </td>--%>
+                        <%--                            <td class="price-column">${product.price}</td>--%>
+                        <%--                            <td class="quantity-column">--%>
+                        <%--                                <div class="quantity-control">--%>
+                        <%--                                    <button class="quantity-btn minus">-</button>--%>
+                        <%--                                    <input type="text" class="quantity-input" value="1">--%>
+                        <%--                                    <button class="quantity-btn plus">+</button>--%>
+                        <%--                                </div>--%>
+                        <%--                            </td>--%>
+                        <%--                            <td class="subtotal-column">${product.price}</td>--%>
+                        <%--                        </tr>--%>
                         </tbody>
                     </table>
                     <div class="coupon-section">

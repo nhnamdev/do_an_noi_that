@@ -62,28 +62,41 @@ public class CartController extends HttpServlet {
         HashMap<String, Order> cart = (HashMap<String, Order>) session.getAttribute("cart");
 
         request.setAttribute("cart", cart);
-        request.getRequestDispatcher(request.getContextPath() + "/cart.jsp").forward(request, response);
+        request.getRequestDispatcher("/cart.jsp").forward(request, response);
         return;
     }
 
     public void addToCart(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String productID = request.getParameter("id");
+//lay ra quantity cua san pham, mac dinh neu khong thay doi gi thi khi an vao nut them vao gio hang thi se lay so luong la 1
+        int quantity = 1;
+        try {
+            String quantityString = request.getParameter("quantity");
+            if (quantityString != null && !quantityString.isEmpty()) {
+                quantity = Integer.parseInt(quantityString);
+            }
+        } catch (NumberFormatException e) {
+//            neu co loi thi lay so luong la 1
+            quantity = 1;
+        }
         Product product = productDao.getProductById(productID);
         HttpSession session = request.getSession();
+
         HashMap<String, Order> cart = (HashMap<String, Order>) session.getAttribute("cart");
+
 //         gio hang trong thi khoi tao them moi 1 san pham khi an vao button "them vao gio hang"
         if (cart == null) {
             cart = new HashMap<>();
-            order = new Order(1, product);
+            order = new Order(quantity, product);
             cart.put(productID, order);
         } else {
 //            kiem tra neu trong gio hang da co 1 san pham truoc do da duoc them vao, thi tang so luong sp
             if (cart.containsKey(productID)) {
                 Order order = cart.get(productID);
-                order.increaseQuantity();
+                order.setQuantity(order.getQuantity() + quantity);
 //                ko co thi them moi san pham do vao gio hang
             } else {
-                order = new Order(1, product);
+                order = new Order(quantity, product);
                 cart.put(productID, order);
             }
         }
