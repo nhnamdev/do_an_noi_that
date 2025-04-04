@@ -3,7 +3,7 @@ package vn.edu.hcmuaf.fit.sourcedoannoithat.dao.model;
 public class ProductDetail {
     private int detailID;
     private int id;
-    private String productDesribe;
+    private String productDescribe;
     private String material;
     private String brand;
     private String color;
@@ -13,11 +13,11 @@ public class ProductDetail {
     private String feature;
     private String stockStatus;
 
-    public ProductDetail(int detailID, int id, String productDesribe, String material,
+    public ProductDetail(int detailID, int id, String productDescribe, String material,
                          String brand, String color, double length, double width, double height, String feature, String stockStatus) {
         this.detailID = detailID;
         this.id = id;
-        this.productDesribe = productDesribe;
+        this.productDescribe = productDescribe;
         this.material = material;
         this.brand = brand;
         this.color = color;
@@ -44,12 +44,12 @@ public class ProductDetail {
         this.id = id;
     }
 
-    public String getProductDesribe() {
-        return productDesribe;
+    public String getproductDescribe() {
+        return productDescribe;
     }
 
-    public void setProductDesribe(String productDesribe) {
-        this.productDesribe = productDesribe;
+    public void setproductDescribe(String productDescribe) {
+        this.productDescribe = productDescribe;
     }
 
     public String getMaterial() {
@@ -121,7 +121,7 @@ public class ProductDetail {
         return "ProductDetail{" +
                 "detailID=" + detailID +
                 ", id=" + id +
-                ", productDesribe='" + productDesribe + '\'' +
+                ", productDescribe='" + productDescribe + '\'' +
                 ", material='" + material + '\'' +
                 ", brand='" + brand + '\'' +
                 ", color='" + color + '\'' +

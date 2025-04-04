@@ -293,7 +293,7 @@
             </div>
         </div>
     </div>
-    <jsp:include page="/components/footer.jsp"/>
+    <jsp:include page="components/footer.jsp" />
 </div>
 <script src="js/shop.js"></script>
 </body>
