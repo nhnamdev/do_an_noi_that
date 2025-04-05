@@ -1,12 +1,12 @@
 package vn.edu.hcmuaf.fit.sourcedoannoithat.dao.model;
 
 import java.io.Serializable;
-
-public class Order implements Serializable {
+// hien thi thong tin san pham len tren gio hang
+public class CartDisplayItem implements Serializable {
     private int quantity;
     private Product product;
 
-    public Order(int quantity, Product product) {
+    public CartDisplayItem(int quantity, Product product) {
         this.quantity = quantity;
         this.product = product;
     }

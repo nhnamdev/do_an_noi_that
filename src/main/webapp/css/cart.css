@@ -649,35 +649,46 @@ body, html {
 /* coupon section */
 .coupon-form {
     display: flex;
-    margin-bottom: 25px;
+    justify-content: space-between;
+    margin: 20px 0;
+}
+
+.coupon-code {
+    display: flex;
+    align-items: center;
+    width: 50%;
 }
 
 .coupon-input {
-    padding: 12px 15px;
-    border: 1px solid #e0e0e0;
-    border-right: none;
-    border-radius: 6px 0 0 6px;
-    font-family: 'Poppins', sans-serif;
-    transition: all 0.3s ease;
+    flex: 1;
+    height: 42px;
+    padding: 0 15px;
+    border: 1px solid #ddd;
+    border-radius: 4px 0 0 4px;
+    font-size: 14px;
+    outline: none;
+    transition: border-color 0.3s;
 }
 
 .coupon-input:focus {
-    outline: none;
-    border-color: var(--color-primary);
+    border-color: #4a90e2;
 }
 
 .apply-btn {
+    height: 42px;
     padding: 0 20px;
-    background-color: #333333;
-    color: #ffffff;
+    background-color: var(--color-primary);
+    color: #fff;
     border: none;
-    border-radius: 0 6px 6px 0;
+    border-radius: 0 4px 4px 0;
+    font-size: 14px;
     font-weight: 500;
-    transition: all 0.3s ease;
+    cursor: pointer;
+    transition: background-color 0.3s;
 }
 
 .apply-btn:hover {
-    background-color: var(--color-primary);
+    background-color: #599a0b;
 }
 
 .update-cart {
@@ -742,6 +753,35 @@ body, html {
 
 .coupon-chip:hover {
     background-color: #e8e8e8;
+}
+
+.update-section {
+    width: 35%;
+    text-align: right;
+}
+
+.update-cart-btn {
+    height: 42px;
+    padding: 0 20px;
+    background-color: var(--color-primary);
+    color: white;
+    border: none;
+    border-radius: 4px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.update-cart-btn i {
+    margin-right: 8px;
+}
+
+.update-cart-btn:hover {
+    background-color: #599a0b;
 }
 
 /*  button continue shopping    */

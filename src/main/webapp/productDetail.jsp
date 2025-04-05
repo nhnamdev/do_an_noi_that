@@ -160,7 +160,7 @@
                                 </script>
                             </div>
                             <div class="action-buttons">
-                                <form action="cart/addToCart" method="post">
+                                <form action="${pageContext.request.contextPath}/cart/addToCart" method="post">
                                     <input type="hidden" name="id" value="${product.id}">
                                     <input type="hidden" name="quantity" id="quantityInput" value="1">
                                     <button type="submit" class="add-to-cart-btn" onclick="setQuantity()">

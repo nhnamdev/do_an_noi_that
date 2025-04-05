@@ -1,42 +1,87 @@
 // ĐÂY LÀ TRANG JS XỬ LÍ SỰ KIỆN CHO PHẦN GIỎ HÀNG cart.jsp
 
 document.addEventListener('DOMContentLoaded', function () {
-    const quantityInputs = document.querySelectorAll('.quantity-input');
-    const minusButtons = document.querySelectorAll('.quantity-btn.minus');
     const plusButtons = document.querySelectorAll('.quantity-btn.plus');
-    const removeButtons = document.querySelectorAll('.remove-btn');
+    const minusButtons = document.querySelectorAll('.quantity-btn.minus');
+    const quantityInputs = document.querySelectorAll('.quantity-input');
+    const cartForm = document.querySelector('form[action*="/cart/updateQuantity"]');
+    const updateCartButton = document.getElementById('updateCartButton');
 
     // Xử lý sự kiện nút tăng số lượng
     plusButtons.forEach(button => {
-        button.addEventListener('click', function () {
-            const input = this.parentElement.querySelector('.quantity-input');
-            const currentValue = parseInt(input.value);
+        button.addEventListener('click', function (e) {
+            e.preventDefault();
+            const control = this.closest('.quantity-control');
+            const input = control.querySelector('.quantity-input');
+            const productId = control.getAttribute('data-product-id');
+            const hiddenInput = document.getElementById('quantity_' + productId);
 
-            // Tăng số lượng sp
-            input.value = currentValue + 1;
+            let value = parseInt(input.value);
+            if (!isNaN(value)) {
+                value++;
+                input.value = value;
+                if (hiddenInput) {
+                    hiddenInput.value = value;
+                }
+            }
         });
     });
 
     // Xử lý sự kiện nút giảm số lượng
     minusButtons.forEach(button => {
-        button.addEventListener('click', function () {
-            const input = this.parentElement.querySelector('.quantity-input');
-            const currentValue = parseInt(input.value);
+        button.addEventListener('click', function (e) {
+            e.preventDefault();
+            const control = this.closest('.quantity-control');
+            const input = control.querySelector('.quantity-input');
+            const productId = control.getAttribute('data-product-id');
+            const hiddenInput = document.getElementById('quantity_' + productId);
 
-            // Không cho phép số lượng nhỏ hơn 1
-            if (currentValue > 1) {
-                input.value = currentValue - 1;
+            let value = parseInt(input.value);
+            if (!isNaN(value) && value > 1) {
+                value--;
+                input.value = value;
+                if (hiddenInput) {
+                    hiddenInput.value = value;
+                }
             }
         });
     });
 
-    // Xử lý sự kiện nút xóa sản phẩm
-    removeButtons.forEach(button => {
-        button.addEventListener('click', function () {
-            if (confirm('Bạn có chắc muốn xóa sản phẩm này khỏi giỏ hàng?')) {
-                const cartItem = this.closest('tr');
-                cartItem.remove();
+    // so luong san pham thay doi se dc hien thi o day
+    quantityInputs.forEach(input => {
+        input.addEventListener('change', function () {
+            const control = this.closest('.quantity-control');
+            const productId = control.getAttribute('data-product-id');
+            const hiddenInput = document.getElementById('quantity_' + productId);
+
+            let value = parseInt(this.value);
+            if (isNaN(value) || value < 1) {
+                value = 1;
+                this.value = value;
+            }
+
+            if (hiddenInput) {
+                hiddenInput.value = value;
             }
         });
     });
+
+    // Connect the external update button to the form
+    if (updateCartButton && cartForm) {
+        updateCartButton.addEventListener('click', function (e) {
+            e.preventDefault();
+
+            // Update all hidden inputs with current values from visible inputs
+            document.querySelectorAll('.quantity-control').forEach(control => {
+                const visibleInput = control.querySelector('.quantity-input');
+                const productId = control.getAttribute('data-product-id');
+                const hiddenInput = document.getElementById('quantity_' + productId);
+
+                if (visibleInput && hiddenInput) {
+                    hiddenInput.value = visibleInput.value;
+                }
+            });
+            cartForm.submit();
+        });
+    }
 });
