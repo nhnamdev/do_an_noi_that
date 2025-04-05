@@ -8,6 +8,9 @@
   <title>Title</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
   <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/pace/1.0.2/themes/blue/pace-theme-flash.min.css" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pace/1.0.2/pace.min.js"></script>
 </head>
 <body>
 <nav class="navbar navbar-expand-lg navbar-light bg-white fixed-top shadow-sm">
@@ -27,14 +30,14 @@
         <li class="nav-item"><a class="nav-link" href="contact.jsp">Liên hệ</a></li>
       </ul>
       <ul class="navbar-nav ms-auto">
-        <c:if test="${sessionScope.loginModel==null && sessionScope.googleAccount == null}">
+        <c:if test="${sessionScope.loginModel==null && sessionScope.googleAccount == null &&sessionScope.facebookAccount == null}">
           <li class="nav-item">
             <a class="nav-link" href="login.jsp">
               <i class="fas fa-user"></i> Đăng nhập / Đăng ký
             </a>
           </li>
         </c:if>
-        <c:if test="${sessionScope.loginModel!=null || sessionScope.googleAccount != null}">
+        <c:if test="${sessionScope.loginModel!=null || sessionScope.googleAccount != null || sessionScope.facebookAccount != null}">
           <li class="nav-item">
             <a class="nav-link" href="personal.jsp">
               <img src="img/avt.jpg" class="rounded-circle" width="22">
