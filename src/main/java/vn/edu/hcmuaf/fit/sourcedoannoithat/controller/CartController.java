@@ -18,6 +18,7 @@ import vn.edu.hcmuaf.fit.sourcedoannoithat.dao.model.Product;
 public class CartController extends HttpServlet {
     private ProductDao productDao = new ProductDao();
     private CartDisplayItem cartDisplayItem;
+    private CartDao cartDao = new CartDao();
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws
@@ -61,9 +62,31 @@ public class CartController extends HttpServlet {
 
     public void showCart(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession();
+        Integer userId = (Integer) session.getAttribute("userIdLogin");
 
         HashMap<String, CartDisplayItem> cart = (HashMap<String, CartDisplayItem>) session.getAttribute("cart");
+        if (userId != null && (cart == null || cart.isEmpty())) {
+            // Tải giỏ hàng từ database
+            List<Cart> cartItems = cartDao.getCartItems(userId);
 
+            if (!cartItems.isEmpty()) {
+                cart = new HashMap<>();
+
+                for (Cart item : cartItems) {
+                    // Lấy thông tin sản phẩm
+                    Product product = productDao.getProductById(String.valueOf(item.getProductID()));
+
+                    if (product != null) {
+                        // Tạo CartDisplayItem từ thông tin sản phẩm và số lượng
+                        CartDisplayItem displayItem = new CartDisplayItem(item.getQuantity(), product);
+                        cart.put(String.valueOf(item.getProductID()), displayItem);
+                    }
+                }
+
+                // Lưu giỏ hàng vào session
+                session.setAttribute("cart", cart);
+            }
+        }
         request.setAttribute("cart", cart);
         request.getRequestDispatcher("/cart.jsp").forward(request, response);
         return;
@@ -73,6 +96,12 @@ public class CartController extends HttpServlet {
         String productID = request.getParameter("id");
         Product product = productDao.getProductById(productID);
         HttpSession session = request.getSession();
+        Integer userId = (Integer) session.getAttribute("userIdLogin");
+//        kiem tra dang nhap, neu chua dang nhap ma ng dung an them vao gio hang thi se chuyen sang trang login
+        if (userId == null) {
+            response.sendRedirect(request.getContextPath() + "/login.jsp");
+            return;
+        }
 //lay ra quantity cua san pham, mac dinh neu khong thay doi gi thi khi an vao nut them vao gio hang thi se lay so luong la 1
         int quantity = 1;
         try {
@@ -108,6 +137,14 @@ public class CartController extends HttpServlet {
 //        for (Map.Entry<String, CartDisplayItem> entry : cart.entrySet()) {
 //            System.out.println(entry.getValue().getProduct().getName() + " - So luong: " + entry.getValue().getQuantity());
 //        }
+//        luu gio hang vao database
+        try {
+            int prodId = Integer.parseInt(productID);
+            // neu trong gio hang da co san pham do, thi cap nhat so luong
+            int totalQuantity = cart.get(productID).getQuantity();
+            cartDao.addOrUpdateCartItem(userId, prodId, totalQuantity);
+        } catch (NumberFormatException e) {
+        }
         response.sendRedirect(request.getContextPath() + "/cart/");
         return;
     }
@@ -119,6 +156,7 @@ public class CartController extends HttpServlet {
     public void updateCartQuantity(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 //        phuong thuc nay se cap nhat lai toan bo gio hang khi nguoi dung nhan vao
         HttpSession session = request.getSession();
+        Integer userId = (Integer) session.getAttribute("userIdLogin");
         HashMap<String, CartDisplayItem> cart = (HashMap<String, CartDisplayItem>) session.getAttribute("cart");
 
         if (cart != null) {
@@ -135,8 +173,18 @@ public class CartController extends HttpServlet {
                         if (quantity > 0 && cart.containsKey(productID)) {
                             CartDisplayItem item = cart.get(productID);
                             item.setQuantity(quantity);
+
+                            if (userId != null) {
+                                try {
+                                    int prodId = Integer.parseInt(productID);
+                                    cartDao.addOrUpdateCartItem(userId, prodId, quantity);
+                                } catch (NumberFormatException e) {
+                                    e.printStackTrace();
+                                }
+                            }
                         }
                     } catch (NumberFormatException e) {
+                        e.printStackTrace();
                     }
                 }
                 session.setAttribute("cart", cart);

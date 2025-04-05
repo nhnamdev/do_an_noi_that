@@ -32,15 +32,12 @@ public class CartDao {
             rs = ps.executeQuery();
 //            neu san pham da ton tai, cap nhat so luong
             if (rs.next()) {
-                int currentQuantity = rs.getInt("quantity");
-                int newQuantity = currentQuantity + quantity;
-
                 String updateQuery = "UPDATE cart\n" +
                         "SET quantity = ?\n" +
                         "WHERE user_id = ?\n" +
                         "AND product_id = ?;";
                 ps = conn.prepareStatement(updateQuery);
-                ps.setInt(1, newQuantity);
+                ps.setInt(1, quantity);
                 ps.setInt(2, userID);
                 ps.setInt(3, productID);
 

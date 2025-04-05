@@ -23,8 +23,8 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarNav">
       <ul class="navbar-nav me-auto">
-        <li class="nav-item"><a class="nav-link" href="index">Trang chủ</a></li>
-        <li class="nav-item"><a class="nav-link" href="shop">Cửa hàng</a></li>
+        <li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/index">Trang chủ</a></li>
+        <li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/shop">Cửa hàng</a></li>
         <li class="nav-item"><a class="nav-link" href="news.jsp">Tin tức</a></li>
         <li class="nav-item"><a class="nav-link" href="About_us.jsp">Thông tin</a></li>
         <li class="nav-item"><a class="nav-link" href="contact.jsp">Liên hệ</a></li>
@@ -44,7 +44,7 @@
             </a>
           </li>
           <li class="nav-item"><a class="nav-link" href="favorite.jsp"><i class="fa fa-bookmark"></i></a></li>
-          <li class="nav-item"><a class="nav-link" href="cart.jsp"><i class="fa fa-shopping-cart"></i></a></li>
+          <li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/cart/"><i class="fa fa-shopping-cart"></i></a></li>
         </c:if>
         <li class="nav-item">
           <a class="nav-link" href="#" id="searchIcon"><i class="fa fa-search"></i></a>
