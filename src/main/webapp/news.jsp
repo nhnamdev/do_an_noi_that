@@ -9,6 +9,9 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
     <link rel="stylesheet" href="css/news.css">
+    <%--    Ck editor--%>
+    <script src="https://cdn.ckeditor.com/4.22.1/standard/ckeditor.js"></script>
+    <%--    Ck editor--%>
 </head>
 <body>
     <jsp:include page="/components/header.jsp" />
@@ -21,9 +24,6 @@
                             <li><a href="${pageContext.request.contextPath}/index">Trang chủ</a></li>
                             <li><i class="fas fa-angle-right"></i></li>
                             <li><a href="${pageContext.request.contextPath}/news.jsp">Tin Tức</a></li>
-<%--                            <li><i class="fas fa-angle-right"></i></li>--%>
-<%--                            <li>Title</li>--%>
-
                         </ul>
                     </div>
                 </div>
