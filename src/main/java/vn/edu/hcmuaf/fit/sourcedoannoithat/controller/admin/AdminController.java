@@ -42,6 +42,19 @@ public class AdminController extends HttpServlet {
 
         ProfileDao profileDao = new ProfileDao();
         List<AccountManagement> profile = profileDao.getAccountAdmin();
+        String accountIdToDelete = req.getParameter("deleteId");
+        String accountIdToLock = req.getParameter("lockId");
+        String accountIdToUnlock = req.getParameter("unlockId");
+        if (accountIdToDelete != null) {
+            profileDao.deleteAccount(Integer.parseInt(accountIdToDelete));
+
+        }
+        if (accountIdToLock != null) {
+            profileDao.lockUser(Integer.parseInt(accountIdToLock));
+        }
+        if (accountIdToUnlock != null) {
+            profileDao.unlockUser(Integer.parseInt(accountIdToUnlock));
+        }
 
         String selectedName = req.getParameter("name");
         List<String> content = contactDao.getContentByName(selectedName);
