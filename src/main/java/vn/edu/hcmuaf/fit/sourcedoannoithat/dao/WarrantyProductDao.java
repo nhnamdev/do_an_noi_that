@@ -1,7 +1,6 @@
 package vn.edu.hcmuaf.fit.sourcedoannoithat.dao;
 
 import vn.edu.hcmuaf.fit.sourcedoannoithat.dao.db.DBConnect;
-import vn.edu.hcmuaf.fit.sourcedoannoithat.dao.model.Order;
 import vn.edu.hcmuaf.fit.sourcedoannoithat.dao.model.WarrantyProduct;
 
 import java.sql.Connection;
