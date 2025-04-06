@@ -8,7 +8,7 @@ public class DBConnect {
     public Connection getConnection() throws Exception {
         Class.forName("com.mysql.cj.jdbc.Driver");
 
-        String url = "jdbc:mysql://localhost:3307/donoithat";
+        String url = "jdbc:mysql://localhost:3306/donoithat";
         String user = "root";
         String password = "";
 
@@ -23,6 +23,7 @@ public class DBConnect {
 
         return connection;
     }
+
     public static void main(String[] args) {
         try {
             DBConnect dbConnect = new DBConnect();
