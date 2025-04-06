@@ -446,28 +446,13 @@
                 <th>Email</th>
                 <th>Số điện thoại</th>
                 <th>Địa chỉ</th>
+                <th>Trạng thái</th>
                 <th>Hành Động</th>
             </tr>
             </thead>
             <tbody>
             <%
-                String accountIdToDelete = request.getParameter("deleteId");
-                String accountIdToLock = request.getParameter("lockId");
-                String accountIdToUnlock = request.getParameter("unlockId");
                 ProfileDao profileDao = new ProfileDao();
-                if (accountIdToDelete != null) {
-                    profileDao.deleteAccount(Integer.parseInt(accountIdToDelete));
-                    response.sendRedirect("admin.jsp");
-                    return;
-                } else if (accountIdToLock != null) {
-                    profileDao.lockUser(Integer.parseInt(accountIdToLock));
-                    response.sendRedirect("admin.jsp");
-                    return;
-                } else if (accountIdToUnlock != null) {
-                    profileDao.unlockUser(Integer.parseInt(accountIdToUnlock));
-                    response.sendRedirect("admin.jsp");
-                    return;
-                }
                 List<AccountManagement> profile;
                 String searchKeyword = request.getParameter("search");
                 if (searchKeyword != null && !searchKeyword.isEmpty()) {
@@ -497,17 +482,41 @@
                 </td>
                 <td><%= pr.getAddress() %>
                 </td>
+                <td><%
+                    int activeStatus = profileDao.getActiveUser(pr.getId());
+                    String statusMessage = "";
+                    switch (activeStatus) {
+                        case -1:
+                            statusMessage = "Đang khóa";
+                            break;
+                        case 0:
+                            statusMessage = "Chưa kích hoạt";
+                            break;
+                        case 1:
+                            statusMessage = "Đã kích hoạt";
+                            break;
+                        default:
+                            statusMessage = "Không xác định";
+                            break;
+                    }
+                %>
+                    <%= statusMessage %></td>
                 <td>
                     <div class="action-buttons">
-                        <a href="admin.jsp?deleteId=<%= pr.getId() %>" class="btn reject" style="text-decoration: none;"
-                           onclick="return confirm('Bạn có chắc chắn muốn xóa tài khoản này?');">Xóa tài khoản</a>
-                        <%
-                            int activeStatus = profileDao.getActiveUser(pr.getId());
-                        %>
-                        <button class="btn lock"
-                                style="background-color: <%= activeStatus == 1 ? "red" : "green" %>; color: white;"
-                                onclick="<%= activeStatus == 1 ? "lockAccount(" + pr.getId() + ");" : "unlockAccount(" + pr.getId() + ");" %>"><%= activeStatus == 1 ? "Khóa tài khoản" : "Mở khóa tài khoản" %>
-                        </button>
+                        <form method="get" action="admin" id="deleteForm_<%= pr.getId() %>">
+                            <input type="hidden" name="deleteId" value="<%= pr.getId() %>">
+                            <button type="submit" class="btn reject" style="background-color: darkgrey"
+                                    onclick="return confirm('Bạn có chắc chắn muốn xóa tài khoản này?')">Xóa tài khoản</button>
+                        </form>
+
+                            <form method="get" action="admin" id="lockUnlockForm_<%= pr.getId() %>">
+                                <input type="hidden" name="<%= activeStatus == 1 ? "lockId" : "unlockId" %>" value="<%= pr.getId() %>">
+                                <button type="submit" class="btn lock"
+                                        style="background-color: <%= activeStatus == 1 ? "red" : "green" %>; color: white;"
+                                        onclick="return confirm('<%= activeStatus == 1 ? "Bạn có chắc chắn muốn khóa tài khoản này?" : "Bạn có chắc chắn muốn mở khóa tài khoản này?" %>')">
+                                    <%= activeStatus == 1 ? "Khóa tài khoản" : "Mở khóa tài khoản" %>
+                                </button>
+                            </form>
                     </div>
                 </td>
             </tr>
@@ -516,56 +525,6 @@
             %>
             </tbody>
         </table>
-        <script>
-            function lockAccount(accountId) {
-            if (confirm('Bạn có chắc chắn muốn khóa tài khoản này?')) {
-                var xhr = new XMLHttpRequest();
-                xhr.open("GET", "admin.jsp?lockId=" + accountId, true);
-                xhr.onreadystatechange = function () {
-                    if (xhr.readyState == 4 && xhr.status == 200) {
-                        alert("Tài khoản đã được khóa thành công.");
-                        var lockButton = document.getElementById("lockButton_" + accountId);
-                        if (lockButton) {
-                            lockButton.innerHTML = "Mở khóa tài khoản";
-                            lockButton.setAttribute("onclick", "return false;");
-                        }
-                        updateAccountList();
-                    }
-                };
-                xhr.send();
-            }
-        }
-            function unlockAccount(accountId) {
-                if (confirm('Bạn có chắc chắn muốn mở khóa tài khoản này?')) {
-                    var xhr = new XMLHttpRequest();
-                    xhr.open("GET", "admin.jsp?unlockId=" + accountId, true);
-                    xhr.onreadystatechange = function () {
-                        if (xhr.readyState == 4 && xhr.status == 200) {
-                            alert("Tài khoản đã được mở khóa thành công.");
-                            var lockButton = document.getElementById("lockButton_" + accountId);
-                            if (lockButton) {
-                                lockButton.innerHTML = "Khóa tài khoản";
-                                lockButton.setAttribute("onclick", "lockAccount(" + accountId + ");");
-                                lockButton.style.backgroundColor = "red";
-                            }
-                            updateAccountList();
-                        }
-                    };
-                    xhr.send();
-                }
-            }
-
-        function updateAccountList() {
-            var xhr = new XMLHttpRequest();
-            xhr.open("GET", "admin.jsp", true);
-            xhr.onreadystatechange = function () {
-                if (xhr.readyState == 4 && xhr.status == 200) {
-                    var tbody = document.querySelector("table tbody");
-                    tbody.innerHTML = xhr.responseText;
-                }
-            };
-            xhr.send();
-        }</script>
         <script src="js/customer-management.js"></script>
     </div>
     <div id="productsManagement" class="detail">
@@ -625,46 +584,212 @@
                 </tr>
                 <tbody>
                 <%
-                    String searchKW = request.getParameter("search");
-                    String pageParam = request.getParameter("page");
-                    int pages = (pageParam != null) ? Integer.parseInt(pageParam) : 1;
-                    int pageSize = 10;
+                    String
+                            searchKW
+                            =
+                            request
+                                    .
+                                    getParameter
+                                            (
+                                                    "search"
+                                            );
+                    String
+                            pageParam
+                            =
+                            request
+                                    .
+                                    getParameter
+                                            (
+                                                    "page"
+                                            );
+                    int
+                            pages
+                            =
+                            (
+                                    pageParam
+                                            !=
+                                            null
+                            )
+                                    ?
+                                    Integer
+                                            .
+                                            parseInt
+                                                    (
+                                                            pageParam
+                                                    )
+                                    :
+                                    1;
+                    int
+                            pageSize
+                            =
+                            10;
 
-                    SearchDao productDao = new SearchDao();
-                    int totalProducts = 0;
+                    SearchDao
+                            productDao
+                            =
+                            new
+                                    SearchDao
+                                    (
+                                    );
+                    int
+                            totalProducts
+                            =
+                            0;
 
-                    List<Product> listP;
-                    if (searchKW != null && !searchKW.isEmpty()) {
-                        totalProducts = productDao.getTotalProductsBySearch(searchKW);
-                        listP = productDao.searchProducts(searchKW);
+                    List
+                            <
+                                    Product
+                                    >
+                            listP;
+                    if
+                    (
+                            searchKW
+                                    !=
+                                    null
+                                    &&
+                                    !
+                                            searchKW
+                                                    .
+                                                    isEmpty
+                                                            (
+                                                            )
+                    ) {
+                        totalProducts
+                                =
+                                productDao
+                                        .
+                                        getTotalProductsBySearch
+                                                (
+                                                        searchKW
+                                                )
+                        ;
+                        listP
+                                =
+                                productDao
+                                        .
+                                        searchProducts
+                                                (
+                                                        searchKW
+                                                )
+                        ;
                     } else {
-                        totalProducts = productDao.getTotalProducts();
-                        listP = productDao.getProductsByPage(pages, pageSize);
+                        totalProducts
+                                =
+                                productDao
+                                        .
+                                        getTotalProducts
+                                                (
+                                                )
+                        ;
+                        listP
+                                =
+                                productDao
+                                        .
+                                        getProductsByPage
+                                                (
+                                                        pages
+                                                        ,
+                                                        pageSize
+                                                )
+                        ;
                     }
 
 
-                    int totalPages = (int) Math.ceil((double) totalProducts / pageSize);
+                    int
+                            totalPages
+                            =
+                            (
+                                    int
+                                    )
+                                    Math
+                                            .
+                                            ceil
+                                                    (
+                                                            (
+                                                                    double
+                                                                    )
+                                                                    totalProducts
+                                                                    /
+                                                                    pageSize
+                                                    );
 
 
-                    String productIdToDelete = request.getParameter("deletepId");
-                    if (productIdToDelete != null) {
-                        productDao.deleteProduct(Integer.parseInt(productIdToDelete));
-                        response.sendRedirect("admin.jsp");
-                        return;
+                    String
+                            productIdToDelete
+                            =
+                            request
+                                    .
+                                    getParameter
+                                            (
+                                                    "deletepId"
+                                            );
+                    if
+                    (
+                            productIdToDelete
+                                    !=
+                                    null
+                    ) {
+                        productDao
+                                .
+                                deleteProduct
+                                        (
+                                                Integer
+                                                        .
+                                                        parseInt
+                                                                (
+                                                                        productIdToDelete
+                                                                )
+                                        )
+                        ;
+                        response
+                                .
+                                sendRedirect
+                                        (
+                                                "admin.jsp"
+                                        )
+                        ;
+                        return
+                                ;
                     }
 
-                    for (Product product : listP) {
+                    for
+                    (
+                            Product
+                                    product
+                            :
+                            listP
+                    ) {
                 %>
                 <tr>
-                    <td><%= product.getId() %>
+                    <td><%= product
+                            .
+                            getId
+                                    (
+                                    ) %>
                     </td>
-                    <td><%= product.getName() %>
+                    <td><%= product
+                            .
+                            getName
+                                    (
+                                    ) %>
                     </td>
-                    <td><%= product.getPrice() %>
+                    <td><%= product
+                            .
+                            getPrice
+                                    (
+                                    ) %>
                     </td>
-                    <td><%= product.getImg() %>
+                    <td><%= product
+                            .
+                            getImg
+                                    (
+                                    ) %>
                     </td>
-                    <td><%= product.getQuantitySold() %>
+                    <td><%= product
+                            .
+                            getQuantitySold
+                                    (
+                                    ) %>
                     </td>
                     <td>
                         <a href="admin.jsp?deletepId=<%= product.getId() %>"
@@ -680,21 +805,61 @@
 
         </div>
         <div id="paginationInfo">
-            Hiển thị <%= (pages - 1) * pageSize + 1 %> -
-            <%= Math.min(pages * pageSize, totalProducts) %> trên tổng số <%= totalProducts %> sản phẩm
+            Hiển thị <%= (
+                pages
+                        -
+                        1
+        )
+                *
+                pageSize
+                +
+                1 %> -
+            <%= Math
+                    .
+                    min
+                            (
+                                    pages
+                                            *
+                                            pageSize
+                                    ,
+                                    totalProducts
+                            ) %> trên tổng số <%= totalProducts %> sản phẩm
         </div>
 
         <div id="paginationControls">
             <%
-                if (totalProducts > 0) {
-                    if (pages > 1) {
+                if
+                (
+                        totalProducts
+                                >
+                                0
+                ) {
+                    if
+                    (
+                            pages
+                                    >
+                                    1
+                    ) {
             %>
             <a href="admin.jsp?page=<%= pages - 1 %>&search=<%= (searchKW != null) ? searchKW : "admin.jsp" %>">Trước</a>
 
             <%
                 }
 
-                for (int i = 1; i <= totalPages; i++) {
+                for
+                (
+                        int
+                        i
+                        =
+                        1
+                        ;
+                        i
+                                <=
+                                totalPages
+                        ;
+                        i
+                                ++
+                ) {
             %>
             <a href="admin.jsp?page=<%= i %>&search=<%= (searchKW != null) ? searchKW : "admin.jsp" %>"
                class="<%= (i == pages) ? "active" : "" %>">
@@ -704,7 +869,12 @@
             <%
                 }
 
-                if (pages < totalPages) {
+                if
+                (
+                        pages
+                                <
+                                totalPages
+                ) {
             %>
             <a href="admin.jsp?page=<%= pages + 1 %>&search=<%= (searchKW != null) ? searchKW : "admin.jsp" %>">Tiếp</a>
             <%
