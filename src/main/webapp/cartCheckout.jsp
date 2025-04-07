@@ -1,4 +1,6 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="f" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html lang="vi">
 <head>
@@ -72,7 +74,7 @@
                 <div class="order-row">
                     <div class="checkout-breadcrumb">
                         <div class="title-cart">
-                            <a href="">
+                            <a href="${pageContext.request.contextPath}/cart/">
                                 <div class="number-wrapper">
                                     <h3 class="step-number">01</h3>
                                 </div>
@@ -112,27 +114,33 @@
                     <form name="checkout" action="" class="checkout-cart">
                         <div class="left-col">
                             <h3>THÔNG TIN THANH TOÁN</h3>
-                            <div class="form-row">
-                                <div class="form-group">
-                                    <label for="last-name">Họ *</label>
-                                    <input type="text" id="last-name" name="last-name" required>
-                                </div>
-                                <div class="form-group">
-                                    <label for="first-name">Tên *</label>
-                                    <input type="text" id="first-name" name="first-name" required>
-                                </div>
+                            <div class="form-group">
+                                <label for="fullname">Họ và tên *</label>
+                                <input type="text" id="fullname" name="fullname" required>
                             </div>
                             <div class="form-group">
-                                <label for="address">Địa chỉ *</label>
-                                <input type="text" id="address" name="address" required>
+                                <label for="email">Địa chỉ email *</label>
+                                <input type="email" id="email" name="email" required>
                             </div>
                             <div class="form-group">
                                 <label for="phone">Số điện thoại *</label>
                                 <input type="tel" id="phone" name="phone" required>
                             </div>
                             <div class="form-group">
-                                <label for="email">Địa chỉ email *</label>
-                                <input type="email" id="email" name="email" required>
+                                <label for="province">Tỉnh/Thành phố *</label>
+                                <select id="province" name="province" required onchange="loadDistricts()">
+                                    <option value="">Chọn Tỉnh/Thành phố</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="district">Quận/Huyện *</label>
+                                <select id="district" name="district" required>
+                                    <option value="">Chọn Quận/Huyện</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="address">Địa chỉ *</label>
+                                <input type="text" id="address" name="address" required>
                             </div>
                             <div class="form-group">
                                 <label for="order-notes">Ghi chú đơn hàng (tùy chọn)</label>
@@ -143,11 +151,29 @@
                         <div class="right-col">
                             <h3>THÔNG TIN ĐƠN HÀNG</h3>
                             <div class="order-summary-item">
-                                <div class="product-details">
-                                    <img src="img/sofa7.jpg" alt="Bộ bàn ghế gỗ Cao Su" class="product-image">
-                                    <span>Bộ bàn ghế gỗ Cao Su</span>
-                                </div>
-                                <div class="product-price">5,471,000đ</div>
+                                <c:forEach var="entry" items="${cart}">
+                                    <c:set var="order" value="${entry.value}"/>
+                                    <c:set var="product" value="${order.product}"/>
+                                    <div class="product-cart-item">
+                                        <div class="product-info">
+                                            <img src="${product.img}" alt="${product.name}" class="product-image">
+                                            <div class="product-details">
+                                                <h4 class="product-name">${product.name}</h4>
+                                                <div class="product-meta">
+                                                    <span class="product-quantity">Số lượng: ${order.quantity}</span>
+                                                    <span class="product-price">
+                            <f:formatNumber type="currency" value="${product.price}" pattern="#,###đ"/>
+                        </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="product-subtotal">
+                                            <f:formatNumber type="currency"
+                                                            value="${product.price * order.quantity}"
+                                                            pattern="#,###đ"/>
+                                        </div>
+                                    </div>
+                                </c:forEach>
                             </div>
                             <div class="order-summary-total">
                                 <div>Tổng tiền hàng</div>
@@ -189,5 +215,6 @@
     </div>
     <jsp:include page="/components/footer.jsp"/>
 </div>
+<script src="js/cartCheckout.js"></script>
 </body>
 </html>

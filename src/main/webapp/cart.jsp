@@ -67,7 +67,7 @@
                 <div class="order-row">
                     <div class="checkout-breadcrumb">
                         <div class="title-cart">
-                            <a href="">
+                            <a href="${pageContext.request.contextPath}/cart/">
                                 <div class="number-wrapper">
                                     <h3 class="step-number">01</h3>
                                 </div>
