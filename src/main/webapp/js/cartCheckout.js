@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', function () {
-    fetch('data/provinceList.json')
+    fetch(contextPath + '/data/provinceList.json')
         .then(response => response.json())
         .then(data => {
             const provinceSelect = document.getElementById('province');
@@ -23,7 +23,7 @@ function loadDistricts() {
 
     districtSelect.innerHTML = '<option value="">Chọn Quận/Huyện</option>';
 
-    fetch('data/provinceList.json')
+    fetch(contextPath + '/data/provinceList.json')
         .then(response => response.json())
         .then(data => {
             const selectedProvinceName = provinceSelect.value;

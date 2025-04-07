@@ -8,7 +8,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Thanh toán</title>
-    <link rel="stylesheet" href="css/cartCheckout.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/cartCheckout.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
 </head>
 <body>
@@ -215,6 +215,9 @@
     </div>
     <jsp:include page="/components/footer.jsp"/>
 </div>
-<script src="js/cartCheckout.js"></script>
+<script>
+    var contextPath = '${pageContext.request.contextPath}';
+</script>
+<script src="${pageContext.request.contextPath}/js/cartCheckout.js"></script>
 </body>
 </html>

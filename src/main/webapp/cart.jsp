@@ -7,7 +7,6 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="contextPath" content="${pageContext.request.contextPath}">
     <title>Giỏ hàng</title>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/cart.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
@@ -216,7 +215,9 @@
                         <span class="total-label">Tổng</span>
                         <span class="total-value"></span>
                     </div>
-                    <button class="checkout-btn">TIẾN HÀNH THANH TOÁN</button>
+                    <form action="${pageContext.request.contextPath}/checkout/" method="post">
+                        <button class="checkout-btn">TIẾN HÀNH THANH TOÁN</button>
+                    </form>
                 </div>
             </div>
         </div>
