@@ -34,12 +34,15 @@ public class ProfileController extends HttpServlet {
             HttpSession session = req.getSession();
             Integer userId = (Integer) session.getAttribute("userIdLogin");
 
-            // Lấy dữ liệu từ request
             String newName = req.getParameter("userNameInput");
             String newBirthday = req.getParameter("userBirthdayInput");
             String newNumberPhone = req.getParameter("userPhoneInput");
             String newAddress = req.getParameter("userAddressInput");
             String newEmail = req.getParameter("userEmailInput");
+
+            String newDistrict = req.getParameter("district");
+            String newProvince = req.getParameter("province");
+            String fullAddress = newAddress + ", " + newDistrict + ", " + newProvince;
 
             // Lấy dữ liệu hiện tại từ session
             String currentName = (String) session.getAttribute("userName");
@@ -56,14 +59,14 @@ public class ProfileController extends HttpServlet {
                             (newEmail != null && !newEmail.equals(currentEmail));
 
             if (isChanged) {
-                Profile profile = new Profile(newName, newBirthday, newNumberPhone, newAddress, newEmail);
+                Profile profile = new Profile(newName, newBirthday, newNumberPhone, fullAddress, newEmail);
                 boolean isUpdated = profileDao.updateProfile(profile, userId);
 
                 if (isUpdated) {
                     session.setAttribute("userName", newName);
                     session.setAttribute("userBirthday", newBirthday);
                     session.setAttribute("userPhone", newNumberPhone);
-                    session.setAttribute("userAddress", newAddress);
+                    session.setAttribute("userAddress", fullAddress);
                     session.setAttribute("userEmail", newEmail);
 
                     JSONObject jsonResponse = new JSONObject();
@@ -72,7 +75,7 @@ public class ProfileController extends HttpServlet {
                     updatedUserJson.put("userName", newName);
                     updatedUserJson.put("userBirthday", newBirthday);
                     updatedUserJson.put("userPhone", newNumberPhone);
-                    updatedUserJson.put("userAddress", newAddress);
+                    updatedUserJson.put("userAddress", fullAddress);
                     updatedUserJson.put("userEmail", newEmail);
 
                     jsonResponse.put("updatedUser", updatedUserJson);

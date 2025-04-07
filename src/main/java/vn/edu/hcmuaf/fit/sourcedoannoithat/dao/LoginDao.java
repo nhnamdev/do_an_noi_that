@@ -69,16 +69,15 @@ public class LoginDao {
             connection = new DBConnect().getConnection();
             ps = connection.prepareStatement(query);
             ps.setString(1, email);
-            int rowsAffected = ps.executeUpdate();
-            if (rowsAffected > 0) {
-                return true;
-            } else {
-                return false;
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                int count = rs.getInt(1);
+                return count > 0;
             }
         }catch (Exception e) {
             e.printStackTrace();
-            return false;
         }
+        return false;
     }
     public int getUserRole(String username) {
         String query = "SELECT role FROM profile_client WHERE username = ?";
@@ -138,5 +137,6 @@ public class LoginDao {
         System.out.println(loginDao.getUserRole("haipro0801"));
         System.out.println(loginDao.getIdByUsername("haipro0801"));
         System.out.println(loginDao.getUserActive("haipro12"));
+        System.out.println(loginDao.isUserExist("hohaitest@gmail.com"));
     }
 }
