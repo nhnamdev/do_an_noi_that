@@ -15,6 +15,7 @@
     <link rel="stylesheet" href="css/personal_style.css">
     <link rel="stylesheet" href="css/style.css">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
 </head>
 
@@ -55,9 +56,9 @@
                         <h5>Welcome<br><strong>${sessionScope.userName}</strong></h5>
                     </div>
                 </div>
-                <div class="homePage" id="homePage"><h5><i class="fa fa-home"></i>TRANG TÀI KHOẢN</h5></div>
+                <div class="address" id="homePage"><h5><i class="fa fa-home"></i>TRANG TÀI KHOẢN</h5></div>
                 <a href="cart.jsp" class="button">
-                    <div class="order"><h5><i class="fa fa-box"></i> ĐƠN HÀNG</h5>
+                    <div class="address"><h5><i class="fa fa-box"></i> ĐƠN HÀNG</h5>
                     </div>
                 </a>
                 <a href="contact.jsp" class="button">
@@ -68,12 +69,12 @@
                     <div class="address"><h5><i class="fa fa-arrow-rotate-left"></i> ĐỔI/TRẢ</h5>
                     </div>
                 </a>
-                <div class="account" id="account"><h5><i class="fa fa-person"></i> TÀI KHOẢN</h5></div>
+                <div class="address" id="account"><h5><i class="fa fa-person"></i> TÀI KHOẢN</h5></div>
                 <a href="changePassword.jsp" class="button">
                     <div class="address"><h5><i class="fa fa-lock"></i> ĐỔI MẬT KHẨU</h5>
                     </div>
                 </a>
-                <div class="logOut" onclick="document.getElementById('logoutForm').submit();">
+                <div class="address" onclick="document.getElementById('logoutForm').submit();">
                     <h5><i class="fa fa-right-from-bracket"></i> ĐĂNG XUẤT</h5>
                     <form id="logoutForm" action="logout" method="post">
                         <button type="submit" class="button" style="display: none;"></button>
@@ -81,14 +82,14 @@
                 </div>
             </div>
             <div class="omega">
-                <div class="container rounded bg-white mt-5 mb-5">
+                <div class="container rounded bg-white mb-5">
                     <div class="row" style="display:none" id="md5Section">
                         <div class="col-md-5 border-right">
                             <div class="p-3 py-5">
                                 <div class="d-flex justify-content-between align-items-center mb-3">
                                     <h2 class="text-right">Cài đặt thông tin</h2>
                                 </div>
-                                <form action="index" method="post">
+                                <form action="updateProfile" method="post">
                                     <div class="col-md-6 editable">
                                         <h5 class="labels">Tên khách hàng:</h5>
                                         <p id="userName">${sessionScope.userName}</p>
@@ -106,6 +107,17 @@
                                         <p id="userPhone">${sessionScope.userPhone}</p>
                                         <input type="text" name="userPhoneInput" id="userPhoneInput"
                                                style="display:none;"/>
+                                    </div>
+                                    <div class="col-md-12 editable">
+                                        <h5 for="province" style="margin-top: 6px">Tỉnh/Thành phố:</h5>
+                                        <select id="province" name="province" style="height: 35px;width: 150px">
+                                            <option value="">Chọn tỉnh/thành phố</option>
+                                        </select><br>
+
+                                        <h5 for="district" style="margin-left: 20px;margin-top: 6px">Quận/Huyện:</h5>
+                                        <select id="district" name="district" disabled style="height: 35px;width: 150px">
+                                            <option value="">Chọn quận/huyện</option>
+                                        </select><br>
                                     </div>
                                     <div class="col-md-12 editable">
                                         <h5 class="labels">Địa chỉ:</h5>
@@ -135,7 +147,7 @@
                             của bạn) </h5>
                         <div class="content">
                             <a href="cart.jsp" class="button">
-                            <div class="box"><h5><i class="fa fa-box"></i> <br> ĐƠN HÀNG</h5></div>
+                                <div class="box"><h5><i class="fa fa-box"></i> <br> ĐƠN HÀNG</h5></div>
                             </a>
                             <a href="contact.jsp" class="button">
                                 <div class="box"><h5><i class="fa fa-location-dot"></i> <br> ĐỊA CHỈ</h5></div>
@@ -172,6 +184,72 @@
         });
     </script>
     <script>
+        async function getProvinces() {
+            try {
+                const response = await fetch('https://provinces.open-api.vn/api?depth=2');
+                if (!response.ok) {
+                    throw new Error('Không thể lấy danh sách tỉnh/thành phố');
+                }
+                const provinces = await response.json();
+                console.log('Danh sách tỉnh/thành phố:', provinces);
+                const provinceSelect = document.getElementById('province');
+
+                // Thêm các tỉnh/thành phố vào dropdown
+                provinces.forEach(province => {
+                    const option = document.createElement('option');
+                    option.value = province.name;
+                    option.textContent = province.name;
+                    provinceSelect.appendChild(option);
+                });
+            } catch (error) {
+                console.error('Lỗi khi lấy tỉnh/thành phố:', error);
+            }
+        }
+
+        async function getDistricts(provinceName) {
+            try {
+                const response = await fetch(`https://provinces.open-api.vn/api/${provinceCode}?depth=2`);
+                if (!response.ok) {
+                    console.error(`Lỗi khi gọi API quận/huyện, mã lỗi: ${response.status}`);
+                    throw new Error('Không thể lấy danh sách quận/huyện');
+                }
+                const provinces = await response.json();
+                const provinceData = provinces.find(item => item.name === provinceName);
+                const districtSelect = document.getElementById('district');
+                districtSelect.innerHTML = '<option value="">Chọn quận/huyện</option>';
+                if (provinceData && provinceData.districts && Array.isArray(provinceData.districts)) {
+                    provinceData.districts.forEach(district => {
+                        const option = document.createElement('option');
+                        option.value = district.code;
+                        option.textContent = district.name;
+                        districtSelect.appendChild(option);
+                    });
+                    districtSelect.disabled = false;
+                } else {
+                    districtSelect.innerHTML = '<option value="">Không có quận/huyện</option>';
+                    districtSelect.disabled = true;
+                }
+            } catch (error) {
+                console.error('Lỗi khi lấy quận/huyện:', error);
+                const districtSelect = document.getElementById('district');
+                districtSelect.innerHTML = '<option value="">Không thể tải quận/huyện</option>';
+                districtSelect.disabled = true;
+            }
+        }
+
+        document.getElementById('province').addEventListener('change', function () {
+            const provinceName = event.target.value;
+            if (provinceName) {
+                getDistricts(provinceName);
+            } else {
+                const districtSelect = document.getElementById('district');
+                districtSelect.innerHTML = '<option value="">Chọn quận/huyện</option>';
+                districtSelect.disabled = true;
+            }
+        });
+        getProvinces();
+    </script>
+    <script>
         $(document).ready(function () {
             $(".saveBtn").click(function (e) {
                 e.preventDefault();
@@ -181,7 +259,9 @@
                     userBirthdayInput: $("#userBirthdayInput").val(),
                     userPhoneInput: $("#userPhoneInput").val(),
                     userAddressInput: $("#userAddressInput").val(),
-                    userEmailInput: $("#userEmailInput").val()
+                    userEmailInput: $("#userEmailInput").val(),
+                    province: $("#province").find("option:selected").text(),
+                    district: $("#district").find("option:selected").text()
                 };
 
                 $.ajax({
@@ -197,10 +277,16 @@
                             $(".editable").each(function () {
                                 let p = $(this).find("p");
                                 let input = $(this).find("input");
+                                let select = $(this).find("select");
                                 if (p.length && input.length) {
                                     p.text(input.val());
                                     p.show();
                                     input.hide();
+                                }
+                                if (select.length) {
+                                    p.text(select.find("option:selected").text());
+                                    p.show();
+                                    select.hide();
                                 }
                             });
                             $(".saveBtn").hide();
@@ -210,7 +296,6 @@
                         }
                     },
                     error: function (xhr, status, error) {
-                        // Hiển thị lỗi chi tiết hơn
                         let errorMessage = "Lỗi kết nối đến server!";
                         if (xhr.status === 404) {
                             errorMessage = "Không tìm thấy URL (404). Vui lòng kiểm tra lại endpoint.";
@@ -232,10 +317,16 @@
                 $(".editable").each(function () {
                     let p = $(this).find("p");
                     let input = $(this).find("input");
+                    let select = $(this).find("select");
                     if (p.length && input.length) {
                         input.val(p.text());
                         p.hide();
                         input.show();
+                    }
+                    if (select.length) {
+                        select.val(p.text());
+                        p.hide();
+                        select.show();
                     }
                 });
                 $(".saveBtn").show();

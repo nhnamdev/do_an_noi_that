@@ -355,11 +355,12 @@ body, html {
 
 .navigation_titlePage .omega {
     position: absolute;
-    top: 65px;
+    top: 50px;
     padding: 80px 0;
     left: 0;
     text-align: center;
     width: 100%;
+    height: 300px;
     background-color: rgba(255, 255, 255, 0.5); /*rgba(255,255,255,0.5):trắng khói*/
     pointer-events: none;
     z-index: 2;
@@ -376,6 +377,7 @@ body, html {
 .navigation_titlePage .omega .title {
     font-size: 48px;
     font-weight: 500;
+    margin-top: 10px;
 }
 
 .navigation_titlePage .omega .path {
