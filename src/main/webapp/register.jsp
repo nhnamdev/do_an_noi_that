@@ -46,22 +46,12 @@
         <form action="register" method="post">
           <label for="fullname" style="margin-top: 0;">Họ và tên:</label>
           <input type="text" id="fullname" name="full_name" required class="hienthi">
-
-          <label for="birthdate">Ngày sinh:</label>
-          <input type="date" id="birthdate" name="birth_day" required class="hienthi">
-
           <label for="email">Địa chỉ email:</label>
           <input type="email" id="email" name="email" required class="hienthi">
-
           <label for="phone">Số điện thoại:</label>
           <input type="text" id="phone" name="phone_number" required class="hienthi">
-
-          <label for="address">Địa chỉ:</label>
-          <input type="text" id="address" name="address" class="hienthi">
-
           <label for="username">Tên đăng nhập:</label>
           <input type="text" id="username" name="username" required class="hienthi">
-
           <label for="password">Mật khẩu:</label>
           <input type="password" id="password" name="password" required class="hienthi">
 
@@ -76,7 +66,7 @@
           </div>
 
           <button type="submit">Đăng ký</button>
-          <div class="lostpass" style="margin-left: 150px;">
+          <div class="lostpass" style="margin-left: 145px;">
             <a class="a_dangnhap" href="login.jsp">Đăng nhập </a>
           </div>
         </form>

@@ -29,17 +29,15 @@ public class RegisterController extends HttpServlet {
         try {
             // Lấy thông tin từ form
             String fullName = request.getParameter("full_name");
-            String birthDay = request.getParameter("birth_day");
             String email = request.getParameter("email");
             request.getSession().setAttribute("registeredEmail", email);
             String phoneNumber = request.getParameter("phone_number");
-            String address = request.getParameter("address");
             String username = request.getParameter("username");
             String password = request.getParameter("password");
             String confirmPassword = request.getParameter("confirm_password");
 
             // Kiểm tra dữ liệu hợp lệ
-            String errorMessage = validateInput(fullName, birthDay, email, phoneNumber, address, username, password, confirmPassword);
+            String errorMessage = validateInput(fullName, null, email, phoneNumber, null, username, password, confirmPassword);
 
             if (errorMessage != null) {
                 request.setAttribute("error", errorMessage);
@@ -61,9 +59,8 @@ public class RegisterController extends HttpServlet {
 
             // Mã hóa mật khẩu
             String hashedPassword = BCrypt.hashpw(password, BCrypt.gensalt());
-            // Tạo mã xác nhận (token) và lưu tạm thời vào cơ sở dữ liệu
             String otp = EmailUtility.generateOTP();
-            RegisterModel model = new RegisterModel(fullName,birthDay,email,phoneNumber,address,username,hashedPassword);
+            RegisterModel model = new RegisterModel(fullName,null,email,phoneNumber,null,username,hashedPassword);
             boolean isSuccess = registerDao.registerUser(model,otp);
 
             if (isSuccess) {
@@ -103,7 +100,7 @@ public class RegisterController extends HttpServlet {
         if (!phoneRegex.matcher(phoneNumber).matches()) return "Sdt phải có 10 chữ số và bắt đầu bằng 0!";
         if (!usernameRegex.matcher(username).matches()) return "Tên đăng nhập không hợp lệ!";
 //        if (!usernameRegex.matcher(username).matches()) return "Tên đăng nhập từ 5-20 ký tự, chỉ chứa chữ, số, dấu gạch dưới!";
-       // if (!passwordRegex.matcher(password).matches()) return "Mật khẩu không hợp lệ!";
+        if (!passwordRegex.matcher(password).matches()) return "Mật khẩu không hợp lệ!";
 //        if (!passwordRegex.matcher(password).matches()) return "Mật khẩu phải có ít nhất 6 ký tự, 1 chữ hoa, 1 số, 1 ký tự đặc biệt!";
         if (!password.equals(confirmPassword)) return "Mật khẩu xác nhận không khớp!";
 

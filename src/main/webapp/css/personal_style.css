@@ -9,6 +9,7 @@ body, html {
     margin-left: auto;
     width: 1200px;
 }
+
 #searchForm {
     display: none;
     position: absolute;
@@ -27,6 +28,7 @@ body, html {
     border: 1px solid #ccc;
     border-radius: 4px;
 }
+
 .header .container {
     height: 60px;
     display: flex;
@@ -81,7 +83,8 @@ body, html {
             float: left;
             text-decoration: none;
         }
-        span:hover{
+
+        span:hover {
             color: black;
         }
 
@@ -504,11 +507,12 @@ body, html {
 
 .navigation_titlePage .omega {
     position: absolute;
-    top: 65px;
+    top: 50px;
     padding: 80px 0;
     left: 0;
     text-align: center;
     width: 100%;
+    height: 300px;
     background-color: rgba(255, 255, 255, 0.5); /*rgba(255,255,255,0.5):trắng khói*/
     pointer-events: none;
     z-index: 2;
@@ -523,6 +527,7 @@ body, html {
 .navigation_titlePage .omega .title {
     font-size: 48px;
     font-weight: 500;
+    margin-top: 10px;
 }
 
 .navigation_titlePage .omega .path {
@@ -554,10 +559,12 @@ body, html {
 .content_section {
     padding-bottom: 30px;
     margin-top: 30px;
-    height: 500px;
-    .container{
+    height: 600px;
+
+    .container {
         display: flex;
     }
+
     .row {
         width: 100%;
         justify-content: center;
@@ -574,13 +581,12 @@ body, html {
         padding-left: 15px;
         padding-bottom: 10px;
         background-color: whitesmoke;
-        width: 40%;
+        width: 100%;
         box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); /* Thêm box-shadow */
         border-radius: 2px;
     }
 
     p {
-        margin-top: 25px;
         margin-left: 5px;
     }
 
@@ -599,8 +605,13 @@ body, html {
 
     .col-md-12 {
         display: flex;
+
+        label {
+            font-size: 15px;
+        }
     }
-    button{
+
+    button {
         width: 100px;
         height: 30px;
         border-radius: 15px;
@@ -618,137 +629,105 @@ body, html {
         cursor: pointer;
     }
 }
+
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@600&display=swap');
-.content_section .alpha{
+.content_section .alpha {
     width: 25%;
     padding: 20px;
     cursor: pointer;
+
     .avt {
         display: flex;
-        border:1px solid lightgray;
+        border: 1px solid lightgray;
+        padding-bottom: 10px;
+        margin-bottom: 50px;
     }
-    .homePage {
-        display: flex;
-        border:1px solid lightgray;
-        height: 45px;
-        align-items: center;
-        margin-top: 30px;
-        text-align: center;
-        font-family: 'Poppins', sans-serif;
-        color:gray;
-        h5{
-            margin-left: 20px;
-        }
+    .welcomeName{
+        margin-top: 20px;
     }
-    .homePage:hover{
-        background-color: whitesmoke;
-        cursor: pointer;
-    }
-    .order {
-        display: flex;
-        border:1px solid lightgray;
-        align-items: center;
-        height: 45px;
-        text-align: center;
-        font-family: 'Poppins', sans-serif;
-        color:gray;
-        h5{
-            margin-left: 20px;
-        }
-    }
-    .order:hover {
-        background-color: whitesmoke;
-        cursor: pointer;
-    }
+
+
     .address {
         align-items: center;
         display: flex;
-        border:1px solid lightgray;
+        border: 1px solid lightgray;
         height: 45px;
         text-align: center;
         font-family: 'Poppins', sans-serif;
-        color:gray;
-        h5{
+        color: gray;
+
+        h5 {
             margin-left: 20px;
+            font-weight: bold;
+            margin-top: 10px;
         }
     }
-    .address:hover{
+
+    .address:hover {
         background-color: whitesmoke;
         cursor: pointer;
     }
-    .account {
-        display: flex;
-        border:1px solid lightgray;
-        height: 45px;
-        text-align: center;
-        align-items: center;
-        font-family: 'Poppins', sans-serif;
-        color:gray;
-        h5{
-            margin-left: 20px;
-        }
+
+    .address i{
+        margin-right: 10px;
     }
-    .account:hover{
-        background-color: whitesmoke;
-        cursor: pointer;
-    }
-    .logOut {
-        display: flex;
-        border:1px solid lightgray;
-        height: 45px;
-        text-align: center;
-        align-items: center;
-        font-family: 'Poppins', sans-serif;
-        color:gray;
-        h5{
-            margin-left: 20px;
-        }
-    }
-    .logOut:hover{
-        background-color: whitesmoke;
-        cursor: pointer;
-    }
+
     h5 {
-        color:#6c757d;
+        color: #6c757d;
         font-family: 'Poppins', sans-serif;
     }
-    strong{
-        color:#343a40;
+
+    strong {
+        color: #343a40;
     }
+
     img {
-        margin-left: 20px;
+        margin-left: 15px;
         margin-right: 20px;
-        margin-top: 20px;
+        margin-top: 15px;
         height: 50px;
         width: 50px;
     }
 }
+
 .content_section .omega {
     width: 75%;
     padding: 20px;
-    .content{
+
+    .content {
         display: grid;
         grid-template-columns: repeat(2, 1fr);
         gap: 20px;
     }
+    .homePageSection h5 {
+        margin-bottom: 20px;
+    }
+
     h5 {
-        color:#6c757d;
+        color: #6c757d;
         font-family: 'Poppins', sans-serif;
+        margin-top: 4px;
     }
-    strong,u{
-        color:#343a40;
+
+    strong, u {
+        color: #343a40;
     }
+
     .box {
-        border:1px solid lightgray;
+        border: 1px solid lightgray;
         align-items: center;
         height: 90px;
         text-align: center;
         font-family: 'Poppins', sans-serif;
-        color:gray;
-        h5{
+        color: gray;
+
+        h5 {
             margin-left: 20px;
+            margin-top: 25px;
+            font-weight: bold;
         }
     }
+
     .box:hover {
         background-color: whitesmoke;
         cursor: pointer;

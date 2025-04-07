@@ -76,6 +76,49 @@ public class ProductDao {
         }
         return 0;
     }
+    public List<Product> searchByNamePaging(String keyword, int index) {
+        List<Product> result = new ArrayList<>();
+        try {
+            int start = (index - 1) * 6;
+            String query = "SELECT * FROM product_shop WHERE name LIKE ? LIMIT ?, 6";
+
+            conn = new DBConnect().getConnection();
+            ps = conn.prepareStatement(query);
+            ps.setString(1, "%" + keyword + "%");
+            ps.setInt(2, start);
+
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                Product p = new Product(
+                        rs.getInt(1),
+                        rs.getString(2),
+                        rs.getDouble(3),
+                        rs.getString(4),
+                        rs.getInt(5)
+                );
+                result.add(p);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
+    public int countSearchByName(String keyword) {
+        try {
+            String query = "SELECT COUNT(*) FROM product_shop WHERE name LIKE ?";
+            conn = new DBConnect().getConnection();
+            ps = conn.prepareStatement(query);
+            ps.setString(1, "%" + keyword + "%");
+            rs = ps.executeQuery();
+
+            if (rs.next()) {
+                return rs.getInt(1);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return 0;
+    }
 
     public List<Product> pagingProduct(int index) {
         List<Product> list = new ArrayList<>();
