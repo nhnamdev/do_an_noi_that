@@ -21,16 +21,28 @@ public class ListProductController extends HttpServlet {
         if (indexPage == null) {
             indexPage = "1";
         }
+        String keyword = request.getParameter("search");
         int index = Integer.parseInt(indexPage);
 //        chia 6 san pham vao 1 trang
         ProductDao dao = new ProductDao();
-        int count = dao.getAllProductCount();
-        int endPage = count / 6;
+        List<Product> productList;
+        int count;
+        int endPage;
+
+        if (keyword != null && !keyword.trim().isEmpty()) {
+            // Nếu có tìm kiếm
+            count = dao.countSearchByName(keyword);
+            productList = dao.searchByNamePaging(keyword, index);
+        } else {
+            // Không có tìm kiếm
+            count = dao.getAllProductCount();
+            productList = dao.pagingProduct(index);
+        }
+
+        endPage = count / 6;
         if (count % 6 != 0) {
             endPage++;
         }
-
-        List<Product> productList = dao.pagingProduct(index);
 
         request.setAttribute("listPagination", productList);
         request.setAttribute("endP", endPage);
