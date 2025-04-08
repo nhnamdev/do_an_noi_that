@@ -110,12 +110,15 @@
                                     </div>
                                     <div class="col-md-12 editable">
                                         <h5 for="province" style="margin-top: 6px">Tỉnh/Thành phố:</h5>
-                                        <select id="province" name="province" style="height: 35px;width: 150px">
+                                        <select id="province" name="province"
+                                                style="height: 35px;width: 150px; display:none;"
+                                                onchange="loadDistricts()">
                                             <option value="">Chọn tỉnh/thành phố</option>
                                         </select><br>
 
                                         <h5 for="district" style="margin-left: 20px;margin-top: 6px">Quận/Huyện:</h5>
-                                        <select id="district" name="district" disabled style="height: 35px;width: 150px">
+                                        <select id="district" name="district"
+                                                style="height: 35px;width: 150px; display:none;">
                                             <option value="">Chọn quận/huyện</option>
                                         </select><br>
                                     </div>
@@ -184,75 +187,65 @@
         });
     </script>
     <script>
-        async function getProvinces() {
-            try {
-                const response = await fetch('https://provinces.open-api.vn/api?depth=2');
-                if (!response.ok) {
-                    throw new Error('Không thể lấy danh sách tỉnh/thành phố');
-                }
-                const provinces = await response.json();
-                console.log('Danh sách tỉnh/thành phố:', provinces);
-                const provinceSelect = document.getElementById('province');
+        document.addEventListener('DOMContentLoaded', function () {
+            fetch('${pageContext.request.contextPath}/data/provinceList.json')
+                .then(response => response.json())
+                .then(data => {
+                    const provinceSelect = document.getElementById('province');
 
-                // Thêm các tỉnh/thành phố vào dropdown
-                provinces.forEach(province => {
-                    const option = document.createElement('option');
-                    option.value = province.name;
-                    option.textContent = province.name;
-                    provinceSelect.appendChild(option);
-                });
-            } catch (error) {
-                console.error('Lỗi khi lấy tỉnh/thành phố:', error);
-            }
-        }
+                    const uniqueProvinces = [...new Set(data.map(item => item.provinceName))];
 
-        async function getDistricts(provinceName) {
-            try {
-                const response = await fetch(`https://provinces.open-api.vn/api/${provinceCode}?depth=2`);
-                if (!response.ok) {
-                    console.error(`Lỗi khi gọi API quận/huyện, mã lỗi: ${response.status}`);
-                    throw new Error('Không thể lấy danh sách quận/huyện');
-                }
-                const provinces = await response.json();
-                const provinceData = provinces.find(item => item.name === provinceName);
-                const districtSelect = document.getElementById('district');
-                districtSelect.innerHTML = '<option value="">Chọn quận/huyện</option>';
-                if (provinceData && provinceData.districts && Array.isArray(provinceData.districts)) {
-                    provinceData.districts.forEach(district => {
-                        const option = document.createElement('option');
-                        option.value = district.code;
-                        option.textContent = district.name;
-                        districtSelect.appendChild(option);
+                    uniqueProvinces.forEach(provinceName => {
+                        const option = new Option(provinceName, provinceName);
+                        provinceSelect.add(option);
                     });
-                    districtSelect.disabled = false;
-                } else {
-                    districtSelect.innerHTML = '<option value="">Không có quận/huyện</option>';
-                    districtSelect.disabled = true;
-                }
-            } catch (error) {
-                console.error('Lỗi khi lấy quận/huyện:', error);
-                const districtSelect = document.getElementById('district');
-                districtSelect.innerHTML = '<option value="">Không thể tải quận/huyện</option>';
-                districtSelect.disabled = true;
-            }
-        }
-
-        document.getElementById('province').addEventListener('change', function () {
-            const provinceName = event.target.value;
-            if (provinceName) {
-                getDistricts(provinceName);
-            } else {
-                const districtSelect = document.getElementById('district');
-                districtSelect.innerHTML = '<option value="">Chọn quận/huyện</option>';
-                districtSelect.disabled = true;
-            }
+                })
+                .catch(error => {
+                    console.error('Lỗi tải danh sách tỉnh:', error);
+                });
         });
-        getProvinces();
+
+        // load quận huyện khi chọn tỉnh thành
+        function loadDistricts() {
+            const provinceSelect = document.getElementById('province');
+            const districtSelect = document.getElementById('district');
+
+            districtSelect.innerHTML = '<option value="">Chọn Quận/Huyện</option>';
+
+            fetch('${pageContext.request.contextPath}/data/provinceList.json')
+                .then(response => response.json())
+                .then(data => {
+                    const selectedProvinceName = provinceSelect.value;
+
+                    const districtsForProvince = data
+                        .filter(item => item.provinceName === selectedProvinceName)
+                        .map(item => item.districtName);
+
+                    const uniqueDistricts = [...new Set(districtsForProvince)];
+
+                    uniqueDistricts.forEach(districtName => {
+                        const option = new Option(districtName, districtName);
+                        districtSelect.add(option);
+                    });
+                })
+                .catch(error => {
+                    console.error('Lỗi tải danh sách quận huyện:', error);
+                });
+        }
     </script>
     <script>
         $(document).ready(function () {
             $(".saveBtn").click(function (e) {
                 e.preventDefault();
+
+                // Check if province and district are selected
+                let province = $("#province").find("option:selected").val();
+                let district = $("#district").find("option:selected").val();
+
+                if (!province || !district) {
+                    alert("Vui lòng chọn Tỉnh/Thành phố và Quận/Huyện");
+                    return;
+                }
 
                 let formData = {
                     userNameInput: $("#userNameInput").val(),
@@ -260,8 +253,8 @@
                     userPhoneInput: $("#userPhoneInput").val(),
                     userAddressInput: $("#userAddressInput").val(),
                     userEmailInput: $("#userEmailInput").val(),
-                    province: $("#province").find("option:selected").text(),
-                    district: $("#district").find("option:selected").text()
+                    province: province,
+                    district: district
                 };
 
                 $.ajax({
@@ -274,42 +267,39 @@
                             alert("Cập nhật thành công!");
                             $(".avt .welcomeName strong").text(response.updatedUser.userName);
                             $("#homePageSection h5 strong").text(response.updatedUser.userName);
+
+                            // Update the displayed address with the new full address
+                            $("#userAddress").text(response.updatedUser.userAddress);
+
+                            // Hide all inputs and show the text values
                             $(".editable").each(function () {
                                 let p = $(this).find("p");
                                 let input = $(this).find("input");
-                                let select = $(this).find("select");
                                 if (p.length && input.length) {
-                                    p.text(input.val());
                                     p.show();
                                     input.hide();
                                 }
-                                if (select.length) {
-                                    p.text(select.find("option:selected").text());
-                                    p.show();
-                                    select.hide();
-                                }
                             });
+
+                            // Hide province and district dropdowns
+                            $("#province").hide();
+                            $("#district").hide();
+
                             $(".saveBtn").hide();
                             $(".editBtn").show();
+                        } else if (response.status === "info") {
+                            alert(response.message);
                         } else {
                             alert("Cập nhật thất bại! Lỗi: " + (response.message || "Không rõ"));
                         }
                     },
                     error: function (xhr, status, error) {
                         let errorMessage = "Lỗi kết nối đến server!";
-                        if (xhr.status === 404) {
-                            errorMessage = "Không tìm thấy URL (404). Vui lòng kiểm tra lại endpoint.";
-                        } else if (xhr.status === 500) {
-                            errorMessage = "Lỗi máy chủ (500). Vui lòng thử lại sau.";
-                        } else if (status === 'timeout') {
-                            errorMessage = "Thời gian chờ kết nối hết hạn. Vui lòng kiểm tra kết nối mạng.";
-                        } else if (xhr.responseText) {
-                            errorMessage = "Lỗi từ server: " + xhr.responseText;
-                        }
+                        // Rest of your error handling
                         console.error("Chi tiết lỗi từ server:", xhr.responseText);
                         alert(errorMessage);
                     },
-                    timeout: 10000 // Đặt timeout nếu server mất quá lâu để phản hồi
+                    timeout: 10000
                 });
             });
 
@@ -318,21 +308,47 @@
                     let p = $(this).find("p");
                     let input = $(this).find("input");
                     let select = $(this).find("select");
+
                     if (p.length && input.length) {
-                        input.val(p.text());
+                        input.val(p.text().trim());
                         p.hide();
                         input.show();
                     }
-                    if (select.length) {
-                        select.val(p.text());
+
+                    // Show province and district dropdowns
+                    if ($(this).find("#province").length || $(this).find("#district").length) {
                         p.hide();
-                        select.show();
+                        $(this).find("h5").show();
+                        $(this).find("select").show();
                     }
                 });
+
+                // Try to parse the current address to set province and district
+                let currentAddress = $("#userAddress").text().trim();
+                let addressParts = currentAddress.split(", ");
+
+                if (addressParts.length >= 3) {
+                    let province = addressParts[addressParts.length - 1];
+                    let district = addressParts[addressParts.length - 2];
+                    let address = addressParts.slice(0, addressParts.length - 2).join(", ");
+
+                    // Set address input
+                    $("#userAddressInput").val(address);
+
+                    // Try to select province and trigger district loading
+                    setTimeout(function () {
+                        $("#province").val(province).trigger('change');
+
+                        // Wait for districts to load and then select the right one
+                        setTimeout(function () {
+                            $("#district").val(district);
+                        }, 500);
+                    }, 500);
+                }
+
                 $(".saveBtn").show();
                 $(this).hide();
             });
-
         });
     </script>
 

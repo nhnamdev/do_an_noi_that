@@ -16,6 +16,7 @@ import java.io.IOException;
 @WebServlet("/updateProfile")
 public class ProfileController extends HttpServlet {
     ProfileDao profileDao = new ProfileDao();
+
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         resp.setContentType("application/json");
@@ -55,8 +56,10 @@ public class ProfileController extends HttpServlet {
                     (newName != null && !newName.equals(currentName)) ||
                             (newBirthday != null && !newBirthday.equals(currentBirthday)) ||
                             (newNumberPhone != null && !newNumberPhone.equals(currentNumberPhone)) ||
-                            (newAddress != null && !newAddress.equals(currentAddress)) ||
-                            (newEmail != null && !newEmail.equals(currentEmail));
+                            (newEmail != null && !newEmail.equals(currentEmail)) ||
+                            (newProvince != null && !newProvince.isEmpty()) ||
+                            (newDistrict != null && !newDistrict.isEmpty()) ||
+                            (newAddress != null && !newAddress.equals(currentAddress));
 
             if (isChanged) {
                 Profile profile = new Profile(newName, newBirthday, newNumberPhone, fullAddress, newEmail);
@@ -84,6 +87,9 @@ public class ProfileController extends HttpServlet {
                 } else {
                     resp.getWriter().write("{\"status\": \"error\", \"message\": \"Update failed\"}");
                 }
+            } else {
+                // No changes detected
+                resp.getWriter().write("{\"status\": \"info\", \"message\": \"No changes detected\"}");
             }
         } catch (Exception e) {
             e.printStackTrace();
