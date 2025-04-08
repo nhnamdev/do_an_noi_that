@@ -13,11 +13,6 @@ public class CheckoutController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws
             ServletException, IOException {
-    }
-
-    @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws
-            ServletException, IOException {
         HttpSession session = request.getSession();
         Integer userID = (Integer) session.getAttribute("userIdLogin");
         if (userID == null) {
@@ -29,5 +24,29 @@ public class CheckoutController extends HttpServlet {
             response.sendRedirect(request.getContextPath() + "/cart");
         }
         request.getRequestDispatcher("/cartCheckout.jsp").forward(request, response);
+    }
+
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws
+            ServletException, IOException {
+        HttpSession session = request.getSession();
+        Integer userID = (Integer) session.getAttribute("userIdLogin");
+
+        if (userID == null) {
+            response.sendRedirect(request.getContextPath() + "/login.jsp");
+            return;
+        }
+
+        String fullname = request.getParameter("fullname");
+        String email = request.getParameter("email");
+        String phone = request.getParameter("phone");
+        String address = request.getParameter("address");
+        String district = request.getParameter("district");
+        String province = request.getParameter("province");
+        String fullAddress = request.getParameter("fullAddress");
+        String notes = request.getParameter("order-notes");
+        String paymentMethod = request.getParameter("payment");
+
+        response.sendRedirect(request.getContextPath() + "/orderReceived.jsp");
     }
 }

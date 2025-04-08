@@ -12,6 +12,25 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
 </head>
 <body>
+<%
+    String userAddress = (String) session.getAttribute("userAddress");
+    System.out.println("JSP - Địa chỉ từ session: " + userAddress);
+%>
+
+<!-- Thêm div ẩn để debug -->
+<div id="debug-info" style="display:none;">
+    <p>Địa chỉ đầy đủ: ${sessionScope.userAddress}</p>
+</div>
+
+<!-- Thêm script để kiểm tra DOM -->
+<script>
+    window.onload = function () {
+        console.log("DOM đã load xong");
+        console.log("Giá trị hiện tại của ô địa chỉ:", document.getElementById('address').value);
+        console.log("Giá trị hiện tại của tỉnh/thành phố:", document.getElementById('province').value);
+        console.log("Giá trị hiện tại của quận/huyện:", document.getElementById('district').value);
+    };
+</script>
 <div id="wrapper">
     <jsp:include page="/components/header.jsp"/>
     <script src="js/showSearch.js"></script>
@@ -116,15 +135,16 @@
                             <h3>THÔNG TIN THANH TOÁN</h3>
                             <div class="form-group">
                                 <label for="fullname">Họ và tên *</label>
-                                <input type="text" id="fullname" name="fullname" required>
+                                <input type="text" id="fullname" name="fullname" required
+                                       value="${sessionScope.userName}">
                             </div>
                             <div class="form-group">
                                 <label for="email">Địa chỉ email *</label>
-                                <input type="email" id="email" name="email" required>
+                                <input type="email" id="email" name="email" required value="${sessionScope.userEmail}">
                             </div>
                             <div class="form-group">
                                 <label for="phone">Số điện thoại *</label>
-                                <input type="tel" id="phone" name="phone" required>
+                                <input type="tel" id="phone" name="phone" required value="${sessionScope.userPhone}">
                             </div>
                             <div class="form-group">
                                 <label for="province">Tỉnh/Thành phố *</label>
@@ -140,7 +160,8 @@
                             </div>
                             <div class="form-group">
                                 <label for="address">Địa chỉ *</label>
-                                <input type="text" id="address" name="address" required>
+                                <input type="text" id="address" name="address" required
+                                       value="${sessionScope.userAddress}">
                             </div>
                             <div class="form-group">
                                 <label for="order-notes">Ghi chú đơn hàng (tùy chọn)</label>
@@ -154,6 +175,8 @@
                                 <c:forEach var="entry" items="${cart}">
                                     <c:set var="order" value="${entry.value}"/>
                                     <c:set var="product" value="${order.product}"/>
+                                    <c:set var="itemTotal" value="${product.price * order.quantity}"/>
+                                    <c:set var="totalAmount" value="${totalAmount + itemTotal}"/>
                                     <div class="product-cart-item">
                                         <div class="product-info">
                                             <img src="${product.img}" alt="${product.name}" class="product-image">
@@ -177,7 +200,7 @@
                             </div>
                             <div class="order-summary-total">
                                 <div>Tổng tiền hàng</div>
-                                <div>5,471,000đ</div>
+                                <div>${totalAmount}</div>
                             </div>
                             <div class="order-summary-total">
                                 <div>Tổng tiền phí vận chuyển</div>
@@ -185,7 +208,7 @@
                             </div>
                             <div class="order-summary-total grand-total">
                                 <div>Tổng thanh toán</div>
-                                <div>5,471,000đ</div>
+                                <div>${totalAmount + shippingFee}</div>
                             </div>
                             <div class="payment-method">
                                 <div class="payment-option">

@@ -215,7 +215,7 @@
                         <span class="total-label">Tổng</span>
                         <span class="total-value"></span>
                     </div>
-                    <form action="${pageContext.request.contextPath}/checkout/" method="post">
+                    <form action="${pageContext.request.contextPath}/checkout/" method="get">
                         <button class="checkout-btn">TIẾN HÀNH THANH TOÁN</button>
                     </form>
                 </div>
