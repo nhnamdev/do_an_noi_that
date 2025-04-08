@@ -14,7 +14,7 @@
 <body>
 <div>
     <div class="contactUs">
-        <jsp:include page="components/header.jsp" />
+        <jsp:include page="components/header.jsp"/>
 
         <div class="slider1">
             <div class="easypin">
@@ -72,7 +72,7 @@
             </div>
         </div>
         <div class="slider4">
-            <div class="bosuutap">
+            <div class="bosuutap" style="margin-left: 2%;">
                 <img src="assets_duc/img/Asgaard%20sofa%201.png" height="799" width="947"/>
             </div>
             <div class="bosuutap-text">
@@ -92,10 +92,9 @@
                 </a>
             </div>
         </div>
-        <jsp:include page="components/footer.jsp" />
+        <jsp:include page="components/footer.jsp"/>
     </div>
 </div>
-
 
 
 </body>

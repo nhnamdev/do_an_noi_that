@@ -1,6 +1,7 @@
 :root {
     --color-primary: #6bae0e; /* Màu xanh la */
 }
+
 /* Reset Css */
 
 
@@ -23,7 +24,7 @@ body, html {
     width: 100%;
     z-index: 1000;
     position: fixed;
-    background-color:#ffffff ;
+    background-color: #ffffff;
     transition: box-shadow 0.3s ease;
 }
 
@@ -146,6 +147,7 @@ body, html {
     margin-left: 70px;
 
 }
+
 .header .container .left ul li a:hover {
     color: var(--color-primary);
 
@@ -165,11 +167,6 @@ body, html {
     height: 18px;
     border: 2px solid lightgray;
 }
-
-
-
-
-
 
 
 #searchForm {
@@ -284,10 +281,10 @@ body, html {
 }
 
 .slider2 .img-left {
-    width: 500px;
+    width: 50%;
     height: 622px;
     margin-top: 50px;
-    margin-left: 180px;
+    margin-left: 15%;
 }
 
 .img-left, .img-right {
@@ -305,10 +302,10 @@ body, html {
 }
 
 .slider2 .img-right {
-    width: 600px;
+    width: 50%;
     height: 622px;
     margin-top: 50px;
-    margin-left: 280px;
+    /*margin-left: 280px;*/
 }
 
 .slider2 .img-right h1 {
@@ -337,7 +334,7 @@ body, html {
 }
 
 .slider3 .header1 {
-    margin-left: 350px;
+    text-align: center;
     margin-top: 50px;
 }
 
@@ -355,8 +352,8 @@ body, html {
 /*IMG SAN PHAM*/
 .slider3 .img-sanpham {
     display: flex;
-    max-width: 1000px;
-    margin-top: 50px;
+    /*max-width: 1000px;*/
+    /*margin-top: 50px;*/
 }
 
 .slider3 .img-sanpham .img-1, .img-2, .img-3, .img-4 {
@@ -599,22 +596,25 @@ body, html {
     position: relative;
     bottom: 14px;
 }
+
 /* logo  */
 /* Ảnh home index*/
 .easypin {
     width: 100%;
-    height: 100vh;
+
     position: relative;
     display: flex;
     justify-content: center;
     align-items: center;
     overflow: hidden;
 }
+
 .easypin img {
     max-width: 100%;
     height: auto;
     display: block;
 }
+
 /* Ảnh home index*/
 
 /* Login/Register */
@@ -657,6 +657,7 @@ body, html {
     fill: currentColor;
     transition: 0.3s;
 }
+
 /*.login-register span{*/
 /*    position: relative;*/
 /*    bottom: 6px;*/
@@ -666,6 +667,7 @@ body, html {
 .login-register:hover svg {
     fill: var(--color-primary);
 }
+
 .login-register:hover span {
     fill: var(--color-primary);
     color: var(--color-primary);
@@ -678,4 +680,5 @@ body, html {
         padding: 8px 12px;
     }
 }
+
 /* Login/Register */
