@@ -531,7 +531,7 @@
                                 <button type="submit" class="btn lock"
                                         style="background-color: <%= activeStatus == 1 ? "red" : "green" %>; color: white;"
                                         onclick="return confirm('<%= activeStatus == 1 ? "Bạn có chắc chắn muốn khóa tài khoản này?" : "Bạn có chắc chắn muốn mở khóa tài khoản này?" %>')">
-                                    <%= activeStatus == 1 ? "Khóa tài khoản" : "Mở khóa tài khoản" %>
+                                    <%= activeStatus == 1 ? "Khóa" : "Mở khóa" %>
                                 </button>
                             </form>
                     </div>
