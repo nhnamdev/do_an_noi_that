@@ -8,7 +8,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%
     Integer role = (Integer) session.getAttribute("role");
-    if (role == null || role != 1) {
+    if (role == null || role < 2) {
         response.sendRedirect("index.jsp");
         return;
     }
@@ -446,6 +446,7 @@
                 <th>Email</th>
                 <th>Số điện thoại</th>
                 <th>Địa chỉ</th>
+                <th>Quyền</th>
                 <th>Trạng thái</th>
                 <th>Hành Động</th>
             </tr>
@@ -482,6 +483,22 @@
                 </td>
                 <td><%= pr.getAddress() %>
                 </td>
+                <td><%
+                    int roleStatus = profileDao.getRoleUser(pr.getId());
+                    String roleMessage = "";
+                    switch (roleStatus) {
+                        case 0:
+                            roleMessage = "User";
+                            break;
+                        case 1:
+                            roleMessage = "Mod";
+                            break;
+                        default:
+                            roleMessage = "Không xác định";
+                            break;
+                    }
+                %>
+                    <%= roleMessage %></td>
                 <td><%
                     int activeStatus = profileDao.getActiveUser(pr.getId());
                     String statusMessage = "";
