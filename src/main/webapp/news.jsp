@@ -1,4 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="f" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html lang="vi">
 <head>
@@ -75,39 +78,21 @@
         </aside>
         <!-- Main content -->
         <main class="col-md-9">
-            <div class="news">
-                <a href="#" title="X" class="entry-image nasa-blog-img blog-image-attachment nasa-block">
-                    <img width="595" height="397"
-                         src="https://noithat-nhadep.monamedia.net/wp-content/uploads/2018/02/Cloud-Modular-with-Ottaman-1024x683-1-595x397.jpg"
-                         class="attachment-large size-large wp-post-image" alt="" decoding="async">
-                    <div class="image-overlay"></div>
-                </a>
-                <h2> Title The need of life with vip style</h2>
-                <p><small> 13 Tháng Hai, 2018</small></p>
-                <p> Mô Tả Dài </p>
-            </div>
-            <div class="news">
-                <a href="#" title="X" class="entry-image nasa-blog-img blog-image-attachment nasa-block">
-                    <img width="595" height="397"
-                         src="https://noithat-nhadep.monamedia.net/wp-content/uploads/2018/02/Cloud-Modular-with-Ottaman-1024x683-1-595x397.jpg"
-                         class="attachment-large size-large wp-post-image" alt="" decoding="async">
-                    <div class="image-overlay"></div>
-                </a>
-                <h2> Title The need of life with vip style</h2>
-                <p><small> 13 Tháng Hai, 2018</small></p>
-                <p> Mô Tả Dài </p>
-            </div>
-            <div class="news">
-                <a href="#" title="X" class="entry-image nasa-blog-img blog-image-attachment nasa-block">
-                    <img width="595" height="397"
-                         src="https://noithat-nhadep.monamedia.net/wp-content/uploads/2018/02/Cloud-Modular-with-Ottaman-1024x683-1-595x397.jpg"
-                         class="attachment-large size-large wp-post-image" alt="" decoding="async">
-                    <div class="image-overlay"></div>
-                </a>
-                <h2> Title The need of life with vip style</h2>
-                <p><small> 13 Tháng Hai, 2018</small></p>
-                <p> Mô Tả Dài </p>
-            </div>
+            <c:forEach var="news" items="${listNews}">
+                <div class="news">
+                    <a href="NewDetailController?Id=${news.id}" title="X"
+                       class="entry-image nasa-blog-img blog-image-attachment nasa-block">
+                        <img width="595" height="397"
+                             src="https://noithat-nhadep.monamedia.net/wp-content/uploads/2018/02/Cloud-Modular-with-Ottaman-1024x683-1-595x397.jpg"
+                             class="attachment-large size-large wp-post-image" alt="" decoding="async">
+                        <div class="image-overlay"></div>
+                    </a>
+                    <h2>${news.title}</h2>
+                    <p><small><fmt:formatDate value="${news.createdAt}" pattern="dd MMMM, yyyy"/></small></p>
+                    <p>${news.description} </p>
+
+                </div>
+            </c:forEach>
         </main>
         <!-- Main content -->
     </div>

@@ -22,7 +22,7 @@ public class NewsDAO {
             rs = ps.executeQuery();
             while (rs.next()) {
                 newsList.add(new News(
-                        rs.getInt("id"),
+                        rs.getInt("news_id"),
                         rs.getString("title"),
                         rs.getString("description"),
                         rs.getString("content"),
@@ -55,7 +55,7 @@ public class NewsDAO {
     }
 
     public News getNewsByID(int id) {
-        String query = "SELECT * FROM news WHERE id = ?";
+        String query = "SELECT * FROM news WHERE news_id = ?";
         try {
             conn = new DBConnect().getConnection();
             ps = conn.prepareStatement(query);
@@ -63,7 +63,7 @@ public class NewsDAO {
             rs = ps.executeQuery();
             if (rs.next()) {
                 return new News(
-                        rs.getInt("id"),
+                        rs.getInt("news_id"),
                         rs.getString("title"),
                         rs.getString("description"),
                         rs.getString("content"),
@@ -78,5 +78,12 @@ public class NewsDAO {
         return null;
     }
 
+    public static void main(String[] args) {
+        NewsDAO dao = new NewsDAO();
+        List<News> listNew = dao.getAllNews();
 
+        for (News news : listNew) {
+            System.out.println(news);
+        }
+    }
 }
