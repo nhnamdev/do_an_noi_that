@@ -8,7 +8,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%
     Integer role = (Integer) session.getAttribute("role");
-    if (role == null || role != 1) {
+    if (role == null || role < 2) {
         response.sendRedirect("index.jsp");
         return;
     }
@@ -327,7 +327,7 @@
                 <ul id="customerList">
                     <c:forEach items="${names}" var="n">
                         <li class="customer" onclick="location.href='admin?name=${n}'" style="cursor: pointer;">
-                            <img src="img/avt/avt.jpg" alt=""/>
+                            <img src="img/avt.jpg" alt=""/>
                             <span>${n}</span>
                         </li>
                     </c:forEach>
@@ -446,6 +446,7 @@
                 <th>Email</th>
                 <th>Số điện thoại</th>
                 <th>Địa chỉ</th>
+                <th>Quyền</th>
                 <th>Trạng thái</th>
                 <th>Hành Động</th>
             </tr>
@@ -483,6 +484,22 @@
                 <td><%= pr.getAddress() %>
                 </td>
                 <td><%
+                    int roleStatus = profileDao.getRoleUser(pr.getId());
+                    String roleMessage = "";
+                    switch (roleStatus) {
+                        case 0:
+                            roleMessage = "User";
+                            break;
+                        case 1:
+                            roleMessage = "Mod";
+                            break;
+                        default:
+                            roleMessage = "Không xác định";
+                            break;
+                    }
+                %>
+                    <%= roleMessage %></td>
+                <td><%
                     int activeStatus = profileDao.getActiveUser(pr.getId());
                     String statusMessage = "";
                     switch (activeStatus) {
@@ -500,26 +517,23 @@
                             break;
                     }
                 %>
-                    <%= statusMessage %>
-                </td>
+                    <%= statusMessage %></td>
                 <td>
                     <div class="action-buttons">
                         <form method="get" action="admin" id="deleteForm_<%= pr.getId() %>">
                             <input type="hidden" name="deleteId" value="<%= pr.getId() %>">
                             <button type="submit" class="btn reject" style="background-color: darkgrey"
-                                    onclick="return confirm('Bạn có chắc chắn muốn xóa tài khoản này?')">Xóa tài khoản
-                            </button>
+                                    onclick="return confirm('Bạn có chắc chắn muốn xóa tài khoản này?')">Xóa tài khoản</button>
                         </form>
 
-                        <form method="get" action="admin" id="lockUnlockForm_<%= pr.getId() %>">
-                            <input type="hidden" name="<%= activeStatus == 1 ? "lockId" : "unlockId" %>"
-                                   value="<%= pr.getId() %>">
-                            <button type="submit" class="btn lock"
-                                    style="background-color: <%= activeStatus == 1 ? "red" : "green" %>; color: white;"
-                                    onclick="return confirm('<%= activeStatus == 1 ? "Bạn có chắc chắn muốn khóa tài khoản này?" : "Bạn có chắc chắn muốn mở khóa tài khoản này?" %>')">
-                                <%= activeStatus == 1 ? "Khóa tài khoản" : "Mở khóa tài khoản" %>
-                            </button>
-                        </form>
+                            <form method="get" action="admin" id="lockUnlockForm_<%= pr.getId() %>">
+                                <input type="hidden" name="<%= activeStatus == 1 ? "lockId" : "unlockId" %>" value="<%= pr.getId() %>">
+                                <button type="submit" class="btn lock"
+                                        style="background-color: <%= activeStatus == 1 ? "red" : "green" %>; color: white;"
+                                        onclick="return confirm('<%= activeStatus == 1 ? "Bạn có chắc chắn muốn khóa tài khoản này?" : "Bạn có chắc chắn muốn mở khóa tài khoản này?" %>')">
+                                    <%= activeStatus == 1 ? "Khóa" : "Mở khóa" %>
+                                </button>
+                            </form>
                     </div>
                 </td>
             </tr>

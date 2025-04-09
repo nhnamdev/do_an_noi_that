@@ -7,6 +7,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.mindrot.jbcrypt.BCrypt;
 import vn.edu.hcmuaf.fit.sourcedoannoithat.dao.MyAccountLostPassDao;
+import vn.edu.hcmuaf.fit.sourcedoannoithat.dao.RegisterDao;
 import vn.edu.hcmuaf.fit.sourcedoannoithat.utils.EmailUtility;
 import vn.edu.hcmuaf.fit.sourcedoannoithat.utils.PasswordGenerator;
 
@@ -16,10 +17,12 @@ import java.io.IOException;
 @WebServlet("/forgot-password")
 public class MyAccountLostPassController extends HttpServlet {
     private MyAccountLostPassDao lostPassDao = new MyAccountLostPassDao();
+    private RegisterDao registerDao = new RegisterDao();
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String email = request.getParameter("email");
+        String otp = request.getParameter("otp");
 
         if (email == null || email.trim().isEmpty()) {
             request.setAttribute("error", "Vui lòng nhập email!");
@@ -29,6 +32,11 @@ public class MyAccountLostPassController extends HttpServlet {
 
         if (!lostPassDao.isEmailExist(email)) {
             request.setAttribute("error", "Email không tồn tại trong hệ thống!");
+            request.getRequestDispatcher("my_account_lostpass.jsp").forward(request, response);
+            return;
+        }
+        if (otp == null || otp.trim().isEmpty()) {
+            request.setAttribute("error", "Vui lòng nhập mã OTP!");
             request.getRequestDispatcher("my_account_lostpass.jsp").forward(request, response);
             return;
         }
@@ -48,7 +56,7 @@ public class MyAccountLostPassController extends HttpServlet {
                 EmailUtility.sendEmail(email, subject, content);
 
                 request.setAttribute("success", "Mật khẩu mới đã được gửi tới email của bạn!");
-                request.getRequestDispatcher("my_account_lostpass.jsp").forward(request, response);
+                request.getRequestDispatcher("login.jsp").forward(request, response);
 
             } catch (MessagingException e) {
                 e.printStackTrace();

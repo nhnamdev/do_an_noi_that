@@ -1,4 +1,11 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%
+    Integer role = (Integer) session.getAttribute("role");
+    if (role == null || role == 0) {
+        response.sendRedirect("index.jsp");
+        return;
+    }
+%>
 <html>
 <head>
     <title>Mod</title>

@@ -125,6 +125,8 @@ public class LoginController extends HttpServlet {
                     if (role == 0) {
                         response.sendRedirect("index.jsp");
                     } else if (role == 1) {
+                        response.sendRedirect("mod.jsp");
+                    } else if (role == 2) {
                         response.sendRedirect("admin");
                     } else {
                         response.sendRedirect("login.jsp");

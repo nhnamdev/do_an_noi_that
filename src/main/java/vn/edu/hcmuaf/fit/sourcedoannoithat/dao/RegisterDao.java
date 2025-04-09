@@ -131,7 +131,7 @@ public class RegisterDao {
     }
 
     public boolean updateOTP(String email, String otp) {
-        String query = "UPDATE profile_client SET otp = ? , otpCreateAt=NOW() WHERE email = ? AND active = 0" ;
+        String query = "UPDATE profile_client SET otp = ? , otpCreateAt=NOW() WHERE email = ?" ;
         try {
             connection = new DBConnect().getConnection();
             ps = connection.prepareStatement(query);
