@@ -28,7 +28,7 @@
                 </li>
                 <li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/shop">Cửa hàng</a>
                 </li>
-                <li class="nav-item"><a class="nav-link" href="news.jsp">Tin tức</a></li>
+                <li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/news">Tin tức</a></li>
                 <li class="nav-item"><a class="nav-link" href="About_us.jsp">Thông tin</a></li>
                 <li class="nav-item"><a class="nav-link" href="contact.jsp">Liên hệ</a></li>
             </ul>
@@ -59,7 +59,8 @@
 </nav>
 <%--Lam phan tim kiem vao day roi hien len--%>
 <%--Hải: oke--%>
-<form class="d-none position-absolute bg-white p-3 border rounded" id="formSearch" style="top: 70px; right: 10%;z-index: 9999;"
+<form class="d-none position-absolute bg-white p-3 border rounded" id="formSearch"
+      style="top: 70px; right: 10%;z-index: 9999;"
       action="shop" method="get">
     <input class="form-control" type="search" name="search" placeholder="Tìm kiếm" required>
     <button class="btn btn-primary mt-2" type="submit">Search</button>

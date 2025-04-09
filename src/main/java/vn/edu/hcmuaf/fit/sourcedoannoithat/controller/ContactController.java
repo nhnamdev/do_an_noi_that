@@ -29,9 +29,9 @@ public class ContactController extends HttpServlet {
             Contact contact = new Contact(name, email, topic, content);
             boolean isSuccess = contactDao.createContact(contact);
             if (isSuccess) {
-                resp.sendRedirect("index.jsp");
-            } else {
                 resp.sendRedirect("contact.jsp");
+            } else {
+                resp.sendRedirect("index.jsp");
             }
         } catch (Exception e) {
             e.printStackTrace();

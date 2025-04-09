@@ -1,5 +1,7 @@
-
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="f" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html lang="vi">
 <head>
@@ -14,22 +16,22 @@
     <%--    Ck editor--%>
 </head>
 <body>
-    <jsp:include page="/components/header.jsp" />
-    <div class="container" style="margin-top: 6.4rem">
-        <div class="row">
-            <div class="breadcrumb-wrapper">
-                <div class="breadcrumb">
-                    <div class="container ">
-                        <ul style=" padding-top: 14px;text-align: center;height: 54px;display: flex; background-color: #e8e8e8" >
-                            <li><a href="${pageContext.request.contextPath}/index">Trang chủ</a></li>
-                            <li><i class="fas fa-angle-right"></i></li>
-                            <li><a href="${pageContext.request.contextPath}/news.jsp">Tin Tức</a></li>
-                        </ul>
-                    </div>
+<jsp:include page="/components/header.jsp"/>
+<div class="container" style="margin-top: 6.4rem">
+    <div class="row">
+        <div class="breadcrumb-wrapper">
+            <div class="breadcrumb">
+                <div class="container ">
+                    <ul style=" padding-top: 14px;text-align: center;height: 54px;display: flex; background-color: #e8e8e8">
+                        <li><a href="${pageContext.request.contextPath}/index">Trang chủ</a></li>
+                        <li><i class="fas fa-angle-right"></i></li>
+                        <li><a href="${pageContext.request.contextPath}/news.jsp">Tin Tức</a></li>
+                    </ul>
                 </div>
             </div>
         </div>
-        <div class="row">
+    </div>
+    <div class="row">
         <!-- Sidebar -->
         <aside class="col-md-3 sidebar">
             <h5>Tìm kiếm</h5>
@@ -51,24 +53,51 @@
                     <p class="mb-0">Beauty life style classic</p>
                 </div>
             </div>
+            <div class="latest-post d-flex align-items-center mb-2">
+                <img src="img/sofa1.jpg" alt="">
+                <div class="ms-2">
+                    <small>Fashions magazine</small>
+                    <p class="mb-0">Beauty life style classic</p>
+                </div>
+            </div>
+            <div class="latest-post d-flex align-items-center mb-2">
+                <img src="img/sofa1.jpg" alt="">
+                <div class="ms-2">
+                    <small>Fashions magazine</small>
+                    <p class="mb-0">Beauty life style classic</p>
+                </div>
+            </div>
+            <div class="latest-post d-flex align-items-center mb-2">
+                <img src="img/sofa1.jpg" alt="">
+                <div class="ms-2">
+                    <small>Fashions magazine</small>
+                    <p class="mb-0">Beauty life style classic</p>
+                </div>
+            </div>
             <!-- bài viết mới nhất của mỗi danh mục -->
         </aside>
         <!-- Main content -->
         <main class="col-md-9">
-           <div class="news">
-            <a href="#" title="X" class="entry-image nasa-blog-img blog-image-attachment nasa-block">
-                <img width="595" height="397" src="https://noithat-nhadep.monamedia.net/wp-content/uploads/2018/02/Cloud-Modular-with-Ottaman-1024x683-1-595x397.jpg" class="attachment-large size-large wp-post-image" alt="" decoding="async" >
-                <div class="image-overlay"></div>
-            </a>
-            <h2> Title The need of life with vip style</h2>
-            <p><small> 13 Tháng Hai, 2018</small></p>
-            <p> Mô Tả Dài </p>
-           </div>
+            <c:forEach var="news" items="${listNews}">
+                <div class="news">
+                    <a href="NewDetailController?Id=${news.id}" title="X"
+                       class="entry-image nasa-blog-img blog-image-attachment nasa-block">
+                        <img width="595" height="397"
+                             src="https://noithat-nhadep.monamedia.net/wp-content/uploads/2018/02/Cloud-Modular-with-Ottaman-1024x683-1-595x397.jpg"
+                             class="attachment-large size-large wp-post-image" alt="" decoding="async">
+                        <div class="image-overlay"></div>
+                    </a>
+                    <h2>${news.title}</h2>
+                    <p><small><fmt:formatDate value="${news.createdAt}" pattern="dd MMMM, yyyy"/></small></p>
+                    <p>${news.description} </p>
+
+                </div>
+            </c:forEach>
         </main>
-            <!-- Main content -->
-        </div>
+        <!-- Main content -->
     </div>
-    <jsp:include page="components/footer.jsp" />
+</div>
+<jsp:include page="components/footer.jsp"/>
 
 
 </body>

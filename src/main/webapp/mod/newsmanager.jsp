@@ -1,5 +1,8 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+
+
 <html>
+
 <head>
 
     <title>Quản Lí Tin Tức</title>
@@ -50,7 +53,8 @@
 <%--CONTENT MAIN ADMIN --%>
 <div class="content">
     <div class="page-inner" id="main_contentt">
-        <form style="gap: 0px" action="AddNewsServlet" method="post" enctype="multipart/form-data">
+        <form style="gap: 0px" action="${pageContext.request.contextPath}/mod/newsmanager" method="post"
+              enctype="multipart/form-data">
             <label>Tiêu đề:</label><br>
             <input type="text" name="title" required><br><br>
 
@@ -59,6 +63,15 @@
 
             <label>Nội dung chi tiết:</label><br>
             <textarea name="content" id="editor1"></textarea><br><br>
+
+            <label>Loại tin:</label><br>
+            <select name="category_id" required>
+                <option value="1">Fashions magazine</option>
+                <option value="2">Images</option>
+                <option value="3">Life style</option>
+                <option value="4">Photography</option>
+                <option value="5">Style</option>
+            </select><br><br>
 
             <label>Ảnh:</label><br>
             <input type="file" name="image"><br><br>
