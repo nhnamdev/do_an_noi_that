@@ -4,7 +4,7 @@ package vn.edu.hcmuaf.fit.sourcedoannoithat.dao.model;
 import java.util.Date;
 
 public class News {
-    private int id;
+    private int news_id;
     private String title;
     private String description;
     private String content;
@@ -16,8 +16,8 @@ public class News {
     public News() {
     }
 
-    public News(int id, String title, String description, String content, String image, Date createdAt, int categoryId) {
-        this.id = id;
+    public News(int news_id, String title, String description, String content, String image, Date createdAt, int categoryId) {
+        this.news_id = news_id;
         this.title = title;
         this.description = description;
         this.content = content;
@@ -28,12 +28,12 @@ public class News {
 
     // GETTERS & SETTERS
 
-    public int getId() {
-        return id;
+    public int getNews_id() {
+        return news_id;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setNews_id(int news_id) {
+        this.news_id = news_id;
     }
 
     public String getTitle() {
@@ -82,5 +82,18 @@ public class News {
 
     public void setCategoryId(int categoryId) {
         this.categoryId = categoryId;
+    }
+
+    @Override
+    public String toString() {
+        return "News{" +
+                "news_id=" + news_id +
+                ", title='" + title + '\'' +
+                ", description='" + description + '\'' +
+                ", content='" + content + '\'' +
+                ", image='" + image + '\'' +
+                ", createdAt=" + createdAt +
+                ", categoryId=" + categoryId +
+                '}';
     }
 }
