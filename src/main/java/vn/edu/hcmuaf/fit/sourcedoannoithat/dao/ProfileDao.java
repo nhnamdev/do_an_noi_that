@@ -57,6 +57,22 @@ public class ProfileDao {
         }
         return active;
     }
+    public int getRoleUser(int id){
+        String query ="SELECT role FROM profile_client WHERE id=?";
+        int role = 0;
+        try {
+            connection = new DBConnect().getConnection();
+            ps = connection.prepareStatement(query);
+            ps.setInt(1, id);
+            ResultSet resultSet = ps.executeQuery();
+            if (resultSet.next()) {
+                role = resultSet.getInt("role");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return role;
+    }
 
     public boolean checkOldPassW(String oldPassw,int id) {
         String query = "SELECT password FROM profile_client WHERE id = ?";
@@ -142,7 +158,7 @@ public class ProfileDao {
 
     public List<AccountManagement> getAccountAdmin() {
         try {
-            String query = "SELECT * FROM profile_client WHERE role =0";
+            String query = "SELECT * FROM profile_client WHERE role =0 OR role=1";
             connection = new DBConnect().getConnection();
             ps = connection.prepareStatement(query);
             rs = ps.executeQuery();
@@ -215,8 +231,9 @@ public class ProfileDao {
         ProfileDao profileDao = new ProfileDao();
         Profile profile = new Profile("Hồ Hải 3", "08/01/2001", "0793450530", "BÙI HỮU NGHĨA STREET", "hominhhai2k@gmail.com");
         //System.out.println(profileDao.checkOldPassW("123456",3));
-       // System.out.println(profileDao.changePassw("123456",2));
-        profileDao.lockUser(3);
+        //System.out.println(profileDao.changePassw("123456",35));
+        //profileDao.lockUser(3);
+        System.out.println(profileDao.getRoleUser(35));
     }
 
 }

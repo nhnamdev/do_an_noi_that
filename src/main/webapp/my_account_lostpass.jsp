@@ -1,26 +1,24 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: Administrator
-  Date: 04/01/2025
-  Time: 08:13:23 PM
-  To change this template use File | Settings | File Templates.
---%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Quên mật khẩu</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
-    <link rel="stylesheet" href="css/my_account_lostpass.css">
+    <link rel="stylesheet" href="css/ConfirmOTP.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <link rel="stylesheet" href="css/style.css">
 </head>
+
 <body>
+
 <div>
-    <jsp:include page="/components/header.jsp" />
-    <div class="overlay" id="overlay"></div>
-    <script src="../page_SingleProduct/showCart.js"></script>
+    <jsp:include page="/components/header.jsp"/>
+    <script src="js/showSearch.js"></script>
     <div class="navigation_titlePage">
         <div class="container">
             <div class="alpha">
@@ -40,68 +38,68 @@
             </div>
         </div>
     </div>
-    <div class="slider2">
-        <div class="login">
-            <div>
-                <c:if test="${not empty success}">
-                    <p style="color: green;">${success}</p>
-                </c:if>
+    <div class="slider2" style="background-color: #fff; height: 590px">
+        <div class="confirm" style="margin: auto; width: 460px;">
+            <h2 style="margin-left: 120px;">Quên mật khẩu</h2>
+            <form action="forgot-password" method="post"
+                  style="margin-right: 32px;width: 426px;border: 2px dashed #6bae0e;padding-left: 30px; padding-bottom: 20px;margin-left: 30px">
                 <c:if test="${not empty error}">
-                    <p style="color: red;">${error}</p>
+                    <div style="color: red; font-weight: bold; width: 360px;">
+                            ${error}
+                    </div>
                 </c:if>
-            </div>
-            <form action="forgot-password" method="post">
-                <h2>Quên mật khẩu</h2>
-                <label for="email">Địa chỉ email</label>
-                <input class="dangnhap-matkhau" type="email" name="email" id="email" required>
-                <div class="butt">
-                    <button type="submit">Lấy lại mật khẩu</button>
+                <label style="margin-top: 5px ">Nhập Email:</label>
+                <input class="dangnhap-matkhau" name="email" value="${sessionScope.userEmail}" type="text">
+                <label style="margin-top: 5px ">Nhập mã OTP:</label>
+                <input class="dangnhap-matkhau" name="otp" type="text">
+                <div class="button" style="display: flex">
+                    <button type="button" id="resendOtpBtn" class="resendOtp"
+                            style="padding: 1px 2px; color: white; border: none; cursor: pointer;font-size: 15px;">
+                        Gửi mã OTP
+                    </button>
+                    <button type="submit" id="activeBtn">Lấy mật khẩu</button>
                 </div>
             </form>
-            <a id="quaylai" href="login.jsp">Quay lại</a>
         </div>
     </div>
+    <script>
+        $(document).ready(function() {
+            var canResend = true;
+            $(".resendOtp").click(function(e) {
+                e.preventDefault();
+                if (!canResend) {
+                    alert('Bạn vui lòng đợi 5 giây trước khi gửi lại mã OTP.');
+                    return;
+                }
+                var email = $("input[name='email']").val();
+                $.ajax({
+                    type: 'POST',
+                    url: 'resendOTP',
+                    data: {
+                        email: email
+                    },
+                    dataType: 'json',
+                    success: function(response) {
+                        if (response.success) {
+                            alert('Mã OTP đã được gửi!');
+                            canResend = false;
+                            setTimeout(function() {
+                                canResend = true;
+                            }, 5000);
+                        } else {
+                            alert('Đã xảy ra lỗi: ' + response.message);
+                        }
+                    },
+                    error: function() {
+                        alert('Có lỗi xảy ra khi gửi mã OTP. Vui lòng thử lại!');
+                    }
+                });
+            });
+        });
+    </script>
+
 </div>
-<div class="content_section_2">
-    <div class="container">
-        <div class="item">
-            <div class="card">
-                <i class="fa fa-truck"></i>
-            </div>
-            <div class="content">
-                <div class="free_delivery">
-                    <h2 class="title">Miễn Phí Giao Hàng</h2>
-                    <div class="content_div">Đối với các đơn hàng có giá trị trên 2.000K sẽ được miễn phí phí vận
-                        chuyển
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="item">
-            <div class="card">
-                <i class="fa fa-rotate-left"></i>
-            </div>
-            <div class="content">
-                <div class="return">
-                    <h2 class="title">Hỗ Trợ Đổi/Trả Hàng</h2>
-                    <div class="content_div">Nếu hàng hóa có vấn đề sẽ hỗ trợ đổi trả trong vòng 90 ngày</div>
-                </div>
-            </div>
-        </div>
-        <div class="item">
-            <div class="card">
-                <i class="fa fa-credit-card"></i>
-            </div>
-            <div class="content">
-                <div class="secure_payment">
-                    <h2 class="title">Thanh Toán An Toàn</h2>
-                    <div class="content_div">100% thanh toán an toàn và bảo mật thông tin khách hàng</div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-<jsp:include page="components/footer.jsp" />
-</div>
+<jsp:include page="components/footer.jsp"/>
 </body>
+
 </html>

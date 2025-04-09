@@ -138,7 +138,7 @@
                                         <input type="email" name="userEmailInput" id="userEmailInput"
                                                style="display:none;"/>
                                     </div>
-                                    <button class="saveBtn" type="submit" style="display:none;">Lưu thông tin</button>
+                                    <button class="saveBtn" type="submit" style="display:none;width: 30%">Lưu thông tin</button>
                                     <button class="editBtn" type="button">Chỉnh sửa</button>
                                 </form>
                             </div>
@@ -271,11 +271,11 @@
                             // Update the displayed address with the new full address
                             $("#userAddress").text(response.updatedUser.userAddress);
 
-                            // Hide all inputs and show the text values
                             $(".editable").each(function () {
                                 let p = $(this).find("p");
                                 let input = $(this).find("input");
                                 if (p.length && input.length) {
+                                    p.text(input.val());
                                     p.show();
                                     input.hide();
                                 }
