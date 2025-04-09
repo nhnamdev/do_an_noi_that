@@ -327,7 +327,7 @@
                 <ul id="customerList">
                     <c:forEach items="${names}" var="n">
                         <li class="customer" onclick="location.href='admin?name=${n}'" style="cursor: pointer;">
-                            <img src="img/avt.jpg" alt=""/>
+                            <img src="img/avt/avt.jpg" alt=""/>
                             <span>${n}</span>
                         </li>
                     </c:forEach>
@@ -500,23 +500,26 @@
                             break;
                     }
                 %>
-                    <%= statusMessage %></td>
+                    <%= statusMessage %>
+                </td>
                 <td>
                     <div class="action-buttons">
                         <form method="get" action="admin" id="deleteForm_<%= pr.getId() %>">
                             <input type="hidden" name="deleteId" value="<%= pr.getId() %>">
                             <button type="submit" class="btn reject" style="background-color: darkgrey"
-                                    onclick="return confirm('Bạn có chắc chắn muốn xóa tài khoản này?')">Xóa tài khoản</button>
+                                    onclick="return confirm('Bạn có chắc chắn muốn xóa tài khoản này?')">Xóa tài khoản
+                            </button>
                         </form>
 
-                            <form method="get" action="admin" id="lockUnlockForm_<%= pr.getId() %>">
-                                <input type="hidden" name="<%= activeStatus == 1 ? "lockId" : "unlockId" %>" value="<%= pr.getId() %>">
-                                <button type="submit" class="btn lock"
-                                        style="background-color: <%= activeStatus == 1 ? "red" : "green" %>; color: white;"
-                                        onclick="return confirm('<%= activeStatus == 1 ? "Bạn có chắc chắn muốn khóa tài khoản này?" : "Bạn có chắc chắn muốn mở khóa tài khoản này?" %>')">
-                                    <%= activeStatus == 1 ? "Khóa tài khoản" : "Mở khóa tài khoản" %>
-                                </button>
-                            </form>
+                        <form method="get" action="admin" id="lockUnlockForm_<%= pr.getId() %>">
+                            <input type="hidden" name="<%= activeStatus == 1 ? "lockId" : "unlockId" %>"
+                                   value="<%= pr.getId() %>">
+                            <button type="submit" class="btn lock"
+                                    style="background-color: <%= activeStatus == 1 ? "red" : "green" %>; color: white;"
+                                    onclick="return confirm('<%= activeStatus == 1 ? "Bạn có chắc chắn muốn khóa tài khoản này?" : "Bạn có chắc chắn muốn mở khóa tài khoản này?" %>')">
+                                <%= activeStatus == 1 ? "Khóa tài khoản" : "Mở khóa tài khoản" %>
+                            </button>
+                        </form>
                     </div>
                 </td>
             </tr>

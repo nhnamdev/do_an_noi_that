@@ -59,7 +59,7 @@
             <input type="text" name="title" required><br><br>
 
             <label>Mô tả:</label><br>
-            <textarea name="description" rows="3"></textarea><br><br>
+            <textarea name="description" rows="3" required></textarea><br><br>
 
             <label>Nội dung chi tiết:</label><br>
             <textarea name="content" id="editor1"></textarea><br><br>
@@ -74,7 +74,7 @@
             </select><br><br>
 
             <label>Ảnh:</label><br>
-            <input type="file" name="image"><br><br>
+            <input type="file" name="image" required><br><br>
 
             <input type="submit" value="Thêm bài viết">
         </form>

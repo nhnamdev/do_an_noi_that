@@ -51,7 +51,7 @@
         <div class="container">
             <div class="alpha">
                 <div class="avt">
-                    <img src="img/avt.jpg" alt="">
+                    <img src="img/avt/avt.jpg" alt="">
                     <div class="welcomeName">
                         <h5>Welcome<br><strong>${sessionScope.userName}</strong></h5>
                     </div>
