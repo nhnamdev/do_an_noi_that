@@ -7,13 +7,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%
-    Integer role = (Integer) session.getAttribute("role");
-    if (role == null || role < 2) {
-        response.sendRedirect("index.jsp");
-        return;
-    }
-%>
-<%
     String searchQuery = request.getParameter("search");
     List<AccountManagement> acc = null;
 
