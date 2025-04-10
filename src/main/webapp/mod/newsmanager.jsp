@@ -1,10 +1,8 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-
-
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="f" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <html>
-
 <head>
-
     <title>Quản Lí Tin Tức</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -16,24 +14,7 @@
     <link rel="icon" href="assets/img/kaiadmin/favicon.ico" type="image/x-icon"/>
     <!-- Fonts and icons -->
     <script src="assets/js/plugin/webfont/webfont.min.js"></script>
-    <script>
-        WebFont.load({
-            google: {families: ["Public Sans:300,400,500,600,700"]},
-            custom: {
-                families: [
-                    "Font Awesome 5 Solid",
-                    "Font Awesome 5 Regular",
-                    "Font Awesome 5 Brands",
-                    "simple-line-icons",
-                ],
-                urls: ["assets/css/fonts.min.css"],
-            },
-            active: function () {
-                sessionStorage.fonts = true;
-            },
-        });
-    </script>
-    <!-- CSS Files -->
+
     <link rel="stylesheet" href="assets/css/bootstrap.min.css"/>
     <link rel="stylesheet" href="assets/css/plugins.min.css"/>
     <link rel="stylesheet" href="assets/css/kaiadmin.min.css"/>
@@ -47,6 +28,13 @@
     <%--DATATABLE--%>
     <%--    ck4--%>
     <script src="https://cdn.ckeditor.com/4.22.1/standard/ckeditor.js"></script>
+    <%--    dâtatable--%>
+    <!-- DataTables CSS -->
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
+    <!-- Buttons extension CSS -->
+    <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.4.1/css/buttons.dataTables.min.css">
+    <!-- DataTables JS -->
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
 </head>
 <body>
 <jsp:include page="sidebarMod.jsp"/>
@@ -79,11 +67,96 @@
             <input type="submit" value="Thêm bài viết">
         </form>
     </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card card-round">
+                <div class="card-header">
+                    <div class="card-head-row card-tools-still-right">
+                        <div class="card-title">Quản lí tin tức</div>
+                        <div class="card-tools">
+                            <div class="dropdown">
+                                <button id="btnExportPDF" class="btn btn-primary">Print</button>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body p-0">
+                    <div class="table-responsive">
+                        <!-- Projects table -->
+                        <table id="transactionTable" class="table align-items-center mb-0">
+
+                            <thead class="thead-light">
+                            <tr>
+                                <th scope="col">Tiêu đề</th>
+                                <th scope="col" class="text-end">Mô tả</th>
+                                <th scope="col" class="text-end">Hình ảnh</th>
+                                <th scope="col" class="text-end">Ngày tạo</th>
+                                <th scope="col" class="text-end">Thao tác</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+
+                            <c:forEach var="news" items="${listNews}">
+                                <tr>
+                                    <th scope="row">
+                                        <div style="max-width: 200px; display: inline-block; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+                                                ${news.title}
+                                        </div>
+                                    </th>
+                                    <td class="text-end">
+                                        <div style="max-width: 600px; display: inline-block; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+                                                ${news.description}
+                                        </div>
+                                    </td>
+                                    <td class="text-end"><img width="60" height="50"
+                                                              src="${pageContext.request.contextPath}/img/tintuc/${news.image}"
+                                                              class="attachment-large size-large wp-post-image" alt=""
+                                                              decoding="async">
+                                    </td>
+                                    <td class="text-end">
+                                        <span class="badge badge-success">${news.createdAt}</span>
+                                    </td>
+                                    <td class="text-end">
+                                            <%--     Chua xu li--%>
+                                        <a class="badge badge-danger" href="mod/newsmanager/${news.news_id}">Xóa</a>
+                                    </td>
+                                </tr>
+                            </c:forEach>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
     <%--END CONTENT MAIN ADMIN --%>
 </div>
 <!-- Khởi tạo CKEditor -->
 <script>
     CKEDITOR.replace('editor1');
+
+    $(document).ready(function () {
+        var table = $('#transactionTable').DataTable({
+            dom: 'Bfrtip', // B: Buttons, f: filter, r: processing, t: table, i: info, p: pagination
+            buttons: [
+                {
+                    extend: 'pdfHtml5',
+                    title: 'Transaction History',
+                    exportOptions: {
+                        columns: ':visible'
+                    }
+                },
+                {
+                    extend: 'print',
+                    title: 'Transaction History',
+                    exportOptions: {
+                        columns: ':visible'
+                    }
+                }
+            ]
+        });
+    });
 </script>
 
 </body>
