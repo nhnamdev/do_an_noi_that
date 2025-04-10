@@ -12,25 +12,6 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
 </head>
 <body>
-<%
-    String userAddress = (String) session.getAttribute("userAddress");
-    System.out.println("JSP - Địa chỉ từ session: " + userAddress);
-%>
-
-<!-- Thêm div ẩn để debug -->
-<div id="debug-info" style="display:none;">
-    <p>Địa chỉ đầy đủ: ${sessionScope.userAddress}</p>
-</div>
-
-<!-- Thêm script để kiểm tra DOM -->
-<script>
-    window.onload = function () {
-        console.log("DOM đã load xong");
-        console.log("Giá trị hiện tại của ô địa chỉ:", document.getElementById('address').value);
-        console.log("Giá trị hiện tại của tỉnh/thành phố:", document.getElementById('province').value);
-        console.log("Giá trị hiện tại của quận/huyện:", document.getElementById('district').value);
-    };
-</script>
 <div id="wrapper">
     <jsp:include page="/components/header.jsp"/>
     <script src="js/showSearch.js"></script>
@@ -148,7 +129,7 @@
                             </div>
                             <div class="form-group">
                                 <label for="province">Tỉnh/Thành phố *</label>
-                                <select id="province" name="province" required onchange="loadDistricts()">
+                                <select id="province" name="province" required>
                                     <option value="">Chọn Tỉnh/Thành phố</option>
                                 </select>
                             </div>
@@ -156,6 +137,12 @@
                                 <label for="district">Quận/Huyện *</label>
                                 <select id="district" name="district" required>
                                     <option value="">Chọn Quận/Huyện</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="ward">Phường/Xã *</label>
+                                <select id="ward" name="ward" required>
+                                    <option value="">Chọn Phường/Xã</option>
                                 </select>
                             </div>
                             <div class="form-group">

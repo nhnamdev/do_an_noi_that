@@ -1,130 +1,167 @@
 document.addEventListener('DOMContentLoaded', function () {
-    // Bước 1: Load danh sách tỉnh/thành phố (giữ nguyên code hiện tại)
-    fetch(contextPath + '/data/provinceList.json')
-        .then(response => response.json())
-        .then(data => {
-            const provinceSelect = document.getElementById('province');
-
-            // Thêm options cho tỉnh/thành phố
-            const uniqueProvinces = [...new Set(data.map(item => item.provinceName))];
-            uniqueProvinces.forEach(provinceName => {
-                const option = new Option(provinceName, provinceName);
-                provinceSelect.add(option);
-            });
-
-            // Bước 2: Phân tích địa chỉ từ session
-            const fullAddress = document.getElementById('address').value.trim();
-            console.log("Đang phân tích địa chỉ đầy đủ:", fullAddress);
-
-            if (fullAddress) {
-                // Tách địa chỉ theo dấu phẩy
-                const addressParts = fullAddress.split(', ');
-
-                if (addressParts.length >= 3) {
-                    // Lấy phần tỉnh/thành phố (phần cuối)
-                    const province = addressParts[addressParts.length - 1].trim();
-                    // Lấy phần quận/huyện (phần gần cuối)
-                    const district = addressParts[addressParts.length - 2].trim();
-                    // Phần địa chỉ chi tiết (các phần còn lại)
-                    const streetAddress = addressParts.slice(0, addressParts.length - 2).join(', ').trim();
-
-                    console.log("Tỉnh/TP được phát hiện:", province);
-                    console.log("Quận/Huyện được phát hiện:", district);
-                    console.log("Địa chỉ chi tiết:", streetAddress);
-
-                    // Cập nhật ô địa chỉ chỉ với phần đường/số nhà
-                    document.getElementById('address').value = streetAddress;
-
-                    // Bước 3: Chọn tỉnh/thành phố
-                    if (province && provinceSelect) {
-                        provinceSelect.value = province;
-
-                        // Bước 4: Load quận/huyện dựa trên tỉnh/thành đã chọn
-                        loadDistrictsAndSelect(district);
-                    }
-                }
-            }
-        })
-        .catch(error => {
-            console.error('Lỗi tải danh sách tỉnh:', error);
-        });
+    loadProvinces();
+    document.getElementById('province').addEventListener('change', loadDistricts);
+    document.getElementById('district').addEventListener('change', loadWards);
 });
 
-// Hàm load quận/huyện và chọn một giá trị cụ thể
-function loadDistrictsAndSelect(districtToSelect) {
+function loadProvinces() {
     const provinceSelect = document.getElementById('province');
-    const districtSelect = document.getElementById('district');
-
-    // Xóa các option cũ
-    districtSelect.innerHTML = '<option value="">Chọn Quận/Huyện</option>';
-
-    // Lấy tỉnh/thành phố đã chọn
-    const selectedProvinceName = provinceSelect.value;
-    if (!selectedProvinceName) return;
-
-    console.log("Đang load quận/huyện cho tỉnh:", selectedProvinceName);
-
-    fetch(contextPath + '/data/provinceList.json')
+    provinceSelect.innerHTML = '<option value="">Đang tải...</option>';
+    // Gọi API lấy danh sách tỉnh/thành phố
+    fetch(contextPath + '/api/provinces', {
+        method: 'GET',
+        headers: {'Content-Type': 'application/json'}
+    })
         .then(response => response.json())
         .then(data => {
-            // Lọc quận/huyện thuộc tỉnh/thành phố đã chọn
-            const districtsForProvince = data
-                .filter(item => item.provinceName === selectedProvinceName)
-                .map(item => item.districtName);
+            provinceSelect.innerHTML = '<option value="">Chọn Tỉnh/Thành phố</option>';
 
-            const uniqueDistricts = [...new Set(districtsForProvince)];
-
-            // Thêm các options quận/huyện
-            uniqueDistricts.forEach(districtName => {
-                const option = new Option(districtName, districtName);
-                districtSelect.add(option);
-            });
-
-            console.log("Đã load", uniqueDistricts.length, "quận/huyện");
-            console.log("Đang cố gắng chọn quận/huyện:", districtToSelect);
-
-            // Chọn quận/huyện đã xác định
-            if (districtToSelect) {
-                districtSelect.value = districtToSelect;
-
-                // Nếu không tìm thấy, thử lại sau một chút
-                if (districtSelect.value !== districtToSelect) {
-                    console.log("Chưa tìm thấy quận/huyện, thử lại sau 500ms");
-                    setTimeout(function () {
-                        districtSelect.value = districtToSelect;
-                    }, 500);
-                }
+            if (data.code === 200 && data.data) {
+                data.data
+                    .sort((a, b) => a.ProvinceName.localeCompare(b.ProvinceName))
+                    .forEach(province => {
+                        const option = document.createElement('option');
+                        option.value = province.ProvinceID;
+                        option.textContent = province.ProvinceName;
+                        provinceSelect.appendChild(option);
+                    });
+                processExistingAddress();
+            } else {
+                provinceSelect.innerHTML = '<option value="">Không thể tải dữ liệu</option>';
             }
         })
-        .catch(error => {
-            console.error('Lỗi tải danh sách quận/huyện:', error);
+        .catch(() => {
+            provinceSelect.innerHTML = '<option value="">Lỗi kết nối</option>';
         });
 }
 
-// Giữ nguyên hàm loadDistricts hiện tại cho sự kiện onChange
 function loadDistricts() {
     const provinceSelect = document.getElementById('province');
     const districtSelect = document.getElementById('district');
+    const wardSelect = document.getElementById('ward');
 
-    districtSelect.innerHTML = '<option value="">Chọn Quận/Huyện</option>';
+    const provinceId = provinceSelect.value;
+    districtSelect.innerHTML = '<option value="">Đang tải...</option>';
+    wardSelect.innerHTML = '<option value="">Chọn Phường/Xã</option>';
 
-    fetch(contextPath + '/data/provinceList.json')
+    if (!provinceId) {
+        districtSelect.innerHTML = '<option value="">Chọn Quận/Huyện</option>';
+        return;
+    }
+    // Gọi API lấy danh sách quận/huyện theo province_id
+    fetch(contextPath + '/api/districts?province_id=' + encodeURIComponent(provinceId), {
+        method: 'GET',
+        headers: {'Content-Type': 'application/json'}
+    })
         .then(response => response.json())
         .then(data => {
-            const selectedProvinceName = provinceSelect.value;
+            districtSelect.innerHTML = '<option value="">Chọn Quận/Huyện</option>';
 
-            const districtsForProvince = data
-                .filter(item => item.provinceName === selectedProvinceName)
-                .map(item => item.districtName);
-
-            const uniqueDistricts = [...new Set(districtsForProvince)];
-
-            uniqueDistricts.forEach(districtName => {
-                const option = new Option(districtName, districtName);
-                districtSelect.add(option);
-            });
+            if (data && data.code === 200 && data.data && Array.isArray(data.data)) {
+                data.data
+                    .sort((a, b) => a.DistrictName.localeCompare(b.DistrictName))
+                    .forEach(district => {
+                        const option = document.createElement('option');
+                        option.value = district.DistrictID;
+                        option.textContent = district.DistrictName;
+                        districtSelect.appendChild(option);
+                    });
+            } else {
+                districtSelect.innerHTML = '<option value="">Không thể tải dữ liệu</option>';
+            }
         })
-        .catch(error => {
-            console.error('Lỗi tải danh sách quận/huyện:', error);
+        .catch(() => {
+            districtSelect.innerHTML = '<option value="">Lỗi kết nối</option>';
         });
+}
+
+function loadWards() {
+    const districtSelect = document.getElementById('district');
+    const wardSelect = document.getElementById('ward');
+
+    wardSelect.innerHTML = '<option value="">Đang tải...</option>';
+
+    const districtId = districtSelect.value;
+    if (!districtId) {
+        wardSelect.innerHTML = '<option value="">Chọn Phường/Xã</option>';
+        return;
+    }
+    // Gọi API lấy danh sách phuoường/xã theo district_id
+    fetch(contextPath + '/api/wards?district_id=' + districtId, {
+        method: 'GET',
+        headers: {'Content-Type': 'application/json'}
+    })
+        .then(response => response.json())
+        .then(data => {
+            wardSelect.innerHTML = '<option value="">Chọn Phường/Xã</option>';
+
+            if (data.code === 200 && data.data) {
+                data.data
+                    .sort((a, b) => a.WardName.localeCompare(b.WardName))
+                    .forEach(ward => {
+                        const option = document.createElement('option');
+                        option.value = ward.WardCode;
+                        option.textContent = ward.WardName;
+                        wardSelect.appendChild(option);
+                    });
+            } else {
+                wardSelect.innerHTML = '<option value="">Không thể tải dữ liệu</option>';
+            }
+        })
+        .catch(() => {
+            wardSelect.innerHTML = '<option value="">Lỗi kết nối</option>';
+        });
+}
+
+// neu dia chi da co ben trang personal.jsp, sync qua va tach dia chi theo tinh/thanh, phuong/xa, quan/huyen
+function processExistingAddress() {
+    const fullAddress = document.getElementById('address').value.trim();
+    if (!fullAddress) return;
+
+    const addressParts = fullAddress.split(', ');
+    if (addressParts.length >= 4) {
+        const provinceName = addressParts[addressParts.length - 1].trim();
+        const districtName = addressParts[addressParts.length - 2].trim();
+        const wardName = addressParts[addressParts.length - 3].trim();
+        const streetAddress = addressParts.slice(0, addressParts.length - 3).join(', ').trim();
+
+        document.getElementById('address').value = streetAddress;
+
+        setTimeout(() => selectProvinceByName(provinceName, districtName, wardName), 1000);
+    }
+}
+
+function selectProvinceByName(provinceName, districtName, wardName) {
+    const provinceSelect = document.getElementById('province');
+    for (let i = 0; i < provinceSelect.options.length; i++) {
+        if (provinceSelect.options[i].textContent === provinceName) {
+            provinceSelect.selectedIndex = i;
+            loadDistricts();
+            setTimeout(() => selectDistrictByName(districtName, wardName), 1000);
+            break;
+        }
+    }
+}
+
+function selectDistrictByName(districtName, wardName) {
+    const districtSelect = document.getElementById('district');
+    for (let i = 0; i < districtSelect.options.length; i++) {
+        if (districtSelect.options[i].textContent === districtName) {
+            districtSelect.selectedIndex = i;
+            loadWards();
+            setTimeout(() => selectWardByName(wardName), 1000);
+            break;
+        }
+    }
+}
+
+function selectWardByName(wardName) {
+    const wardSelect = document.getElementById('ward');
+    for (let i = 0; i < wardSelect.options.length; i++) {
+        if (wardSelect.options[i].textContent === wardName) {
+            wardSelect.selectedIndex = i;
+            setTimeout(calculateShippingFee, 500);
+            break;
+        }
+    }
 }
