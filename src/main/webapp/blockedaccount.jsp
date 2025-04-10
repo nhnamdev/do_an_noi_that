@@ -1,5 +1,5 @@
-
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html lang="vi">
 <head>
@@ -16,6 +16,7 @@
             background-color: #f8d7da;
             margin: 0;
         }
+
         .container {
             text-align: center;
             background: white;
@@ -24,13 +25,16 @@
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
             max-width: 400px;
         }
+
         h1 {
             color: #721c24;
         }
+
         p {
             color: #721c24;
             font-size: 16px;
         }
+
         .btn {
             display: inline-block;
             margin-top: 15px;
@@ -40,8 +44,16 @@
             text-decoration: none;
             border-radius: 5px;
         }
+
         .btn:hover {
             background-color: #c82333;
+        }
+        .button {
+            background-color: #f8d7da;
+            color:brown;
+            margin-top: 20px;
+            font-weight: bold;
+            border-radius: 5px;
         }
     </style>
 </head>
@@ -50,6 +62,10 @@
     <h1>Tài khoản bị khóa</h1>
     <p>Tài khoản của bạn đã bị khóa. Vui lòng liên hệ với admin để biết thêm chi tiết.</p>
     <a href="" class="btn">Admin: 1900 1508</a>
+    <form id="logoutForm" action="logout" method="post">
+        <button type="submit" class="button">ĐĂNG XUẤT</button>
+    </form>
+
 </div>
 </body>
 </html>

@@ -77,7 +77,7 @@ public class LoginController extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         request.setCharacterEncoding("UTF-8");
         response.setCharacterEncoding("UTF-8");
-
+        HttpSession session = request.getSession();
 
         String gRecaptchaResponse = request.getParameter("g-recaptcha-response");
         if (!verifyRecaptcha(gRecaptchaResponse)) {
@@ -100,11 +100,11 @@ public class LoginController extends HttpServlet {
 
             RegisterModel loginModel = new RegisterModel(username, password);
             int active = loginDao.getUserActive(username);
+            session.setAttribute("active", active);
             boolean isValidUser = loginDao.checkLogin(loginModel);
             if (active == 1) {
                 if (isValidUser) {
                     logDAO.insertLog(username, "alert", "login", "", "");
-                    HttpSession session = request.getSession();
                     session.setAttribute("loginModel", loginModel);
                     Integer userId = loginDao.getIdByUsername(username);
                     session.setAttribute("userIdLogin", userId);
