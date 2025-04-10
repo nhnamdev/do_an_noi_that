@@ -121,6 +121,11 @@
                                                 style="height: 35px;width: 150px; display:none;">
                                             <option value="">Chọn quận/huyện</option>
                                         </select><br>
+                                        <h5 for="ward" style="margin-left: 20px;margin-top: 6px">Phường/Xã:</h5>
+                                        <select id="ward" name="ward"
+                                                style="height: 35px;width: 150px; display:none;">
+                                            <option value="">Chọn phường/xã</option>
+                                        </select><br>
                                     </div>
                                     <div class="col-md-12 editable">
                                         <h5 class="labels">Địa chỉ:</h5>
@@ -138,7 +143,9 @@
                                         <input type="email" name="userEmailInput" id="userEmailInput"
                                                style="display:none;"/>
                                     </div>
-                                    <button class="saveBtn" type="submit" style="display:none;width: 30%">Lưu thông tin</button>
+                                    <button class="saveBtn" type="submit" style="display:none;width: 30%">Lưu thông
+                                        tin
+                                    </button>
                                     <button class="editBtn" type="button">Chỉnh sửa</button>
                                 </form>
                             </div>
