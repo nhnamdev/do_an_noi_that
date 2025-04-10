@@ -46,11 +46,11 @@
             <input type="text" class="form-control mb-3" placeholder="Tìm kiếm...">
             <h5>Chuyên mục</h5>
             <ul class="list-unstyled">
-                <li><a href="#">Fashions magazine</a></li>
-                <li><a href="#">Images</a></li>
-                <li><a href="#">Life style</a></li>
-                <li><a href="#">Photography</a></li>
-                <li><a href="#">Style</a></li>
+                <li><a href="${pageContext.request.contextPath}/news">Fashions magazine</a></li>
+                <li><a href="${pageContext.request.contextPath}/news">Images</a></li>
+                <li><a href="${pageContext.request.contextPath}/news">Life style</a></li>
+                <li><a href="${pageContext.request.contextPath}/news">Photography</a></li>
+                <li><a href="${pageContext.request.contextPath}/news">Style</a></li>
             </ul>
             <h5>Bài viết mới nhất</h5>
             <!-- bài viết mới nhất của mỗi danh mục -->
