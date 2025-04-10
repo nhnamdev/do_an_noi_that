@@ -4,6 +4,7 @@ import jakarta.servlet.*;
 import jakarta.servlet.http.*;
 import jakarta.servlet.annotation.*;
 import vn.edu.hcmuaf.fit.sourcedoannoithat.dao.NewsDAO;
+import vn.edu.hcmuaf.fit.sourcedoannoithat.utils.ConstantsStatic;
 
 import java.io.File;
 import java.io.IOException;
@@ -44,7 +45,7 @@ public class QuanLiTinTucController extends HttpServlet {
         String uniqueFileName = baseName + "_" + System.currentTimeMillis() + fileExtension;
 
 // Đường dẫn upload
-        String uploadPath = "D:\\a_hk2_nam3\\TTWEB\\Project\\do_an_noi_that\\src\\main\\webapp\\img\\tintuc";
+        String uploadPath = ConstantsStatic.UPLOAD_PATH_TINTUC;
         File uploadDir = new File(uploadPath);
         if (!uploadDir.exists()) uploadDir.mkdir();
 

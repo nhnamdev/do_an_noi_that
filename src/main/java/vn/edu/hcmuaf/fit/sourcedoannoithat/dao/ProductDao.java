@@ -14,6 +14,30 @@ public class ProductDao {
     PreparedStatement ps = null;
     ResultSet rs = null;
 
+    public List<Product> getTop4BestSellers() {
+        List<Product> list = new ArrayList<>();
+        String sql = "SELECT * FROM product_shop ORDER BY quantitySold DESC LIMIT 4";
+
+        try {
+            conn = new DBConnect().getConnection();
+            ps = conn.prepareStatement(sql);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                Product p = new Product();
+                p.setId(rs.getInt("id"));
+                p.setName(rs.getString("name"));
+                p.setPrice(rs.getDouble("price"));
+                p.setImg(rs.getString("image"));
+                p.setQuantitySold(rs.getInt("quantitySold"));
+                list.add(p);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return list;
+    }
+
     public List<Product> getAllProduct() {
         List<Product> productList = new ArrayList<Product>();
         String query = "SELECT * \n" +
@@ -76,6 +100,7 @@ public class ProductDao {
         }
         return 0;
     }
+
     public List<Product> searchByNamePaging(String keyword, int index) {
         List<Product> result = new ArrayList<>();
         try {
@@ -103,6 +128,7 @@ public class ProductDao {
         }
         return result;
     }
+
     public int countSearchByName(String keyword) {
         try {
             String query = "SELECT COUNT(*) FROM product_shop WHERE name LIKE ?";
@@ -148,17 +174,10 @@ public class ProductDao {
 
     public static void main(String[] args) {
         ProductDao dao = new ProductDao();
-        List<Product> productList = dao.getAllProduct();
+        List<Product> productList = dao.getTop4BestSellers();
         for (Product product : productList) {
             System.out.println(product);
         }
-        System.out.println(dao.getProductById("1"));
-        int count = dao.getAllProductCount();
-        System.out.println(count);
 
-        List<Product> productList2 = dao.pagingProduct(2);
-        for (Product product : productList2) {
-            System.out.println(product);
-        }
     }
 }

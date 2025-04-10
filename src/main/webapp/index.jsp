@@ -1,6 +1,6 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -38,37 +38,21 @@
         </div>
         <div class="slider3">
             <div class="header1">
-                <h1>Lựa chọn hàng đầu</h1>
-                <p>Tìm đồ dùng phù hợp với sở
+                <h1 style="margin-left: 0;">Lựa chọn hàng đầu</h1>
+                <p style="margin-right: 0;">Tìm đồ dùng phù hợp với sở
                     thích của bạn với bộ sưu tập nội thất của chúng tôi.</p>
             </div>
             <div class="img-sanpham">
-                <div class="img-1">
-                    <img src="assets_duc/img/Trenton%20modular%20sofa_3%201.png" height="287" width="287"/>
-                    <p>Ghế đơn Sofa mô-đun Trenton_3</p>
-                    <h2>Giá: 25.000.000</h2>
-                </div>
-                <div class="img-2">
-                    <img src="assets_duc/img/Granite%20dining%20table%20with%20dining%20chair%201.png" height="185"
-                         width="255"/>
-                    <p>Bàn ăn đá granite kèm ghế</p>
-                    <h2>Giá: 15.000.000</h2>
-                </div>
-                <div class="img-3">
-                    <img src="assets_duc/img/Outdoor%20bar%20table%20and%20stool%201.png" height="247" width="250"/>
-                    <p>Bàn ghế quầy bar ngoài trời</p>
-                    <h2>Giá: 10.000.000</h2>
-                </div>
-                <div class="img-4">
-
-                    <img src="assets_duc/img/Plain%20console%20with%20teak%20mirror%201.png" height="174"
-                         width="240"/>
-                    <p>Bảng điều khiển đơn giản với gương bằng gỗ tếch</p>
-                    <h2>Giá: 5.000.000</h2>
-                </div>
+                <c:forEach var="p" items="${listProduct}">
+                    <div class="img-1" style="    margin-left: 60px;">
+                        <img src="${p.img}" height="287" width="287"/>
+                        <p>${p.name}</p>
+                        <h2>Giá: <fmt:formatNumber value="${p.price}" type="number" groupingUsed="true"/> VND</h2>
+                    </div>
+                </c:forEach>
             </div>
             <div class="footer-slider3">
-                <a href="#" class="shop-now">Xem thêm</a>
+                <a href="${pageContext.request.contextPath}/shop" class="shop-now">Xem thêm</a>
             </div>
         </div>
         <div class="slider4">
