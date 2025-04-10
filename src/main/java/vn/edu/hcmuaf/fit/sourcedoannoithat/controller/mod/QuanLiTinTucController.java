@@ -33,24 +33,31 @@ public class QuanLiTinTucController extends HttpServlet {
         String cateRaw = request.getParameter("category_id");
         int categoryId = Integer.parseInt(cateRaw); // nếu có select loại tin
 
-        // Xử lý ảnh
+//        Vì đây không phải môi trường deploy nên mặc định tomcat sẽ lưu vào ổ đĩa C.
+//        Phần này phải setup theo máy thì mới chạy được source lưu chỗ nào thì ảnh sẽ luôn ở đó
         Part filePart = request.getPart("image");
-        String fileName = Path.of(filePart.getSubmittedFileName()).getFileName().toString();
+        String originalFileName = Path.of(filePart.getSubmittedFileName()).getFileName().toString();
 
-        // Thư mục lưu ảnh
-        String uploadPath = request.getServletContext().getRealPath("/") + "tintuc";
+// Tạo file name duy nhất
+        String fileExtension = originalFileName.substring(originalFileName.lastIndexOf("."));
+        String baseName = originalFileName.substring(0, originalFileName.lastIndexOf("."));
+        String uniqueFileName = baseName + "_" + System.currentTimeMillis() + fileExtension;
+
+// Đường dẫn upload
+        String uploadPath = "D:\\a_hk2_nam3\\TTWEB\\Project\\do_an_noi_that\\src\\main\\webapp\\img\\tintuc";
         File uploadDir = new File(uploadPath);
         if (!uploadDir.exists()) uploadDir.mkdir();
 
-        // Lưu file vào thư mục
-        File file = new File(uploadDir, fileName);
+// Lưu file
+        File file = new File(uploadDir, uniqueFileName);
         try (InputStream fileContent = filePart.getInputStream()) {
             Files.copy(fileContent, file.toPath());
         }
 
-        // Lưu thông tin vào DB
+// Lưu vào DB
         NewsDAO dao = new NewsDAO();
-        dao.insertNews(title, description, content, "tintuc/" + fileName, categoryId);
+        dao.insertNews(title, description, content, uniqueFileName, categoryId);
+
 
         // Quay lại trang quản lý
         response.sendRedirect(request.getContextPath() + "/mod/newsmanager");

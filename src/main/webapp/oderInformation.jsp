@@ -17,7 +17,7 @@
 
 <body>
 <div class="cart">
-    <jsp:include page="/components/header.jsp" />
+    <jsp:include page="/components/header.jsp"/>
     <script src="js/showSearch.js"></script>
     <script src="js/actionOfProfile.js"></script>
     <div class="overlay" id="overlay"></div>
@@ -77,7 +77,7 @@
         <div class="Info">
             <div class="profile-sidebar">
                 <div class="profile-header">
-                    <img src="img/avt.jpg" alt="">
+                    <img src="img/avt/avt.jpg" alt="">
                     <div class="profile-info">
                         <p class="username">${sessionScope.userName}</p>
                         <a href="personal.jsp" class="edit-profile">Sửa Hồ Sơ</a>
@@ -158,9 +158,9 @@
             </div>
         </div>
     </div>
-        <jsp:include page="components/footer.jsp" />
+    <jsp:include page="components/footer.jsp"/>
 </div>
-    <script src="js/oderInformation_script.js"></script>
+<script src="js/oderInformation_script.js"></script>
 </body>
 
 </html>

@@ -80,10 +80,10 @@
         <main class="col-md-9">
             <c:forEach var="news" items="${listNews}">
                 <div class="news">
-                    <a href="NewDetailController?Id=${news.id}" title="X"
+                    <a href="NewDetailController?id=${news.news_id}" title="X"
                        class="entry-image nasa-blog-img blog-image-attachment nasa-block">
                         <img width="595" height="397"
-                             src="https://noithat-nhadep.monamedia.net/wp-content/uploads/2018/02/Cloud-Modular-with-Ottaman-1024x683-1-595x397.jpg"
+                             src="img/tintuc/${news.image}"
                              class="attachment-large size-large wp-post-image" alt="" decoding="async">
                         <div class="image-overlay"></div>
                     </a>

@@ -19,7 +19,7 @@ public class NewDetailController extends HttpServlet {
         News news1 = news.getNewsByID(id);
 
         request.setAttribute("news", news1);
-        request.getRequestDispatcher("/mod/news-detail.jsp").forward(request, response);
+        request.getRequestDispatcher("newsDetail.jsp").forward(request, response);
     }
 
     @Override
