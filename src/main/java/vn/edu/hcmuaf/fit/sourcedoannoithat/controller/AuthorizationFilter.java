@@ -25,8 +25,14 @@ public class AuthorizationFilter implements Filter {
 
         String uri = req.getRequestURI();
         Integer role = (session != null) ? (Integer) session.getAttribute("role") : null;
+        Integer active = (session != null) ? (Integer) session.getAttribute("active") : null;
         String contextPath = req.getContextPath();
+        boolean isAllowedPage = uri.endsWith("blockedaccount.jsp")||uri.endsWith("/logout") ;
 
+        if (!isAllowedPage && active != null && active == -1) {
+            res.sendRedirect(contextPath + "/blockedaccount.jsp");
+            return;
+        }
         if (uri.endsWith("mod.jsp")) {
             if (role == null || role < 1) {
                 res.sendRedirect(contextPath + "/index.jsp");
