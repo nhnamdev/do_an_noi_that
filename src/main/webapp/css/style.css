@@ -324,7 +324,7 @@ body, html {
 /*Slider 3*/
 .slider3 {
     width: 100%;
-    height: 777px;
+    height: 700px;
     display: flex;
 
 }
@@ -396,7 +396,7 @@ body, html {
 
 .slider3 .footer-slider3 {
     width: 100%;
-    margin-top: 20px;
+    margin-top: 50px;
     text-align: center;
 }
 

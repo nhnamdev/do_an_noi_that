@@ -4,12 +4,15 @@ import jakarta.servlet.*;
 import jakarta.servlet.http.*;
 import jakarta.servlet.annotation.*;
 import vn.edu.hcmuaf.fit.sourcedoannoithat.dao.NewsDAO;
+import vn.edu.hcmuaf.fit.sourcedoannoithat.dao.model.News;
+import vn.edu.hcmuaf.fit.sourcedoannoithat.utils.ConstantsStatic;
 
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.List;
 
 @MultipartConfig
 @WebServlet(name = "QuanLiTinTucController", value = "/mod/newsmanager")
@@ -17,6 +20,9 @@ public class QuanLiTinTucController extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        NewsDAO dao = new NewsDAO();
+        List<News> listNew = dao.getAllNews();
+        request.setAttribute("listNews", listNew);
         request.setCharacterEncoding("UTF-8");
         response.setCharacterEncoding("UTF-8");
         request.getRequestDispatcher("newsmanager.jsp").forward(request, response);
@@ -44,7 +50,7 @@ public class QuanLiTinTucController extends HttpServlet {
         String uniqueFileName = baseName + "_" + System.currentTimeMillis() + fileExtension;
 
 // Đường dẫn upload
-        String uploadPath = "D:\\a_hk2_nam3\\TTWEB\\Project\\do_an_noi_that\\src\\main\\webapp\\img\\tintuc";
+        String uploadPath = ConstantsStatic.UPLOAD_PATH_TINTUC;
         File uploadDir = new File(uploadPath);
         if (!uploadDir.exists()) uploadDir.mkdir();
 
