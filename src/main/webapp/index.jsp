@@ -19,21 +19,20 @@
         <div class="slider1">
             <div class="easypin">
                 <a href="index">
-                    <img src="https://noithat-nhadep.monamedia.net/wp-content/uploads/2024/04/slider-home-furniture.jpg"
-                         alt="Home Furniture">
+                    <img src="img/home_index.jpg" alt="Home Furniture">
                 </a>
             </div>
         </div>
         <div class="slider2">
             <div class="img-left">
                 <img src="assets_duc/img/banphu.png" height="450" width="450"/>
-                <h1>Bàn phụ</h1>
-                <a href="#" class="shop-now">Xem thêm</a>
+                <h1>Bàn trang trí</h1>
+                <a href="${pageContext.request.contextPath}/shop" class="shop-now">Xem thêm</a>
             </div>
             <div class="img-right">
                 <img src="assets_duc/img/sofa-don-vai-1.png" height="450" width="450"/>
-                <h1>Ghế phụ</h1>
-                <a href="#" class="shop-now1">Xem thêm</a>
+                <h1>Ghế da</h1>
+                <a href="${pageContext.request.contextPath}/shop" class="shop-now1">Xem thêm</a>
             </div>
         </div>
         <div class="slider3">

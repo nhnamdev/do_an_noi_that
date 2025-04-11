@@ -1,7 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="f" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="fmt" uri="jakarta.tags.fmt" %>
 <!DOCTYPE html>
 <html lang="vi">
 <head>
@@ -14,6 +14,34 @@
     <%--    Ck editor--%>
     <script src="https://cdn.ckeditor.com/4.22.1/standard/ckeditor.js"></script>
     <%--    Ck editor--%>
+    <style>
+        .banner-container {
+            width: 280px;
+            height: 280px;
+            margin-top: 30px;
+            overflow: hidden;
+        }
+
+        .banner-container img {
+            width: 100%;
+            height: 100%;
+            animation: zoomFade 2s ease-in-out forwards;
+            opacity: 0;
+            border-radius: 20px;
+            transform: scale(1.1);
+        }
+
+        @keyframes zoomFade {
+            0% {
+                opacity: 0;
+                transform: scale(1.1);
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+    </style>
 </head>
 <body>
 <jsp:include page="/components/header.jsp"/>
@@ -38,61 +66,62 @@
             <input type="text" class="form-control mb-3" placeholder="Tìm kiếm...">
             <h5>Chuyên mục</h5>
             <ul class="list-unstyled">
-                <li><a href="#">Fashions magazine</a></li>
-                <li><a href="#">Images</a></li>
-                <li><a href="#">Life style</a></li>
-                <li><a href="#">Photography</a></li>
-                <li><a href="#">Style</a></li>
+                <li><a href="${pageContext.request.contextPath}/news">Fashions magazine</a></li>
+                <li><a href="${pageContext.request.contextPath}/news">Images</a></li>
+                <li><a href="${pageContext.request.contextPath}/news">Life style</a></li>
+                <li><a href="${pageContext.request.contextPath}/news">Photography</a></li>
+                <li><a href="${pageContext.request.contextPath}/news">Style</a></li>
             </ul>
             <h5>Bài viết mới nhất</h5>
             <!-- bài viết mới nhất của mỗi danh mục -->
-            <div class="latest-post d-flex align-items-center mb-2">
-                <img src="img/sofa1.jpg" alt="">
-                <div class="ms-2">
-                    <small>Fashions magazine</small>
-                    <p class="mb-0">Beauty life style classic</p>
-                </div>
-            </div>
-            <div class="latest-post d-flex align-items-center mb-2">
-                <img src="img/sofa1.jpg" alt="">
-                <div class="ms-2">
-                    <small>Fashions magazine</small>
-                    <p class="mb-0">Beauty life style classic</p>
-                </div>
-            </div>
-            <div class="latest-post d-flex align-items-center mb-2">
-                <img src="img/sofa1.jpg" alt="">
-                <div class="ms-2">
-                    <small>Fashions magazine</small>
-                    <p class="mb-0">Beauty life style classic</p>
-                </div>
-            </div>
-            <div class="latest-post d-flex align-items-center mb-2">
-                <img src="img/sofa1.jpg" alt="">
-                <div class="ms-2">
-                    <small>Fashions magazine</small>
-                    <p class="mb-0">Beauty life style classic</p>
-                </div>
+            <c:forEach var="news" items="${listNews}">
+                <a href="NewDetailController?id=${news.news_id}"
+                   class="text-decoration-none text-dark">
+                    <div class="latest-post d-flex align-items-center mb-2">
+                        <img src="img/tintuc/${news.image}" alt="">
+                        <div class="ms-2">
+                            <small style="max-width: 150px; display: inline-block; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+                                    ${news.title}
+                            </small>
+                            <p class="mb-0"
+                               style="max-width: 200px; display: inline-block; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+                                    ${news.description}
+                            </p>
+                        </div>
+                    </div>
+                </a>
+            </c:forEach>
+            <div class="banner-container">
+                <img src="img/img.png" width="340px" height="340px">
             </div>
             <!-- bài viết mới nhất của mỗi danh mục -->
+
         </aside>
         <!-- Main content -->
         <main class="col-md-9">
-            <c:forEach var="news" items="${listNews}">
-                <div class="news">
-                    <a href="NewDetailController?id=${news.news_id}" title="X"
-                       class="entry-image nasa-blog-img blog-image-attachment nasa-block">
-                        <img width="595" height="397"
-                             src="img/tintuc/${news.image}"
-                             class="attachment-large size-large wp-post-image" alt="" decoding="async">
-                        <div class="image-overlay"></div>
-                    </a>
-                    <h2>${news.title}</h2>
-                    <p><small><fmt:formatDate value="${news.createdAt}" pattern="dd MMMM, yyyy"/></small></p>
-                    <p>${news.description} </p>
-
-                </div>
-            </c:forEach>
+            <div class="row">
+                <c:forEach var="news" items="${listNews}">
+                    <div class="col-md-6 mb-4">
+                        <div class="news">
+                            <a href="NewDetailController?id=${news.news_id}" title="Funiture"
+                               class="entry-image nasa-blog-img blog-image-attachment nasa-block">
+                                <img width="400" height="380"
+                                     src="img/tintuc/${news.image}"
+                                     class="attachment-large size-large wp-post-image" alt="" decoding="async">
+                                <div class="image-overlay"></div>
+                            </a>
+                            <h3>${news.title}</h3>
+                            <p>
+                                <small>
+                                    <fmt:formatDate value="${news.createdAt}" pattern="dd MMMM, yyyy"/> - Nguyễn Hoàng
+                                    Nam
+                                </small>
+                            </p>
+                            <p>${news.description}</p>
+                        </div>
+                    </div>
+                </c:forEach>
+            </div>
         </main>
         <!-- Main content -->
     </div>
