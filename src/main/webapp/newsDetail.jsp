@@ -34,6 +34,9 @@
                         <li><a href="${pageContext.request.contextPath}/index">Trang chủ</a></li>
                         <li><i class="fas fa-angle-right"></i></li>
                         <li><a href="${pageContext.request.contextPath}/news.jsp">Tin Tức</a></li>
+                        <li><i class="fas fa-angle-right"></i></li>
+                        <li><a>${news.title}</a></li>
+
                     </ul>
                 </div>
             </div>

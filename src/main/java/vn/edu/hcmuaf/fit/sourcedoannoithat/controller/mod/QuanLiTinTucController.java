@@ -50,7 +50,7 @@ public class QuanLiTinTucController extends HttpServlet {
         String uniqueFileName = baseName + "_" + System.currentTimeMillis() + fileExtension;
 
 // Đường dẫn upload
-        String uploadPath = ConstantsStatic.UPLOAD_PATH_TINTUC;
+        String uploadPath = ConstantsStatic.UPLOAD_PATH + "tintuc";
         File uploadDir = new File(uploadPath);
         if (!uploadDir.exists()) uploadDir.mkdir();
 

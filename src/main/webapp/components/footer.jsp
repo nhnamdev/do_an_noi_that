@@ -13,7 +13,7 @@
     <div class="container">
         <div class="row">
             <div class="col-md-4 text-center text-md-start mb-3">
-                <img src="//noithat-nhadep.monamedia.net/wp-content/uploads/2024/04/1-e1713930644851.png"
+                <img src="${pageContext.request.contextPath}/img/logo/logo-website.jpg"
                      alt="Mona Media" class="img-fluid" style="max-width: 150px;">
                 <ul class="list-unstyled mt-3">
                     <li><a href="#" class="text-decoration-none text-dark">1073/3 Cộng Hòa, P.7, Q.Tân Bình, TP.HCM</a>
@@ -44,8 +44,8 @@
     </div>
     <div class="bg-white text-black text-left py-2 mt-4 ">
         <p class="mb-0">&copy; Thiết kế và lập trình bởi
-            <img style="width: 200px; height: 15px"
-                 src="https://mona-winery.monamedia.net/wp-content/uploads/2024/01/logo-mona-thu-gon.png"
+            <img style="width: 100px; height: 30px"
+                 src="${pageContext.request.contextPath}/img/logo/logo-website.jpg"
                  alt="MonaMedia">
         </p>
     </div>

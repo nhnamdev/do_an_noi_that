@@ -15,46 +15,32 @@
     <script src="https://cdn.ckeditor.com/4.22.1/standard/ckeditor.js"></script>
     <%--    Ck editor--%>
     <style>
-        .news {
+        .banner-container {
+            width: 280px;
+            height: 280px;
+            margin-top: 30px;
             overflow: hidden;
-            position: relative;
         }
 
-        .news .entry-image {
-            display: block;
-            position: relative;
-            overflow: hidden;
-            border-radius: 8px;
-        }
-
-        .news img {
-            transition: transform 0.4s ease-in-out;
-            width: 100%;
-            height: auto;
-            display: block;
-            border-radius: 8px;
-        }
-
-        .news .image-overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
+        .banner-container img {
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.3);
+            animation: zoomFade 2s ease-in-out forwards;
             opacity: 0;
-            transition: opacity 0.4s ease-in-out;
-            border-radius: 8px;
+            border-radius: 20px;
+            transform: scale(1.1);
         }
 
-        .news:hover img {
-            transform: scale(1.05);
+        @keyframes zoomFade {
+            0% {
+                opacity: 0;
+                transform: scale(1.1);
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1);
+            }
         }
-
-        .news:hover .image-overlay {
-            opacity: 1;
-        }
-
     </style>
 </head>
 <body>
@@ -105,7 +91,11 @@
                     </div>
                 </a>
             </c:forEach>
+            <div class="banner-container">
+                <img src="img/img.png" width="340px" height="340px">
+            </div>
             <!-- bài viết mới nhất của mỗi danh mục -->
+
         </aside>
         <!-- Main content -->
         <main class="col-md-9">
@@ -113,7 +103,7 @@
                 <c:forEach var="news" items="${listNews}">
                     <div class="col-md-6 mb-4">
                         <div class="news">
-                            <a href="NewDetailController?id=${news.news_id}" title="X"
+                            <a href="NewDetailController?id=${news.news_id}" title="Funiture"
                                class="entry-image nasa-blog-img blog-image-attachment nasa-block">
                                 <img width="400" height="380"
                                      src="img/tintuc/${news.image}"

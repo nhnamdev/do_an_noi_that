@@ -15,8 +15,8 @@
 <body>
 <nav class="navbar navbar-expand-lg navbar-light bg-white fixed-top shadow-sm">
     <div class="container">
-        <a class="navbar-brand" href="index" style="padding-top: 0;">
-            <img src="//noithat-nhadep.monamedia.net/wp-content/uploads/2024/04/1-e1713930644851.png" alt="Mona Media"
+        <a class="navbar-brand" href="${pageContext.request.contextPath}/index" style="padding-top: 0;">
+            <img src="${pageContext.request.contextPath}/img/logo/logo-website.jpg" alt="Mona Media"
                  class="header_logo" width="120">
         </a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">

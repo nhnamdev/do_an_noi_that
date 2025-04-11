@@ -13,21 +13,23 @@ import java.util.List;
 
 @WebServlet(name = "HomeController", value = "/index")
 public class HomeController extends HttpServlet {
-
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
 
         ProductDao productDao = new ProductDao();
-        List<Product> listProduct = productDao.getTop4BestSellers();
-        request.setAttribute("listProduct", listProduct);
-        if (listProduct != null) {
-            request.getRequestDispatcher("index.jsp").forward(request, response);
-        } else {
+        try {
+            List<Product> listProduct = productDao.getTop4BestSellers();
+            if (listProduct == null || listProduct.isEmpty()) {
+                request.getRequestDispatcher("errorDb.jsp").forward(request, response);
+            } else {
+                request.setAttribute("listProduct", listProduct);
+                request.getRequestDispatcher("index.jsp").forward(request, response);
+            }
+        } catch (Exception e) {
+            e.printStackTrace(); // Log lỗi nếu cần
             request.getRequestDispatcher("errorDb.jsp").forward(request, response);
         }
-
-
     }
 
     @Override
