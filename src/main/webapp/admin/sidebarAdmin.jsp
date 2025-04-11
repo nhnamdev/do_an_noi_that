@@ -14,7 +14,6 @@
     <button class="btn" onclick="mailBoxList();changeColor(this)">Hộp thư</button>
     <ul id="mailBoxList" class="nested-list">
         <li onclick="showDetail('mailBox2')">Thống kê phản hồi</li>
-        <li onclick="showDetail('mailBox3')">Tin nhắn</li>
     </ul>
     <!--quản lý -->
     <button class="btn" onclick="manageList();changeColor(this)">Quản lý</button>

@@ -313,31 +313,7 @@
 
     </div>
     <%--        End Thống kê phản hồi--%>
-    <div id="mailBox3" class="detail">
-        <h2>Tin nhắn</h2>
-        <div class="chat-container">
-            <div class="customer-list">
-                <ul id="customerList">
-                    <c:forEach items="${names}" var="n">
-                        <li class="customer" onclick="location.href='admin?name=${n}'" style="cursor: pointer;">
-                            <img src="img/avt.jpg" alt=""/>
-                            <span>${n}</span>
-                        </li>
-                    </c:forEach>
-                </ul>
-            </div>
-            <div id="messagesContainer">
-                <h3>Hộp thư</h3>
-                <ul id="messagesList">
-                    <c:if test="${not empty selectedContent}">
-                        <c:forEach items="${selectedContent}" var="content">
-                            <li>${content}</li>
-                        </c:forEach>
-                    </c:if>
-                </ul>
-            </div>
-        </div>
-    </div>
+
     <div id="showPL1" class="detail">
         <h1>Danh Sách Yêu Cầu</h1>
         <table>

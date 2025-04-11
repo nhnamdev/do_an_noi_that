@@ -1,14 +1,5 @@
-<%@ page import="vn.edu.hcmuaf.fit.sourcedoannoithat.dao.model.Product" %>
-<%@ page import="java.util.List" %>
-<%@ page import="java.util.ArrayList" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%
-    List<Product> cartProducts = (List<Product>) session.getAttribute("cartProducts");
-    if (cartProducts == null) {
-        cartProducts = new ArrayList<Product>();
-    }
-%>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -27,7 +18,6 @@
 <div class="contactUs">
     <jsp:include page="/components/header.jsp"/>
     <script src="js/showSearch.js"></script>
-    <script src="js/showHeader.js"></script>
     <script src="js/actionOfProfile.js"></script>
     <div class="overlay" id="overlay"></div>
 
