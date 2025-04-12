@@ -33,8 +33,9 @@ public class DetailDao {
                         rs.getDouble(7),
                         rs.getDouble(8),
                         rs.getDouble(9),
-                        rs.getString(10),
-                        rs.getString(11));
+                        rs.getDouble(10),
+                        rs.getString(11),
+                        rs.getString(12));
             }
         } catch (Exception e) {
             throw new RuntimeException(e);

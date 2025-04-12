@@ -133,9 +133,9 @@
                                                     <div class="product-details">
                                                         <div class="product-name">${product.name}</div>
                                                         <div class="product-variants">
-                                                            <span class="product-variant">Màu: đen</span>
-                                                            <span class="product-variant">Kích thước: 300x400</span>
-                                                            <span class="product-variant">Chất liệu: Gỗ cao su</span>
+                                                            <span class="product-variant">Màu: ${order.productDetail.color}</span>
+                                                            <span class="product-variant">Kích thước: ${order.productDetail.width}x${order.productDetail.height}</span>
+                                                            <span class="product-variant">Chất liệu: ${order.productDetail.material}</span>
                                                         </div>
                                                         <button class="remove-btn"
                                                                 onclick="removeProduct(${product.id})">

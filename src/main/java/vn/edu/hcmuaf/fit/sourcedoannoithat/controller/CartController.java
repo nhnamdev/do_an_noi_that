@@ -9,10 +9,12 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.*;
 import jakarta.servlet.annotation.*;
 import vn.edu.hcmuaf.fit.sourcedoannoithat.dao.CartDao;
+import vn.edu.hcmuaf.fit.sourcedoannoithat.dao.DetailDao;
 import vn.edu.hcmuaf.fit.sourcedoannoithat.dao.ProductDao;
 import vn.edu.hcmuaf.fit.sourcedoannoithat.dao.model.Cart;
 import vn.edu.hcmuaf.fit.sourcedoannoithat.dao.model.CartDisplayItem;
 import vn.edu.hcmuaf.fit.sourcedoannoithat.dao.model.Product;
+import vn.edu.hcmuaf.fit.sourcedoannoithat.dao.model.ProductDetail;
 
 @WebServlet(name = "CartController", value = "/cart/*")
 public class CartController extends HttpServlet {
@@ -71,14 +73,14 @@ public class CartController extends HttpServlet {
 
             if (!cartItems.isEmpty()) {
                 cart = new HashMap<>();
-
+                DetailDao detailDao = new DetailDao();
                 for (Cart item : cartItems) {
                     // Lấy thông tin sản phẩm
                     Product product = productDao.getProductById(String.valueOf(item.getProductID()));
-
+                    ProductDetail productDetail = detailDao.getProductDetail(String.valueOf(item.getProductID()));
                     if (product != null) {
                         // Tạo CartDisplayItem từ thông tin sản phẩm và số lượng
-                        CartDisplayItem displayItem = new CartDisplayItem(item.getQuantity(), product);
+                        CartDisplayItem displayItem = new CartDisplayItem(item.getQuantity(), product, productDetail);
                         cart.put(String.valueOf(item.getProductID()), displayItem);
                     }
                 }
@@ -95,6 +97,11 @@ public class CartController extends HttpServlet {
     public void addToCart(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String productID = request.getParameter("id");
         Product product = productDao.getProductById(productID);
+
+//        lay ra thong tin cua san pham, vd mau sac, chieu cao x chieu rong
+        DetailDao detailDao = new DetailDao();
+        ProductDetail productDetail = detailDao.getProductDetail(productID);
+
         HttpSession session = request.getSession();
         Integer userId = (Integer) session.getAttribute("userIdLogin");
 //        kiem tra dang nhap, neu chua dang nhap ma ng dung an them vao gio hang thi se chuyen sang trang login
@@ -119,7 +126,7 @@ public class CartController extends HttpServlet {
 //         gio hang trong thi khoi tao them moi 1 san pham khi an vao button "them vao gio hang"
         if (cart == null) {
             cart = new HashMap<>();
-            cartDisplayItem = new CartDisplayItem(quantity, product);
+            cartDisplayItem = new CartDisplayItem(quantity, product, productDetail);
             cart.put(productID, cartDisplayItem);
         } else {
 //            kiem tra neu trong gio hang da co 1 san pham truoc do da duoc them vao, thi tang so luong sp
@@ -127,8 +134,11 @@ public class CartController extends HttpServlet {
                 CartDisplayItem cartItem = cart.get(productID);
                 cartItem.setQuantity(cartItem.getQuantity() + quantity);
 //                ko co thi them moi san pham do vao gio hang
+                if (cartItem.getProductDetail() == null) {
+                    cartItem.setProductDetail(productDetail);
+                }
             } else {
-                cartDisplayItem = new CartDisplayItem(quantity, product);
+                cartDisplayItem = new CartDisplayItem(quantity, product, productDetail);
                 cart.put(productID, cartDisplayItem);
             }
         }
@@ -144,6 +154,7 @@ public class CartController extends HttpServlet {
             int totalQuantity = cart.get(productID).getQuantity();
             cartDao.addOrUpdateCartItem(userId, prodId, totalQuantity);
         } catch (NumberFormatException e) {
+            e.printStackTrace();
         }
         response.sendRedirect(request.getContextPath() + "/cart/");
         return;
@@ -173,7 +184,11 @@ public class CartController extends HttpServlet {
                         if (quantity > 0 && cart.containsKey(productID)) {
                             CartDisplayItem item = cart.get(productID);
                             item.setQuantity(quantity);
-
+                            if (item.getProductDetail() == null) {
+                                DetailDao detailDao = new DetailDao();
+                                ProductDetail detail = detailDao.getProductDetail(productID);
+                                item.setProductDetail(detail);
+                            }
                             if (userId != null) {
                                 try {
                                     int prodId = Integer.parseInt(productID);
