@@ -7,16 +7,14 @@ public class ProductDetail {
     private String material;
     private String brand;
     private String color;
-    private double length;
-    private double width;
-    private double height;
-    private double weight;
+    private int length;
+    private int width;
+    private int height;
+    private int weight;
     private String feature;
     private String stockStatus;
 
-    public ProductDetail(int detailID, int id, String productDescribe, String material,
-                         String brand, String color, double length, double width,
-                         double height, double weight, String feature, String stockStatus) {
+    public ProductDetail(int detailID, int id, String productDescribe, String material, String brand, String color, int length, int width, int height, int weight, String feature, String stockStatus) {
         this.detailID = detailID;
         this.id = id;
         this.productDescribe = productDescribe;
@@ -79,35 +77,35 @@ public class ProductDetail {
         this.color = color;
     }
 
-    public double getLength() {
+    public int getLength() {
         return length;
     }
 
-    public void setLength(double length) {
+    public void setLength(int length) {
         this.length = length;
     }
 
-    public double getWidth() {
+    public int getWidth() {
         return width;
     }
 
-    public void setWidth(double width) {
+    public void setWidth(int width) {
         this.width = width;
     }
 
-    public double getHeight() {
+    public int getHeight() {
         return height;
     }
 
-    public void setHeight(double height) {
+    public void setHeight(int height) {
         this.height = height;
     }
 
-    public double getWeight() {
+    public int getWeight() {
         return weight;
     }
 
-    public void setWeight(double weight) {
+    public void setWeight(int weight) {
         this.weight = weight;
     }
 
