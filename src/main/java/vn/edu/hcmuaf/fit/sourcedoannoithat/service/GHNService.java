@@ -41,7 +41,7 @@ public class GHNService {
         return executeRequest(connection);
     }
 
-    public static String calculateShippingFee(int fromDistrictId, String fromWardCode,
+    public static String calculateShippingFee(
                                               int toDistrictId, String toWardCode,
                                               int weight, int length, int width, int height) throws IOException {
         URL url = new URL(shippingAPI);
@@ -56,8 +56,8 @@ public class GHNService {
         String jsonInputString = String.format(
                 "{"
                         + "\"service_type_id\":2,"
-                        + "\"from_district_id\":%d,"
-                        + "\"from_ward_code\":\"%s\","
+//                        + "\"from_district_id\":%d,"
+//                        + "\"from_ward_code\":\"%s\","
                         + "\"to_district_id\":%d,"
                         + "\"to_ward_code\":\"%s\","
                         + "\"weight\":%d,"
@@ -77,7 +77,8 @@ public class GHNService {
                         + "  }"
                         + "]"
                         + "}",
-                fromDistrictId, fromWardCode, toDistrictId, toWardCode,
+//                fromDistrictId, fromWardCode,
+                toDistrictId, toWardCode,
                 weight, length, width, height,
                 weight, length, width, height
         );
@@ -129,7 +130,7 @@ public class GHNService {
             String wardResult = GHNService.getWards("1442");
             System.out.println(wardResult);
 
-            System.out.println(calculateShippingFee(1442, "20101", 3440,
+            System.out.println(calculateShippingFee(3440,
                     "20110", 1700, 10, 10, 10));
 
         } catch (Exception e) {

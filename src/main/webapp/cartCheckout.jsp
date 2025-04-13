@@ -187,15 +187,17 @@
                             </div>
                             <div class="order-summary-total">
                                 <div>Tổng tiền hàng</div>
-                                <div>${totalAmount}</div>
+                                <div id="total-product"><f:formatNumber type="currency" value="${totalAmount}"
+                                                                        pattern="#,###đ"/></div>
                             </div>
                             <div class="order-summary-total">
-                                <div>Tổng tiền phí vận chuyển</div>
-                                <div>Miễn phí</div>
+                                <div>Phí vận chuyển</div>
+                                <div id="shipping-fee-display">Chọn địa chỉ để tính phí</div>
                             </div>
                             <div class="order-summary-total grand-total">
                                 <div>Tổng thanh toán</div>
-                                <div>${totalAmount + shippingFee}</div>
+                                <div id="total-invoice"><f:formatNumber type="currency" value="${totalAmount}"
+                                                                        pattern="#,###đ"/></div>
                             </div>
                             <div class="payment-method">
                                 <div class="payment-option">
