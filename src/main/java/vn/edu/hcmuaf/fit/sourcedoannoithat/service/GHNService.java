@@ -8,7 +8,7 @@ import java.nio.charset.StandardCharsets;
 
 // call api tu giao hang nhanh
 public class GHNService {
-    //    private static final String shippingAPI = "https://dev-online-gateway.ghn.vn/shiip/public-api/v2/shipping-order/fee";
+    private static final String shippingAPI = "https://dev-online-gateway.ghn.vn/shiip/public-api/v2/shipping-order/fee";
     private static final String provinceURL = "https://dev-online-gateway.ghn.vn/shiip/public-api/master-data/province";
     private static final String districtURL = "https://dev-online-gateway.ghn.vn/shiip/public-api/master-data/district";
     private static final String wardURL = "https://dev-online-gateway.ghn.vn/shiip/public-api/master-data/ward?district_id";
@@ -34,6 +34,56 @@ public class GHNService {
 
         try (OutputStream os = connection.getOutputStream()) {
             String jsonInputString = "{\"district_id\":" + districtID + "}";
+            byte[] input = jsonInputString.getBytes(StandardCharsets.UTF_8);
+            os.write(input, 0, input.length);
+        }
+
+        return executeRequest(connection);
+    }
+
+    public static String calculateShippingFee(
+                                              int toDistrictId, String toWardCode,
+                                              int weight, int length, int width, int height) throws IOException {
+        URL url = new URL(shippingAPI);
+        HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+        connection.setRequestMethod("POST");
+        connection.setRequestProperty("Content-Type", "application/json");
+        connection.setRequestProperty("Token", token);
+        connection.setRequestProperty("ShopId", shopID);
+        connection.setDoOutput(true);
+
+        // service_type_id=5 dung de giao hang nang, ma noi that thi tat nhien nang r
+        String jsonInputString = String.format(
+                "{"
+                        + "\"service_type_id\":2,"
+//                        + "\"from_district_id\":%d,"
+//                        + "\"from_ward_code\":\"%s\","
+                        + "\"to_district_id\":%d,"
+                        + "\"to_ward_code\":\"%s\","
+                        + "\"weight\":%d,"
+                        + "\"length\":%d,"
+                        + "\"width\":%d,"
+                        + "\"height\":%d,"
+                        + "\"insurance_value\":0,"
+                        + "\"items\": ["
+                        + "  {"
+                        + "    \"name\": \"Sample Item\","
+                        + "    \"code\": \"ITEM01\","
+                        + "    \"quantity\": 1,"
+                        + "    \"weight\": %d,"
+                        + "    \"length\": %d,"
+                        + "    \"width\": %d,"
+                        + "    \"height\": %d"
+                        + "  }"
+                        + "]"
+                        + "}",
+//                fromDistrictId, fromWardCode,
+                toDistrictId, toWardCode,
+                weight, length, width, height,
+                weight, length, width, height
+        );
+
+        try (OutputStream os = connection.getOutputStream()) {
             byte[] input = jsonInputString.getBytes(StandardCharsets.UTF_8);
             os.write(input, 0, input.length);
         }
@@ -79,6 +129,9 @@ public class GHNService {
             // Test API phuong/xa districtId = 1442 (Q1)
             String wardResult = GHNService.getWards("1442");
             System.out.println(wardResult);
+
+            System.out.println(calculateShippingFee(3440,
+                    "20110", 1700, 10, 10, 10));
 
         } catch (Exception e) {
             System.err.println("Lỗi: " + e.getMessage());
