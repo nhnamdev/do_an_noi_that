@@ -6,6 +6,7 @@ import java.util.List;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.*;
 import jakarta.servlet.annotation.*;
+import vn.edu.hcmuaf.fit.sourcedoannoithat.dao.FavouriteDao;
 import vn.edu.hcmuaf.fit.sourcedoannoithat.dao.ProductDao;
 import vn.edu.hcmuaf.fit.sourcedoannoithat.dao.model.Product;
 
@@ -43,9 +44,16 @@ public class ListProductController extends HttpServlet {
         if (count % 6 != 0) {
             endPage++;
         }
+        Integer userId = (Integer)request.getSession().getAttribute("userIdLogin");
+        List<Integer> favoriteProductIds = null;
+        if (userId != null) {
+            FavouriteDao favDao = new FavouriteDao();
+            favoriteProductIds = favDao.getFavoriteProductIds(userId);
+        }
 
         request.setAttribute("listPagination", productList);
         request.setAttribute("endP", endPage);
+        request.setAttribute("favoriteProductIds", favoriteProductIds);
         request.getRequestDispatcher("shop.jsp").forward(request, response);
     }
 

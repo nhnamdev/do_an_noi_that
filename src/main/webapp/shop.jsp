@@ -242,9 +242,18 @@
                                                 <a href="detail?pId=${p.id}">
                                                     <img src="${p.img}" alt="${p.name}">
                                                 </a>
-                                                <span class="favorite-product" title="Thêm vào yêu thích">
-                                                <i class="fa-regular fa-heart"></i>
-                                            </span>
+                                                <c:choose>
+                                                    <c:when test="${favoriteProductIds.contains(p.id)}">
+                                                        <span class="favorite-product" title="Bỏ khỏi yêu thích">
+                                                            <i class="fa-solid fa-heart"></i>
+                                                        </span>
+                                                    </c:when>
+                                                    <c:otherwise>
+                                                        <span class="favorite-product" title="Thêm vào yêu thích">
+                                                            <i class="fa-regular fa-heart"></i>
+                                                        </span>
+                                                    </c:otherwise>
+                                                </c:choose>
                                             </div>
                                             <div class="product-detail">
                                                 <h4>
@@ -293,7 +302,7 @@
             </div>
         </div>
     </div>
-    <jsp:include page="components/footer.jsp" />
+    <jsp:include page="components/footer.jsp"/>
 </div>
 <script src="js/shop.js"></script>
 </body>
