@@ -218,7 +218,9 @@
                                     đã chuyển.
                                 </p>
                             </div>
-                            <button type="submit" class="order-button">ĐẶT HÀNG</button>
+                            <form action="">
+                                <button type="submit" class="order-button">ĐẶT HÀNG</button>
+                            </form>
                         </div>
                     </form>
                 </div>
