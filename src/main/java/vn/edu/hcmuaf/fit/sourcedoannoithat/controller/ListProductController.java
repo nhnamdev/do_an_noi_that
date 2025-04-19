@@ -2,6 +2,7 @@ package vn.edu.hcmuaf.fit.sourcedoannoithat.controller;
 
 import java.io.*;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.*;
@@ -23,6 +24,7 @@ public class ListProductController extends HttpServlet {
             indexPage = "1";
         }
         String keyword = request.getParameter("search");
+        String onlyFavorite = request.getParameter("onlyFavorite");
         int index = Integer.parseInt(indexPage);
 //        chia 6 san pham vao 1 trang
         ProductDao dao = new ProductDao();
@@ -49,6 +51,17 @@ public class ListProductController extends HttpServlet {
         if (userId != null) {
             FavouriteDao favDao = new FavouriteDao();
             favoriteProductIds = favDao.getFavoriteProductIds(userId);
+        }
+        if ("true".equals(onlyFavorite) && favoriteProductIds != null) {
+            List<Integer> finalFavoriteProductIds = favoriteProductIds;
+            productList = productList.stream()
+                    .filter(product -> finalFavoriteProductIds.contains(product.getId()))
+                    .collect(Collectors.toList());
+            count = productList.size();
+            endPage = count / 6;
+            if (count % 6 != 0) {
+                endPage++;
+            }
         }
 
         request.setAttribute("listPagination", productList);
