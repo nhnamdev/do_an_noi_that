@@ -47,7 +47,8 @@
 <%--CONTENT MAIN ADMIN --%>
 <div class="content">
     <!-- Modal -->
-    <div class="modal fade" id="newsModal" tabindex="-1" role="dialog" aria-labelledby="newsModalLabel" aria-hidden="true">
+    <div class="modal fade" id="newsModal" tabindex="-1" role="dialog" aria-labelledby="newsModalLabel"
+         aria-hidden="true">
         <div class="modal-dialog modal-lg" role="document"> <!-- modal-lg để modal to ra -->
             <div class="modal-content">
                 <div class="modal-header">
@@ -63,17 +64,14 @@
                             <label>Tiêu đề:</label>
                             <input type="text" class="form-control" name="title" required>
                         </div>
-
                         <div class="form-group">
                             <label>Mô tả:</label>
                             <textarea class="form-control" name="description" rows="3" required></textarea>
                         </div>
-
                         <div class="form-group">
                             <label>Nội dung chi tiết:</label>
                             <textarea class="form-control" name="content" id="editor1"></textarea>
                         </div>
-
                         <div class="form-group">
                             <label>Loại tin:</label>
                             <select class="form-control" name="category_id" required>
@@ -84,15 +82,17 @@
                                 <option value="5">Style</option>
                             </select>
                         </div>
-
                         <div class="form-group">
                             <label>Ảnh:</label>
                             <input type="file" class="form-control" name="image" required>
                         </div>
-
                         <div class="modal-footer">
-                            <button type="submit" class="btn btn-primary">Thêm bài viết</button>
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+                            <button type="submit" class="btn btn-primary" style="width: auto; margin-right: 14px">Thêm
+                                bài viết
+                            </button>
+                            <button type="button" class="btn btn-secondary" style="width: auto;"
+                                    data-bs-dismiss="modal">Đóng
+                            </button>
                         </div>
                     </form>
                 </div>
@@ -108,10 +108,9 @@
                         <div class="card-title">Quản lí tin tức</div>
                         <div class="card-tools">
                             <div class="dropdown" style="display: flex">
-                                <button id="btnExportPDF" class="btn btn-primary">Print</button>
-                                <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#newsModal">Thêm Tin Tức</button>
-
-
+                                <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#newsModal">Thêm
+                                    Tin Tức
+                                </button>
                             </div>
                         </div>
                     </div>
@@ -140,7 +139,7 @@
                                         </div>
                                     </th>
                                     <td class="text-end">
-                                        <div style="max-width: 600px; display: inline-block; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+                                        <div style="max-width: 500px; display: inline-block; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
                                                 ${news.description}
                                         </div>
                                     </td>
@@ -153,8 +152,9 @@
                                         <span class="badge badge-success">${news.createdAt}</span>
                                     </td>
                                     <td class="text-end">
-                                            <%--     Chua xu li--%>
-                                        <a class="badge badge-danger" href="mod/newsmanager/${news.news_id}">Xóa</a>
+                                        <a class="badge badge-danger"
+                                           href="${pageContext.request.contextPath}/mod/newsmanager/deleteNews?id=${news.news_id}"
+                                           onclick="return confirm('Bạn có chắc chắn muốn xoá?')">Xóa</a>
                                     </td>
                                 </tr>
                             </c:forEach>
@@ -167,9 +167,8 @@
     </div>
     <%--END CONTENT MAIN ADMIN --%>
 </div>
-<!-- Khởi tạo CKEditor -->
+
 <script>
-    // Đảm bảo CKEditor chỉ khởi tạo một lần
     let editorInitialized = false;
     const modal = document.getElementById('newsModal');
     modal.addEventListener('shown.bs.modal', function () {
@@ -178,33 +177,6 @@
             editorInitialized = true;
         }
     });
-</script>
-<script>
-    // CKEDITOR.replace('editor1');
-
-    $(document).ready(function () {
-        var table = $('#transactionTable').DataTable({
-            dom: 'Bfrtip', // B: Buttons, f: filter, r: processing, t: table, i: info, p: pagination
-            buttons: [
-                {
-                    extend: 'pdfHtml5',
-                    title: 'Transaction History',
-                    exportOptions: {
-                        columns: ':visible'
-                    }
-                },
-                {
-                    extend: 'print',
-                    title: 'Transaction History',
-                    exportOptions: {
-                        columns: ':visible'
-                    }
-                }
-            ]
-        });
-    });
-</script>
-<script>
     document.getElementById("btnShowForm").addEventListener("click", function () {
         var formDiv = document.getElementById("main_contentt");
         if (formDiv.style.display === "none") {
@@ -214,6 +186,5 @@
         }
     });
 </script>
-
 </body>
 </html>
