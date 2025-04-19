@@ -155,6 +155,21 @@ public class FavouriteDao {
         }
         return false;
     }
+    public List<Integer> getFavoriteProductIds(int userId) {
+        List<Integer> favoriteProductIds = new ArrayList<>();
+        try {
+            Connection conn = new DBConnect().getConnection();
+            PreparedStatement stmt = conn.prepareStatement("SELECT product_id FROM user_favourite WHERE user_id = ?");
+            stmt.setInt(1, userId);
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                favoriteProductIds.add(rs.getInt("product_id"));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return favoriteProductIds;
+    }
 
 
 }

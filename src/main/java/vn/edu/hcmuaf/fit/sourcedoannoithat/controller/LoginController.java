@@ -102,8 +102,12 @@ public class LoginController extends HttpServlet {
             int active = loginDao.getUserActive(username);
             session.setAttribute("active", active);
             boolean isValidUser = loginDao.checkLogin(loginModel);
+            if (!isValidUser) {
+                request.setAttribute("error", "Tên đăng nhập hoặc mật khẩu không đúng!");
+                request.getRequestDispatcher("login.jsp").forward(request, response);
+                return;
+            }
             if (active == 1) {
-                if (isValidUser) {
                     logDAO.insertLog(username, "alert", "login", "", "");
                     session.setAttribute("loginModel", loginModel);
                     Integer userId = loginDao.getIdByUsername(username);
@@ -131,10 +135,6 @@ public class LoginController extends HttpServlet {
                     } else {
                         response.sendRedirect("login.jsp");
                     }
-                } else {
-                    request.setAttribute("error", "Tên đăng nhập hoặc mật khẩu không đúng!");
-                    request.getRequestDispatcher("login.jsp").forward(request, response);
-                }
             } else if (active == 0) {
                 response.sendRedirect("ConfirmOTP.jsp");
             } else if (active == -1) {
