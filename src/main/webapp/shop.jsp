@@ -88,7 +88,8 @@
                 <div class="sort-feature">
                     <div class="sort-dropdown">
                         <div class="sort-btn">
-                            Sắp xếp theo <span class="arrow-down"></span>
+                            Sắp xếp theo: Mặc định
+                            <i class="fas fa-chevron-down"></i>
                         </div>
                         <div class="sort-dropdown-content">
                             <a href="#" class="active">Mặc định</a>
@@ -103,6 +104,11 @@
                     <!-- Sidebar-->
                     <div class="sidebar">
                         <div class="filter-box">
+                            <a href="#" class="clear-filters"><i class="fas fa-times"></i> Xóa tất cả bộ lọc</a>
+                            <%-- những phần dc người dùng ấn lọc ra sẽ hiển thị ở đây --%>
+                            <div class="active-filters">
+
+                            </div>
                             <h3>Danh mục sản phẩm</h3>
                             <ul class="category-list">
                                 <li class="category-item">
@@ -240,16 +246,18 @@
                                             <div class="product-tumb">
                                                 <span class="discount-percent">-5%</span>
                                                 <a href="detail?pId=${p.id}">
-                                                    <img src="${p.img}" alt="${p.name}">
+                                                    <img src="${p.img}" alt="${p.name}" loading="lazy">
                                                 </a>
                                                 <c:choose>
                                                     <c:when test="${favoriteProductIds.contains(p.id)}">
-                                                        <span class="favorite-product" title="Bỏ khỏi yêu thích" data-product-id="${p.id}">
+                                                        <span class="favorite-product active" title="Bỏ khỏi yêu thích"
+                                                              data-product-id="${p.id}">
                                                             <i class="fa-solid fa-heart"></i>
                                                         </span>
                                                     </c:when>
                                                     <c:otherwise>
-                                                        <span class="favorite-product" title="Thêm vào yêu thích" data-product-id="${p.id}">
+                                                        <span class="favorite-product" title="Thêm vào yêu thích"
+                                                              data-product-id="${p.id}">
                                                             <i class="fa-regular fa-heart"></i>
                                                         </span>
                                                     </c:otherwise>
@@ -259,6 +267,19 @@
                                                 <h4>
                                                     <a href="detail?pId=${p.id}">${p.name}</a>
                                                 </h4>
+
+                                                <div class="product-rating">
+                                                    <div class="stars">
+                                                        <i class="fas fa-star"></i>
+                                                        <i class="fas fa-star"></i>
+                                                        <i class="fas fa-star"></i>
+                                                        <i class="fas fa-star"></i>
+                                                        <i class="fas fa-star"></i>
+<%--                                                        <i class="fas fa-star-half-alt"></i>--%>
+                                                    </div>
+                                                    <span class="rating-count">(12)</span>
+                                                </div>
+
                                                 <div class="product-bottom_detail">
                                                     <div class="price">
                                                         <span class="original-price">600.000đ</span>
@@ -303,48 +324,104 @@
         </div>
     </div>
     <jsp:include page="components/footer.jsp"/>
-    <script>
-        document.addEventListener("DOMContentLoaded", function () {
-            document.querySelectorAll(".favorite-product").forEach(function (element) {
-                element.addEventListener("click", function () {
-                    const span = this;
-                    const productId = span.getAttribute("data-product-id");
-                    const url = `${pageContext.request.contextPath}/addToFavorites`;
-                    fetch(url, {
-                        method: "POST",
-                        headers: {
-                            "Content-Type": "application/x-www-form-urlencoded"
-                        },
-                        body: new URLSearchParams({
-                            productId: productId
-                        })
-                    })
-                        .then(response => response.json())
-                        .then(data => {
-                            console.log(data);
-                            if (data.success || data["Đã thêm sản phẩm yêu thích"]) {
-                                const isActive = span.classList.contains("active");
-                                if (isActive) {
-                                    span.classList.remove("active");
-                                    span.setAttribute("title", "Thêm vào yêu thích");
-                                    span.innerHTML = `<i class="fa-regular fa-heart"></i>`;
-                                } else {
-                                    span.classList.add("active");
-                                    span.setAttribute("title", "Bỏ khỏi yêu thích");
-                                    span.innerHTML = `<i class="fa-solid fa-heart"></i>`;
-                                }
-                            } else {
-                                alert(data.message || "Đã có lỗi xảy ra.");
-                            }
-                        })
-                        .catch(error => {
-                            console.error("Lỗi:", error);
-                        });
-                });
-            });
-        });
-    </script>
+    <div class="toast-container" id="toastContainer"></div>
 </div>
 <script src="js/shop.js"></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const favoriteButtons = document.querySelectorAll(".favorite-product");
+        favoriteButtons.forEach(function (button) {
+            const newButton = button.cloneNode(true);
+            button.parentNode.replaceChild(newButton, button);
+        });
+
+        function showToast(title, message, type = 'success') {
+            let container = document.getElementById('toastContainer');
+            if (!container) {
+                container = document.createElement('div');
+                container.id = 'toastContainer';
+                container.className = 'toast-container';
+                document.body.appendChild(container);
+            }
+
+            const toast = document.createElement('div');
+            toast.className = `toast toast-${type}`;
+
+            toast.innerHTML = `
+            <div class="toast-icon">
+                <i class="fas ${type == 'success' ? 'fa-check-circle' : 'fa-exclamation-circle'}"></i>
+            </div>
+            <div class="toast-body">
+                <div class="toast-title">${title}</div>
+                <div class="toast-message">${message}</div>
+            </div>
+        `;
+
+            container.appendChild(toast);
+
+            setTimeout(() => {
+                toast.classList.add('show');
+            }, 10);
+
+            // Tự động ẩn sau 3 giây
+            setTimeout(() => {
+                toast.classList.remove('show');
+                setTimeout(() => {
+                    if (toast.parentNode) {
+                        toast.parentNode.removeChild(toast);
+                    }
+                }, 300);
+            }, 3000);
+        }
+
+        document.querySelectorAll(".favorite-product").forEach(function (element) {
+            element.addEventListener("click", function () {
+                const span = this;
+                const productId = span.getAttribute("data-product-id");
+                const url = `${pageContext.request.contextPath}/addToFavorites`;
+                fetch(url, {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/x-www-form-urlencoded"
+                    },
+                    body: new URLSearchParams({
+                        productId: productId
+                    })
+                })
+                    .then(response => response.json())
+                    .then(data => {
+                        console.log(data);
+                        if (data.success || data["Đã thêm sản phẩm yêu thích"]) {
+                            const isActive = span.classList.contains("active");
+                            if (isActive) {
+                                span.classList.remove("active");
+                                span.setAttribute("title", "Thêm vào yêu thích");
+                                span.innerHTML = `<i class="fa-regular fa-heart"></i>`;
+
+                                // Hiển thị thông báo đã bỏ yêu thích
+                                showToast('Thông báo', 'Đã xóa khỏi danh sách yêu thích', 'success');
+                            } else {
+                                span.classList.add("active");
+                                span.setAttribute("title", "Bỏ khỏi yêu thích");
+                                span.innerHTML = `<i class="fa-solid fa-heart"></i>`;
+
+                                // Hiển thị thông báo đã thêm yêu thích
+                                showToast('Thông báo', 'Đã thêm vào danh sách yêu thích', 'success');
+                            }
+                        } else {
+                            // Hiển thị thông báo lỗi
+                            showToast('Thông báo', data.message || "Đã có lỗi xảy ra", 'error');
+                        }
+                    })
+                    .catch(error => {
+                        console.error("Lỗi:", error);
+
+                        // Hiển thị thông báo lỗi
+                        showToast('Thông báo', "Đã xảy ra lỗi khi xử lý yêu cầu", 'error');
+                    });
+            });
+        });
+    });
+</script>
 </body>
 </html>
