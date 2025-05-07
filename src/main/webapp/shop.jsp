@@ -242,9 +242,18 @@
                                                 <a href="detail?pId=${p.id}">
                                                     <img src="${p.img}" alt="${p.name}">
                                                 </a>
-                                                <span class="favorite-product" title="Thêm vào yêu thích">
-                                                <i class="fa-regular fa-heart"></i>
-                                            </span>
+                                                <c:choose>
+                                                    <c:when test="${favoriteProductIds.contains(p.id)}">
+                                                        <span class="favorite-product" title="Bỏ khỏi yêu thích" data-product-id="${p.id}">
+                                                            <i class="fa-solid fa-heart"></i>
+                                                        </span>
+                                                    </c:when>
+                                                    <c:otherwise>
+                                                        <span class="favorite-product" title="Thêm vào yêu thích" data-product-id="${p.id}">
+                                                            <i class="fa-regular fa-heart"></i>
+                                                        </span>
+                                                    </c:otherwise>
+                                                </c:choose>
                                             </div>
                                             <div class="product-detail">
                                                 <h4>
@@ -293,7 +302,48 @@
             </div>
         </div>
     </div>
-    <jsp:include page="components/footer.jsp" />
+    <jsp:include page="components/footer.jsp"/>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            document.querySelectorAll(".favorite-product").forEach(function (element) {
+                element.addEventListener("click", function () {
+                    const span = this;
+                    const productId = span.getAttribute("data-product-id");
+                    const url = `${pageContext.request.contextPath}/addToFavorites`;
+                    fetch(url, {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/x-www-form-urlencoded"
+                        },
+                        body: new URLSearchParams({
+                            productId: productId
+                        })
+                    })
+                        .then(response => response.json())
+                        .then(data => {
+                            console.log(data);
+                            if (data.success || data["Đã thêm sản phẩm yêu thích"]) {
+                                const isActive = span.classList.contains("active");
+                                if (isActive) {
+                                    span.classList.remove("active");
+                                    span.setAttribute("title", "Thêm vào yêu thích");
+                                    span.innerHTML = `<i class="fa-regular fa-heart"></i>`;
+                                } else {
+                                    span.classList.add("active");
+                                    span.setAttribute("title", "Bỏ khỏi yêu thích");
+                                    span.innerHTML = `<i class="fa-solid fa-heart"></i>`;
+                                }
+                            } else {
+                                alert(data.message || "Đã có lỗi xảy ra.");
+                            }
+                        })
+                        .catch(error => {
+                            console.error("Lỗi:", error);
+                        });
+                });
+            });
+        });
+    </script>
 </div>
 <script src="js/shop.js"></script>
 </body>

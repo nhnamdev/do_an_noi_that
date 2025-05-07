@@ -65,8 +65,8 @@
                     <div class="address"><h5><i class="fa fa-location-dot"></i> ĐỊA CHỈ</h5>
                     </div>
                 </a>
-                <a href="returnProduct.jsp" class="button">
-                    <div class="address"><h5><i class="fa fa-arrow-rotate-left"></i> ĐỔI/TRẢ</h5>
+                <a href="shop?onlyFavorite=true" class="button">
+                    <div class="address"><h5><i class="fa fa-arrow-rotate-left"></i> ƯA THÍCH</h5>
                     </div>
                 </a>
                 <div class="address" id="account"><h5><i class="fa fa-person"></i> TÀI KHOẢN</h5></div>
@@ -162,8 +162,8 @@
                             <a href="contact.jsp" class="button">
                                 <div class="box"><h5><i class="fa fa-location-dot"></i> <br> ĐỊA CHỈ</h5></div>
                             </a>
-                            <a href="returnProduct.jsp" class="button">
-                                <div class="box"><h5><i class="fa fa-arrow-rotate-left"></i> <br> ĐỔI/TRẢ</h5></div>
+                            <a href="shop?onlyFavorite=true" class="button">
+                                <div class="box"><h5><i class="fa fa-arrow-rotate-left"></i> <br> ƯA THÍCH</h5></div>
                             </a>
                             <div class="box" id="account1"><h5><i class="fa fa-person"></i> <br> TÀI KHOẢN</h5></div>
                             <a href="changePassword.jsp" class="button">
