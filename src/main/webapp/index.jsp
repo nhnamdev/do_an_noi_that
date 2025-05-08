@@ -25,12 +25,12 @@
         </div>
         <div class="slider2">
             <div class="img-left">
-                <img src="assets_duc/img/banphu.png" height="450" width="450"/>
+                <img src="img/home/banphu.png" height="450" width="450"/>
                 <h1>Bàn trang trí</h1>
                 <a href="${pageContext.request.contextPath}/shop" class="shop-now">Xem thêm</a>
             </div>
             <div class="img-right">
-                <img src="assets_duc/img/sofa-don-vai-1.png" height="450" width="450"/>
+                <img src="img/home/sofa-don-vai-1.png" height="450" width="450"/>
                 <h1>Ghế da</h1>
                 <a href="${pageContext.request.contextPath}/shop" class="shop-now1">Xem thêm</a>
             </div>
@@ -56,7 +56,7 @@
         </div>
         <div class="slider4">
             <div class="bosuutap" style="margin-left: 2%;">
-                <img src="assets_duc/img/Asgaard%20sofa%201.png" height="799" width="947"/>
+                <img src="img/home/Asgaard%20sofa%201.png" height="799" width="947"/>
             </div>
             <div class="bosuutap-text">
                 <h3>Bộ sưu tập mới</h3>

@@ -451,7 +451,7 @@ body, html {
 .slider5 {
     width: 100%;
     height: 450px;
-    background-image: url("../assets_duc/img/Rectangle 17.png");
+    background-image: url("../img/home/Rectangle 17.png");
     background-size: cover; /* Tùy chọn: Để ảnh phủ toàn bộ màn hình */
     background-position: center; /* Tùy chọn: Để ảnh ở giữa màn hình */
     background-repeat: no-repeat; /* Tùy chọn: Để ảnh không lặp */
