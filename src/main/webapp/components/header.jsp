@@ -46,7 +46,7 @@
                             <img src="img/avt/avt.jpg" class="rounded-circle" width="22">
                         </a>
                     </li>
-                    <li class="nav-item"><a class="nav-link" href="favorite.jsp"><i class="fa fa-bookmark"></i></a></li>
+                    <li class="nav-item"><a class="nav-link" href="shop?onlyFavorite=true"><i class="fa fa-bookmark"></i></a></li>
                     <li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/cart/"><i
                             class="fa fa-shopping-cart"></i></a></li>
                 </c:if>

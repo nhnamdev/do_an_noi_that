@@ -19,9 +19,20 @@ public class FavouriteController extends HttpServlet {
         PrintWriter out = response.getWriter();
 
         try {
-            String productId = request.getParameter("productId");
-            String userId = request.getSession().getAttribute("userIdLogin") == null ? null : request.getSession().getAttribute("userIdLogin").toString();
-
+            String productIdStr = request.getParameter("productId");
+            Integer productId = null;
+            Integer userId = (Integer)request.getSession().getAttribute("userIdLogin");
+            if (productIdStr != null && !productIdStr.trim().isEmpty()) {
+                try {
+                    productId = Integer.parseInt(productIdStr.trim());
+                } catch (NumberFormatException e) {
+                    out.write("{\"success\": false, \"message\": \"productId không hợp lệ: " + productIdStr + "\"}");
+                    return;
+                }
+            } else {
+                out.write("{\"success\": false, \"message\": \"Thiếu hoặc rỗng productId\"}");
+                return;
+            }
             if (userId == null) {
                 out.write("{\"success\": false, \"message\": \"User not logged in\"}");
                 return;
@@ -37,8 +48,8 @@ public class FavouriteController extends HttpServlet {
             PreparedStatement stmt = conn.prepareStatement(
                     "INSERT INTO user_favourite (user_id, product_id) VALUES (?, ?)"
             );
-            stmt.setString(1, userId);
-            stmt.setString(2, productId);
+            stmt.setInt(1, userId);
+            stmt.setInt(2, productId);
             int rowsInserted = stmt.executeUpdate();
 
             if (rowsInserted > 0) {
@@ -53,15 +64,15 @@ public class FavouriteController extends HttpServlet {
     }
 
 
-    public boolean deleteFavourite(String userId, String productId) {
+    public boolean deleteFavourite(int userId, int productId) {
         Connection connection = null;
         PreparedStatement ps = null;
         try {
             String query = "DELETE FROM user_favourite WHERE user_id = ? AND product_id = ?";
             connection = new DBConnect().getConnection();
             ps = connection.prepareStatement(query);
-            ps.setString(1, userId);
-            ps.setString(2, productId);
+            ps.setInt(1, userId);
+            ps.setInt(2, productId);
 
             int affectedRows = ps.executeUpdate(); // Trả về số dòng bị ảnh hưởng
             return affectedRows > 0; // Nếu có dòng bị xóa, trả về true

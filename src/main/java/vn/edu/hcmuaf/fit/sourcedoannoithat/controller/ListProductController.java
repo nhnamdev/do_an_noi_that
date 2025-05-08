@@ -2,10 +2,12 @@ package vn.edu.hcmuaf.fit.sourcedoannoithat.controller;
 
 import java.io.*;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.*;
 import jakarta.servlet.annotation.*;
+import vn.edu.hcmuaf.fit.sourcedoannoithat.dao.FavouriteDao;
 import vn.edu.hcmuaf.fit.sourcedoannoithat.dao.ProductDao;
 import vn.edu.hcmuaf.fit.sourcedoannoithat.dao.model.Product;
 
@@ -22,6 +24,7 @@ public class ListProductController extends HttpServlet {
             indexPage = "1";
         }
         String keyword = request.getParameter("search");
+        String onlyFavorite = request.getParameter("onlyFavorite");
         int index = Integer.parseInt(indexPage);
 //        chia 6 san pham vao 1 trang
         ProductDao dao = new ProductDao();
@@ -43,9 +46,27 @@ public class ListProductController extends HttpServlet {
         if (count % 6 != 0) {
             endPage++;
         }
+        Integer userId = (Integer)request.getSession().getAttribute("userIdLogin");
+        List<Integer> favoriteProductIds = null;
+        if (userId != null) {
+            FavouriteDao favDao = new FavouriteDao();
+            favoriteProductIds = favDao.getFavoriteProductIds(userId);
+        }
+        if ("true".equals(onlyFavorite) && favoriteProductIds != null) {
+            List<Integer> finalFavoriteProductIds = favoriteProductIds;
+            productList = productList.stream()
+                    .filter(product -> finalFavoriteProductIds.contains(product.getId()))
+                    .collect(Collectors.toList());
+            count = productList.size();
+            endPage = count / 6;
+            if (count % 6 != 0) {
+                endPage++;
+            }
+        }
 
         request.setAttribute("listPagination", productList);
         request.setAttribute("endP", endPage);
+        request.setAttribute("favoriteProductIds", favoriteProductIds);
         request.getRequestDispatcher("shop.jsp").forward(request, response);
     }
 
