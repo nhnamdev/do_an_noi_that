@@ -13,6 +13,27 @@ public class NewsDAO {
     PreparedStatement ps = null;
     ResultSet rs = null;
 
+    public boolean deleteNewsById(int id) {
+        String query = "DELETE FROM news WHERE news_id = ?";
+        try {
+            conn = new DBConnect().getConnection();
+            ps = conn.prepareStatement(query);
+            ps.setInt(1, id);
+            int affectedRows = ps.executeUpdate();
+            return affectedRows > 0;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        } finally {
+            try {
+                if (ps != null) ps.close();
+                if (conn != null) conn.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
     public List<News> getAllNews() {
         List<News> newsList = new ArrayList<>();
         String query = "SELECT * FROM news ORDER BY created_at DESC";

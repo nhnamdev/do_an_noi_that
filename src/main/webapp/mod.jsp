@@ -12,23 +12,6 @@
     <!-- Fonts and icons -->
     <script src="assets/js/plugin/webfont/webfont.min.js"></script>
 
-    <script>
-        WebFont.load({
-            google: {families: ["Public Sans:300,400,500,600,700"]},
-            custom: {
-                families: [
-                    "Font Awesome 5 Solid",
-                    "Font Awesome 5 Regular",
-                    "Font Awesome 5 Brands",
-                    "simple-line-icons",
-                ],
-                urls: ["assets/css/fonts.min.css"],
-            },
-            active: function () {
-                sessionStorage.fonts = true;
-            },
-        });
-    </script>
     <!-- CSS Files -->
     <link rel="stylesheet" href="assets/css/bootstrap.min.css"/>
     <link rel="stylesheet" href="assets/css/plugins.min.css"/>
@@ -65,7 +48,7 @@
                             </div>
                             <div class="col col-stats ms-3 ms-sm-0">
                                 <div class="numbers">
-                                    <p class="card-category">Visitors</p>
+                                    <p class="card-category">Tài Khoản</p>
                                     <h4 class="card-title">1,294</h4>
                                 </div>
                             </div>
@@ -84,7 +67,7 @@
                             </div>
                             <div class="col col-stats ms-3 ms-sm-0">
                                 <div class="numbers">
-                                    <p class="card-category">Subscribers</p>
+                                    <p class="card-category">Bảo Hành</p>
                                     <h4 class="card-title">1303</h4>
                                 </div>
                             </div>
@@ -103,7 +86,8 @@
                             </div>
                             <div class="col col-stats ms-3 ms-sm-0">
                                 <div class="numbers">
-                                    <p class="card-category">Sales</p>
+                                    <%--   Lay tu hoa don--%>
+                                    <p class="card-category">Tổng Doanh Thu</p>
                                     <h4 class="card-title">$ 1,345</h4>
                                 </div>
                             </div>
@@ -122,7 +106,8 @@
                             </div>
                             <div class="col col-stats ms-3 ms-sm-0">
                                 <div class="numbers">
-                                    <p class="card-category">Order</p>
+                                    <%--   Lay tu Order--%>
+                                    <p class="card-category">Tổng Đơn Hàng</p>
                                     <h4 class="card-title">576</h4>
                                 </div>
                             </div>
@@ -130,6 +115,48 @@
                     </div>
                 </div>
             </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-6 col-md-6">
+                <div class="card card-stats card-round">
+                    <div class="card-body">
+                        <div class="row align-items-center">
+                            <div class="col-icon">
+                                <div class="icon-big text-center icon-primary bubble-shadow-small">
+                                    <i class="fa-solid fa-cart-plus"></i>
+                                </div>
+                            </div>
+                            <div class="col col-stats ms-3 ms-sm-0">
+                                <div class="numbers">
+                                    <p class="card-category">Sản Phẩm Bán Chạy</p>
+                                    <h4 class="card-title">1,294</h4>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6 col-md-6">
+                <div class="card card-stats card-round">
+                    <div class="card-body">
+                        <div class="row align-items-center">
+                            <div class="col-icon">
+                                <div class="icon-big text-center icon-info bubble-shadow-small">
+                                    <i class="fa-solid fa-cart-shopping"></i>
+                                </div>
+                            </div>
+                            <div class="col col-stats ms-3 ms-sm-0">
+                                <div class="numbers">
+                                    <p class="card-category">Sản Phẩm Bán Ế</p>
+                                    <h4 class="card-title">1303</h4>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
         </div>
         <%--            Transaction History--%>
         <div class="row">

@@ -10,23 +10,6 @@
     <meta content="width=device-width, initial-scale=1.0, shrink-to-fit=no" name="viewport"/>
     <!-- Fonts and icons -->
     <script src="../assets/js/plugin/webfont/webfont.min.js"></script>
-    <script>
-        WebFont.load({
-            google: {families: ["Public Sans:300,400,500,600,700"]},
-            custom: {
-                families: [
-                    "Font Awesome 5 Solid",
-                    "Font Awesome 5 Regular",
-                    "Font Awesome 5 Brands",
-                    "simple-line-icons",
-                ],
-                urls: ["assets/css/fonts.min.css"],
-            },
-            active: function () {
-                sessionStorage.fonts = true;
-            },
-        });
-    </script>
     <!-- CSS Files -->
     <link rel="stylesheet" href="../assets/css/bootstrap.min.css"/>
     <link rel="stylesheet" href="../assets/css/plugins.min.css"/>
@@ -49,12 +32,7 @@
     <!--hộp thư -->
     <a class="btn" href="${pageContext.request.contextPath}/mod">Trang chủ</a>
     <a class="btn" href="${pageContext.request.contextPath}/mod/newsmanager">Quản lí Tin Tức</a>
-    <a class="btn" href="${pageContext.request.contextPath}/mod">Thống kê phản hồi</a>
-    <a class="btn" href="${pageContext.request.contextPath}/mod">Quản lý Đơn hàng</a>
-    <a class="btn" href="${pageContext.request.contextPath}/mod">Yêu cầu hoàn tiền/hủy đơn</a>
-    <a class="btn" href="${pageContext.request.contextPath}/mod">Thông báo tình trạng đơn hàng</a>
     <a class="btn" href="${pageContext.request.contextPath}/mod">Kho hàng</a>
-    <a class="btn" href="${pageContext.request.contextPath}/mod">Bảo hành</a>
 </div>
 </body>
 </html>

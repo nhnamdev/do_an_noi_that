@@ -78,7 +78,7 @@
                 <a href="NewDetailController?id=${news.news_id}"
                    class="text-decoration-none text-dark">
                     <div class="latest-post d-flex align-items-center mb-2">
-                        <img src="img/tintuc/${news.image}" alt="">
+                        <img src="img/tintuc/${news.image}" alt="" loading="lazy">
                         <div class="ms-2">
                             <small style="max-width: 150px; display: inline-block; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
                                     ${news.title}
@@ -107,7 +107,8 @@
                                class="entry-image nasa-blog-img blog-image-attachment nasa-block">
                                 <img width="400" height="380"
                                      src="img/tintuc/${news.image}"
-                                     class="attachment-large size-large wp-post-image" alt="" decoding="async">
+                                     class="attachment-large size-large wp-post-image" alt="" decoding="async"
+                                     loading="lazy">
                                 <div class="image-overlay"></div>
                             </a>
                             <h3>${news.title}</h3>

@@ -18,61 +18,6 @@
     <div id="content">
         <div class="container">
             <div class="overlay" id="overlay"></div>
-            <div class="info-box" id="infoBox">
-                <div class="container">
-                    <h3>Thông tin giỏ hàng</h3>
-                    <div class="listProduct">
-                        <c:choose>
-                            <c:when test="${not empty sessionScope.cartProducts}">
-                                <c:forEach var="item" items="${sessionScope.cartProducts}">
-                                    <div class="row1">
-                                        <div class="alpha">
-                                            <img src="${item.image}" alt="">
-                                        </div>
-                                        <div class="omega">
-                                            <div class="name">${item.name}</div>
-                                            <div class="sumPrice">
-                                                <div class="quantity">${item.quantity} X</div>
-                                                <div class="price">${item.price * item.quantity}đ</div>
-                                            </div>
-                                        </div>
-                                        <div class="beta">
-                                            <button class="close-button">
-                                                <i class="fa fa-times-circle"></i>
-                                            </button>
-                                        </div>
-                                    </div>
-                                </c:forEach>
-                            </c:when>
-                            <c:otherwise>
-                                <div class="empty-cart">Giỏ hàng của bạn đang trống.</div>
-                            </c:otherwise>
-                        </c:choose>
-                    </div>
-                    <div class="totalPrice">
-                        <div class="title">Tổng tiền</div>
-                        <div class="price">
-                            <%--                    <%--%>
-                            <%--                        double totalPrice = 0;--%>
-                            <%--                        List<Product> cartProducts = (List<Product>) session.getAttribute("cartProducts");--%>
-                            <%--                        if (cartProducts == null) {--%>
-                            <%--                            cartProducts = new ArrayList<Product>();--%>
-                            <%--                        }--%>
-                            <%--                        for (Product item : cartProducts) {--%>
-                            <%--                            totalPrice += item.getPrice() * item.getQuantity();--%>
-                            <%--                        }--%>
-
-                            <%--                    %>--%>
-                            <%--                    <%= totalPrice %>đ--%>
-                        </div>
-                    </div>
-                    <div class="other_choose">
-                        <button class="view_cart" onclick="window.location.href='cart.jsp'">Giỏ hàng</button>
-                        <button class="check_out" onclick="window.location.href='cartCheckout.jsp'">Thanh toán</button>
-                    </div>
-                </div>
-            </div>
-            <script src="js/showCart.js"></script>
             <div class="content_section_1">
                 <div class="breadcrumb-wrapper">
                     <div class="breadcrumb">
@@ -240,16 +185,18 @@
                                             <div class="product-tumb">
                                                 <span class="discount-percent">-5%</span>
                                                 <a href="detail?pId=${p.id}">
-                                                    <img src="${p.img}" alt="${p.name}">
+                                                    <img src="${p.img}" alt="${p.name}" loading="lazy">
                                                 </a>
                                                 <c:choose>
                                                     <c:when test="${favoriteProductIds.contains(p.id)}">
-                                                        <span class="favorite-product" title="Bỏ khỏi yêu thích" data-product-id="${p.id}">
+                                                        <span class="favorite-product" title="Bỏ khỏi yêu thích"
+                                                              data-product-id="${p.id}">
                                                             <i class="fa-solid fa-heart"></i>
                                                         </span>
                                                     </c:when>
                                                     <c:otherwise>
-                                                        <span class="favorite-product" title="Thêm vào yêu thích" data-product-id="${p.id}">
+                                                        <span class="favorite-product" title="Thêm vào yêu thích"
+                                                              data-product-id="${p.id}">
                                                             <i class="fa-regular fa-heart"></i>
                                                         </span>
                                                     </c:otherwise>
@@ -266,7 +213,8 @@
                                                     </div>
                                                     <div class="product-actions">
                                                         <button class="add-to-cart-btn">
-                                                            <i class="fa fa-shopping-cart"></i> Thêm vào giỏ
+                                                            <i class="fa fa-shopping-cart">
+                                                            </i> Thêm vào giỏ
                                                         </button>
                                                     </div>
                                                 </div>
@@ -302,49 +250,49 @@
             </div>
         </div>
     </div>
-    <jsp:include page="components/footer.jsp"/>
-    <script>
-        document.addEventListener("DOMContentLoaded", function () {
-            document.querySelectorAll(".favorite-product").forEach(function (element) {
-                element.addEventListener("click", function () {
-                    const span = this;
-                    const productId = span.getAttribute("data-product-id");
-                    const url = `${pageContext.request.contextPath}/addToFavorites`;
-                    fetch(url, {
-                        method: "POST",
-                        headers: {
-                            "Content-Type": "application/x-www-form-urlencoded"
-                        },
-                        body: new URLSearchParams({
-                            productId: productId
-                        })
+</div>
+<jsp:include page="components/footer.jsp"/>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        document.querySelectorAll(".favorite-product").forEach(function (element) {
+            element.addEventListener("click", function () {
+                const span = this;
+                const productId = span.getAttribute("data-product-id");
+                const url = `${pageContext.request.contextPath}/addToFavorites`;
+                fetch(url, {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/x-www-form-urlencoded"
+                    },
+                    body: new URLSearchParams({
+                        productId: productId
                     })
-                        .then(response => response.json())
-                        .then(data => {
-                            console.log(data);
-                            if (data.success || data["Đã thêm sản phẩm yêu thích"]) {
-                                const isActive = span.classList.contains("active");
-                                if (isActive) {
-                                    span.classList.remove("active");
-                                    span.setAttribute("title", "Thêm vào yêu thích");
-                                    span.innerHTML = `<i class="fa-regular fa-heart"></i>`;
-                                } else {
-                                    span.classList.add("active");
-                                    span.setAttribute("title", "Bỏ khỏi yêu thích");
-                                    span.innerHTML = `<i class="fa-solid fa-heart"></i>`;
-                                }
+                })
+                    .then(response => response.json())
+                    .then(data => {
+                        console.log(data);
+                        if (data.success || data["Đã thêm sản phẩm yêu thích"]) {
+                            const isActive = span.classList.contains("active");
+                            if (isActive) {
+                                span.classList.remove("active");
+                                span.setAttribute("title", "Thêm vào yêu thích");
+                                span.innerHTML = `<i class="fa-regular fa-heart"></i>`;
                             } else {
-                                alert(data.message || "Đã có lỗi xảy ra.");
+                                span.classList.add("active");
+                                span.setAttribute("title", "Bỏ khỏi yêu thích");
+                                span.innerHTML = `<i class="fa-solid fa-heart"></i>`;
                             }
-                        })
-                        .catch(error => {
-                            console.error("Lỗi:", error);
-                        });
-                });
+                        } else {
+                            alert(data.message || "Đã có lỗi xảy ra.");
+                        }
+                    })
+                    .catch(error => {
+                        console.error("Lỗi:", error);
+                    });
             });
         });
-    </script>
-</div>
+    });
+</script>
 <script src="js/shop.js"></script>
 </body>
 </html>
