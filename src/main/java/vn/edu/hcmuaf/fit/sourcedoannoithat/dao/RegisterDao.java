@@ -3,8 +3,10 @@ package vn.edu.hcmuaf.fit.sourcedoannoithat.dao;
 import vn.edu.hcmuaf.fit.sourcedoannoithat.dao.db.DBConnect;
 import vn.edu.hcmuaf.fit.sourcedoannoithat.dao.model.RegisterModel;
 
-import java.sql.*;
-import java.time.LocalDateTime;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
 public class RegisterDao {
     Connection connection = null;
@@ -18,9 +20,9 @@ public class RegisterDao {
             connection = new DBConnect().getConnection();
             ps = connection.prepareStatement(query);
             ps.setString(3, user.getFullName());
-            ps.setString(4, user.getBirthDay());
+            ps.setString(4, "01/01/2004");
             ps.setString(5, user.getPhoneNumber());
-            ps.setString(6, user.getAddress());
+            ps.setString(6, "Đang cập nhật");
             ps.setString(7, user.getEmail());
             ps.setString(1, user.getUsername());
             ps.setString(2, user.getPassword()); // Trong thực tế nên mã hóa mật khẩu
@@ -44,6 +46,7 @@ public class RegisterDao {
             }
         }
     }
+
     public boolean checkEmailExists(String email) {
         String query = "SELECT COUNT(*) FROM profile_client WHERE email = ?";
 
@@ -74,29 +77,23 @@ public class RegisterDao {
     public boolean checkAccountExists(String username) {
         String query = "SELECT COUNT(*) FROM profile_client WHERE username = ?";
 
-        try {
-            connection = new DBConnect().getConnection();
-            ps = connection.prepareStatement(query);
+        try (
+                Connection connection = new DBConnect().getConnection();
+                PreparedStatement ps = connection.prepareStatement(query)
+        ) {
             ps.setString(1, username);
-
-            rs = ps.executeQuery();
-            if (rs.next()) {
-                int count = rs.getInt(1);
-                return count == 0;
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    int count = rs.getInt(1);
+                    return count > 0; // Tài khoản đã tồn tại
+                }
             }
         } catch (Exception e) {
             e.printStackTrace();
-        } finally {
-            try {
-                if (rs != null) rs.close();
-                if (ps != null) ps.close();
-                if (connection != null) connection.close();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
         }
-        return true;
+        return false; // Lỗi hoặc không tồn tại
     }
+
 
     public boolean verifyOTP(String email, String otp) {
         String query = "SELECT * FROM profile_client WHERE email = ? AND otp = ? AND active= 0";
@@ -131,7 +128,7 @@ public class RegisterDao {
     }
 
     public boolean updateOTP(String email, String otp) {
-        String query = "UPDATE profile_client SET otp = ? , otpCreateAt=NOW() WHERE email = ?" ;
+        String query = "UPDATE profile_client SET otp = ? , otpCreateAt=NOW() WHERE email = ?";
         try {
             connection = new DBConnect().getConnection();
             ps = connection.prepareStatement(query);
@@ -158,7 +155,7 @@ public class RegisterDao {
 
 
     public void removeExpiredOTP() {
-        String query = "DELETE FROM profile_client WHERE active = 0 AND TIMESTAMPDIFF(HOUR, created_at, NOW()) > 1";
+        String query = "DELETE FROM profile_client WHERE active = 0 AND TIMESTAMPDIFF(HOUR, otpCreateAt, NOW()) > 1";
 
         try {
             connection = new DBConnect().getConnection();
@@ -179,17 +176,18 @@ public class RegisterDao {
     }
 
     public static void main(String[] args) {
-        RegisterModel user = new RegisterModel();
-        user.setUsername("testuser");
-        user.setPassword("password123"); // Nên mã hóa mật khẩu
-        user.setFullName("Test User");
-        user.setBirthDay("1990-01-01");
-        user.setPhoneNumber("0123456789");
-        user.setAddress("123 Test Street");
-        user.setEmail("testuser@example.com");
+ 
 
-        // Gọi phương thức registerUser để kiểm tra
         RegisterDao registerDao = new RegisterDao();
-        //System.out.println(registerDao.verifyOTP("hominhhai2k4@gmail.com", "436014"));
+        String email = "rocap85817@deusa7.com";
+        String otp = "488063"; // giả sử OTP được gửi về email là 123456
+
+        boolean result = registerDao.verifyOTP(email, otp);
+
+        if (result) {
+            System.out.println("✅ OTP hợp lệ. Kích hoạt tài khoản thành công.");
+        } else {
+            System.out.println("❌ OTP không hợp lệ hoặc đã hết hạn.");
+        }
     }
 }
