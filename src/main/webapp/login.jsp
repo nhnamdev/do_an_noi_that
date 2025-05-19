@@ -68,10 +68,10 @@
                 <div class="loginOther" style="display: flex; margin-top: 10px;">
                     <div class="google" style="margin-right: 50px;margin-left: 50px;">
                         <a href="https://accounts.google.com/o/oauth2/auth?scope=email profile openid
-&redirect_uri=http://localhost:8080/source_do_an_noi_that_war/login?provider=google
-&response_type=code
-&client_id=313036133777-qlvuragc9njih90ffl86jj1gdlp0450d.apps.googleusercontent.com
-&approval_prompt=force"
+                            &redirect_uri=http://localhost:8080/source_do_an_noi_that_war/login?provider=google
+                            &response_type=code
+                            &client_id=313036133777-qlvuragc9njih90ffl86jj1gdlp0450d.apps.googleusercontent.com
+                            &approval_prompt=force"
                            style="background-color: #4285F4; color: white; padding: 10px 10px; text-decoration: none; border-radius: 5px; display: inline-block;">
                             <i class="fab fa-google" style="margin-right: 8px;"></i> Google
                         </a>

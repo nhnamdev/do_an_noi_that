@@ -9,7 +9,6 @@ import vn.edu.hcmuaf.fit.sourcedoannoithat.dao.model.RegisterModel;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 
 public class LoginDao {
     Connection connection = null;
@@ -19,7 +18,7 @@ public class LoginDao {
     public boolean checkLogin(RegisterModel login) {
         String query = "SELECT password FROM profile_client WHERE username = ?";
 
-        try  {
+        try {
             connection = new DBConnect().getConnection();
             ps = connection.prepareStatement(query);
             ps.setString(1, login.getUsername());
@@ -49,6 +48,7 @@ public class LoginDao {
             e.printStackTrace();
         }
     }
+
     public void addFacebookAccount(FBAccount fbAccount) {
         String query = "INSERT INTO profile_client (username, password,name,birthday,role,phoneNumber,address,email,otp,active,otpCreateAt) VALUES( null, null, ?, null,0,null,null,?,null,1,NOW())";
         try {
@@ -64,8 +64,8 @@ public class LoginDao {
     }
 
     public boolean isUserExist(String email) {
-        String query ="SELECT COUNT(*) FROM profile_client WHERE email = ?";
-        try{
+        String query = "SELECT COUNT(*) FROM profile_client WHERE email = ?";
+        try {
             connection = new DBConnect().getConnection();
             ps = connection.prepareStatement(query);
             ps.setString(1, email);
@@ -74,11 +74,12 @@ public class LoginDao {
                 int count = rs.getInt(1);
                 return count > 0;
             }
-        }catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return false;
     }
+
     public int getUserRole(String username) {
         String query = "SELECT role FROM profile_client WHERE username = ?";
         int role = 0;
@@ -107,13 +108,14 @@ public class LoginDao {
             ps.setString(1, username);
             ResultSet resultSet = ps.executeQuery();
             if (resultSet.next()) {
-               active = resultSet.getInt("active");
+                active = resultSet.getInt("active");
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
         return active;
     }
+
     public int getIdByUsername(String username) {
         String query = "SELECT id FROM profile_client WHERE username = ?";
         int id = 0;

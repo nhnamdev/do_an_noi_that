@@ -5,6 +5,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import org.mindrot.jbcrypt.BCrypt;
 import vn.edu.hcmuaf.fit.sourcedoannoithat.dao.RegisterDao;
 import vn.edu.hcmuaf.fit.sourcedoannoithat.dao.model.RegisterModel;
@@ -14,7 +15,6 @@ import javax.mail.MessagingException;
 import java.io.IOException;
 import java.util.Timer;
 import java.util.TimerTask;
-import java.util.UUID;
 import java.util.regex.Pattern;
 
 @WebServlet("/register")
@@ -46,7 +46,7 @@ public class RegisterController extends HttpServlet {
             }
 
             // Kiểm tra xem tài khoản đã tồn tại chưa
-            if (!registerDao.checkAccountExists(username)) {
+            if (registerDao.checkAccountExists(username)) {
                 request.setAttribute("error", "Tên đăng nhập đã tồn tại!");
                 request.getRequestDispatcher("register.jsp").forward(request, response);
                 return;
@@ -60,11 +60,13 @@ public class RegisterController extends HttpServlet {
             // Mã hóa mật khẩu
             String hashedPassword = BCrypt.hashpw(password, BCrypt.gensalt());
             String otp = EmailUtility.generateOTP();
-            RegisterModel model = new RegisterModel(fullName,null,email,phoneNumber,null,username,hashedPassword);
-            boolean isSuccess = registerDao.registerUser(model,otp);
+            RegisterModel model = new RegisterModel(fullName, null, email, phoneNumber, null, username, hashedPassword);
+            boolean isSuccess = registerDao.registerUser(model, otp);
 
             if (isSuccess) {
                 try {
+                    HttpSession session = request.getSession();
+                    session.setAttribute("email_otp", email);
                     EmailUtility.sendOTP(email, otp);
                 } catch (MessagingException e) {
                     e.printStackTrace();
@@ -84,6 +86,7 @@ public class RegisterController extends HttpServlet {
             request.getRequestDispatcher("register.jsp").forward(request, response);
         }
     }
+
     // ✅ Hàm kiểm tra dữ liệu đầu vào bằng Regex
     private String validateInput(String fullName, String birthDay, String email, String phoneNumber, String address, String username, String password, String confirmPassword) {
         Pattern nameRegex = Pattern.compile("^[A-Za-zÀ-Ỹà-ỹ\\s]{2,}$");
@@ -106,6 +109,7 @@ public class RegisterController extends HttpServlet {
 
         return null; // Không có lỗi
     }
+
     public void init() throws ServletException {
         super.init();
         Timer timer = new Timer(true);

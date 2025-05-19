@@ -73,10 +73,10 @@ public class Profile implements Serializable {
     public String toString() {
         return
                 "name='" + name + '\'' +
-                ", birthday='" + birthday + '\'' +
-                ", phoneNumber='" + phoneNumber + '\'' +
-                ", address='" + address + '\'' +
-                ", email='" + email + '\'' +
-                '}';
+                        ", birthday='" + birthday + '\'' +
+                        ", phoneNumber='" + phoneNumber + '\'' +
+                        ", address='" + address + '\'' +
+                        ", email='" + email + '\'' +
+                        '}';
     }
 }
