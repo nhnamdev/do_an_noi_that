@@ -33,14 +33,14 @@ public class AuthorizationFilter implements Filter {
             res.sendRedirect(contextPath + "/blockedaccount.jsp");
             return;
         }
-        if (uri.endsWith("mod.jsp")) {
+        if (uri.contains("/mod") || uri.endsWith("mod.jsp")) {
             if (role == null || role < 1) {
                 res.sendRedirect(contextPath + "/index.jsp");
                 return;
             }
         }
 
-        if (uri.endsWith("admin.jsp")) {
+        if (uri.contains("/admin") || uri.endsWith("admin.jsp")) {
             if (role == null || role < 2) {
                 res.sendRedirect(contextPath + "/index.jsp");
                 return;
