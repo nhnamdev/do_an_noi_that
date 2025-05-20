@@ -66,7 +66,8 @@
             <div class="testimonials-content">
                 <article class="testimonial">
                     <p class="testimonial-text">
-                        Là Startup mới đi vào hoạt động, không có nhiều chi phí để setup văn phòng. Nhờ TOZ, Vinafly đã
+                        Là Startup mới đi vào hoạt động, không có nhiều chi phí để setup văn phòng. Nhờ MonaDecor,
+                        Vinafly đã
                         hoàn thiện được khu văn phòng với giá thành siêu hợp lý. Cảm ơn các bạn.
                     </p>
                     <div class="testimonial-info">
@@ -82,7 +83,8 @@
 
                 <article class="testimonial">
                     <blockquote class="testimonial-text">
-                        TOZ giao hàng rất nhanh. Văn phòng mình cần thi công gấp, vừa gọi điện lúc sáng thì chiều các
+                        MonaDecor giao hàng rất nhanh. Văn phòng mình cần thi công gấp, vừa gọi điện lúc sáng thì chiều
+                        các
                         bạn đã mang hàng đến lắp đặt. Nhân viên nhiệt tình, cẩn thận.
                     </blockquote>
                     <div class="testimonial-info">

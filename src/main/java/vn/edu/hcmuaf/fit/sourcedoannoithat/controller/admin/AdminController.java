@@ -20,6 +20,10 @@ public class AdminController extends HttpServlet {
         req.setCharacterEncoding("UTF-8");
         resp.setCharacterEncoding("UTF-8");
 
+        //        Payment history
+        PaymentHistoryDao paymentHistoryDao = new PaymentHistoryDao();
+        List<PaymentHistory> listPaymentHistory = paymentHistoryDao.getAllPaymentHistory();
+        //        Payment history
         ReturnProductDao returnProductDao = new ReturnProductDao();
         List<ReturnProduct> list = returnProductDao.getReturnProduct();
 
@@ -61,7 +65,7 @@ public class AdminController extends HttpServlet {
 
 //        OrderDao orderDao = new OrderDao();
 //        List<Order> order = orderDao.getListOrder();
-
+        req.setAttribute("listPaymentHistory", listPaymentHistory);
         req.setAttribute("selectedContent", content);
         req.setAttribute("warranty", warrantyProduct);
         req.setAttribute("profile", profile);

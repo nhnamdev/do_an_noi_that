@@ -51,9 +51,6 @@
     </div>
 </footer>
 
-<!--- ChatBot AI--->
-<script async data-taggo-botid="67dc1e1e248cff85ede211ca" src="https://widget.taggo.chat/v2.js"></script>
-<!--- ChatBot AI--->
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
