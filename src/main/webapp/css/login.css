@@ -9,6 +9,7 @@ body, html {
     margin-right: auto;
     width: 1200px;
 }
+
 #searchForm {
     display: none;
     position: absolute;
@@ -82,9 +83,11 @@ body, html {
             float: left;
             text-decoration: none;
         }
-        span:hover{
+
+        span:hover {
             color: black;
         }
+
         .imageContainer {
             position: relative;
             width: 50px;
@@ -171,6 +174,7 @@ body, html {
     height: 18px;
     border: 2px solid lightgray;
 }
+
 #searchForm {
     display: none;
     position: absolute;
@@ -189,6 +193,7 @@ body, html {
     border: 1px solid #ccc;
     border-radius: 4px;
 }
+
 .info-box {
     position: fixed;
     top: 1px;
@@ -405,6 +410,7 @@ body, html {
     font-size: 16px;
     font-weight: 300;
 }
+
 /* Slider 2*/
 .slider2 {
     width: 100%;
@@ -416,13 +422,14 @@ body, html {
 .slider2 .login {
     width: 608px;
     height: 603px;
-    margin-top:1%;
+    margin-top: 1%;
     margin-left: 38%;
     display: inline-block;
 
 }
-.slider2 .login .dangnhap-matkhau{
-    padding:10px;
+
+.slider2 .login .dangnhap-matkhau {
+    padding: 10px;
     font-size: 1rem;
     border-radius: 5px;
     margin-top: 5px;
@@ -443,10 +450,12 @@ body, html {
     margin-bottom: 5px;
     font-weight: normal;
 }
-.slider2 .login .hienmatkhau  {
+
+.slider2 .login .hienmatkhau {
     display: flex;
 }
-.slider2 .login #hienmatkhau{
+
+.slider2 .login #hienmatkhau {
     margin-right: 30px;
 }
 
@@ -480,7 +489,6 @@ body, html {
 }
 
 
-
 .slider2 .register button {
     cursor: pointer;
     color: #ffffff;
@@ -492,9 +500,10 @@ body, html {
     height: 50px;
     margin-top: 2rem;
 }
+
 /* Update quên mật khẩu và đăng ký*/
-.slider2 .login .lostpass{
-    margin-top:20px;
+.slider2 .login .lostpass {
+    margin-top: 20px;
 }
 
 
@@ -826,13 +835,32 @@ body, html {
     text-decoration: none;
     color: #333D29;
 }
+
 /*DangNhap*/
 
-.a_quenmatkhau{
+.a_quenmatkhau {
     color: var(--color-primary);
     text-decoration: 1px;
 
 }
-.a_dangki{
+
+.a_dangki {
     color: var(--color-primary);
+}
+
+button#loginButton {
+    width: 350px;
+    padding: 10px;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    margin-left: 6px;
+    font-size: 16px;
+    cursor: not-allowed;
+    background-color: #ccc; /* Màu xám khi chưa hợp lệ */
+}
+
+button#loginButton.active {
+    background-color: #6bae0e; /* Màu xanh khi hợp lệ */
+    cursor: pointer;
 }

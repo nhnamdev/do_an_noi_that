@@ -126,9 +126,9 @@ public class LoginController extends HttpServlet {
                 session.setAttribute("role", role);
 
                 if (role == 0) {
-                    response.sendRedirect("index.jsp");
+                    response.sendRedirect("index");
                 } else if (role == 1) {
-                    response.sendRedirect("mod.jsp");
+                    response.sendRedirect("mod");
                 } else if (role == 2) {
                     response.sendRedirect("admin");
                 } else {
