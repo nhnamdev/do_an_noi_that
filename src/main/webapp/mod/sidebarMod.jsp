@@ -17,7 +17,8 @@
     <!-- CSS Just for demo purpose, don't include it in your project -->
     <link rel="stylesheet" href="../assets/css/demo.css"/>
     <%--    tesst--%>
-    <link rel="stylesheet" href="../css/admin_style.css">
+
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/admin_style.css">
     <%--DATATABLE--%>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.28/jspdf.plugin.autotable.min.js"></script>
@@ -25,14 +26,36 @@
     <script src="https://cdn.ckeditor.com/4.22.1/standard/ckeditor.js"></script>
 </head>
 <body>
-<div class="sidebar">
-    <div class="header">
-        <h3>Mod</h3>
-    </div>
-    <!--hộp thư -->
-    <a class="btn" href="${pageContext.request.contextPath}/mod">Trang chủ</a>
-    <a class="btn" href="${pageContext.request.contextPath}/mod/newsmanager">Quản lí Tin Tức</a>
-    <a class="btn" href="${pageContext.request.contextPath}/mod">Kho hàng</a>
+<div class="d-flex flex-column flex-shrink-0 p-3 bg-dark text-white position-fixed vh-100" style="width: 250px;">
+    <a href="${pageContext.request.contextPath}/mod"
+       class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
+        <span class="fs-4 fw-bold">Mod</span>
+    </a>
+    <hr>
+    <ul class="nav nav-pills flex-column mb-auto">
+        <li class="nav-item">
+            <a href="${pageContext.request.contextPath}/mod" class="nav-link text-white">
+                <i class="fa fa-home me-2"></i> Trang chủ
+            </a>
+        </li>
+        <li>
+            <a href="${pageContext.request.contextPath}/mod/newsmanager" class="nav-link text-white">
+                <i class="fa fa-newspaper me-2"></i> Quản lí Tin Tức
+            </a>
+        </li>
+        <li>
+            <a href="${pageContext.request.contextPath}/mod" class="nav-link text-white">
+                <i class="fa fa-boxes me-2"></i> Kho hàng
+            </a>
+        </li>
+        <li>
+            <a href="${pageContext.request.contextPath}/logout" class="nav-link text-white">
+                <i class="fa fa-right-from-bracket"></i> Đăng xuất
+            </a>
+        </li>
+
+    </ul>
 </div>
+
 </body>
 </html>
