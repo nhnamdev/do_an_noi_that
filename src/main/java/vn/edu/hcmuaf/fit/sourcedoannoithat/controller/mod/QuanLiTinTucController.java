@@ -1,8 +1,12 @@
 package vn.edu.hcmuaf.fit.sourcedoannoithat.controller.mod;
 
-import jakarta.servlet.*;
-import jakarta.servlet.http.*;
-import jakarta.servlet.annotation.*;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.MultipartConfig;
+import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.Part;
 import vn.edu.hcmuaf.fit.sourcedoannoithat.dao.NewsDAO;
 import vn.edu.hcmuaf.fit.sourcedoannoithat.dao.model.News;
 import vn.edu.hcmuaf.fit.sourcedoannoithat.utils.ConstantsStatic;
@@ -12,6 +16,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.StandardCopyOption;
 import java.util.List;
 
 @MultipartConfig
@@ -39,30 +44,25 @@ public class QuanLiTinTucController extends HttpServlet {
         String cateRaw = request.getParameter("category_id");
         int categoryId = Integer.parseInt(cateRaw); // nếu có select loại tin
 
-//        Vì đây không phải môi trường deploy nên mặc định tomcat sẽ lưu vào ổ đĩa C.
-//        Phần này phải setup theo máy thì mới chạy được source lưu chỗ nào thì ảnh sẽ luôn ở đó
+        //        Vì đây không phải môi trường deploy nên mặc định tomcat sẽ lưu vào ổ đĩa C.
+        //        Phần này phải setup theo máy thì mới chạy được source lưu chỗ nào thì ảnh sẽ luôn ở đó
+        // Lấy file từ form
         Part filePart = request.getPart("image");
-        String originalFileName = Path.of(filePart.getSubmittedFileName()).getFileName().toString();
+        String originalFileName = Path.of(filePart.getSubmittedFileName()).getFileName().toString(); // tên gốc
 
-// Tạo file name duy nhất
-        String fileExtension = originalFileName.substring(originalFileName.lastIndexOf("."));
-        String baseName = originalFileName.substring(0, originalFileName.lastIndexOf("."));
-        String uniqueFileName = baseName + "_" + System.currentTimeMillis() + fileExtension;
-
-// Đường dẫn upload
+        // Đường dẫn upload (giữ nguyên như cũ hoặc cập nhật tương đối nếu muốn)
         String uploadPath = ConstantsStatic.UPLOAD_PATH + "tintuc";
         File uploadDir = new File(uploadPath);
-        if (!uploadDir.exists()) uploadDir.mkdir();
+        if (!uploadDir.exists()) uploadDir.mkdirs(); // tạo thư mục nếu chưa có
 
-// Lưu file
-        File file = new File(uploadDir, uniqueFileName);
+        // Lưu file (ghi đè nếu trùng tên)
+        File file = new File(uploadDir, originalFileName);
         try (InputStream fileContent = filePart.getInputStream()) {
-            Files.copy(fileContent, file.toPath());
+            Files.copy(fileContent, file.toPath(), StandardCopyOption.REPLACE_EXISTING); // cho phép ghi đè
         }
-
-// Lưu vào DB
+        // Lưu vào DB
         NewsDAO dao = new NewsDAO();
-        dao.insertNews(title, description, content, uniqueFileName, categoryId);
+        dao.insertNews(title, description, content, originalFileName, categoryId);
 
 
         // Quay lại trang quản lý

@@ -181,97 +181,46 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <tr>
-                                    <th scope="row">
-                                        <button class="btn btn-icon btn-round btn-success btn-sm me-2">
-                                            <i class="fa fa-check"></i>
-                                        </button>
-                                        Payment from #10231
-                                    </th>
-                                    <td class="text-end">Mar 19, 2020, 2.45pm</td>
-                                    <td class="text-end">$250.00</td>
-                                    <td class="text-end">
-                                        <span class="badge badge-success">Completed</span>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th scope="row">
-                                        <button class="btn btn-icon btn-round btn-success btn-sm me-2">
-                                            <i class="fa fa-check"></i>
-                                        </button>
-                                        Payment from #10231
-                                    </th>
-                                    <td class="text-end">Mar 19, 2020, 2.45pm</td>
-                                    <td class="text-end">$250.00</td>
-                                    <td class="text-end">
-                                        <span class="badge badge-success">Completed</span>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th scope="row">
-                                        <button class="btn btn-icon btn-round btn-success btn-sm me-2">
-                                            <i class="fa fa-check"></i>
-                                        </button>
-                                        Payment from #10231
-                                    </th>
-                                    <td class="text-end">Mar 19, 2020, 2.45pm</td>
-                                    <td class="text-end">$250.00</td>
-                                    <td class="text-end">
-                                        <span class="badge badge-success">Completed</span>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th scope="row">
-                                        <button class="btn btn-icon btn-round btn-success btn-sm me-2">
-                                            <i class="fa fa-check"></i>
-                                        </button>
-                                        Payment from #10231
-                                    </th>
-                                    <td class="text-end">Mar 19, 2020, 2.45pm</td>
-                                    <td class="text-end">$250.00</td>
-                                    <td class="text-end">
-                                        <span class="badge badge-success">Completed</span>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th scope="row">
-                                        <button class="btn btn-icon btn-round btn-success btn-sm me-2">
-                                            <i class="fa fa-check"></i>
-                                        </button>
-                                        Payment from #10231
-                                    </th>
-                                    <td class="text-end">Mar 19, 2020, 2.45pm</td>
-                                    <td class="text-end">$250.00</td>
-                                    <td class="text-end">
-                                        <span class="badge badge-success">Completed</span>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th scope="row">
-                                        <button class="btn btn-icon btn-round btn-success btn-sm me-2">
-                                            <i class="fa fa-check"></i>
-                                        </button>
-                                        Payment from #10231
-                                    </th>
-                                    <td class="text-end">Mar 19, 2020, 2.45pm</td>
-                                    <td class="text-end">$250.00</td>
-                                    <td class="text-end">
-                                        <span class="badge badge-success">Completed</span>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th scope="row">
-                                        <button class="btn btn-icon btn-round btn-success btn-sm me-2">
-                                            <i class="fa fa-check"></i>
-                                        </button>
-                                        Payment from #10231
-                                    </th>
-                                    <td class="text-end">Mar 19, 2020, 2.45pm</td>
-                                    <td class="text-end">$250.00</td>
-                                    <td class="text-end">
-                                        <span class="badge badge-success">Completed</span>
-                                    </td>
-                                </tr>
+                                <c:forEach var="item" items="${listPaymentHistory}">
+                                    <tr>
+                                        <th scope="row">
+                                            <button class="btn btn-icon btn-round btn-success btn-sm me-2">
+                                                <i class="fa fa-check"></i>
+                                            </button>
+                                            Payment from #${item.userName}
+                                        </th>
+                                        <td class="text-end">${item.paymentTime}</td>
+                                        <td class="text-end">$${item.amountPaid}</td>
+                                        <td class="text-end">
+                                            <c:choose>
+                                                <c:when test="${item.status == 'success'}">
+                                                    <span class="badge badge-success">Completed</span>
+                                                </c:when>
+                                                <c:when test="${item.status == 'pending'}">
+                                                    <span class="badge badge-warning">Pending</span>
+                                                </c:when>
+                                                <c:otherwise>
+                                                    <span class="badge badge-danger">Failed</span>
+                                                </c:otherwise>
+                                            </c:choose>
+                                        </td>
+                                    </tr>
+                                </c:forEach>
+                                <%--                                <tr>--%>
+                                <%--                                    <th scope="row">--%>
+                                <%--                                        <button class="btn btn-icon btn-round btn-success btn-sm me-2">--%>
+                                <%--                                            <i class="fa fa-check"></i>--%>
+                                <%--                                        </button>--%>
+                                <%--                                        Payment from #10231--%>
+                                <%--                                    </th>--%>
+                                <%--                                    <td class="text-end">Mar 19, 2020, 2.45pm</td>--%>
+                                <%--                                    <td class="text-end">$250.00</td>--%>
+                                <%--                                    <td class="text-end">--%>
+                                <%--                                        <span class="badge badge-success">Completed</span>--%>
+                                <%--                                    </td>--%>
+                                <%--                                </tr>--%>
+
+
                                 </tbody>
                             </table>
                         </div>

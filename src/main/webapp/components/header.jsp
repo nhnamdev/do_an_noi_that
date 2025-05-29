@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Title</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+    <%--    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>--%>
 
     <link href="https://cdnjs.cloudflare.com/ajax/libs/pace/1.0.2/themes/blue/pace-theme-flash.min.css"
           rel="stylesheet">
@@ -46,7 +46,8 @@
                             <img src="img/avt/avt.jpg" class="rounded-circle" width="22">
                         </a>
                     </li>
-                    <li class="nav-item"><a class="nav-link" href="shop?onlyFavorite=true"><i class="fa fa-bookmark"></i></a></li>
+                    <li class="nav-item"><a class="nav-link" href="shop?onlyFavorite=true"><i
+                            class="fa fa-bookmark"></i></a></li>
                     <li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/cart/"><i
                             class="fa fa-shopping-cart"></i></a></li>
                 </c:if>

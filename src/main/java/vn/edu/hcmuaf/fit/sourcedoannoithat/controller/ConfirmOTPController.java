@@ -1,19 +1,19 @@
 package vn.edu.hcmuaf.fit.sourcedoannoithat.controller;
 
-import jakarta.servlet.*;
-import jakarta.servlet.http.*;
-import jakarta.servlet.annotation.*;
-import org.mindrot.jbcrypt.BCrypt;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import vn.edu.hcmuaf.fit.sourcedoannoithat.dao.RegisterDao;
-import vn.edu.hcmuaf.fit.sourcedoannoithat.dao.model.RegisterModel;
-import vn.edu.hcmuaf.fit.sourcedoannoithat.utils.EmailUtility;
 
-import javax.mail.MessagingException;
 import java.io.IOException;
 
 @WebServlet("/confirm")
 public class ConfirmOTPController extends HttpServlet {
     private RegisterDao registerDao = new RegisterDao();
+
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
     }
@@ -25,7 +25,9 @@ public class ConfirmOTPController extends HttpServlet {
         try {
             HttpSession session = request.getSession();
             String otp = request.getParameter("username");
-            String email = request.getParameter("email");
+            //email lay tu session
+
+            String email = session.getAttribute("email_otp").toString();
             Integer failedAttempts = (Integer) session.getAttribute("failedAttempts");
             if (failedAttempts == null) {
                 failedAttempts = 0;
