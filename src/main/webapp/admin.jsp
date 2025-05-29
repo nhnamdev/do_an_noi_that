@@ -26,10 +26,8 @@
     <%--    <link rel="stylesheet" href="css/admin_style.css">--%>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
-
     <%--tesst--%>
     <meta content="width=device-width, initial-scale=1.0, shrink-to-fit=no" name="viewport"/>
-    <link rel="icon" href="assets/img/kaiadmin/favicon.ico" type="image/x-icon"/>
     <!-- Fonts and icons -->
     <script src="assets/js/plugin/webfont/webfont.min.js"></script>
     <script>
@@ -206,19 +204,6 @@
                                         </td>
                                     </tr>
                                 </c:forEach>
-                                <%--                                <tr>--%>
-                                <%--                                    <th scope="row">--%>
-                                <%--                                        <button class="btn btn-icon btn-round btn-success btn-sm me-2">--%>
-                                <%--                                            <i class="fa fa-check"></i>--%>
-                                <%--                                        </button>--%>
-                                <%--                                        Payment from #10231--%>
-                                <%--                                    </th>--%>
-                                <%--                                    <td class="text-end">Mar 19, 2020, 2.45pm</td>--%>
-                                <%--                                    <td class="text-end">$250.00</td>--%>
-                                <%--                                    <td class="text-end">--%>
-                                <%--                                        <span class="badge badge-success">Completed</span>--%>
-                                <%--                                    </td>--%>
-                                <%--                                </tr>--%>
 
 
                                 </tbody>

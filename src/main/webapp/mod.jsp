@@ -1,4 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <html>
 <head>
     <title>Mod</title>
@@ -19,7 +20,7 @@
     <!-- CSS Just for demo purpose, don't include it in your project -->
     <link rel="stylesheet" href="assets/css/demo.css"/>
     <%--    tesst--%>
-    <link rel="stylesheet" href="css/admin_style.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/admin_style.css">
     <%--DATATABLE--%>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.28/jspdf.plugin.autotable.min.js"></script>
@@ -187,97 +188,32 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <tr>
-                                    <th scope="row">
-                                        <button class="btn btn-icon btn-round btn-success btn-sm me-2">
-                                            <i class="fa fa-check"></i>
-                                        </button>
-                                        Payment from #10231
-                                    </th>
-                                    <td class="text-end">Mar 19, 2020, 2.45pm</td>
-                                    <td class="text-end">$250.00</td>
-                                    <td class="text-end">
-                                        <span class="badge badge-success">Completed</span>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th scope="row">
-                                        <button class="btn btn-icon btn-round btn-success btn-sm me-2">
-                                            <i class="fa fa-check"></i>
-                                        </button>
-                                        Payment from #10231
-                                    </th>
-                                    <td class="text-end">Mar 19, 2020, 2.45pm</td>
-                                    <td class="text-end">$250.00</td>
-                                    <td class="text-end">
-                                        <span class="badge badge-success">Completed</span>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th scope="row">
-                                        <button class="btn btn-icon btn-round btn-success btn-sm me-2">
-                                            <i class="fa fa-check"></i>
-                                        </button>
-                                        Payment from #10231
-                                    </th>
-                                    <td class="text-end">Mar 19, 2020, 2.45pm</td>
-                                    <td class="text-end">$250.00</td>
-                                    <td class="text-end">
-                                        <span class="badge badge-success">Completed</span>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th scope="row">
-                                        <button class="btn btn-icon btn-round btn-success btn-sm me-2">
-                                            <i class="fa fa-check"></i>
-                                        </button>
-                                        Payment from #10231
-                                    </th>
-                                    <td class="text-end">Mar 19, 2020, 2.45pm</td>
-                                    <td class="text-end">$250.00</td>
-                                    <td class="text-end">
-                                        <span class="badge badge-success">Completed</span>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th scope="row">
-                                        <button class="btn btn-icon btn-round btn-success btn-sm me-2">
-                                            <i class="fa fa-check"></i>
-                                        </button>
-                                        Payment from #10231
-                                    </th>
-                                    <td class="text-end">Mar 19, 2020, 2.45pm</td>
-                                    <td class="text-end">$250.00</td>
-                                    <td class="text-end">
-                                        <span class="badge badge-success">Completed</span>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th scope="row">
-                                        <button class="btn btn-icon btn-round btn-success btn-sm me-2">
-                                            <i class="fa fa-check"></i>
-                                        </button>
-                                        Payment from #10231
-                                    </th>
-                                    <td class="text-end">Mar 19, 2020, 2.45pm</td>
-                                    <td class="text-end">$250.00</td>
-                                    <td class="text-end">
-                                        <span class="badge badge-success">Completed</span>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th scope="row">
-                                        <button class="btn btn-icon btn-round btn-success btn-sm me-2">
-                                            <i class="fa fa-check"></i>
-                                        </button>
-                                        Payment from #10231
-                                    </th>
-                                    <td class="text-end">Mar 19, 2020, 2.45pm</td>
-                                    <td class="text-end">$250.00</td>
-                                    <td class="text-end">
-                                        <span class="badge badge-success">Completed</span>
-                                    </td>
-                                </tr>
+                                <c:forEach var="item" items="${listPaymentHistory}">
+                                    <tr>
+                                        <th scope="row">
+                                            <button class="btn btn-icon btn-round btn-success btn-sm me-2">
+                                                <i class="fa fa-check"></i>
+                                            </button>
+                                            Payment from #${item.userName}
+                                        </th>
+                                        <td class="text-end">${item.paymentTime}</td>
+                                        <td class="text-end">$${item.amountPaid}</td>
+                                        <td class="text-end">
+                                            <c:choose>
+                                                <c:when test="${item.status == 'success'}">
+                                                    <span class="badge badge-success">Completed</span>
+                                                </c:when>
+                                                <c:when test="${item.status == 'pending'}">
+                                                    <span class="badge badge-warning">Pending</span>
+                                                </c:when>
+                                                <c:otherwise>
+                                                    <span class="badge badge-danger">Failed</span>
+                                                </c:otherwise>
+                                            </c:choose>
+                                        </td>
+                                    </tr>
+                                </c:forEach>
+
                                 </tbody>
                             </table>
                         </div>
