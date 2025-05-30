@@ -1,4 +1,3 @@
-
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
@@ -27,6 +26,9 @@
     </ul>
     <button class="btn" onclick="showDetail('productsManagement'); changeColor(this)">Kho hàng</button>
     <button class="btn" onclick="showDetail('warranty-container');changeColor(this)">Bảo hành</button>
+    <a href="${pageContext.request.contextPath}/logout" class="btn">
+        </i> Đăng xuất
+    </a>
 </div>
 <script src="../js/about-management.js"></script>
 <script src="../js/showDetail.js"></script>
