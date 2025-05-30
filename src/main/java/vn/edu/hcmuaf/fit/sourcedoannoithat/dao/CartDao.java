@@ -32,14 +32,12 @@ public class CartDao {
             rs = ps.executeQuery();
 //            neu san pham da ton tai, cap nhat so luong
             if (rs.next()) {
-                //code cũ ps.setInt(1, quantity); => nó chỉ lấy cái số mà được nhập vào cuối cùng chứ không tăng lên
-                int newQuantity = rs.getInt("quantity")+quantity; //tao them bien newQuantity de luu sl moi
                 String updateQuery = "UPDATE cart\n" +
                         "SET quantity = ?\n" +
                         "WHERE user_id = ?\n" +
                         "AND product_id = ?;";
                 ps = conn.prepareStatement(updateQuery);
-                ps.setInt(1, newQuantity);
+                ps.setInt(1, quantity);
                 ps.setInt(2, userID);
                 ps.setInt(3, productID);
 
