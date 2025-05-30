@@ -4,6 +4,8 @@ import jakarta.servlet.*;
 import jakarta.servlet.http.*;
 import jakarta.servlet.annotation.*;
 import vn.edu.hcmuaf.fit.sourcedoannoithat.dao.OrderDao;
+import vn.edu.hcmuaf.fit.sourcedoannoithat.dao.model.Invoice;
+import vn.edu.hcmuaf.fit.sourcedoannoithat.dao.model.PaymentHistory;
 import vn.edu.hcmuaf.fit.sourcedoannoithat.service.VNPayService;
 
 import java.io.IOException;
@@ -19,10 +21,12 @@ public class VNPayReturnController extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        processRequest(request, response);
     }
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        processRequest(request, response);
     }
 
     OrderDao orderDao = new OrderDao();
@@ -54,20 +58,21 @@ public class VNPayReturnController extends HttpServlet {
 
                 String orderId = request.getParameter("vnp_TxnRef");
 
-//                Order order = new Order();
-//                order.setId(Integer.parseInt(orderId));
-//
-//                boolean transSuccess = false;
-//                if ("00".equals(request.getParameter("vnp_TransactionStatus"))) {
-//                    //update banking system
-//                    order.setStatus("Completed");
-//                    transSuccess = true;
-//                } else {
-//                    order.setStatus("Failed");
-//                }
-//                orderDao.updateOrderStatus(order);
-//                request.setAttribute("transResult", transSuccess);
-                request.getRequestDispatcher("paymentResult.jsp").forward(request, response);
+                Invoice invoice = new Invoice();
+                invoice.setId((Integer.parseInt(orderId)));
+
+                boolean transSuccess = false;
+                invoice.setTransactionCode(paymentCode);
+                if ("00".equals(request.getParameter("vnp_TransactionStatus"))) {
+                    //update banking system
+                    invoice.setStatus("success");
+                    transSuccess = true;
+                } else {
+                    invoice.setStatus("Failed");
+                }
+                orderDao.updateOrderStatus(invoice);
+                request.setAttribute("transResult", transSuccess);
+                request.getRequestDispatcher("paymentReturn.jsp").forward(request, response);
             } else {
                 //RETURN PAGE ERROR
                 System.out.println("GD KO HOP LE (invalid signature)");

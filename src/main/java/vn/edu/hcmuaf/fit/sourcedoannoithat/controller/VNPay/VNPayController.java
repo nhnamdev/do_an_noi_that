@@ -4,6 +4,7 @@ import jakarta.servlet.*;
 import jakarta.servlet.http.*;
 import jakarta.servlet.annotation.*;
 import vn.edu.hcmuaf.fit.sourcedoannoithat.dao.OrderDao;
+import vn.edu.hcmuaf.fit.sourcedoannoithat.dao.model.Invoice;
 import vn.edu.hcmuaf.fit.sourcedoannoithat.service.VNPayService;
 
 import java.io.IOException;
@@ -22,20 +23,20 @@ public class VNPayController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         HttpSession session = req.getSession();
-        if(req.getParameter("totalBill") == null) {
-            resp.sendRedirect("cart");//create cart servlet
+        String totalBillStr = req.getParameter("totalBill");
+
+        if (totalBillStr == null) {
+            resp.sendRedirect("cart");
             return;
         }
-        double amountDouble = Double.parseDouble(req.getParameter("totalBill"));
+
+        double totalBillDouble = Double.parseDouble(totalBillStr);
 
         OrderDao orderDao = new OrderDao();
-        int userId = (Integer) session.getAttribute("userIdLogin");;
+        Invoice invoice = new Invoice();
+        invoice.setFinalAmount((int)totalBillDouble);
+        int orderId = orderDao.insertOrder(invoice);
 
-//        Order order = new Order();
-//        order.setUserID(userId);
-//        order.setTotalAmount(amountDouble);
-//        int orderId = orderDao.insertOrder(order);
-        int orderId = 1;
         VNPayService Config = new VNPayService();
 
 
@@ -47,7 +48,7 @@ public class VNPayController extends HttpServlet {
         String vnp_Command = "pay";
         String orderType = "other";
 
-        long amount = (long) (amountDouble * 100);
+        long amount = (long) (totalBillDouble * 100);
         String vnp_TxnRef = orderId+"";//dky ma rieng
         String vnp_IpAddr = Config.getIpAddress(req);
 
