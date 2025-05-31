@@ -111,7 +111,7 @@
             </div>
             <div class="row-checkout">
                 <div class="checkout-content">
-                    <form name="checkout" action="" class="checkout-cart">
+                    <form action="${pageContext.request.contextPath}/payment" method="post" class="checkout-cart">
                         <div class="left-col">
                             <h3>THÔNG TIN THANH TOÁN</h3>
                             <div class="form-group">
@@ -201,15 +201,15 @@
                             </div>
                             <div class="payment-method">
                                 <div class="payment-option">
-                                    <input type="radio" id="bank-transfer" name="payment" checked>
+                                    <input type="radio" id="bank-transfer" name="payment" value="bank" checked>
                                     <label for="bank-transfer">Chuyển khoản ngân hàng</label>
                                 </div>
                                 <div class="payment-option">
-                                    <input type="radio" id="vnpay-transfer" name="payment">
+                                    <input type="radio" id="vnpay-transfer" name="payment" value="vnpay">
                                     <label for="vnpay-transfer">Thanh toán qua VNPay</label>
                                 </div>
                                 <div class="payment-option">
-                                    <input type="radio" id="cash-on-delivery" name="payment">
+                                    <input type="radio" id="cash-on-delivery" name="payment" value="cod">
                                     <label for="cash-on-delivery">Trả tiền mặt khi nhận hàng (COD)</label>
                                 </div>
                                 <p class="order-note">
@@ -218,9 +218,8 @@
                                     đã chuyển.
                                 </p>
                             </div>
-                            <form action="">
-                                <button type="submit" class="order-button">ĐẶT HÀNG</button>
-                            </form>
+                            <input type="hidden" name="totalBill" value="${totalAmount}" />
+                            <button type="submit" class="order-button">ĐẶT HÀNG</button>
                         </div>
                     </form>
                 </div>

@@ -67,6 +67,7 @@ body, html {
     height: 18px;
     border: 2px solid lightgray;
 }
+
 /* Ẩn form tìm kiếm mặc định */
 #searchForm {
     display: none;
@@ -174,6 +175,7 @@ body, html {
     font-size: 16px;
     font-weight: 300;
 }
+
 /* Slider 2*/
 .slider2 {
     width: 100%;
@@ -193,33 +195,37 @@ body, html {
 
 .slider2 .login label {
     display: block;
-    margin-top: 15px;
+    margin-top: 10px;
     margin-bottom: 5px;
     margin-left: 5px;
     font-weight: normal;
     font-size: 1rem;
 }
+
 .slider2 .login input {
     display: block;
-    margin-top: 15px;
-    margin-bottom: 5px;
+    margin-top: 8px;
+    margin-bottom: 2px;
     font-weight: normal;
     font-size: 1rem;
     width: 350px;
 
 
 }
-.slider2 .login .hienmatkhau  {
-    display:flex;
-    margin-top:7px;
-    margin-right:100px;
+
+.slider2 .login .hienmatkhau {
+    display: flex;
+    margin-top: 7px;
+    margin-right: 100px;
 }
-.slider2 .login .hienmatkhau #agree_terms  {
-    width:20px;
+
+.slider2 .login .hienmatkhau #agree_terms {
+    width: 20px;
     margin-left: 10px;
 }
-.slider2 .login .hienmatkhau #show_password  {
-    width:20px;
+
+.slider2 .login .hienmatkhau #show_password {
+    width: 20px;
 }
 
 
@@ -237,7 +243,6 @@ body, html {
 }
 
 
-
 .slider2 .register {
     width: 390px;
     height: 603px;
@@ -245,8 +250,6 @@ body, html {
     margin-right: 15%;
     margin-left: 350px;
 }
-
-
 
 
 .slider2 .register button {
@@ -258,11 +261,12 @@ body, html {
     border-radius: 10px;
     width: 58%;
     height: 50px;
-    margin-top: 5rem;
+    margin-top: 2rem;
 }
+
 /* Update quên mật khẩu và đăng ký*/
-.slider2 .login .lostpass{
-    margin-top:30px;
+.slider2 .login .lostpass {
+    margin-top: 30px;
 }
 
 
@@ -433,12 +437,14 @@ body, html {
     margin-top: 16px;
     color: #CAD2C5;
 }
+
 .footer_bottom ul {
     list-style-type: none;
     color: #CAD2C5;
     margin-right: 5px;
     margin-left: 80px;
 }
+
 .content_section_2 {
     .container {
         display: flex;
@@ -523,79 +529,17 @@ body, html {
         opacity: 0;
     }
 }
-.footer .container {
-    display: flex;
-    height: auto;
-    width: 100%;
-    padding-top: 30px;
-    justify-content: center;
-}
-
-.footer ul {
-    list-style-type: none;
-}
-
-.footer .profile .content {
-    max-width: 250px;
-    margin-top: 20px;
-}
-
-.footer .line {
-    padding-top: 1px;
-    background-color: black;
-}
-
-.footer .profile .title {
-    color: #333D29;
-    font-size: 20px;
-}
-
-.footer .link {
-    margin-left: 50px;
-    margin-right: 100px;
-}
-
-.footer .link .title {
-    color: #333D29;
-    margin-left: 40px;
-    font-size: 20px;
-}
-
-.footer .help {
-    margin-left: 100px;
-    margin-right: 50px;
-}
-
-.footer .help .title {
-    color: #333D29;
-    margin-left: 40px;
-    font-size: 20px;
-}
-
-.footer .profile {
-    color: #333D29;
-    margin-top: 50px;
-    margin-right: 100px;
-}
-
-.footer ul {
-    margin-top: 50px;
-}
-
-.footer ul li {
-    margin-top: 50px;
-    font-weight: bold;
-}
-
-.footer ul li > a {
-    text-decoration: none;
-    color: #333D29;
-}
 
 
-.a_dangnhap{
+.a_dangnhap {
     color: var(--color-primary);
     position: relative;
     right: 10px;
 
+}
+
+small {
+    font-size: 0.575em !important;
+    margin-left: 2px !important;
+    color: #555 !important;
 }

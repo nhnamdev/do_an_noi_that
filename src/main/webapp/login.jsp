@@ -40,7 +40,7 @@
     <div class="slider2" style="background-color: #fff; height: 700px">
         <div class="login" style="margin: auto; width: 460px;">
             <h2 style="margin-left: 120px;">Đăng nhập</h2>
-            <form action="login" method="post"
+            <form action="login" method="post" id="loginForm"
                   style="margin-right: 32px;width: 426px;border: 2px dashed #6bae0e;padding-left: 30px; padding-bottom: 20px">
                 <c:if test="${not empty error}">
                     <div style="color: red; font-weight: bold; width: 360px;">
@@ -48,9 +48,9 @@
                     </div>
                 </c:if>
                 <label style="margin-top: 5px ">Tên đăng nhập</label>
-                <input class="dangnhap-matkhau" name="username" type="text">
+                <input class="dangnhap-matkhau" name="username" type="text" required>
                 <label>Mật khẩu</label>
-                <input class="dangnhap-matkhau" name="password" id="password" type="password" placeholder="">
+                <input class="dangnhap-matkhau" name="password" id="password" type="password" required>
                 <div class="hienmatkhau">
                     <label id="hienmatkhau"><input type="checkbox" name="agree" value="yes"> Ghi nhớ đăng nhập</label>
 
@@ -59,7 +59,9 @@
                     </label>
                 </div>
                 <!-- Google reCAPTCHA -->
-                <div class="g-recaptcha" data-sitekey="6Lek8vsqAAAAAGlMWAnGATelPA7HXTFyfZZaRK1K"></div>
+                <div class="g-recaptcha" data-sitekey="6Lek8vsqAAAAAGlMWAnGATelPA7HXTFyfZZaRK1K"
+                     data-callback="grecaptchaCallback"
+                     style="margin-left: 28px;"></div>
                 <div style="text-align: center; margin-top: 20px; display: flex; align-items: center;">
                     <hr style="width: 100px; border: 1px solid #000; margin-right: 10px;">
                     <h5 style="margin: 0; color: gray;">Đăng nhập với</h5>
@@ -68,7 +70,7 @@
                 <div class="loginOther" style="display: flex; margin-top: 10px;">
                     <div class="google" style="margin-right: 50px;margin-left: 50px;">
                         <a href="https://accounts.google.com/o/oauth2/auth?scope=email profile openid
-                            &redirect_uri=http://localhost:8080/source_do_an_noi_that_war/login?provider=google
+                            &redirect_uri=${pageContext.request.contextPath}/login?provider=google
                             &response_type=code
                             &client_id=313036133777-qlvuragc9njih90ffl86jj1gdlp0450d.apps.googleusercontent.com
                             &approval_prompt=force"
@@ -85,7 +87,7 @@ fields=id,name,email&client_id=1298925587857868
                         </a>
                     </div>
                 </div>
-                <button type="submit" style="margin-left: 54px;">Đăng nhập</button>
+                <button type="submit" id="loginButton" disabled>Đăng nhập</button>
             </form>
             <div class="lostpass" style="margin-left: 48px;">
                 <a class="a_quenmatkhau" href="my_account_lostpass.jsp">Quên mật khẩu?</a>
@@ -102,7 +104,37 @@ fields=id,name,email&client_id=1298925587857868
         passwordField.type = passwordField.type === "password" ? "text" : "password";
     }
 </script>
+<script>
+    // Cập nhật trạng thái của nút đăng nhập
+    function updateLoginButton() {
+        const username = document.querySelector('input[name="username"]').value.trim();
+        const password = document.querySelector('input[name="password"]').value.trim();
+        const captchaResponse = grecaptcha.getResponse();
+
+        const loginButton = document.getElementById("loginButton");
+
+        if (username && password && captchaResponse) {
+            loginButton.disabled = false;
+            loginButton.classList.add("active");
+        } else {
+            loginButton.disabled = true;
+            loginButton.classList.remove("active");
+        }
+    }
+
+    // Gán sự kiện cho input và reCAPTCHA
+    document.addEventListener("DOMContentLoaded", () => {
+        document.querySelector('input[name="username"]').addEventListener("input", updateLoginButton);
+        document.querySelector('input[name="password"]').addEventListener("input", updateLoginButton);
+
+        window.grecaptchaCallback = function () {
+            updateLoginButton();
+        };
+    });
+</script>
+
 <script src="https://www.google.com/recaptcha/api.js" async defer></script>
 </body>
+
 
 </html>
