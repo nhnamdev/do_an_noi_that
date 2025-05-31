@@ -108,4 +108,9 @@ public class CartDao {
         }
         return null;
     }
+
+    public static void main(String[] args) {
+        CartDao cartDao = new CartDao();
+        System.out.println(cartDao.addOrUpdateCartItem(3,4,2));
+    }
 }
