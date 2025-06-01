@@ -215,7 +215,7 @@
                                                 <div class="product-bottom_detail">
                                                     <div class="price">
                                                         <span class="original-price">600.000đ</span>
-                                                        <span class="discount-price">${p.price}</span>
+                                                        <span class="discount-price">${p.formattedPrice}đ</span>
                                                     </div>
                                                     <div class="product-actions">
                                                         <button class="add-to-cart-btn">

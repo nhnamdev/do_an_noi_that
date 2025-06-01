@@ -70,6 +70,10 @@ public class Product implements Serializable {
     public void setQuantity(int quantity) {
         this.quantity = quantity;
     }
+    public String getFormattedPrice() {
+        DecimalFormat formatter = new DecimalFormat("#,###");
+        return formatter.format(price);
+    }
 
     @Override
     public String toString() {
