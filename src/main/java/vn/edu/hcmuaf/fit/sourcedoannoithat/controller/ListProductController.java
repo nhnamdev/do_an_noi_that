@@ -223,6 +223,7 @@ public class ListProductController extends HttpServlet {
 
         request.setAttribute("listPagination", productList);
         request.setAttribute("endP", endPage);
+        request.setAttribute("onlyFavorite", onlyFavorite);
         request.setAttribute("favoriteProductIds", favoriteProductIds);
         request.setAttribute("categories", categories);
         request.setAttribute("currentPage", filterData.index);
