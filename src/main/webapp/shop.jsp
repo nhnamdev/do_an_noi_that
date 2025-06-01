@@ -11,6 +11,7 @@
     <title>Cửa hàng</title>
     <link rel="stylesheet" href="css/shop_styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 </head>
 <body>
 <div class="wrapper">
@@ -72,13 +73,6 @@
                         </div>
                     </div>
                 </div>
-                <form id="filterForm" method="GET" action="shop" style="display: none;">
-                    <input type="hidden" name="index" value="1">
-                    <input type="hidden" name="search" value="${currentKeyword}">
-                    <input type="hidden" name="categoryId" id="filterCategoryId" value="${selectedCategoryId}">
-                    <input type="hidden" name="subcategoryId" id="filterSubcategoryId" value="${selectedSubcategoryId}">
-                    <input type="hidden" name="sortBy" id="filterSortBy" value="${currentSortBy}">
-                </form>
                 <div class="sort-feature">
                     <div class="sort-dropdown">
                         <div class="sort-btn">
@@ -455,179 +449,9 @@
                 </div>
             </div>
         </div>
-        <jsp:include page="components/footer.jsp"/>
-        <div class="toast-container" id="toastContainer"></div>
     </div>
-    <script src="js/shop.js"></script>
-    <script>
-        function selectCategory(categoryId) {
-            document.getElementById('filterCategoryId').value = categoryId;
-            document.getElementById('filterSubcategoryId').value = '';
-            document.getElementById('filterForm').submit();
-        }
-
-        function selectSubcategory(subcategoryId) {
-            document.getElementById('filterSubcategoryId').value = subcategoryId;
-            document.getElementById('filterForm').submit();
-        }
-
-        function updatePriceFilter() {
-            // Remove existing price-range hidden inputs
-            const existingInputs = document.querySelectorAll('input[name="price-range"][type="hidden"]');
-            existingInputs.forEach(input => input.remove());
-
-            // Get checked price ranges
-            const checkedRanges = document.querySelectorAll('input[name="price-range"]:checked');
-            const filterForm = document.getElementById('filterForm');
-
-            // Add hidden inputs for each checked range
-            checkedRanges.forEach(range => {
-                const hiddenInput = document.createElement('input');
-                hiddenInput.type = 'hidden';
-                hiddenInput.name = 'price-range';
-                hiddenInput.value = range.value;
-                filterForm.appendChild(hiddenInput);
-            });
-
-            const pageInput = document.querySelector('input[name="index"]');
-            if (pageInput) {
-                pageInput.value = '1';
-            }
-
-            setTimeout(() => {
-                filterForm.submit();
-            }, 100);
-        }
-
-        function removeFilter(type) {
-            if (type === 'category') {
-                document.getElementById('filterCategoryId').value = '';
-                document.getElementById('filterSubcategoryId').value = '';
-            } else if (type === 'subcategory') {
-                document.getElementById('filterSubcategoryId').value = '';
-            }
-            document.getElementById('filterForm').submit();
-        }
-
-        function removePriceRange(range) {
-            const checkbox = document.querySelector(`input[name="price-range"][value="${range}"]`);
-            if (checkbox) {
-                checkbox.checked = false;
-                updatePriceFilter();
-            }
-        }
-
-        function clearAllFilters() {
-            window.location.href = 'shop';
-        }
-
-        function goToPage(page) {
-            document.querySelector('input[name="index"]').value = page;
-            document.getElementById('filterForm').submit();
-        }
-
-        // Sort functionality
-        document.addEventListener('DOMContentLoaded', function () {
-            const sortOptions = document.querySelectorAll('.sort-dropdown-content a');
-
-            sortOptions.forEach(option => {
-                option.addEventListener('click', function (e) {
-                    e.preventDefault();
-
-                    const sortBy = this.getAttribute('data-sort');
-                    document.getElementById('filterSortBy').value = sortBy;
-
-                    // Update sort label
-                    document.getElementById('sortLabel').textContent = this.textContent + ' ';
-
-                    document.getElementById('filterForm').submit();
-                });
-            });
-
-            const favoriteButtons = document.querySelectorAll(".favorite-product");
-            favoriteButtons.forEach(function (button) {
-                const newButton = button.cloneNode(true);
-                button.parentNode.replaceChild(newButton, button);
-            });
-
-            function showToast(title, message, type = 'success') {
-                let container = document.getElementById('toastContainer');
-                if (!container) {
-                    container = document.createElement('div');
-                    container.id = 'toastContainer';
-                    container.className = 'toast-container';
-                    document.body.appendChild(container);
-                }
-
-                const toast = document.createElement('div');
-                toast.className = `toast toast-${type}`;
-
-                toast.innerHTML = `
-                <div class="toast-icon">
-                    <i class="fas ${type == 'success' ? 'fa-check-circle' : 'fa-exclamation-circle'}"></i>
-                </div>
-                <div class="toast-body">
-                    <div class="toast-title">${title}</div>
-                    <div class="toast-message">${message}</div>
-                </div>
-            `;
-
-                container.appendChild(toast);
-
-                setTimeout(() => {
-                    toast.classList.add('show');
-                }, 10);
-
-                setTimeout(() => {
-                    toast.classList.remove('show');
-                    setTimeout(() => {
-                        if (toast.parentNode) {
-                            toast.parentNode.removeChild(toast);
-                        }
-                    }, 300);
-                }, 3000);
-            }
-
-            document.querySelectorAll(".favorite-product").forEach(function (element) {
-                element.addEventListener("click", function () {
-                    const span = this;
-                    const productId = span.getAttribute("data-product-id");
-                    const url = `${pageContext.request.contextPath}/addToFavorites`;
-                    fetch(url, {
-                        method: "POST",
-                        headers: {
-                            "Content-Type": "application/x-www-form-urlencoded"
-                        },
-                        body: new URLSearchParams({
-                            productId: productId
-                        })
-                    })
-                        .then(response => response.json())
-                        .then(data => {
-                            if (data.success || data["Đã thêm sản phẩm yêu thích"]) {
-                                const isActive = span.classList.contains("active");
-                                if (isActive) {
-                                    span.classList.remove("active");
-                                    span.setAttribute("title", "Thêm vào yêu thích");
-                                    span.innerHTML = `<i class="fa-regular fa-heart"></i>`;
-                                    showToast('Thông báo', 'Đã xóa khỏi danh sách yêu thích', 'success');
-                                } else {
-                                    span.classList.add("active");
-                                    span.setAttribute("title", "Bỏ khỏi yêu thích");
-                                    span.innerHTML = `<i class="fa-solid fa-heart"></i>`;
-                                    showToast('Thông báo', 'Đã thêm vào danh sách yêu thích', 'success');
-                                }
-                            } else {
-                                showToast('Thông báo', data.message || "Đã có lỗi xảy ra", 'error');
-                            }
-                        })
-                        .catch(error => {
-                            console.error("Lỗi:", error);
-                            showToast('Thông báo', "Đã xảy ra lỗi khi xử lý yêu cầu", 'error');
-                        });
-                });
-            });
-        });
-    </script>
+    <jsp:include page="components/footer.jsp"/>
+    <div class="toast-container" id="toastContainer"></div>
+    <script src="${pageContext.request.contextPath}/js/shop.js"></script>
 </body>
 </html>

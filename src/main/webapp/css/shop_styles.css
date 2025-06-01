@@ -1081,6 +1081,7 @@ li {
     border-radius: 6px;
     overflow: hidden;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+    justify-content: center;
 }
 
 .product-list .pagination-item {
