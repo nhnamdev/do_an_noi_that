@@ -40,7 +40,7 @@ public class FavouriteController extends HttpServlet {
 
             // delete if exist
             if (deleteFavourite(userId, productId)) {
-                out.write("{\"success\": true, \"message\": \"Favourite successfully deleted\"}");
+                out.write("{\"success\": true, \"action\": \"deleted\", \"message\": \"Đã bỏ yêu thích\"}");
                 return;
             }
 
@@ -53,9 +53,9 @@ public class FavouriteController extends HttpServlet {
             int rowsInserted = stmt.executeUpdate();
 
             if (rowsInserted > 0) {
-                out.write("{\"Đã thêm sản phẩm yêu thích\": true}");
+                out.write("{\"success\": true, \"action\": \"added\", \"message\": \"Đã thêm yêu thích\"}");
             } else {
-                out.write("{\"success\": false}");
+                out.write("{\"success\": false, \"message\": \"Thêm yêu thích thất bại\"}");
             }
         } catch (Exception e) {
             e.printStackTrace();

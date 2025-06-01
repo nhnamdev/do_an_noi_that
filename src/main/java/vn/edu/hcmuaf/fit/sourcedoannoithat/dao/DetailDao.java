@@ -23,6 +23,7 @@ public class DetailDao {
             ps.setString(1, id);
             rs = ps.executeQuery();
             if (rs.next()) {
+                //table product_detail (db 29-5.txt) chỉ có 11 thuộc tính(không có weight) => lỗi 500 đã fix
                 return new ProductDetail(
                         rs.getInt(1),
                         rs.getInt(2),

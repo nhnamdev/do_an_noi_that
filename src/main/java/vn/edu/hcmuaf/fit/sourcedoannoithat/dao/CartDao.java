@@ -4,7 +4,6 @@ import vn.edu.hcmuaf.fit.sourcedoannoithat.dao.db.DBConnect;
 import vn.edu.hcmuaf.fit.sourcedoannoithat.dao.model.Cart;
 import vn.edu.hcmuaf.fit.sourcedoannoithat.dao.model.Product;
 
-import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -108,5 +107,10 @@ public class CartDao {
             throw new RuntimeException(e);
         }
         return null;
+    }
+
+    public static void main(String[] args) {
+        CartDao cartDao = new CartDao();
+        System.out.println(cartDao.addOrUpdateCartItem(3, 4, 2));
     }
 }
