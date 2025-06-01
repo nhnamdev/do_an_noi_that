@@ -51,20 +51,7 @@
                     </div>
                     <div class="totalPrice">
                         <div class="title">Tổng tiền</div>
-                        <div class="price">
-                            <%--                    <%--%>
-                            <%--                        double totalPrice = 0;--%>
-                            <%--                        List<Product> cartProducts = (List<Product>) session.getAttribute("cartProducts");--%>
-                            <%--                        if (cartProducts == null) {--%>
-                            <%--                            cartProducts = new ArrayList<Product>();--%>
-                            <%--                        }--%>
-                            <%--                        for (Product item : cartProducts) {--%>
-                            <%--                            totalPrice += item.getPrice() * item.getQuantity();--%>
-                            <%--                        }--%>
-
-                            <%--                    %>--%>
-                            <%--                    <%= totalPrice %>đ--%>
-                        </div>
+                        <div class="price"></div>
                     </div>
                     <div class="other_choose">
                         <button class="view_cart" onclick="window.location.href='cart.jsp'">Giỏ hàng</button>
@@ -91,11 +78,6 @@
                     <input type="hidden" name="categoryId" id="filterCategoryId" value="${selectedCategoryId}">
                     <input type="hidden" name="subcategoryId" id="filterSubcategoryId" value="${selectedSubcategoryId}">
                     <input type="hidden" name="sortBy" id="filterSortBy" value="${currentSortBy}">
-                    <c:if test="${selectedPriceRanges != null}">
-                        <c:forEach var="range" items="${selectedPriceRanges}">
-                            <input type="hidden" name="price-range" value="${range}">
-                        </c:forEach>
-                    </c:if>
                 </form>
                 <div class="sort-feature">
                     <div class="sort-dropdown">
@@ -311,31 +293,41 @@
                             <div class="price-range-options">
                                 <label class="price-checkbox">
                                     <input type="checkbox" name="price-range" value="0-1m"
-                                    ${selectedPriceRanges != null && selectedPriceRanges.contains('0-1m') ? 'checked' : ''}
+                                    <c:forEach var="range" items="${selectedPriceRanges}">
+                                           <c:if test="${range == '0-1m'}">checked</c:if>
+                                    </c:forEach>
                                            onchange="updatePriceFilter()">
                                     <span>Dưới 1 triệu</span>
                                 </label>
                                 <label class="price-checkbox">
                                     <input type="checkbox" name="price-range" value="1m-2m"
-                                    ${selectedPriceRanges != null && selectedPriceRanges.contains('1m-2m') ? 'checked' : ''}
+                                    <c:forEach var="range" items="${selectedPriceRanges}">
+                                           <c:if test="${range == '1m-2m'}">checked</c:if>
+                                    </c:forEach>
                                            onchange="updatePriceFilter()">
                                     <span>Từ 1 triệu - 2 triệu</span>
                                 </label>
                                 <label class="price-checkbox">
                                     <input type="checkbox" name="price-range" value="2m-3m"
-                                    ${selectedPriceRanges != null && selectedPriceRanges.contains('2m-3m') ? 'checked' : ''}
+                                    <c:forEach var="range" items="${selectedPriceRanges}">
+                                           <c:if test="${range == '2m-3m'}">checked</c:if>
+                                    </c:forEach>
                                            onchange="updatePriceFilter()">
                                     <span>Từ 2 triệu - 3 triệu</span>
                                 </label>
                                 <label class="price-checkbox">
                                     <input type="checkbox" name="price-range" value="3m-5m"
-                                    ${selectedPriceRanges != null && selectedPriceRanges.contains('3m-5m') ? 'checked' : ''}
+                                    <c:forEach var="range" items="${selectedPriceRanges}">
+                                           <c:if test="${range == '3m-5m'}">checked</c:if>
+                                    </c:forEach>
                                            onchange="updatePriceFilter()">
                                     <span>Từ 3 triệu - 5 triệu</span>
                                 </label>
                                 <label class="price-checkbox">
                                     <input type="checkbox" name="price-range" value="5m+"
-                                    ${selectedPriceRanges != null && selectedPriceRanges.contains('5m+') ? 'checked' : ''}
+                                    <c:forEach var="range" items="${selectedPriceRanges}">
+                                           <c:if test="${range == '5m+'}">checked</c:if>
+                                    </c:forEach>
                                            onchange="updatePriceFilter()">
                                     <span>Trên 5 triệu</span>
                                 </label>
@@ -468,7 +460,6 @@
     </div>
     <script src="js/shop.js"></script>
     <script>
-        // Filter functions
         function selectCategory(categoryId) {
             document.getElementById('filterCategoryId').value = categoryId;
             document.getElementById('filterSubcategoryId').value = '';
@@ -489,6 +480,7 @@
             const checkedRanges = document.querySelectorAll('input[name="price-range"]:checked');
             const filterForm = document.getElementById('filterForm');
 
+            // Add hidden inputs for each checked range
             checkedRanges.forEach(range => {
                 const hiddenInput = document.createElement('input');
                 hiddenInput.type = 'hidden';
@@ -497,9 +489,14 @@
                 filterForm.appendChild(hiddenInput);
             });
 
+            const pageInput = document.querySelector('input[name="index"]');
+            if (pageInput) {
+                pageInput.value = '1';
+            }
+
             setTimeout(() => {
-                document.getElementById('filterForm').submit();
-            }, 300);
+                filterForm.submit();
+            }, 100);
         }
 
         function removeFilter(type) {
@@ -514,8 +511,10 @@
 
         function removePriceRange(range) {
             const checkbox = document.querySelector(`input[name="price-range"][value="${range}"]`);
-            if (checkbox) checkbox.checked = false;
-            updatePriceFilter();
+            if (checkbox) {
+                checkbox.checked = false;
+                updatePriceFilter();
+            }
         }
 
         function clearAllFilters() {

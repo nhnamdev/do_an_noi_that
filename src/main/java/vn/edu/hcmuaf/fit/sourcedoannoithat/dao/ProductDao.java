@@ -40,8 +40,7 @@ public class ProductDao {
 
     public List<Product> getAllProduct() {
         List<Product> productList = new ArrayList<Product>();
-        String query = "SELECT * \n" +
-                "FROM product_shop;";
+        String query = "SELECT * FROM product_shop;";
         try {
             conn = new DBConnect().getConnection();
             ps = conn.prepareStatement(query);
@@ -62,9 +61,7 @@ public class ProductDao {
     }
 
     public Product getProductById(String id) {
-        String query = "SELECT * \n" +
-                "FROM product_shop\n" +
-                "WHERE id=?;";
+        String query = "SELECT * FROM product_shop WHERE id=?;";
         try {
             conn = new DBConnect().getConnection();
             ps = conn.prepareStatement(query);
@@ -85,7 +82,6 @@ public class ProductDao {
         return null;
     }
 
-    //phan trang
     public int getAllProductCount() {
         String query = "SELECT COUNT(*) FROM product_shop;";
         try {
@@ -148,10 +144,7 @@ public class ProductDao {
 
     public List<Product> pagingProduct(int index) {
         List<Product> list = new ArrayList<>();
-        String query = "SELECT *\n" +
-                "FROM product_shop\n" +
-                "ORDER BY id \n" +
-                "LIMIT 6 OFFSET ?;";
+        String query = "SELECT * FROM product_shop ORDER BY id LIMIT 6 OFFSET ?;";
         try {
             conn = new DBConnect().getConnection();
             ps = conn.prepareStatement(query);
@@ -198,19 +191,26 @@ public class ProductDao {
         }
 
         // Lọc theo khoảng giá
-        if (minPrice > 0) {
+        if (minPrice > 0 && maxPrice > 0) {
+            if (maxPrice == Double.MAX_VALUE) {
+                query.append("AND price >= ? ");
+                params.add(minPrice);
+            } else {
+                query.append("AND price >= ? AND price <= ? ");
+                params.add(minPrice);
+                params.add(maxPrice);
+            }
+        } else if (minPrice > 0) {
             query.append("AND price >= ? ");
             params.add(minPrice);
-        }
-
-        if (maxPrice > 0) {
+        } else if (maxPrice > 0 && maxPrice != Double.MAX_VALUE) {
             query.append("AND price <= ? ");
             params.add(maxPrice);
         }
 
         // Sắp xếp
         query.append("ORDER BY ");
-        if (sortBy != null && !sortBy.isEmpty()) {
+        if (sortBy != null && !sortBy.trim().isEmpty()) {
             switch (sortBy.toLowerCase()) {
                 case "price_asc":
                     query.append("price ASC ");
@@ -260,21 +260,21 @@ public class ProductDao {
             }
         } catch (Exception e) {
             e.printStackTrace();
+        } finally {
+            try {
+                if (rs != null) rs.close();
+                if (ps != null) ps.close();
+                if (conn != null) conn.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
 
         return result;
     }
 
-    public static void main(String[] args) {
-        ProductDao dao = new ProductDao();
-        List<Product> productList = dao.getTop4BestSellers();
-        for (Product product : productList) {
-            System.out.println(product);
-        }
-
-    }
-
-    public int countProductsWithAdvancedFilter(String keyword, int categoryId, int subcategoryId, double minPrice, double maxPrice) {
+    public int countProductsWithAdvancedFilter(String keyword, int categoryId, int subcategoryId,
+                                               double minPrice, double maxPrice) {
         StringBuilder query = new StringBuilder("SELECT COUNT(*) FROM product_shop WHERE 1=1 ");
         List<Object> params = new ArrayList<>();
 
@@ -293,12 +293,19 @@ public class ProductDao {
             params.add(subcategoryId);
         }
 
-        if (minPrice > 0) {
+        if (minPrice > 0 && maxPrice > 0) {
+            if (maxPrice == Double.MAX_VALUE) {
+                query.append("AND price >= ? ");
+                params.add(minPrice);
+            } else {
+                query.append("AND price >= ? AND price <= ? ");
+                params.add(minPrice);
+                params.add(maxPrice);
+            }
+        } else if (minPrice > 0) {
             query.append("AND price >= ? ");
             params.add(minPrice);
-        }
-
-        if (maxPrice > 0) {
+        } else if (maxPrice > 0 && maxPrice != Double.MAX_VALUE) {
             query.append("AND price <= ? ");
             params.add(maxPrice);
         }
@@ -317,8 +324,24 @@ public class ProductDao {
             }
         } catch (Exception e) {
             e.printStackTrace();
+        } finally {
+            try {
+                if (rs != null) rs.close();
+                if (ps != null) ps.close();
+                if (conn != null) conn.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
 
         return 0;
+    }
+
+    public static void main(String[] args) {
+        ProductDao dao = new ProductDao();
+        List<Product> productList = dao.getTop4BestSellers();
+        for (Product product : productList) {
+            System.out.println(product);
+        }
     }
 }
