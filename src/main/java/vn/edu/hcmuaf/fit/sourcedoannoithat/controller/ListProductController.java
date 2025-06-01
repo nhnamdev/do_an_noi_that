@@ -66,6 +66,7 @@ public class ListProductController extends HttpServlet {
 
         request.setAttribute("listPagination", productList);
         request.setAttribute("endP", endPage);
+        request.setAttribute("onlyFavorite", onlyFavorite);
         request.setAttribute("favoriteProductIds", favoriteProductIds);
         request.getRequestDispatcher("shop.jsp").forward(request, response);
     }
