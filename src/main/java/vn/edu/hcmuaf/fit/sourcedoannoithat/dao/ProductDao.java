@@ -172,6 +172,99 @@ public class ProductDao {
         return list;
     }
 
+    public List<Product> getProductsWithAdvancedFilter(int index, String keyword, int categoryId,
+                                                       int subcategoryId, double minPrice, double maxPrice,
+                                                       String sortBy) {
+        List<Product> result = new ArrayList<>();
+        StringBuilder query = new StringBuilder("SELECT * FROM product_shop WHERE 1=1 ");
+        List<Object> params = new ArrayList<>();
+
+        // Điều kiện tìm kiếm theo tên
+        if (keyword != null && !keyword.trim().isEmpty()) {
+            query.append("AND name LIKE ? ");
+            params.add("%" + keyword + "%");
+        }
+
+        // Lọc theo danh mục
+        if (categoryId > 0) {
+            query.append("AND category_id = ? ");
+            params.add(categoryId);
+        }
+
+        // Lọc theo danh mục con
+        if (subcategoryId > 0) {
+            query.append("AND subcategory_id = ? ");
+            params.add(subcategoryId);
+        }
+
+        // Lọc theo khoảng giá
+        if (minPrice > 0) {
+            query.append("AND price >= ? ");
+            params.add(minPrice);
+        }
+
+        if (maxPrice > 0) {
+            query.append("AND price <= ? ");
+            params.add(maxPrice);
+        }
+
+        // Sắp xếp
+        query.append("ORDER BY ");
+        if (sortBy != null && !sortBy.isEmpty()) {
+            switch (sortBy.toLowerCase()) {
+                case "price_asc":
+                    query.append("price ASC ");
+                    break;
+                case "price_desc":
+                    query.append("price DESC ");
+                    break;
+                case "popular":
+                    query.append("quantitySold DESC ");
+                    break;
+                case "newest":
+                    query.append("created_date DESC ");
+                    break;
+                case "name":
+                    query.append("name ASC ");
+                    break;
+                default:
+                    query.append("id ASC ");
+            }
+        } else {
+            query.append("id ASC ");
+        }
+
+        // Phân trang
+        int offset = (index - 1) * 6;
+        query.append("LIMIT 6 OFFSET ?");
+        params.add(offset);
+
+        try {
+            conn = new DBConnect().getConnection();
+            ps = conn.prepareStatement(query.toString());
+
+            // Set parameters
+            for (int i = 0; i < params.size(); i++) {
+                ps.setObject(i + 1, params.get(i));
+            }
+
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                result.add(new Product(
+                        rs.getInt("id"),
+                        rs.getString("name"),
+                        rs.getDouble("price"),
+                        rs.getString("image"),
+                        rs.getInt("quantitySold")
+                ));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return result;
+    }
+
     public static void main(String[] args) {
         ProductDao dao = new ProductDao();
         List<Product> productList = dao.getTop4BestSellers();
@@ -179,5 +272,53 @@ public class ProductDao {
             System.out.println(product);
         }
 
+    }
+
+    public int countProductsWithAdvancedFilter(String keyword, int categoryId, int subcategoryId, double minPrice, double maxPrice) {
+        StringBuilder query = new StringBuilder("SELECT COUNT(*) FROM product_shop WHERE 1=1 ");
+        List<Object> params = new ArrayList<>();
+
+        if (keyword != null && !keyword.trim().isEmpty()) {
+            query.append("AND name LIKE ? ");
+            params.add("%" + keyword + "%");
+        }
+
+        if (categoryId > 0) {
+            query.append("AND category_id = ? ");
+            params.add(categoryId);
+        }
+
+        if (subcategoryId > 0) {
+            query.append("AND subcategory_id = ? ");
+            params.add(subcategoryId);
+        }
+
+        if (minPrice > 0) {
+            query.append("AND price >= ? ");
+            params.add(minPrice);
+        }
+
+        if (maxPrice > 0) {
+            query.append("AND price <= ? ");
+            params.add(maxPrice);
+        }
+
+        try {
+            conn = new DBConnect().getConnection();
+            ps = conn.prepareStatement(query.toString());
+
+            for (int i = 0; i < params.size(); i++) {
+                ps.setObject(i + 1, params.get(i));
+            }
+
+            rs = ps.executeQuery();
+            if (rs.next()) {
+                return rs.getInt(1);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return 0;
     }
 }
