@@ -185,7 +185,8 @@
                                             <div class="product-tumb">
                                                 <span class="discount-percent">-5%</span>
                                                 <a href="detail?pId=${p.id}">
-                                                    <img src="${p.img}" alt="${p.name}" loading="lazy">
+                                                    <img src="${pageContext.request.contextPath}/img/sanpham/${p.img}"
+                                                         alt="${p.name}" loading="lazy">
                                                 </a>
                                                 <c:choose>
                                                     <c:when test="${favoriteProductIds.contains(p.id)}">

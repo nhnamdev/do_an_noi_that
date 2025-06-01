@@ -30,7 +30,7 @@ public class FavouriteDao {
                         rs.getString(2),
                         rs.getDouble(3),
                         rs.getString(4),
-                        rs.getInt(5));
+                        rs.getInt(5), rs.getInt(6));
                 result.add(p);
             }
             return result;
@@ -50,7 +50,7 @@ public class FavouriteDao {
             rs = ps.executeQuery();
             List<Product> result = new ArrayList<>();
             while (rs.next()) {
-                Product p = new Product(rs.getInt(1), rs.getString(2), rs.getDouble(3), rs.getString(4), rs.getInt(5));
+                Product p = new Product(rs.getInt(1), rs.getString(2), rs.getDouble(3), rs.getString(4), rs.getInt(5), rs.getInt(6));
                 result.add(p);
             }
             return result;
@@ -88,7 +88,8 @@ public class FavouriteDao {
                         rs.getString("name"),
                         rs.getDouble("price"),
                         rs.getString("image"),
-                        rs.getInt("quantitySold")
+                        rs.getInt("quantitySold"),
+                        rs.getInt("stock")
                 );
                 product.setId(rs.getInt("id"));
                 favorites.add(product);

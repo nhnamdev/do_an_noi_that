@@ -25,7 +25,7 @@ public class SearchDao {
             while (rs.next()) {
                 Product p = new Product(
                         rs.getInt(1),
-                        rs.getString(2), rs.getDouble(3), rs.getString(4), rs.getInt(5));
+                        rs.getString(2), rs.getDouble(3), rs.getString(4), rs.getInt(5), rs.getInt(6));
                 p.setId(rs.getInt(1));
                 result.add(p);
             }
@@ -47,7 +47,7 @@ public class SearchDao {
             List<Product> result = new ArrayList<>();
             while (rs.next()) {
                 Product p = new Product(
-                        rs.getInt(1), rs.getString(2), rs.getDouble(3), rs.getString(4), rs.getInt(5));
+                        rs.getInt(1), rs.getString(2), rs.getDouble(3), rs.getString(4), rs.getInt(5),rs.getInt(6));
                 result.add(p);
             }
             return result;
@@ -100,7 +100,7 @@ public class SearchDao {
             ps.setInt(2, offset);
             rs = ps.executeQuery();
             while (rs.next()) {
-                Product p = new Product(rs.getInt(1), rs.getString(2), rs.getDouble(3), rs.getString(4), rs.getInt(5));
+                Product p = new Product(rs.getInt(1), rs.getString(2), rs.getDouble(3), rs.getString(4), rs.getInt(5),rs.getInt(6));
                 result.add(p);
             }
         } catch (Exception e) {

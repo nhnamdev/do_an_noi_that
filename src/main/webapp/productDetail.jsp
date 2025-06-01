@@ -85,19 +85,41 @@
                     <div class="product-detail-container">
                         <div class="product-image-left">
                             <div class="main-image">
-                                <img src="${not empty mainImage ? mainImage : product.image}" alt="${product.name}"
-                                     id="mainImage">
+                                <c:choose>
+                                    <c:when test="${not empty mainImage}">
+                                        <c:set var="imagePath"
+                                               value='${pageContext.request.contextPath}/img/sanpham/${mainImage}'/>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <c:set var="imagePath"
+                                               value='${pageContext.request.contextPath}/img/sanpham/${product.image}'/>
+                                    </c:otherwise>
+                                </c:choose>
+
+                                <img src="${imagePath}" alt="${product.name}" id="mainImage">
                                 <button class="prev-btn"><i class="fas fa-chevron-left"></i></button>
                                 <button class="next-btn"><i class="fas fa-chevron-right"></i></button>
                             </div>
 
                             <div class="sub-image-container">
                                 <div class="sub-image active">
-                                    <img src="${not empty mainImage ? mainImage : product.image}" alt="${product.name}">
+                                    <c:choose>
+                                        <c:when test="${not empty mainImage}">
+                                            <c:set var="imagePath"
+                                                   value="${pageContext.request.contextPath}/img/sanpham/${mainImage}"/>
+                                        </c:when>
+                                        <c:otherwise>
+                                            <c:set var="imagePath"
+                                                   value="${pageContext.request.contextPath}/img/sanpham/${product.image}"/>
+                                        </c:otherwise>
+                                    </c:choose>
+
+                                    <img src="${imagePath}" alt="${product.name}">
                                 </div>
                                 <c:forEach var="image" items="${subImages}" varStatus="status">
                                     <div class="sub-image">
-                                        <img src="${image}" alt="Ảnh phụ ${status.index + 1}">
+                                        <img src="${pageContext.request.contextPath}/img/sanpham/${image}"
+                                             alt="Ảnh phụ ${status.index + 1}">
                                     </div>
                                 </c:forEach>
                             </div>

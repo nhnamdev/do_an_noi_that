@@ -29,8 +29,8 @@
 <body>
 <jsp:include page="/mod/sidebarMod.jsp"/>
 <%--CONTENT MAIN ADMIN --%>
-<div class="content">
-    <div class="page-inner" id="main_contentt">
+<div class="content" style="margin-left: 18%">
+    <div class="page-inner" id="main_contentt" >
         <div class="d-flex align-items-left align-items-md-center flex-column flex-md-row pt-2 pb-4">
             <div>
                 <h3 class="fw-bold mb-3">Dashboard</h3>

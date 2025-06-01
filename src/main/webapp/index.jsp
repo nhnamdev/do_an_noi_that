@@ -42,9 +42,15 @@
             <div class="img-sanpham">
                 <c:forEach var="p" items="${listProduct}">
                     <div class="img-1" style="margin-left: 60px;">
-                        <img src="${p.img}" height="287" width="287" loading="lazy"/>
-                        <p>${p.name}</p>
-                        <h2>Giá: <fmt:formatNumber value="${p.price}" type="number" groupingUsed="true"/> VND</h2>
+                        <a href="detail?pId=${p.id}">
+                            <img src="${pageContext.request.contextPath}/img/sanpham/${p.img}" height="287" width="287"
+                                 loading="lazy" class="img-sanpham"/>
+                        </a>
+                            <%--                        <img href="detail?pId=${p.id}" src="${p.img}" height="287" width="287" loading="lazy"/>--%>
+                        <h4>
+                            <a href="detail?pId=${p.id}">${p.name}</a>
+                        </h4>
+                        <h2><fmt:formatNumber value="${p.price}" type="number" groupingUsed="true"/> VND</h2>
                     </div>
                 </c:forEach>
             </div>
