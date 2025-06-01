@@ -179,6 +179,12 @@
                     <div class="product-list">
                         <div class="container-fluid">
                             <div class="row">
+                                <!-- Neu khong co san pham de hien thi && user vao che do favourite  -->
+                                <c:if test="${empty listPagination and onlyFavorite == 'true'}">
+                                    <div class="alert alert-info text-center mt-4" style="width: 100%;">
+                                        <h5>Không có sản phẩm yêu thích nào.</h5>
+                                    </div>
+                                </c:if>
                                 <c:forEach items="${listPagination}" var="p">
                                     <div class="col-sm-3 p-3 col-md-3">
                                         <div class="product-block">
@@ -209,7 +215,7 @@
                                                 <div class="product-bottom_detail">
                                                     <div class="price">
                                                         <span class="original-price">600.000đ</span>
-                                                        <span class="discount-price">${p.price}</span>
+                                                        <span class="discount-price">${p.formattedPrice}đ</span>
                                                     </div>
                                                     <div class="product-actions">
                                                         <button class="add-to-cart-btn">
@@ -271,16 +277,16 @@
                     .then(response => response.json())
                     .then(data => {
                         console.log(data);
-                        if (data.success || data["Đã thêm sản phẩm yêu thích"]) {
-                            const isActive = span.classList.contains("active");
-                            if (isActive) {
-                                span.classList.remove("active");
-                                span.setAttribute("title", "Thêm vào yêu thích");
-                                span.innerHTML = `<i class="fa-regular fa-heart"></i>`;
-                            } else {
+                        if (data.success) {
+                            // Kiểm tra action trả về từ server để biết là thêm hay xóa yêu thích
+                            if (data.action === "added") {
                                 span.classList.add("active");
                                 span.setAttribute("title", "Bỏ khỏi yêu thích");
                                 span.innerHTML = `<i class="fa-solid fa-heart"></i>`;
+                            } else if (data.action === "deleted") {
+                                span.classList.remove("active");
+                                span.setAttribute("title", "Thêm vào yêu thích");
+                                span.innerHTML = `<i class="fa-regular fa-heart"></i>`;
                             }
                         } else {
                             alert(data.message || "Đã có lỗi xảy ra.");
@@ -288,6 +294,7 @@
                     })
                     .catch(error => {
                         console.error("Lỗi:", error);
+                        alert("Đã có lỗi xảy ra khi kết nối server.");
                     });
             });
         });
