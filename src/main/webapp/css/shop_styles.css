@@ -1562,3 +1562,19 @@ li {
     font-size: 14px;
     color: #555;
 }
+
+/*  fix nut them gio hang bi lech */
+.product-list .col-sm-3 {
+    padding: 0 !important;
+    margin: 0 !important;
+}
+
+.product-actions form {
+    width: 100% !important;
+}
+
+.add-to-cart-btn {
+    width: 100% !important;
+    text-align: center !important;
+    display: block !important;
+}

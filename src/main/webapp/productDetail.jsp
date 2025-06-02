@@ -76,7 +76,7 @@
                                 <li><i class="fas fa-angle-right"></i></li>
                                 <li><a href="${pageContext.request.contextPath}/shop">Tất cả sản phẩm</a></li>
                                 <li><i class="fas fa-angle-right"></i></li>
-                                <li>Ghế sofa</li>
+                                <li>${product.name}</li>
                             </ul>
                         </div>
                     </div>
@@ -170,6 +170,7 @@
                                         quantity++;
                                         document.getElementById('quantity').innerText = quantity;
                                         document.getElementById('quantityInput').value = quantity;
+                                        document.getElementById('quantityInputBuyNow').value = quantity;
                                     }
 
                                     function decreaseQuantity() {
@@ -177,21 +178,29 @@
                                             quantity--;
                                             document.getElementById('quantity').innerText = quantity;
                                             document.getElementById('quantityInput').value = quantity;
+                                            document.getElementById('quantityInputBuyNow').value = quantity;
                                         }
                                     }
                                 </script>
                             </div>
                             <div class="action-buttons">
-                                <form action="${pageContext.request.contextPath}/cart/addToCart" method="post">
+                                <form action="${pageContext.request.contextPath}/cart/addToCart" method="post"
+                                      class="button-form">
                                     <input type="hidden" name="id" value="${product.id}">
                                     <input type="hidden" name="quantity" id="quantityInput" value="1">
-                                    <button type="submit" class="add-to-cart-btn" onclick="setQuantity()">
+                                    <button type="submit" class="add-to-cart-btn">
                                         <i class="fas fa-cart-plus"></i> Thêm vào giỏ hàng
                                     </button>
                                 </form>
-                                <button type="submit" class="buy-btn">
-                                    <i class="fas fa-shopping-bag"></i> Mua ngay
-                                </button>
+                                <form action="${pageContext.request.contextPath}/checkout/" method="post"
+                                      class="button-form">
+                                    <input type="hidden" name="id" value="${product.id}">
+                                    <input type="hidden" name="quantity" id="quantityInputBuyNow" value="1">
+                                    <input type="hidden" name="buyNow" value="true">
+                                    <button type="submit" class="buy-btn">
+                                        <i class="fas fa-shopping-bag"></i> Mua ngay
+                                    </button>
+                                </form>
                             </div>
                         </div>
                     </div>

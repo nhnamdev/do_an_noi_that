@@ -50,4 +50,12 @@ public class CartDisplayItem implements Serializable {
     public void increaseQuantity() {
         this.quantity++;
     }
+
+    // tính tiền cho item mà người dùng ấn vào mua ngay, chứ không chuyển sang giỏ hàng nữa
+    public double getTotalPrice() {
+        if (product != null) {
+            return product.getPrice() * quantity;
+        }
+        return 0;
+    }
 }

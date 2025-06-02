@@ -66,32 +66,40 @@ public class CartController extends HttpServlet {
         HttpSession session = request.getSession();
         Integer userId = (Integer) session.getAttribute("userIdLogin");
 
-        HashMap<String, CartDisplayItem> cart = (HashMap<String, CartDisplayItem>) session.getAttribute("cart");
-        if (userId != null && (cart == null || cart.isEmpty())) {
-            // Tải giỏ hàng từ database
-            List<Cart> cartItems = cartDao.getCartItems(userId);
-
-            if (!cartItems.isEmpty()) {
-                cart = new HashMap<>();
-                DetailDao detailDao = new DetailDao();
-                for (Cart item : cartItems) {
-                    // Lấy thông tin sản phẩm
-                    Product product = productDao.getProductById(String.valueOf(item.getProductID()));
-                    ProductDetail productDetail = detailDao.getProductDetail(String.valueOf(item.getProductID()));
-                    if (product != null) {
-                        // Tạo CartDisplayItem từ thông tin sản phẩm và số lượng
-                        CartDisplayItem displayItem = new CartDisplayItem(item.getQuantity(), product, productDetail);
-                        cart.put(String.valueOf(item.getProductID()), displayItem);
-                    }
-                }
-
-                // Lưu giỏ hàng vào session
-                session.setAttribute("cart", cart);
-            }
+        if (userId == null) {
+            // Nếu chưa đăng nhập, hiển thị cart trống
+            request.setAttribute("cart", null);
+            request.getRequestDispatcher("/cart.jsp").forward(request, response);
+            return;
         }
+
+        HashMap<String, CartDisplayItem> cart = (HashMap<String, CartDisplayItem>) session.getAttribute("cart");
+        // Tải giỏ hàng từ database
+        List<Cart> cartItems = cartDao.getCartItems(userId);
+
+        if (!cartItems.isEmpty()) {
+            cart = new HashMap<>();
+            DetailDao detailDao = new DetailDao();
+
+            for (Cart item : cartItems) {
+                Product product = productDao.getProductById(String.valueOf(item.getProductID()));
+                ProductDetail productDetail = detailDao.getProductDetail(String.valueOf(item.getProductID()));
+
+                if (product != null) {
+                    CartDisplayItem displayItem = new CartDisplayItem(item.getQuantity(), product, productDetail);
+                    cart.put(String.valueOf(item.getProductID()), displayItem);
+                }
+            }
+
+            session.setAttribute("cart", cart);
+        } else {
+            // Nếu database trống, clear session cart
+            cart = new HashMap<>();
+            session.setAttribute("cart", cart);
+        }
+
         request.setAttribute("cart", cart);
         request.getRequestDispatcher("/cart.jsp").forward(request, response);
-        return;
     }
 
     public void addToCart(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -121,43 +129,51 @@ public class CartController extends HttpServlet {
             quantity = 1;
         }
 
+        // sửa thành load cart từ database trước, thay vì load session
         HashMap<String, CartDisplayItem> cart = (HashMap<String, CartDisplayItem>) session.getAttribute("cart");
 
 //         gio hang trong thi khoi tao them moi 1 san pham khi an vao button "them vao gio hang"
-        if (cart == null) {
+        if (cart == null || cart.isEmpty()) {
             cart = new HashMap<>();
-            cartDisplayItem = new CartDisplayItem(quantity, product, productDetail);
-            cart.put(productID, cartDisplayItem);
-        } else {
-//            kiem tra neu trong gio hang da co 1 san pham truoc do da duoc them vao, thi tang so luong sp
-            if (cart.containsKey(productID)) {
-                CartDisplayItem cartItem = cart.get(productID);
-                cartItem.setQuantity(cartItem.getQuantity() + quantity);
-//                ko co thi them moi san pham do vao gio hang
-                if (cartItem.getProductDetail() == null) {
-                    cartItem.setProductDetail(productDetail);
+            List<Cart> cartItems = cartDao.getCartItems(userId);
+
+            if (!cartItems.isEmpty()) {
+                for (Cart item : cartItems) {
+                    Product existingProduct = productDao.getProductById(String.valueOf(item.getProductID()));
+                    ProductDetail existingDetail = detailDao.getProductDetail(String.valueOf(item.getProductID()));
+                    if (existingProduct != null) {
+                        CartDisplayItem displayItem = new CartDisplayItem(item.getQuantity(), existingProduct, existingDetail);
+                        cart.put(String.valueOf(item.getProductID()), displayItem);
+                    }
                 }
-            } else {
-                cartDisplayItem = new CartDisplayItem(quantity, product, productDetail);
-                cart.put(productID, cartDisplayItem);
             }
         }
+
+        // Bây giờ mới thêm sản phẩm mới vào giỏ hàng
+        if (cart.containsKey(productID)) {
+            // Nếu sản phẩm đã có trong giỏ hàng, tăng số lượng
+            CartDisplayItem cartItem = cart.get(productID);
+            cartItem.setQuantity(cartItem.getQuantity() + quantity);
+            if (cartItem.getProductDetail() == null) {
+                cartItem.setProductDetail(productDetail);
+            }
+        } else {
+            // Nếu chưa có thì thêm mới sản phẩm đó vào giỏ hàng
+            cartDisplayItem = new CartDisplayItem(quantity, product, productDetail);
+            cart.put(productID, cartDisplayItem);
+        }
+
         session.setAttribute("cart", cart);
-//        in ra san pham
-//        for (Map.Entry<String, CartDisplayItem> entry : cart.entrySet()) {
-//            System.out.println(entry.getValue().getProduct().getName() + " - So luong: " + entry.getValue().getQuantity());
-//        }
-//        luu gio hang vao database
         try {
             int prodId = Integer.parseInt(productID);
-            // neu trong gio hang da co san pham do, thi cap nhat so luong
+            // Nếu trong giỏ hàng đã có sản phẩm đó, thì cập nhật số lượng
             int totalQuantity = cart.get(productID).getQuantity();
             cartDao.addOrUpdateCartItem(userId, prodId, totalQuantity);
         } catch (NumberFormatException e) {
             e.printStackTrace();
         }
+
         response.sendRedirect(request.getContextPath() + "/cart/");
-        return;
     }
 
     public void removeFromCart(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
