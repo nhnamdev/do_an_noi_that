@@ -340,7 +340,9 @@
                                                     <div class="product-tumb">
                                                         <span class="discount-percent">-5%</span>
                                                         <a href="detail?pId=${p.id}">
-                                                            <img src="${p.img}" alt="${p.name}" loading="lazy">
+                                                            <img src="${pageContext.request.contextPath}/img/sanpham/${p.img}"
+                                                                 alt="${p.name}"
+                                                                 loading="lazy">
                                                         </a>
                                                         <c:choose>
                                                             <c:when test="${favoriteProductIds != null && favoriteProductIds.contains(p.id)}">
@@ -378,6 +380,7 @@
                                                         <div class="product-bottom_detail">
                                                             <div class="price">
                                                                 <span class="original-price">
+<%--                                                                     lấy giá gốc là giá trên trang * 1.05, làm vậy để kích thị giác khach hang  --%>
                                                                     <f:formatNumber value="${p.price * 1.05}"
                                                                                     type="number" pattern="#,###"/>đ
                                                                 </span>
