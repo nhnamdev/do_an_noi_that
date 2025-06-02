@@ -6,6 +6,7 @@ import vn.edu.hcmuaf.fit.sourcedoannoithat.dao.model.Product;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,6 +14,28 @@ public class ProductDao {
     Connection conn = null;
     PreparedStatement ps = null;
     ResultSet rs = null;
+
+    public boolean deleteProductById(int id) {
+        String sql = "DELETE FROM product_shop WHERE id = ?";
+        try {
+            conn = new DBConnect().getConnection();
+            ps = conn.prepareStatement(sql);
+            ps.setInt(1, id);
+            int rows = ps.executeUpdate();
+            return rows > 0;
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (ps != null) ps.close();
+                if (conn != null) conn.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        return false;
+    }
+
 
     public List<Product> getTop4BestSellers() {
         List<Product> list = new ArrayList<>();
@@ -348,8 +371,88 @@ public class ProductDao {
         return 0;
     }
 
+    public void insertProductWithDetail(String name, double price, int stock, String image,
+                                        String description, String material, String brand, String color,
+                                        double length, double width, double height, double weight, String feature) {
+        String insertProduct = "INSERT INTO product_shop (name, price, image, quantitySold, stock) VALUES (?, ?, ?, 0, ?)";
+        String insertDetail = "INSERT INTO product_detail (id, product_describe, material, brand, color, length, width, height, weight, feature) " +
+                "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+
+        try (Connection conn = new DBConnect().getConnection()) {
+            conn.setAutoCommit(false); // Transaction
+
+            // Insert sản phẩm
+            PreparedStatement ps = conn.prepareStatement(insertProduct, Statement.RETURN_GENERATED_KEYS);
+            ps.setString(1, name);
+            ps.setDouble(2, price);
+            ps.setString(3, image);
+            ps.setInt(4, stock);
+            ps.executeUpdate();
+
+            ResultSet rs = ps.getGeneratedKeys();
+            int productId = 0;
+            if (rs.next()) {
+                productId = rs.getInt(1);
+            }
+
+            // Insert chi tiết
+            PreparedStatement detailPs = conn.prepareStatement(insertDetail);
+            detailPs.setInt(1, productId);
+            detailPs.setString(2, description);
+            detailPs.setString(3, material);
+            detailPs.setString(4, brand);
+            detailPs.setString(5, color);
+            detailPs.setDouble(6, length);
+            detailPs.setDouble(7, width);
+            detailPs.setDouble(8, height);
+            detailPs.setDouble(9, weight);
+            detailPs.setString(10, feature);
+            detailPs.executeUpdate();
+
+            conn.commit();
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new RuntimeException("Không thể thêm sản phẩm mới");
+        }
+    }
+
+    public void addStockById(int productId, int amount) {
+        String sql = "UPDATE product_shop SET stock = stock + ? WHERE id = ?";
+        try (Connection conn = new DBConnect().getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setInt(1, amount);
+            ps.setInt(2, productId);
+            ps.executeUpdate();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     public static void main(String[] args) {
         ProductDao dao = new ProductDao();
+
+        // Dữ liệu test
+        String name = "Bàn gỗ sồi tự nhiên";
+        double price = 2490000;
+        int stock = 15;
+        String image = "ban-go-soi.jpg";
+        String description = "Bàn làm việc bằng gỗ sồi cao cấp, chống thấm nước và chịu lực tốt.";
+        String material = "Gỗ sồi";
+        String brand = "NatureWood";
+        String color = "Nâu";
+        double length = 120.0;
+        double width = 60.0;
+        double height = 75.0;
+        double weight = 25.5;
+        String feature = "Thiết kế hiện đại, dễ lau chùi";
+
+        // Gọi hàm insert
+        dao.insertProductWithDetail(name, price, stock, image, description,
+                material, brand, color, length, width, height, weight, feature);
+
+        System.out.println("✅ Đã thêm sản phẩm test vào CSDL thành công!");
+
+
         List<Product> productList = dao.getAllProduct();
         for (Product product : productList) {
             System.out.println(product);

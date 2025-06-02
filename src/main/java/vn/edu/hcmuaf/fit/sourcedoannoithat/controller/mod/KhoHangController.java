@@ -1,16 +1,10 @@
-
 package vn.edu.hcmuaf.fit.sourcedoannoithat.controller.mod;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.MultipartConfig;
 import jakarta.servlet.annotation.WebServlet;
-import jakarta.servlet.http.HttpServlet;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.Part;
-import vn.edu.hcmuaf.fit.sourcedoannoithat.dao.NewsDAO;
+import jakarta.servlet.http.*;
 import vn.edu.hcmuaf.fit.sourcedoannoithat.dao.ProductDao;
-import vn.edu.hcmuaf.fit.sourcedoannoithat.dao.model.News;
 import vn.edu.hcmuaf.fit.sourcedoannoithat.dao.model.Product;
 import vn.edu.hcmuaf.fit.sourcedoannoithat.utils.ConstantsStatic;
 
@@ -39,36 +33,53 @@ public class KhoHangController extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        request.setCharacterEncoding("UTF-8");
-
+// Lấy dữ liệu từ form
         String name = request.getParameter("name");
-        String priceStr = request.getParameter("price");
-        String stockStr = request.getParameter("stock");
+        double price = Double.parseDouble(request.getParameter("price"));
+        int stock = Integer.parseInt(request.getParameter("stock"));
         String description = request.getParameter("description");
 
+        // detail
+        String material = request.getParameter("material");
+        String brand = request.getParameter("brand");
+        String color = request.getParameter("color");
+        double length = parseDouble(request.getParameter("length"));
+        double width = parseDouble(request.getParameter("width"));
+        double height = parseDouble(request.getParameter("height"));
+        double weight = parseDouble(request.getParameter("weight"));
+        String feature = request.getParameter("feature");
+
+        // Xử lý ảnh chính
         Part filePart = request.getPart("image");
-        String fileName = Path.of(filePart.getSubmittedFileName()).getFileName().toString();
-        String uploadPath = request.getServletContext().getRealPath("/uploads");
+        String originalFileName = Path.of(filePart.getSubmittedFileName()).getFileName().toString();
 
-        // Tạo thư mục nếu chưa có
+        // Đường dẫn upload ảnh sản phẩm
+        String uploadPath = ConstantsStatic.UPLOAD_PATH + "sanpham";
         File uploadDir = new File(uploadPath);
-        if (!uploadDir.exists()) uploadDir.mkdirs();
+        if (!uploadDir.exists()) uploadDir.mkdirs(); // Tạo thư mục nếu chưa có
 
-        File file = new File(uploadDir, fileName);
-        try (InputStream input = filePart.getInputStream()) {
-            Files.copy(input, file.toPath(), StandardCopyOption.REPLACE_EXISTING);
+        // Lưu ảnh vào thư mục
+        File file = new File(uploadDir, originalFileName);
+        try (InputStream fileContent = filePart.getInputStream()) {
+            Files.copy(fileContent, file.toPath(), StandardCopyOption.REPLACE_EXISTING);
+        }
+        // Gọi DAO để lưu vào DB
+        ProductDao dao = new ProductDao();
+        dao.insertProductWithDetail(name, price, stock, originalFileName, description,
+                material, brand, color, length, width, height, weight, feature);
+
+        // Chuyển hướng về trang quản lý
+        HttpSession session = request.getSession();
+        session.setAttribute("successMessage", "Thêm sản phẩm thành công!");
+        response.sendRedirect(request.getContextPath() + "/mod/khohang");
+    }
+
+    private double parseDouble(String value) {
+        try {
+            return Double.parseDouble(value);
+        } catch (Exception e) {
+            return 0;
         }
 
-        Product product = new Product();
-        product.setName(name);
-        product.setPrice(Double.parseDouble(priceStr));
-        product.setStock(Integer.parseInt(stockStr));
-        product.setQuantitySold(0); // sản phẩm mới chưa có bán
-        product.setImg("uploads/" + fileName);
-
-
-        ProductDao dao = new ProductDao();
-        //dao.insert(product); // đảm bảo bạn đã có hàm insert(Product)
-
-        response.sendRedirect(request.getContextPath() + "/mod/khohang");
-    }}
+    }
+}
