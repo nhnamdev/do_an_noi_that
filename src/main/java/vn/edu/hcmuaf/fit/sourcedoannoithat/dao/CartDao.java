@@ -99,7 +99,8 @@ public class CartDao {
                         rs.getString(2),
                         rs.getDouble(3),
                         rs.getString(4),
-                        rs.getInt(5)
+                        rs.getInt(5),
+                        rs.getInt(6)
                 );
             }
         } catch (Exception e) {

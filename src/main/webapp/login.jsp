@@ -81,7 +81,7 @@
                     <div class="facebook">
                         <a href="https://www.facebook.com/v19.0/dialog/oauth?
 fields=id,name,email&client_id=1298925587857868
-&redirect_uri=http://localhost:8080/source_do_an_noi_that_war/login?provider=facebook"
+&redirect_uri=${pageContext.request.contextPath}/login?provider=facebook"
                            style="background-color: #3b5998; color: white; padding: 10px 10px; text-decoration: none; border-radius: 5px; display: inline-block;">
                             <i class="fab fa-facebook-f" style="margin-right: 8px;"></i> Facebook
                         </a>

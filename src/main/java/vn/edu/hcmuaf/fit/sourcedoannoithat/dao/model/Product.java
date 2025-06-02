@@ -9,48 +9,18 @@ public class Product implements Serializable {
     private double price;
     private String img;
     private int quantitySold;
-    private int quantity;
-
-    private int categoryId;
-    private int subcategoryId;
-    private String createdDate;
-    private int viewCount;
-    private boolean isFeatured;
-    private double discountPercent;
-    private Double originalPrice;
-
-    private String categoryName;
-    private String subcategoryName;
+    private int stock;
 
     public Product() {
     }
 
-    public Product(int id, String name, double price, String img, int quantitySold) {
+    public Product(int id, String name, double price, String img, int quantitySold, int stock) {
         this.id = id;
         this.name = name;
         this.price = price;
         this.img = img;
         this.quantitySold = quantitySold;
-        this.quantity = 1;
-    }
-
-    public Product(int id, String name, double price, String img, int quantitySold, int quantity, int categoryId, int subcategoryId, String createdDate,
-                   int viewCount, boolean isFeatured, double discountPercent, Double originalPrice, String categoryName, String subcategoryName) {
-        this.id = id;
-        this.name = name;
-        this.price = price;
-        this.img = img;
-        this.quantitySold = quantitySold;
-        this.quantity = quantity;
-        this.categoryId = categoryId;
-        this.subcategoryId = subcategoryId;
-        this.createdDate = createdDate;
-        this.viewCount = viewCount;
-        this.isFeatured = isFeatured;
-        this.discountPercent = discountPercent;
-        this.originalPrice = originalPrice;
-        this.categoryName = categoryName;
-        this.subcategoryName = subcategoryName;
+        this.stock = stock;
     }
 
     public int getId() {
@@ -93,52 +63,12 @@ public class Product implements Serializable {
         this.quantitySold = quantitySold;
     }
 
-    public int getQuantity() {
-        return quantity;
+    public int getStock() {
+        return stock;
     }
 
-    public void setQuantity(int quantity) {
-        this.quantity = quantity;
-    }
-    public String getFormattedPrice() {
-        DecimalFormat formatter = new DecimalFormat("#,###");
-        return formatter.format(price);
-    }
-
-    public void setCategoryId(int categoryId) {
-        this.categoryId = categoryId;
-    }
-
-    public void setSubcategoryId(int subcategoryId) {
-        this.subcategoryId = subcategoryId;
-    }
-
-    public void setCreatedDate(String createdDate) {
-        this.createdDate = createdDate;
-    }
-
-    public void setViewCount(int viewCount) {
-        this.viewCount = viewCount;
-    }
-
-    public void setFeatured(boolean featured) {
-        isFeatured = featured;
-    }
-
-    public void setDiscountPercent(double discountPercent) {
-        this.discountPercent = discountPercent;
-    }
-
-    public void setOriginalPrice(Double originalPrice) {
-        this.originalPrice = originalPrice;
-    }
-
-    public void setCategoryName(String categoryName) {
-        this.categoryName = categoryName;
-    }
-
-    public void setSubcategoryName(String subcategoryName) {
-        this.subcategoryName = subcategoryName;
+    public void setStock(int quantity) {
+        this.stock = stock;
     }
 
     @Override
@@ -149,16 +79,7 @@ public class Product implements Serializable {
                 ", price=" + price +
                 ", img='" + img + '\'' +
                 ", quantitySold=" + quantitySold +
-                ", quantity=" + quantity +
-                ", categoryId=" + categoryId +
-                ", subcategoryId=" + subcategoryId +
-                ", createdDate='" + createdDate + '\'' +
-                ", viewCount=" + viewCount +
-                ", isFeatured=" + isFeatured +
-                ", discountPercent=" + discountPercent +
-                ", originalPrice=" + originalPrice +
-                ", categoryName='" + categoryName + '\'' +
-                ", subcategoryName='" + subcategoryName + '\'' +
+                ", stock=" + stock +
                 '}';
     }
 }

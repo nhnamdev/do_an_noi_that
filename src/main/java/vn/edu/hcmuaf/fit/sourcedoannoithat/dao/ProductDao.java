@@ -29,6 +29,7 @@ public class ProductDao {
                 p.setPrice(rs.getDouble("price"));
                 p.setImg(rs.getString("image"));
                 p.setQuantitySold(rs.getInt("quantitySold"));
+                p.setStock(rs.getInt("stock"));
                 list.add(p);
             }
         } catch (Exception e) {
@@ -51,7 +52,8 @@ public class ProductDao {
                         rs.getString(2),
                         rs.getDouble(3),
                         rs.getString(4),
-                        rs.getInt(5)
+                        rs.getInt(5),
+                        rs.getInt(6)
                 ));
             }
         } catch (Exception e) {
@@ -73,7 +75,8 @@ public class ProductDao {
                         rs.getString(2),
                         rs.getDouble(3),
                         rs.getString(4),
-                        rs.getInt(5)
+                        rs.getInt(5),
+                        rs.getInt(6)
                 );
             }
         } catch (Exception e) {
@@ -115,7 +118,9 @@ public class ProductDao {
                         rs.getString(2),
                         rs.getDouble(3),
                         rs.getString(4),
-                        rs.getInt(5)
+                        rs.getInt(5),
+                        rs.getInt(6)
+
                 );
                 result.add(p);
             }
@@ -156,8 +161,9 @@ public class ProductDao {
                         rs.getString(2),
                         rs.getDouble(3),
                         rs.getString(4),
-                        rs.getInt(5))
-                );
+                        rs.getInt(5),
+                        rs.getInt(6)
+                        ));
             }
         } catch (Exception e) {
             throw new RuntimeException(e);
@@ -339,7 +345,7 @@ public class ProductDao {
 
     public static void main(String[] args) {
         ProductDao dao = new ProductDao();
-        List<Product> productList = dao.getTop4BestSellers();
+        List<Product> productList = dao.getAllProduct();
         for (Product product : productList) {
             System.out.println(product);
         }

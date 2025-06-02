@@ -44,7 +44,7 @@
             </a>
         </li>
         <li>
-            <a href="${pageContext.request.contextPath}/mod" class="nav-link text-white">
+            <a href="${pageContext.request.contextPath}/mod/khohang" class="nav-link text-white">
                 <i class="fa fa-boxes me-2"></i> Kho hàng
             </a>
         </li>
