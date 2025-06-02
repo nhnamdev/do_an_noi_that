@@ -3,6 +3,7 @@ package vn.edu.hcmuaf.fit.sourcedoannoithat.controller.VNPay;
 import jakarta.servlet.*;
 import jakarta.servlet.http.*;
 import jakarta.servlet.annotation.*;
+import vn.edu.hcmuaf.fit.sourcedoannoithat.dao.CartDao;
 import vn.edu.hcmuaf.fit.sourcedoannoithat.dao.OrderDao;
 import vn.edu.hcmuaf.fit.sourcedoannoithat.dao.model.Invoice;
 import vn.edu.hcmuaf.fit.sourcedoannoithat.dao.model.PaymentHistory;
@@ -34,6 +35,7 @@ public class VNPayReturnController extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         VNPayService Config = new VNPayService();
+        HttpSession session = request.getSession();
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             Map fields = new HashMap();
@@ -63,10 +65,15 @@ public class VNPayReturnController extends HttpServlet {
 
                 boolean transSuccess = false;
                 invoice.setTransactionCode(paymentCode);
-                if ("00".equals(request.getParameter("vnp_TransactionStatus"))) {
+                if ("00".equals(request.getParameter("vnp_TransactionStatus"))) { //thanh toan thanh cong xoa het san pham trong cart
                     //update banking system
                     invoice.setStatus("success");
                     transSuccess = true;
+                    Integer userId = (Integer) session.getAttribute("userIdLogin");
+                    if (userId != null) {
+                        CartDao cartDao = new CartDao();
+                        cartDao.clearCartByUserId(userId);
+                    }
                 } else {
                     invoice.setStatus("Failed");
                 }

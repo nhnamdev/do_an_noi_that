@@ -192,8 +192,8 @@
                                             </button>
                                             Payment from #${item.userName}
                                         </th>
-                                        <td class="text-end">${item.paymentTime}</td>
-                                        <td class="text-end">$${item.amountPaid}</td>
+                                        <td class="text-end">${item.paymentDate}</td>
+                                        <td class="text-end">$${item.finalAmount}</td>
                                         <td class="text-end">
                                             <c:choose>
                                                 <c:when test="${item.status == 'success'}">
