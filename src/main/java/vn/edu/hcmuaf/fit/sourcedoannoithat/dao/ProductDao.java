@@ -47,13 +47,14 @@ public class ProductDao {
             ps = conn.prepareStatement(query);
             rs = ps.executeQuery();
             while (rs.next()) {
+                // Sử dụng constructor với 6 tham số: id, name, price, image, quantitySold, stock
                 productList.add(new Product(
-                        rs.getInt(1),
-                        rs.getString(2),
-                        rs.getDouble(3),
-                        rs.getString(4),
-                        rs.getInt(5),
-                        rs.getInt(6)
+                        rs.getInt("id"),
+                        rs.getString("name"),
+                        rs.getDouble("price"),
+                        rs.getString("image"),
+                        rs.getInt("quantitySold"),
+                        rs.getInt("stock")
                 ));
             }
         } catch (Exception e) {
@@ -70,13 +71,14 @@ public class ProductDao {
             ps.setString(1, id);
             rs = ps.executeQuery();
             if (rs.next()) {
+                // Sử dụng constructor với 6 tham số
                 return new Product(
-                        rs.getInt(1),
-                        rs.getString(2),
-                        rs.getDouble(3),
-                        rs.getString(4),
-                        rs.getInt(5),
-                        rs.getInt(6)
+                        rs.getInt("id"),
+                        rs.getString("name"),
+                        rs.getDouble("price"),
+                        rs.getString("image"),
+                        rs.getInt("quantitySold"),
+                        rs.getInt("stock")
                 );
             }
         } catch (Exception e) {
@@ -113,14 +115,14 @@ public class ProductDao {
 
             rs = ps.executeQuery();
             while (rs.next()) {
+                // Sử dụng constructor với 6 tham số
                 Product p = new Product(
-                        rs.getInt(1),
-                        rs.getString(2),
-                        rs.getDouble(3),
-                        rs.getString(4),
-                        rs.getInt(5),
-                        rs.getInt(6)
-
+                        rs.getInt("id"),
+                        rs.getString("name"),
+                        rs.getDouble("price"),
+                        rs.getString("image"),
+                        rs.getInt("quantitySold"),
+                        rs.getInt("stock")
                 );
                 result.add(p);
             }
@@ -156,14 +158,15 @@ public class ProductDao {
             ps.setInt(1, (index - 1) * 6);
             rs = ps.executeQuery();
             while (rs.next()) {
+                // Sử dụng constructor với 6 tham số
                 list.add(new Product(
-                        rs.getInt(1),
-                        rs.getString(2),
-                        rs.getDouble(3),
-                        rs.getString(4),
-                        rs.getInt(5),
-                        rs.getInt(6)
-                        ));
+                        rs.getInt("id"),
+                        rs.getString("name"),
+                        rs.getDouble("price"),
+                        rs.getString("image"),
+                        rs.getInt("quantitySold"),
+                        rs.getInt("stock")
+                ));
             }
         } catch (Exception e) {
             throw new RuntimeException(e);
@@ -256,12 +259,14 @@ public class ProductDao {
 
             rs = ps.executeQuery();
             while (rs.next()) {
+                // Sử dụng constructor với 6 tham số
                 result.add(new Product(
                         rs.getInt("id"),
                         rs.getString("name"),
                         rs.getDouble("price"),
                         rs.getString("image"),
-                        rs.getInt("quantitySold")
+                        rs.getInt("quantitySold"),
+                        rs.getInt("stock")
                 ));
             }
         } catch (Exception e) {
