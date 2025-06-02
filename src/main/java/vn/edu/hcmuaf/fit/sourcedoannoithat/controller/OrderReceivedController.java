@@ -30,12 +30,12 @@ public class OrderReceivedController extends HttpServlet {
             return;
         }
 
-        // Lấy order_id từ session (được set từ CheckoutController hoặc VNPayReturnController)
+        // Lấy order_id từ session
         Integer lastOrderId = (Integer) session.getAttribute("lastOrderId");
         Integer lastInvoiceId = (Integer) session.getAttribute("lastInvoiceId");
 
         if (lastOrderId == null) {
-            // Nếu không có order_id, chuyển về trang chủ
+            // Nếu không get dc order_id, chuyển về trang chủ
             response.sendRedirect(request.getContextPath() + "/");
             return;
         }
@@ -48,45 +48,31 @@ public class OrderReceivedController extends HttpServlet {
                 return;
             }
 
-            // Lấy danh sách sản phẩm trong đơn hàng
             List<OrderItem> orderItems = orderDao.getOrderItemsByOrderId(lastOrderId);
 
-            // Set attributes để hiển thị trong JSP
             request.setAttribute("orderInfo", orderInfo);
             request.setAttribute("orderItems", orderItems);
 
-            // Forward đến JSP để hiển thị
             request.getRequestDispatcher("/orderReceived.jsp").forward(request, response);
 
-            // ✅ XÓA CART SAU KHI HIỂN THỊ THÀNH CÔNG
-            // Lấy thông tin về loại cart từ session trước khi xóa
+            // Lấy thông tin về loại đặt hàng từ session trước khi xóa
             Boolean isBuyNow = (Boolean) session.getAttribute("isBuyNow");
 
             if (Boolean.TRUE.equals(isBuyNow)) {
-                // Xóa buyNowCart - chỉ xóa session vì buyNow không lưu vào DB
+                // Xóa mua ngay session vì mua ngay không lưu vào DB
                 session.removeAttribute("buyNowCart");
                 session.removeAttribute("isBuyNow");
-                System.out.println("DEBUG OrderReceived: Removed buyNowCart (session only) after successful display");
             } else {
-                // Xóa cart thường - xóa cả session và database
                 session.removeAttribute("cart");
-
-                boolean cartCleared = cartDao.clearCartByUserId(userID);
-                if (cartCleared) {
-                    System.out.println("DEBUG OrderReceived: Successfully cleared cart from database for user " + userID);
-                } else {
-                    System.out.println("DEBUG OrderReceived: Failed to clear cart from database for user " + userID);
-                }
+                cartDao.clearCartByUserId(userID);
             }
 
-            // Clear session data sau khi xóa cart
             session.removeAttribute("lastOrderId");
             session.removeAttribute("lastInvoiceId");
-            session.removeAttribute("pendingOrderInfo"); // Xóa thông tin VNPay tạm thời nếu có
+            session.removeAttribute("pendingOrderInfo");
 
         } catch (Exception e) {
             e.printStackTrace();
-            // Nếu có lỗi, không xóa cart để người dùng có thể thử lại
             response.sendRedirect(request.getContextPath() + "/");
         }
     }

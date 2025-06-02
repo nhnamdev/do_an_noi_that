@@ -4,6 +4,7 @@ import jakarta.servlet.*;
 import jakarta.servlet.http.*;
 import jakarta.servlet.annotation.*;
 import vn.edu.hcmuaf.fit.sourcedoannoithat.dao.OrderDao;
+import vn.edu.hcmuaf.fit.sourcedoannoithat.dao.model.CartDisplayItem;
 import vn.edu.hcmuaf.fit.sourcedoannoithat.dao.model.Invoice;
 import vn.edu.hcmuaf.fit.sourcedoannoithat.service.VNPayService;
 
@@ -24,16 +25,13 @@ public class VNPayController extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         HttpSession session = req.getSession();
 
-        // ✅ Kiểm tra phương thức thanh toán
         String paymentMethod = req.getParameter("payment");
 
         if ("cod".equals(paymentMethod)) {
-            // Chuyển đến CheckoutController để xử lý COD
             req.getRequestDispatcher("/checkout/").forward(req, resp);
             return;
         }
 
-        // ✅ VNPay: Lưu thông tin vào session, không tạo order ngay
         String totalBillStr = req.getParameter("totalBill");
 
         if (totalBillStr == null) {
@@ -43,7 +41,6 @@ public class VNPayController extends HttpServlet {
 
         double totalBillDouble = Double.parseDouble(totalBillStr);
 
-        // ✅ THAY ĐỔI: Lưu thông tin order vào session thay vì tạo order ngay
         Map<String, String> orderInfo = new HashMap<>();
         orderInfo.put("fullname", req.getParameter("fullname"));
         orderInfo.put("phone", req.getParameter("phone"));
@@ -57,10 +54,12 @@ public class VNPayController extends HttpServlet {
 
         // Lưu vào session để sử dụng sau khi thanh toán thành công
         session.setAttribute("pendingOrderInfo", orderInfo);
+        HashMap<String, CartDisplayItem> cart = (HashMap<String, CartDisplayItem>) session.getAttribute("cart");
+        if (cart != null && !cart.isEmpty()) {
+            session.setAttribute("cartToProcess", new HashMap<>(cart));
+        }
 
         VNPayService Config = new VNPayService();
-
-        // ✅ Tạo temporary transaction reference (không phải order_id thật)
         String tempTxnRef = "TEMP_" + System.currentTimeMillis();
 
         String vnp_Version = "2.1.0";
@@ -68,7 +67,7 @@ public class VNPayController extends HttpServlet {
         String orderType = "other";
 
         long amount = (long) (totalBillDouble * 100);
-        String vnp_TxnRef = tempTxnRef; // ✅ Dùng temp ID thay vì order_id
+        String vnp_TxnRef = tempTxnRef;
         String vnp_IpAddr = Config.getIpAddress(req);
 
         String vnp_TmnCode = Config.vnp_TmnCode;

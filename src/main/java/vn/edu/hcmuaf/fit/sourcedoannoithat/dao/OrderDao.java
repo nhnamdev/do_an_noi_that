@@ -23,7 +23,7 @@ public class OrderDao {
                 "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         try {
             conn = new DBConnect().getConnection();
-            conn.setAutoCommit(false); // Bắt đầu transaction
+            conn.setAutoCommit(false);
             ps = conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
 
             if (order.getOrderNumber() == null || order.getOrderNumber().isEmpty()) {
@@ -45,7 +45,7 @@ public class OrderDao {
             rs = ps.getGeneratedKeys();
             int orderId = 0;
             if (rs.next()) {
-                orderId = rs.getInt(1); // Lấy order_id được auto-generate
+                orderId = rs.getInt(1);
             } else {
                 throw new SQLException("Không thể tạo order_id");
             }
@@ -68,13 +68,11 @@ public class OrderDao {
             }
 
             ps.executeBatch();
-            conn.commit(); // Lưu thành công
+            conn.commit();
 
-            System.out.println("DEBUG: Order created with order_id: " + orderId);
-            return orderId; // Trả về order_id
+            return orderId;
 
         } catch (Exception e) {
-            System.out.println("DEBUG: Error creating order: " + e.getMessage());
             e.printStackTrace();
             try {
                 if (conn != null) {

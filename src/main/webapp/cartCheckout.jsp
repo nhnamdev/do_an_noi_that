@@ -166,7 +166,8 @@
                                     <c:set var="totalAmount" value="${totalAmount + itemTotal}"/>
                                     <div class="product-cart-item">
                                         <div class="product-info">
-                                            <img src="${product.img}" alt="${product.name}" class="product-image">
+                                            <img src="/img/sanpham/${product.img}" alt="${product.name}"
+                                                 class="product-image">
                                             <div class="product-details">
                                                 <h4 class="product-name">${product.name}</h4>
                                                 <div class="product-meta">

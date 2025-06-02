@@ -5,17 +5,18 @@ import jakarta.servlet.http.*;
 import jakarta.servlet.annotation.*;
 import vn.edu.hcmuaf.fit.sourcedoannoithat.dao.CartDao;
 import vn.edu.hcmuaf.fit.sourcedoannoithat.dao.OrderDao;
+import vn.edu.hcmuaf.fit.sourcedoannoithat.dao.model.CartDisplayItem;
 import vn.edu.hcmuaf.fit.sourcedoannoithat.dao.model.Invoice;
-import vn.edu.hcmuaf.fit.sourcedoannoithat.dao.model.PaymentHistory;
+import vn.edu.hcmuaf.fit.sourcedoannoithat.dao.model.Product;
+import vn.edu.hcmuaf.fit.sourcedoannoithat.dao.model.order.Order;
+import vn.edu.hcmuaf.fit.sourcedoannoithat.dao.model.order.OrderItem;
 import vn.edu.hcmuaf.fit.sourcedoannoithat.service.VNPayService;
 
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
-import java.util.Enumeration;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 @WebServlet("/vnpayReturn")
 public class VNPayReturnController extends HttpServlet {
@@ -57,33 +58,127 @@ public class VNPayReturnController extends HttpServlet {
             String signValue = Config.hashAllFields(fields);
             if (signValue.equals(vnp_SecureHash)) {
                 String paymentCode = request.getParameter("vnp_TransactionNo");
-
-                String orderId = request.getParameter("vnp_TxnRef");
-
-                Invoice invoice = new Invoice();
-                invoice.setId((Integer.parseInt(orderId)));
+                String tempTxnRef = request.getParameter("vnp_TxnRef");
+                String transactionStatus = request.getParameter("vnp_TransactionStatus");
 
                 boolean transSuccess = false;
-                invoice.setTransactionCode(paymentCode);
-                if ("00".equals(request.getParameter("vnp_TransactionStatus"))) { //thanh toan thanh cong xoa het san pham trong cart
-                    //update banking system
-                    invoice.setStatus("success");
-                    transSuccess = true;
-                    Integer userId = (Integer) session.getAttribute("userIdLogin");
-                    if (userId != null) {
-                        CartDao cartDao = new CartDao();
-                        cartDao.clearCartByUserId(userId);
+                int orderId = 0;
+
+                if ("00".equals(transactionStatus)) {
+                    @SuppressWarnings("unchecked")
+                    Map<String, String> orderInfo = (Map<String, String>) session.getAttribute("pendingOrderInfo");
+                    @SuppressWarnings("unchecked")
+                    HashMap<String, CartDisplayItem> cartToProcess = (HashMap<String, CartDisplayItem>) session.getAttribute("cartToProcess");
+
+                    if (orderInfo != null && cartToProcess != null) {
+                        Integer userID = (Integer) session.getAttribute("userIdLogin");
+
+                        if (userID != null) {
+                            Order order = createOrderFromInfo(userID, orderInfo, cartToProcess);
+                            order.setPaymentMethod("Thanh toán qua VNPay");
+
+                            orderId = orderDao.createOrderAndGetId(order);
+
+                            if (orderId > 0) {
+                                Invoice invoice = new Invoice();
+                                invoice.setOrderId(orderId);
+                                invoice.setTotal(order.getTotalAmount());
+                                invoice.setDiscount(0);
+                                invoice.setFinalAmount(order.getTotalAmount());
+                                invoice.setPaymentMethod(1);
+
+                                int invoiceId = orderDao.insertOrder(invoice);
+
+                                if (invoiceId > 0) {
+                                    Invoice updateInvoice = new Invoice();
+                                    updateInvoice.setId(invoiceId);
+                                    updateInvoice.setTransactionCode(paymentCode);
+                                    updateInvoice.setStatus("success");
+                                    orderDao.updateOrderStatus(updateInvoice);
+                                }
+
+                                CartDao cartDao = new CartDao();
+                                cartDao.clearCartByUserId(userID);
+
+                                session.setAttribute("lastOrderId", orderId);
+                                session.removeAttribute("pendingOrderInfo");
+                                session.removeAttribute("cartToProcess");
+
+                                transSuccess = true;
+                            }
+                        }
                     }
-                } else {
-                    invoice.setStatus("Failed");
                 }
-                orderDao.updateOrderStatus(invoice);
+
                 request.setAttribute("transResult", transSuccess);
                 request.getRequestDispatcher("paymentReturn.jsp").forward(request, response);
+
             } else {
-                //RETURN PAGE ERROR
-                System.out.println("GD KO HOP LE (invalid signature)");
+                request.setAttribute("transResult", false);
+                request.getRequestDispatcher("paymentReturn.jsp").forward(request, response);
             }
+        } catch (Exception e) {
+            e.printStackTrace();
+            request.setAttribute("transResult", false);
+            request.getRequestDispatcher("paymentReturn.jsp").forward(request, response);
         }
+    }
+
+    private Order createOrderFromInfo(Integer userID, Map<String, String> orderInfo, HashMap<String, CartDisplayItem> cartToProcess) {
+        Order order = new Order();
+        order.setUserId(userID);
+        order.setCustomerName(orderInfo.get("fullname"));
+        order.setCustomerPhone(orderInfo.get("phone"));
+        order.setShippingAddress(connectFullAddress(
+                orderInfo.get("address"),
+                orderInfo.get("ward"),
+                orderInfo.get("district"),
+                orderInfo.get("province")
+        ));
+
+        double totalBill = Double.parseDouble(orderInfo.get("totalBill"));
+        order.setTotalAmount(totalBill);
+        order.setOrderStatus("pending");
+        order.setNotes(orderInfo.get("notes"));
+
+        List<OrderItem> orderItems = new ArrayList<>();
+        for (CartDisplayItem cartItem : cartToProcess.values()) {
+            Product product = cartItem.getProduct();
+            OrderItem orderItem = new OrderItem();
+            orderItem.setProductId(product.getId());
+            orderItem.setProductName(product.getName());
+            orderItem.setProductImage(product.getImg());
+            orderItem.setUnitPrice(product.getPrice());
+            orderItem.setQuantity(cartItem.getQuantity());
+            orderItem.setTotalPrice(product.getPrice() * cartItem.getQuantity());
+            orderItems.add(orderItem);
+        }
+        order.setOrderItems(orderItems);
+        return order;
+    }
+
+    private String connectFullAddress(String address, String ward, String district, String province) {
+        StringBuilder fullAddress = new StringBuilder();
+
+        if (address != null && !address.trim().isEmpty()) {
+            fullAddress.append(address.trim());
+        }
+
+        if (ward != null && !ward.trim().isEmpty()) {
+            if (fullAddress.length() > 0) fullAddress.append(", ");
+            fullAddress.append(ward.trim());
+        }
+
+        if (district != null && !district.trim().isEmpty()) {
+            if (fullAddress.length() > 0) fullAddress.append(", ");
+            fullAddress.append(district.trim());
+        }
+
+        if (province != null && !province.trim().isEmpty()) {
+            if (fullAddress.length() > 0) fullAddress.append(", ");
+            fullAddress.append(province.trim());
+        }
+
+        return fullAddress.toString();
     }
 }

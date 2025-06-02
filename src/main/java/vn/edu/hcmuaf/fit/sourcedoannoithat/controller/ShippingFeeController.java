@@ -9,7 +9,6 @@ import jakarta.servlet.annotation.*;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import vn.edu.hcmuaf.fit.sourcedoannoithat.dao.DetailDao;
-import vn.edu.hcmuaf.fit.sourcedoannoithat.dao.ProductDao;
 import vn.edu.hcmuaf.fit.sourcedoannoithat.dao.model.CartDisplayItem;
 import vn.edu.hcmuaf.fit.sourcedoannoithat.dao.model.Product;
 import vn.edu.hcmuaf.fit.sourcedoannoithat.dao.model.ProductDetail;

@@ -168,7 +168,7 @@
                             <c:forEach var="item" items="${orderItems}">
                                 <div class="product-item">
                                     <div class="product-image">
-                                        <img src="${item.productImage}" alt="${item.productName}">
+                                        <img src="/img/sanpham/${item.productImage}" alt="${item.productName}">
                                     </div>
                                     <div class="product-details">
                                         <div class="product-name">
@@ -187,10 +187,6 @@
                                     <div>Tạm tính</div>
                                     <div><f:formatNumber type="currency" value="${orderInfo.totalAmount}"
                                                          pattern="#,###₫"/></div>
-                                </div>
-                                <div class="summary-row">
-                                    <div>Phí vận chuyển</div>
-                                    <div class="free-label">Miễn phí</div>
                                 </div>
                                 <div class="total-row">
                                     <div>Tổng cộng</div>
