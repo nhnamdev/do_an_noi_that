@@ -201,10 +201,6 @@
                             </div>
                             <div class="payment-method">
                                 <div class="payment-option">
-                                    <input type="radio" id="bank-transfer" name="payment" value="bank" checked>
-                                    <label for="bank-transfer">Chuyển khoản ngân hàng</label>
-                                </div>
-                                <div class="payment-option">
                                     <input type="radio" id="vnpay-transfer" name="payment" value="vnpay">
                                     <label for="vnpay-transfer">Thanh toán qua VNPay</label>
                                 </div>

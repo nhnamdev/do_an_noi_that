@@ -109,6 +109,79 @@ public class CartDao {
         return null;
     }
 
+    /**
+     * Xóa một sản phẩm cụ thể khỏi giỏ hàng
+     */
+    public boolean removeCartItem(int userId, int productId) {
+        String query = "DELETE FROM cart WHERE user_id = ? AND product_id = ?";
+        try {
+            conn = new DBConnect().getConnection();
+            ps = conn.prepareStatement(query);
+            ps.setInt(1, userId);
+            ps.setInt(2, productId);
+
+            int rowsAffected = ps.executeUpdate();
+            System.out.println("DEBUG CartDao: Removed product " + productId + " from cart for user " + userId);
+            return rowsAffected > 0;
+
+        } catch (Exception e) {
+            System.out.println("DEBUG CartDao: Error removing cart item - " + e.getMessage());
+            e.printStackTrace();
+            return false;
+        } finally {
+            try {
+                if (ps != null) ps.close();
+                if (conn != null) conn.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    /**
+     * Xóa các sản phẩm cụ thể khỏi giỏ hàng (cho trường hợp mua ngay với nhiều sản phẩm)
+     */
+    public boolean removeCartItems(int userId, List<Integer> productIds) {
+        if (productIds == null || productIds.isEmpty()) {
+            return true;
+        }
+
+        StringBuilder query = new StringBuilder("DELETE FROM cart WHERE user_id = ? AND product_id IN (");
+        for (int i = 0; i < productIds.size(); i++) {
+            query.append("?");
+            if (i < productIds.size() - 1) {
+                query.append(",");
+            }
+        }
+        query.append(")");
+
+        try {
+            conn = new DBConnect().getConnection();
+            ps = conn.prepareStatement(query.toString());
+            ps.setInt(1, userId);
+
+            for (int i = 0; i < productIds.size(); i++) {
+                ps.setInt(i + 2, productIds.get(i));
+            }
+
+            int rowsAffected = ps.executeUpdate();
+            System.out.println("DEBUG CartDao: Removed " + rowsAffected + " specific items from cart for user " + userId);
+            return rowsAffected > 0;
+
+        } catch (Exception e) {
+            System.out.println("DEBUG CartDao: Error removing specific cart items - " + e.getMessage());
+            e.printStackTrace();
+            return false;
+        } finally {
+            try {
+                if (ps != null) ps.close();
+                if (conn != null) conn.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
     public static void main(String[] args) {
         CartDao cartDao = new CartDao();
         System.out.println(cartDao.addOrUpdateCartItem(3, 4, 2));

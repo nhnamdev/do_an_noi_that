@@ -115,7 +115,7 @@ public class ListProductController extends HttpServlet {
                 out.println("        <div class=\"product-tumb\">");
                 out.println("            <span class=\"discount-percent\">-5%</span>");
                 out.println("            <a href=\"detail?pId=" + product.getId() + "\">");
-                out.println("                <img src=\"" + product.getImg() + "\" alt=\"" + product.getName() + "\" loading=\"lazy\">");
+                out.println("                <img src=\"" + request.getContextPath() + "/img/sanpham/" + product.getImg() + "\" alt=\"" + product.getName() + "\" loading=\"lazy\">");
                 out.println("            </a>");
                 out.println("            <span class=\"favorite-product " + favoriteClass + "\" ");
                 out.println("                  title=\"" + favoriteTitle + "\" ");
@@ -147,9 +147,13 @@ public class ListProductController extends HttpServlet {
                 out.println("                    </span>");
                 out.println("                </div>");
                 out.println("                <div class=\"product-actions\">");
-                out.println("                    <button class=\"add-to-cart-btn\">");
-                out.println("                        <i class=\"fa fa-shopping-cart\"></i> Thêm vào giỏ");
-                out.println("                    </button>");
+                out.println("                    <form action=\"" + request.getContextPath() + "/cart/addToCart\" method=\"post\">");
+                out.println("                        <input type=\"hidden\" name=\"id\" value=\"" + product.getId() + "\">");
+                out.println("                        <input type=\"hidden\" name=\"quantity\" value=\"1\">");
+                out.println("                        <button type=\"submit\" class=\"add-to-cart-btn\">");
+                out.println("                            <i class=\"fas fa-cart-plus\"></i> Thêm vào giỏ hàng");
+                out.println("                        </button>");
+                out.println("                    </form>");
                 out.println("                </div>");
                 out.println("            </div>");
                 out.println("        </div>");

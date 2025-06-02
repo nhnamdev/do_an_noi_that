@@ -23,6 +23,17 @@ public class VNPayController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         HttpSession session = req.getSession();
+
+        // ✅ Kiểm tra phương thức thanh toán
+        String paymentMethod = req.getParameter("payment");
+
+        if ("cod".equals(paymentMethod)) {
+            // Chuyển đến CheckoutController để xử lý COD
+            req.getRequestDispatcher("/checkout/").forward(req, resp);
+            return;
+        }
+
+        // ✅ VNPay: Lưu thông tin vào session, không tạo order ngay
         String totalBillStr = req.getParameter("totalBill");
 
         if (totalBillStr == null) {
@@ -32,24 +43,32 @@ public class VNPayController extends HttpServlet {
 
         double totalBillDouble = Double.parseDouble(totalBillStr);
 
-        OrderDao orderDao = new OrderDao();
-        Invoice invoice = new Invoice();
-        invoice.setFinalAmount((int)totalBillDouble);
-        int orderId = orderDao.insertOrder(invoice);
+        // ✅ THAY ĐỔI: Lưu thông tin order vào session thay vì tạo order ngay
+        Map<String, String> orderInfo = new HashMap<>();
+        orderInfo.put("fullname", req.getParameter("fullname"));
+        orderInfo.put("phone", req.getParameter("phone"));
+        orderInfo.put("address", req.getParameter("address"));
+        orderInfo.put("district", req.getParameter("district"));
+        orderInfo.put("province", req.getParameter("province"));
+        orderInfo.put("ward", req.getParameter("ward"));
+        orderInfo.put("notes", req.getParameter("order-notes"));
+        orderInfo.put("totalBill", totalBillStr);
+        orderInfo.put("paymentMethod", "vnpay");
+
+        // Lưu vào session để sử dụng sau khi thanh toán thành công
+        session.setAttribute("pendingOrderInfo", orderInfo);
 
         VNPayService Config = new VNPayService();
 
+        // ✅ Tạo temporary transaction reference (không phải order_id thật)
+        String tempTxnRef = "TEMP_" + System.currentTimeMillis();
 
-        if(orderId < 1) {
-            resp.sendRedirect("cart");
-            return;
-        }
         String vnp_Version = "2.1.0";
         String vnp_Command = "pay";
         String orderType = "other";
 
         long amount = (long) (totalBillDouble * 100);
-        String vnp_TxnRef = orderId+"";//dky ma rieng
+        String vnp_TxnRef = tempTxnRef; // ✅ Dùng temp ID thay vì order_id
         String vnp_IpAddr = Config.getIpAddress(req);
 
         String vnp_TmnCode = Config.vnp_TmnCode;

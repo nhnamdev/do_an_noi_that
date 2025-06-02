@@ -1,11 +1,13 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="f" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html lang="vi">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Checkout</title>
+    <title>Đặt hàng thành công</title>
     <link rel="stylesheet" href="css/orderReceived.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
 </head>
@@ -59,8 +61,11 @@
                 <div class="price">1.120.000đ</div>
             </div>
             <div class="other_choose">
-                <button class="view_cart" onclick="window.location.href='../page_Cart/cart.html'">Giỏ hàng</button>
-                <button class="check_out" onclick="window.location.href='../page_CheckOut/checkout.html'">Thanh toán
+                <button class="view_cart" onclick="window.location.href='${pageContext.request.contextPath}/cart/'">Giỏ
+                    hàng
+                </button>
+                <button class="check_out" onclick="window.location.href='${pageContext.request.contextPath}/checkout/'">
+                    Thanh toán
                 </button>
             </div>
         </div>
@@ -72,7 +77,7 @@
                 <div class="order-row">
                     <div class="checkout-breadcrumb">
                         <div class="title-cart">
-                            <a href="">
+                            <a href="${pageContext.request.contextPath}/cart/">
                                 <div class="number-wrapper">
                                     <h3 class="step-number">01</h3>
                                 </div>
@@ -83,7 +88,7 @@
                             </a>
                         </div>
                         <div class="title-checkout">
-                            <a href="">
+                            <a href="${pageContext.request.contextPath}/checkout/">
                                 <div class="number-wrapper">
                                     <h3 class="step-number">02</h3>
                                 </div>
@@ -115,7 +120,7 @@
                     <div>
                         <h1 class="confirmation-title">Cảm ơn bạn đã đặt hàng</h1>
                         <p class="confirmation-message">Một email xác nhận đã được gửi tới
-                            <b>tanhtran_test@gmail.com</b>.<br>Xin
+                            <b>${sessionScope.userEmail != null ? sessionScope.userEmail : orderInfo.customerEmail}</b>.<br>Xin
                             vui lòng kiểm tra email của bạn</p>
                     </div>
                 </div>
@@ -124,25 +129,28 @@
                         <div class="order-info">
                             <div class="info-section">
                                 <h2 class="section-title">Thông tin mua hàng</h2>
-                                <div class="info-item">Tanh Trần</div>
-                                <div class="info-item">tanhtran_test@gmail.com</div>
-                                <div class="info-item">01234569812</div>
+                                <div class="info-item">${orderInfo.customerName}</div>
+                                <div class="info-item">${sessionScope.userEmail != null ? sessionScope.userEmail : orderInfo.customerEmail}</div>
+                                <div class="info-item">${orderInfo.customerPhone}</div>
                             </div>
                             <div class="info-section">
                                 <h2 class="section-title">Địa chỉ nhận hàng</h2>
-                                <div class="info-item">195 Đặng Văn Ngữ</div>
+                                <div class="info-item">${orderInfo.shippingAddress}</div>
                             </div>
                             <div class="info-section">
                                 <h2 class="section-title">Phương thức thanh toán</h2>
-                                <div class="info-item">Thanh toán khi nhận hàng (COD)</div>
+                                <div class="info-item">${orderInfo.paymentMethod}</div>
                             </div>
                             <div class="info-section">
                                 <h2 class="section-title">Phương thức vận chuyển</h2>
                                 <div class="info-item">Giao hàng tận nơi</div>
                             </div>
                             <div class="action-buttons">
-                                <button class="profile-order">Xem đơn đặt hàng</button>
-                                <button class="print-button">
+                                <button class="profile-order"
+                                        onclick="window.location.href='${pageContext.request.contextPath}/orderInformation'">
+                                    Xem đơn đặt hàng
+                                </button>
+                                <button class="print-button" onclick="window.print()">
                                     <i class="fa-solid fa-print"></i>
                                     <span>In</span>
                                 </button>
@@ -152,24 +160,33 @@
                     <div class="right-column">
                         <div class="order-details">
                             <div class="order-header">
-                                <div class="order-number">Đơn hàng 276040</div>
+                                <div class="order-number">Đơn hàng
+                                    #${orderInfo.orderNumber != null ? orderInfo.orderNumber : sessionScope.lastOrderId}</div>
                             </div>
-                            <div class="product-item">
-                                <div class="product-image">
-                                    <img src="img/sofa1.jpg" alt="Ghe sofa">
-                                </div>
-                                <div class="product-details">
-                                    <div class="product-name">
-                                        <span class="product-quantity">1</span>
-                                        Ghe sofa 1
+
+                            <!-- Hiển thị danh sách sản phẩm -->
+                            <c:forEach var="item" items="${orderItems}">
+                                <div class="product-item">
+                                    <div class="product-image">
+                                        <img src="${item.productImage}" alt="${item.productName}">
+                                    </div>
+                                    <div class="product-details">
+                                        <div class="product-name">
+                                            <span class="product-quantity">${item.quantity}</span>
+                                                ${item.productName}
+                                        </div>
+                                    </div>
+                                    <div class="product-price">
+                                        <f:formatNumber type="currency" value="${item.totalPrice}" pattern="#,###₫"/>
                                     </div>
                                 </div>
-                                <div class="product-price">5.390.000₫</div>
-                            </div>
+                            </c:forEach>
+
                             <div class="order-summary">
                                 <div class="summary-row">
                                     <div>Tạm tính</div>
-                                    <div>5.390.000₫</div>
+                                    <div><f:formatNumber type="currency" value="${orderInfo.totalAmount}"
+                                                         pattern="#,###₫"/></div>
                                 </div>
                                 <div class="summary-row">
                                     <div>Phí vận chuyển</div>
@@ -177,7 +194,8 @@
                                 </div>
                                 <div class="total-row">
                                     <div>Tổng cộng</div>
-                                    <div>5.390.000₫</div>
+                                    <div><f:formatNumber type="currency" value="${orderInfo.totalAmount}"
+                                                         pattern="#,###₫"/></div>
                                 </div>
                             </div>
                         </div>
