@@ -41,36 +41,64 @@ public class ProfileController extends HttpServlet {
             String newAddress = req.getParameter("userAddressInput");
             String newEmail = req.getParameter("userEmailInput");
 
-            String newDistrict = req.getParameter("district");
-            String newProvince = req.getParameter("province");
-            String fullAddress = newAddress + ", " + newDistrict + ", " + newProvince;
+            String provinceId = req.getParameter("provinceId");
+            String provinceName = req.getParameter("provinceName");
+            String districtId = req.getParameter("districtId");
+            String districtName = req.getParameter("districtName");
+            String wardCode = req.getParameter("wardCode");
+            String wardName = req.getParameter("wardName");
+            String fullAddress = req.getParameter("fullAddress");
 
-            // Lấy dữ liệu hiện tại từ session
             String currentName = (String) session.getAttribute("userName");
             String currentBirthday = (String) session.getAttribute("userBirthday");
             String currentNumberPhone = (String) session.getAttribute("userPhone");
             String currentAddress = (String) session.getAttribute("userAddress");
             String currentEmail = (String) session.getAttribute("userEmail");
 
+            String finalAddress;
+            if (fullAddress != null && !fullAddress.trim().isEmpty()) {
+                finalAddress = fullAddress;
+            } else if (newAddress != null && !newAddress.trim().isEmpty()) {
+                if (currentAddress != null && currentAddress.contains(", ")) {
+                    String[] parts = currentAddress.split(", ");
+                    if (parts.length >= 4) {
+                        finalAddress = newAddress + ", " + parts[parts.length - 3] + ", " + parts[parts.length - 2] + ", " + parts[parts.length - 1];
+                    } else {
+                        finalAddress = newAddress;
+                    }
+                } else {
+                    finalAddress = newAddress;
+                }
+            } else {
+                finalAddress = currentAddress;
+            }
+
             boolean isChanged =
                     (newName != null && !newName.equals(currentName)) ||
                             (newBirthday != null && !newBirthday.equals(currentBirthday)) ||
                             (newNumberPhone != null && !newNumberPhone.equals(currentNumberPhone)) ||
                             (newEmail != null && !newEmail.equals(currentEmail)) ||
-                            (newProvince != null && !newProvince.isEmpty()) ||
-                            (newDistrict != null && !newDistrict.isEmpty()) ||
-                            (newAddress != null && !newAddress.equals(currentAddress));
+                            (finalAddress != null && !finalAddress.equals(currentAddress));
 
             if (isChanged) {
-                Profile profile = new Profile(newName, newBirthday, newNumberPhone, fullAddress, newEmail);
+                Profile profile = new Profile(newName, newBirthday, newNumberPhone, finalAddress, newEmail);
                 boolean isUpdated = profileDao.updateProfile(profile, userId);
 
                 if (isUpdated) {
                     session.setAttribute("userName", newName);
                     session.setAttribute("userBirthday", newBirthday);
                     session.setAttribute("userPhone", newNumberPhone);
-                    session.setAttribute("userAddress", fullAddress);
+                    session.setAttribute("userAddress", finalAddress);
                     session.setAttribute("userEmail", newEmail);
+
+                    if (provinceId != null && !provinceId.trim().isEmpty()) {
+                        session.setAttribute("provinceId", provinceId);
+                        session.setAttribute("provinceName", provinceName);
+                        session.setAttribute("districtId", districtId);
+                        session.setAttribute("districtName", districtName);
+                        session.setAttribute("wardCode", wardCode);
+                        session.setAttribute("wardName", wardName);
+                    }
 
                     JSONObject jsonResponse = new JSONObject();
                     jsonResponse.put("status", "success");
@@ -78,21 +106,18 @@ public class ProfileController extends HttpServlet {
                     updatedUserJson.put("userName", newName);
                     updatedUserJson.put("userBirthday", newBirthday);
                     updatedUserJson.put("userPhone", newNumberPhone);
-                    updatedUserJson.put("userAddress", fullAddress);
+                    updatedUserJson.put("userAddress", finalAddress);
                     updatedUserJson.put("userEmail", newEmail);
 
                     jsonResponse.put("updatedUser", updatedUserJson);
-
                     resp.getWriter().write(jsonResponse.toString());
                 } else {
                     resp.getWriter().write("{\"status\": \"error\", \"message\": \"Update failed\"}");
                 }
             } else {
-                // No changes detected
                 resp.getWriter().write("{\"status\": \"info\", \"message\": \"No changes detected\"}");
             }
         } catch (Exception e) {
-            e.printStackTrace();
             resp.getWriter().write("{\"status\": \"error\", \"message\": \"" + e.getMessage() + "\"}");
         }
     }
