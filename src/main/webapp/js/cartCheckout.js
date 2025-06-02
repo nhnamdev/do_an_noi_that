@@ -284,6 +284,11 @@ function updateTotalPayment(shippingFee) {
         currency: 'VND',
         minimumFractionDigits: 0
     }).format(totalPayment).replace('₫', 'đ');
+    // Cập nhật giá trị input ẩn tổng thanh toán gửi lên server
+    const totalBillInput = document.getElementById('totalBillInput');
+    if (totalBillInput) {
+        totalBillInput.value = totalPayment;
+    }
 
     console.log("Đã cập nhật tổng thanh toán thành công");
 }

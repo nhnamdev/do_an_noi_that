@@ -226,6 +226,50 @@ public class ProfileDao {
             e.printStackTrace();
         }
     }
+    public void demoteAccount(int accountId) {
+        String selectQuery = "SELECT role FROM profile_client WHERE id = ?"; //lay role hien tai
+        String updateQuery = "UPDATE profile_client SET role = ? WHERE id = ?";
+
+        try (Connection connection = new DBConnect().getConnection();
+             PreparedStatement selectPs = connection.prepareStatement(selectQuery);
+             PreparedStatement updatePs = connection.prepareStatement(updateQuery)) {
+            selectPs.setInt(1, accountId);
+            ResultSet rs = selectPs.executeQuery();
+
+            if (rs.next()) {
+                int currentRole = rs.getInt("role");
+                int newRole = Math.max(0, currentRole - 1); // dk ko đc < 0
+                updatePs.setInt(1, newRole);
+                updatePs.setInt(2, accountId);
+                updatePs.executeUpdate();
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    public void promoteAccount(int accountId) {
+        String selectQuery = "SELECT role FROM profile_client WHERE id = ?"; //lay role hien tai
+        String updateQuery = "UPDATE profile_client SET role = ? WHERE id = ?";
+
+        try (Connection connection = new DBConnect().getConnection();
+             PreparedStatement selectPs = connection.prepareStatement(selectQuery);
+             PreparedStatement updatePs = connection.prepareStatement(updateQuery)) {
+            selectPs.setInt(1, accountId);
+            ResultSet rs = selectPs.executeQuery();
+
+            if (rs.next()) {
+                int currentRole = rs.getInt("role");
+                int newRole = currentRole + 1;
+                updatePs.setInt(1, newRole);
+                updatePs.setInt(2, accountId);
+                updatePs.executeUpdate();
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
     public static void main(String[] args) {
         ProfileDao profileDao = new ProfileDao();

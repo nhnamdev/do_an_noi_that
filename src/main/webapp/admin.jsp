@@ -357,6 +357,7 @@
                 <th>Quyền</th>
                 <th>Trạng thái</th>
                 <th>Hành Động</th>
+                <th>Cấp/Hạ</th>
             </tr>
             </thead>
             <tbody>
@@ -436,10 +437,8 @@
                                     onclick="return confirm('Bạn có chắc chắn muốn xóa tài khoản này?')">Xóa tài khoản
                             </button>
                         </form>
-
                         <form method="get" action="admin" id="lockUnlockForm_<%= pr.getId() %>">
-                            <input type="hidden" name="<%= activeStatus == 1 ? "lockId" : "unlockId" %>"
-                                   value="<%= pr.getId() %>">
+                            <input type="hidden" name="<%= activeStatus == 1 ? "lockId" : "unlockId" %>" value="<%= pr.getId() %>">
                             <button type="submit" class="btn lock"
                                     style="background-color: <%= activeStatus == 1 ? "red" : "green" %>; color: white;"
                                     onclick="return confirm('<%= activeStatus == 1 ? "Bạn có chắc chắn muốn khóa tài khoản này?" : "Bạn có chắc chắn muốn mở khóa tài khoản này?" %>')">
@@ -447,6 +446,27 @@
                             </button>
                         </form>
                     </div>
+                </td>
+                <td>
+                    <% if (roleStatus > 0) { %>
+                    <!-- Hạ quyền nếu role > 0 -->
+                    <form method="get" action="admin" id="demoteForm_<%= pr.getId() %>">
+                        <input type="hidden" name="demoteId" value="<%= pr.getId() %>">
+                        <button type="submit" class="btn btn-warning"
+                                onclick="return confirm('Bạn có chắc chắn muốn hạ quyền tài khoản này không?')">
+                            Hạ quyền
+                        </button>
+                    </form>
+                    <% } else { %>
+                    <!-- Neu la user thì cap quyen neu role == 0 -->
+                    <form method="get" action="admin" id="promoteForm_<%= pr.getId() %>">
+                        <input type="hidden" name="promoteId" value="<%= pr.getId() %>">
+                        <button type="submit" class="btn btn-warning"
+                                onclick="return confirm('Bạn có chắc chắn muốn nâng quyền tài khoản này không?')">
+                            Cấp quyền
+                        </button>
+                    </form>
+                    <% } %>
                 </td>
             </tr>
             <%
@@ -456,368 +476,6 @@
         </table>
         <script src="js/customer-management.js"></script>
     </div>
-    <div id="productsManagement" class="detail">
-        <h2>Kho hàng</h2>
-        <div class="header-actions">
-            <div class="search-bar">
-                <form action="admin.jsp" method="get">
-                    <input type="text" id="searchInput" name="search" placeholder="Tìm kiếm sản phẩm..."/>
-                    <button type="submit" id="searchButton"><i class="fa fa-search"></i></button>
-                </form>
-            </div>
-            <button id="addProductButton">Thêm Sản Phẩm</button>
-            <button id="exportFileButton">Xuất File</button>
-        </div>
-        <div id="editForm" style="display: none;">
-            <form>
-                <label for="editProductName">Tên Sản Phẩm:</label>
-                <input type="text" id="editProductName" required>
-                <label for="editSellingPrice">Giá Bán:</label>
-                <input type="number" id="editSellingPrice" required>
-                <label for="editCostPrice">Hình ảnh</label>
-                <input type="text" id="editCostPrice" required>
-                <button type="submit">Lưu</button>
-                <button type="button" id="cancelEdit">Hủy</button>
-            </form>
-        </div>
-        <div id="addProductPanel">
-            <div class="panel-content">
-                <h3>Thêm Sản Phẩm</h3>
-                <form action="" method="post">
-                    <label for="productName">Tên Sản Phẩm:</label>
-                    <input type="text" id="productName" name="name" required/>
-
-                    <label for="sellingPrice">Giá Bán:</label>
-                    <input type="text" id="sellingPrice" name="price" required/>
-
-                    <label for="costPrice">Hình ảnh(URL):</label>
-                    <input type="text" id="costPrice" name="image" required/>
-
-
-                    <button type="submit">Thêm</button>
-                    <button type="button" id="closePanelButton">Hủy</button>
-                </form>
-            </div>
-        </div>
-
-        <div id="productTableContainer">
-            <table id="productTable">
-                <thead>
-                <tr>
-                    <th>Mã SP</th>
-                    <th>Tên SP</th>
-                    <th>Giá Bán</th>
-                    <th>Hình ảnh</th>
-                    <th>Đã bán</th>
-                    <th>Hành Động</th>
-                </tr>
-                <tbody>
-                <%
-                    String
-                            searchKW
-                            =
-                            request
-                                    .
-                                    getParameter
-                                            (
-                                                    "search"
-                                            );
-                    String
-                            pageParam
-                            =
-                            request
-                                    .
-                                    getParameter
-                                            (
-                                                    "page"
-                                            );
-                    int
-                            pages
-                            =
-                            (
-                                    pageParam
-                                            !=
-                                            null
-                            )
-                                    ?
-                                    Integer
-                                            .
-                                            parseInt
-                                                    (
-                                                            pageParam
-                                                    )
-                                    :
-                                    1;
-                    int
-                            pageSize
-                            =
-                            10;
-
-                    SearchDao
-                            productDao
-                            =
-                            new
-                                    SearchDao
-                                    (
-                                    );
-                    int
-                            totalProducts
-                            =
-                            0;
-
-                    List
-                            <
-                                    Product
-                                    >
-                            listP;
-                    if
-                    (
-                            searchKW
-                                    !=
-                                    null
-                                    &&
-                                    !
-                                            searchKW
-                                                    .
-                                                    isEmpty
-                                                            (
-                                                            )
-                    ) {
-                        totalProducts
-                                =
-                                productDao
-                                        .
-                                        getTotalProductsBySearch
-                                                (
-                                                        searchKW
-                                                )
-                        ;
-                        listP
-                                =
-                                productDao
-                                        .
-                                        searchProducts
-                                                (
-                                                        searchKW
-                                                )
-                        ;
-                    } else {
-                        totalProducts
-                                =
-                                productDao
-                                        .
-                                        getTotalProducts
-                                                (
-                                                )
-                        ;
-                        listP
-                                =
-                                productDao
-                                        .
-                                        getProductsByPage
-                                                (
-                                                        pages
-                                                        ,
-                                                        pageSize
-                                                )
-                        ;
-                    }
-
-
-                    int
-                            totalPages
-                            =
-                            (
-                                    int
-                                    )
-                                    Math
-                                            .
-                                            ceil
-                                                    (
-                                                            (
-                                                                    double
-                                                                    )
-                                                                    totalProducts
-                                                                    /
-                                                                    pageSize
-                                                    );
-
-
-                    String
-                            productIdToDelete
-                            =
-                            request
-                                    .
-                                    getParameter
-                                            (
-                                                    "deletepId"
-                                            );
-                    if
-                    (
-                            productIdToDelete
-                                    !=
-                                    null
-                    ) {
-                        productDao
-                                .
-                                deleteProduct
-                                        (
-                                                Integer
-                                                        .
-                                                        parseInt
-                                                                (
-                                                                        productIdToDelete
-                                                                )
-                                        )
-                        ;
-                        response
-                                .
-                                sendRedirect
-                                        (
-                                                "admin.jsp"
-                                        )
-                        ;
-                        return
-                                ;
-                    }
-
-                    for
-                    (
-                            Product
-                                    product
-                            :
-                            listP
-                    ) {
-                %>
-                <tr>
-                    <td><%= product
-                            .
-                            getId
-                                    (
-                                    ) %>
-                    </td>
-                    <td><%= product
-                            .
-                            getName
-                                    (
-                                    ) %>
-                    </td>
-                    <td><%= product
-                            .
-                            getPrice
-                                    (
-                                    ) %>
-                    </td>
-                    <td><%= product
-                            .
-                            getImg
-                                    (
-                                    ) %>
-                    </td>
-                    <td><%= product
-                            .
-                            getQuantitySold
-                                    (
-                                    ) %>
-                    </td>
-                    <td>
-                        <a href="admin.jsp?deletepId=<%= product.getId() %>"
-                           onclick="return confirm('Bạn có chắc chắn muốn xóa sản phẩm này?');"
-                           class="btn deleteButton">Xóa</a>
-                    </td>
-                </tr>
-                <%
-                    }
-                %>
-                </tbody>
-            </table>
-
-        </div>
-        <div id="paginationInfo">
-            Hiển thị <%= (
-                pages
-                        -
-                        1
-        )
-                *
-                pageSize
-                +
-                1 %> -
-            <%= Math
-                    .
-                    min
-                            (
-                                    pages
-                                            *
-                                            pageSize
-                                    ,
-                                    totalProducts
-                            ) %> trên tổng số <%= totalProducts %> sản phẩm
-        </div>
-
-        <div id="paginationControls">
-            <%
-                if
-                (
-                        totalProducts
-                                >
-                                0
-                ) {
-                    if
-                    (
-                            pages
-                                    >
-                                    1
-                    ) {
-            %>
-            <a href="admin.jsp?page=<%= pages - 1 %>&search=<%= (searchKW != null) ? searchKW : "admin.jsp" %>">Trước</a>
-
-            <%
-                }
-
-                for
-                (
-                        int
-                        i
-                        =
-                        1
-                        ;
-                        i
-                                <=
-                                totalPages
-                        ;
-                        i
-                                ++
-                ) {
-            %>
-            <a href="admin.jsp?page=<%= i %>&search=<%= (searchKW != null) ? searchKW : "admin.jsp" %>"
-               class="<%= (i == pages) ? "active" : "" %>">
-                <%= i %>
-            </a>
-
-            <%
-                }
-
-                if
-                (
-                        pages
-                                <
-                                totalPages
-                ) {
-            %>
-            <a href="admin.jsp?page=<%= pages + 1 %>&search=<%= (searchKW != null) ? searchKW : "admin.jsp" %>">Tiếp</a>
-            <%
-                }
-            } else {
-            %>
-            <p>Không có sản phẩm nào để hiển thị.</p>
-            <%
-                }
-            %>
-        </div>
-
-    </div>
-
     <div id="warranty-container" class="detail">
         <div class="admin.jspsection">
             <h2>Danh Sách Nội Thất Bảo Hành</h2>
