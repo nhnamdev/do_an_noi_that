@@ -163,7 +163,6 @@
                                     <c:set var="order" value="${entry.value}"/>
                                     <c:set var="product" value="${order.product}"/>
                                     <c:set var="itemTotal" value="${product.price * order.quantity}"/>
-                                    <c:set var="totalAmount" value="${totalAmount + itemTotal}"/>
                                     <div class="product-cart-item">
                                         <div class="product-info">
                                             <img src="${product.img}" alt="${product.name}" class="product-image">
@@ -218,7 +217,7 @@
                                     đã chuyển.
                                 </p>
                             </div>
-                            <input type="hidden" name="totalBill" value="${totalAmount}" />
+                            <input type="hidden" name="totalBill" value="${totalAmount}"/>
                             <button type="submit" class="order-button">ĐẶT HÀNG</button>
                         </div>
                     </form>
