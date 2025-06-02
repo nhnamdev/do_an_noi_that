@@ -6,6 +6,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import vn.edu.hcmuaf.fit.sourcedoannoithat.dao.PaymentHistoryDao;
+import vn.edu.hcmuaf.fit.sourcedoannoithat.dao.model.Invoice;
 import vn.edu.hcmuaf.fit.sourcedoannoithat.dao.model.PaymentHistory;
 
 import java.io.IOException;
@@ -20,7 +21,7 @@ public class HomeModController extends HttpServlet {
         response.setCharacterEncoding("UTF-8");
         //        Payment history
         PaymentHistoryDao paymentHistoryDao = new PaymentHistoryDao();
-        List<PaymentHistory> listPaymentHistory = paymentHistoryDao.getAllPaymentHistory();
+        List<Invoice> listPaymentHistory = paymentHistoryDao.getAllPaymentInvoice();
         //        Payment history
         request.setAttribute("listPaymentHistory", listPaymentHistory);
         request.getRequestDispatcher("mod.jsp").forward(request, response);
