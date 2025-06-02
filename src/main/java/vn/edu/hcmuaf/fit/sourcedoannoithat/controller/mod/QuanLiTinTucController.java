@@ -64,7 +64,6 @@ public class QuanLiTinTucController extends HttpServlet {
         NewsDAO dao = new NewsDAO();
         dao.insertNews(title, description, content, originalFileName, categoryId);
 
-
         // Quay lại trang quản lý
         response.sendRedirect(request.getContextPath() + "/mod/newsmanager");
     }

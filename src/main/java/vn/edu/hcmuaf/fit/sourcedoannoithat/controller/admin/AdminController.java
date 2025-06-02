@@ -19,6 +19,9 @@ public class AdminController extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         req.setCharacterEncoding("UTF-8");
         resp.setCharacterEncoding("UTF-8");
+        // Dashboard
+        DashboardDao dao = new DashboardDao();
+
 
         //        Payment history
         PaymentHistoryDao paymentHistoryDao = new PaymentHistoryDao();
@@ -63,6 +66,12 @@ public class AdminController extends HttpServlet {
         String selectedName = req.getParameter("name");
         List<String> content = contactDao.getContentByName(selectedName);
 
+
+        req.setAttribute("totalUsers", dao.getTotalUsers());
+        req.setAttribute("totalOrders", dao.getTotalOrders());
+        req.setAttribute("totalSales", dao.getTotalSales());
+        req.setAttribute("totalActiveUsers", dao.getTotalActiveUsers());
+        
 //        OrderDao orderDao = new OrderDao();
 //        List<Order> order = orderDao.getListOrder();
         req.setAttribute("listPaymentHistory", listPaymentHistory);

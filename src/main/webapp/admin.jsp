@@ -6,6 +6,8 @@
 <%@ page import="vn.edu.hcmuaf.fit.sourcedoannoithat.dao.SearchDao" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+
 <%
     String searchQuery = request.getParameter("search");
     List<AccountManagement> acc = null;
@@ -84,8 +86,8 @@
                             </div>
                             <div class="col col-stats ms-3 ms-sm-0">
                                 <div class="numbers">
-                                    <p class="card-category">Visitors</p>
-                                    <h4 class="card-title">1,294</h4>
+                                    <p class="card-category">Khách ghé thăm</p>
+                                    <h4 class="card-title">125</h4>
                                 </div>
                             </div>
                         </div>
@@ -103,8 +105,8 @@
                             </div>
                             <div class="col col-stats ms-3 ms-sm-0">
                                 <div class="numbers">
-                                    <p class="card-category">Subscribers</p>
-                                    <h4 class="card-title">1303</h4>
+                                    <p class="card-category">Tổng User</p>
+                                    <h4 class="card-title">${totalActiveUsers}</h4>
                                 </div>
                             </div>
                         </div>
@@ -122,8 +124,9 @@
                             </div>
                             <div class="col col-stats ms-3 ms-sm-0">
                                 <div class="numbers">
-                                    <p class="card-category">Sales</p>
-                                    <h4 class="card-title">$ 1,345</h4>
+                                    <p class="card-category">Tổng doanh thu</p>
+                                    <h4 class="card-title"><fmt:formatNumber value="${totalSales}"
+                                                                             type="number"/> VNĐ</h4>
                                 </div>
                             </div>
                         </div>
@@ -141,8 +144,8 @@
                             </div>
                             <div class="col col-stats ms-3 ms-sm-0">
                                 <div class="numbers">
-                                    <p class="card-category">Order</p>
-                                    <h4 class="card-title">576</h4>
+                                    <p class="card-category">Đơn hàng</p>
+                                    <h4 class="card-title">${totalOrders}</h4>
                                 </div>
                             </div>
                         </div>
@@ -150,6 +153,8 @@
                 </div>
             </div>
         </div>
+
+
         <%--            Transaction History--%>
         <div class="row">
             <div class="col-md-12">
