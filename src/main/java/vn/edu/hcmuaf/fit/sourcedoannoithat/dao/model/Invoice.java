@@ -21,5 +21,5 @@ public class Invoice {
     private String status;
     private Timestamp paymentDate;
     private String transactionCode;
-
+    private String userName;
 }

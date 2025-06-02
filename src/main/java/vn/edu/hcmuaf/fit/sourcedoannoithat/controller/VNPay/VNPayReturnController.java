@@ -3,19 +3,19 @@ package vn.edu.hcmuaf.fit.sourcedoannoithat.controller.VNPay;
 import jakarta.servlet.*;
 import jakarta.servlet.http.*;
 import jakarta.servlet.annotation.*;
+import vn.edu.hcmuaf.fit.sourcedoannoithat.dao.CartDao;
 import vn.edu.hcmuaf.fit.sourcedoannoithat.dao.OrderDao;
-import vn.edu.hcmuaf.fit.sourcedoannoithat.dao.model.CartDisplayItem;
 import vn.edu.hcmuaf.fit.sourcedoannoithat.dao.model.Invoice;
-import vn.edu.hcmuaf.fit.sourcedoannoithat.dao.model.Product;
-import vn.edu.hcmuaf.fit.sourcedoannoithat.dao.model.order.Order;
-import vn.edu.hcmuaf.fit.sourcedoannoithat.dao.model.order.OrderItem;
+import vn.edu.hcmuaf.fit.sourcedoannoithat.dao.model.PaymentHistory;
 import vn.edu.hcmuaf.fit.sourcedoannoithat.service.VNPayService;
 
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
-import java.util.*;
+import java.util.Enumeration;
+import java.util.HashMap;
+import java.util.Map;
 
 @WebServlet("/vnpayReturn")
 public class VNPayReturnController extends HttpServlet {
@@ -35,11 +35,8 @@ public class VNPayReturnController extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         VNPayService Config = new VNPayService();
-        response.setContentType("text/html;charset=UTF-8");
-
         HttpSession session = request.getSession();
-        Integer userID = (Integer) session.getAttribute("userIdLogin");
-
+        response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             Map fields = new HashMap();
             for (Enumeration params = request.getParameterNames(); params.hasMoreElements(); ) {
@@ -58,148 +55,35 @@ public class VNPayReturnController extends HttpServlet {
                 fields.remove("vnp_SecureHash");
             }
             String signValue = Config.hashAllFields(fields);
-
             if (signValue.equals(vnp_SecureHash)) {
                 String paymentCode = request.getParameter("vnp_TransactionNo");
-                String tempTxnRef = request.getParameter("vnp_TxnRef");
+
+                String orderId = request.getParameter("vnp_TxnRef");
+
+                Invoice invoice = new Invoice();
+                invoice.setId((Integer.parseInt(orderId)));
 
                 boolean transSuccess = false;
+                invoice.setTransactionCode(paymentCode);
                 if ("00".equals(request.getParameter("vnp_TransactionStatus"))) { //thanh toan thanh cong xoa het san pham trong cart
+                    //update banking system
+                    invoice.setStatus("success");
                     transSuccess = true;
-                }
-
-                System.out.println("DEBUG VNPay: Transaction status = " + transSuccess);
-                System.out.println("DEBUG VNPay: User ID = " + userID);
-
-                if (transSuccess && userID != null) {
-                    try {
-                        // Lấy thông tin order từ session
-                        Map<String, String> orderInfo = (Map<String, String>) session.getAttribute("pendingOrderInfo");
-                        System.out.println("DEBUG VNPay: Pending order info = " + (orderInfo != null));
-
-                        if (orderInfo != null) {
-                            // Lấy cart để xử lý
-                            HashMap<String, CartDisplayItem> cartToProcess = getCartToProcess(session);
-                            System.out.println("DEBUG VNPay: Cart size = " + (cartToProcess != null ? cartToProcess.size() : 0));
-
-                            if (cartToProcess != null && !cartToProcess.isEmpty()) {
-                                // Tạo Order
-                                Order order = createOrderFromInfo(userID, orderInfo, cartToProcess);
-
-                                // Lưu Order và nhận order_id
-                                int orderId = orderDao.createOrderAndGetId(order);
-                                System.out.println("DEBUG VNPay: Order created with ID = " + orderId);
-
-                                if (orderId > 0) {
-                                    // Tạo Invoice với order_id thật
-                                    Invoice invoice = new Invoice();
-                                    invoice.setOrderId(orderId);
-                                    invoice.setTotal(Double.parseDouble(orderInfo.get("totalBill")));
-                                    invoice.setDiscount(0);
-                                    invoice.setFinalAmount(Double.parseDouble(orderInfo.get("totalBill")));
-                                    invoice.setPaymentMethod(1); // 1 = VNPay
-                                    invoice.setVoucherId(0);
-                                    invoice.setStatus("success");
-                                    invoice.setTransactionCode(paymentCode);
-
-                                    // Lưu Invoice
-                                    int invoiceId = orderDao.insertOrder(invoice);
-                                    System.out.println("DEBUG VNPay: Invoice created with ID = " + invoiceId);
-
-                                    if (invoiceId > 0) {
-                                        // ✅ THÀNH CÔNG - KHÔNG XÓA CART Ở ĐÂY
-                                        // Cart sẽ được xóa trong OrderReceivedController sau khi hiển thị thành công
-
-                                        // Lưu thông tin để hiển thị
-                                        session.setAttribute("lastOrderId", orderId);
-                                        session.setAttribute("lastInvoiceId", invoiceId);
-
-                                        // Xóa thông tin tạm thời VNPay
-                                        session.removeAttribute("pendingOrderInfo");
-
-                                        System.out.println("DEBUG VNPay: Order and Invoice created successfully");
-                                    }
-                                }
-                            }
-                        }
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                        System.out.println("DEBUG VNPay: Exception occurred: " + e.getMessage());
-                        transSuccess = false; // Nếu có lỗi thì coi như thất bại
+                    Integer userId = (Integer) session.getAttribute("userIdLogin");
+                    if (userId != null) {
+                        CartDao cartDao = new CartDao();
+                        cartDao.clearCartByUserId(userId);
                     }
+                } else {
+                    invoice.setStatus("Failed");
                 }
-
-                // Forward đến paymentReturn.jsp với kết quả
+                orderDao.updateOrderStatus(invoice);
                 request.setAttribute("transResult", transSuccess);
                 request.getRequestDispatcher("paymentReturn.jsp").forward(request, response);
             } else {
-                // Invalid signature
-                System.out.println("DEBUG VNPay: Invalid signature");
-                request.setAttribute("transResult", false);
-                request.getRequestDispatcher("paymentReturn.jsp").forward(request, response);
+                //RETURN PAGE ERROR
+                System.out.println("GD KO HOP LE (invalid signature)");
             }
         }
-    }
-
-    // Helper methods
-    private HashMap<String, CartDisplayItem> getCartToProcess(HttpSession session) {
-        Boolean isBuyNow = (Boolean) session.getAttribute("isBuyNow");
-        if (Boolean.TRUE.equals(isBuyNow)) {
-            return (HashMap<String, CartDisplayItem>) session.getAttribute("buyNowCart");
-        } else {
-            return (HashMap<String, CartDisplayItem>) session.getAttribute("cart");
-        }
-    }
-
-    private Order createOrderFromInfo(Integer userID, Map<String, String> orderInfo, HashMap<String, CartDisplayItem> cartToProcess) {
-        Order order = new Order();
-        order.setUserId(userID);
-        order.setCustomerName(orderInfo.get("fullname"));
-        order.setCustomerPhone(orderInfo.get("phone"));
-        order.setShippingAddress(connectFullAddress(
-                orderInfo.get("address"),
-                orderInfo.get("ward"),
-                orderInfo.get("district"),
-                orderInfo.get("province")
-        ));
-        order.setTotalAmount(Double.parseDouble(orderInfo.get("totalBill")));
-        order.setOrderStatus("pending");
-        order.setPaymentMethod("Thanh toán qua VNPay");
-        order.setNotes(orderInfo.get("notes"));
-
-        List<OrderItem> orderItems = new ArrayList<>();
-        for (CartDisplayItem cartItem : cartToProcess.values()) {
-            Product product = cartItem.getProduct();
-            OrderItem orderItem = new OrderItem();
-            orderItem.setProductId(product.getId());
-            orderItem.setProductName(product.getName());
-            orderItem.setProductImage(product.getImg());
-            orderItem.setUnitPrice(product.getPrice());
-            orderItem.setQuantity(cartItem.getQuantity());
-            orderItem.setTotalPrice(product.getPrice() * cartItem.getQuantity());
-            orderItems.add(orderItem);
-        }
-        order.setOrderItems(orderItems);
-        return order;
-    }
-
-    private String connectFullAddress(String address, String ward, String district, String province) {
-        StringBuilder fullAddress = new StringBuilder();
-        if (address != null && !address.trim().isEmpty()) {
-            fullAddress.append(address.trim());
-        }
-        if (ward != null && !ward.trim().isEmpty()) {
-            if (fullAddress.length() > 0) fullAddress.append(", ");
-            fullAddress.append(ward.trim());
-        }
-        if (district != null && !district.trim().isEmpty()) {
-            if (fullAddress.length() > 0) fullAddress.append(", ");
-            fullAddress.append(district.trim());
-        }
-        if (province != null && !province.trim().isEmpty()) {
-            if (fullAddress.length() > 0) fullAddress.append(", ");
-            fullAddress.append(province.trim());
-        }
-        return fullAddress.toString();
     }
 }

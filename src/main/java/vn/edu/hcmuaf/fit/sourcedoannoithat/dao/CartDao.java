@@ -108,6 +108,17 @@ public class CartDao {
         }
         return null;
     }
+    public boolean clearCartByUserId(int userId) {
+        String query = "DELETE FROM cart WHERE user_id = ?";
+        try {
+            conn = new DBConnect().getConnection();
+            ps = conn.prepareStatement(query);
+            ps.setInt(1, userId);
+            return ps.executeUpdate() > 0;
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
 
     /**
      * Xóa một sản phẩm cụ thể khỏi giỏ hàng

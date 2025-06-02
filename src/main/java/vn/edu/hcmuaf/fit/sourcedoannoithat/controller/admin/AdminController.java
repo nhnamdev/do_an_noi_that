@@ -25,7 +25,7 @@ public class AdminController extends HttpServlet {
 
         //        Payment history
         PaymentHistoryDao paymentHistoryDao = new PaymentHistoryDao();
-        List<PaymentHistory> listPaymentHistory = paymentHistoryDao.getAllPaymentHistory();
+        List<Invoice> listPaymentHistory = paymentHistoryDao.getAllPaymentInvoice();
         //        Payment history
         ReturnProductDao returnProductDao = new ReturnProductDao();
         List<ReturnProduct> list = returnProductDao.getReturnProduct();
