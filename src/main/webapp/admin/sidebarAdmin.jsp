@@ -17,18 +17,22 @@
     <!--quản lý -->
     <button class="btn" onclick="manageList();changeColor(this)">Quản lý</button>
     <ul id="manageList" class="nested-list">
-        <li onclick="showDetail('manageList1'); showProductList(); selectItem(this)">Đơn hàng</li>
-        <ul id="showProductList" class="nested-list">
-            <li onclick="showDetail('showPL1')">Yêu cầu hoàn tiền/hủy đơn</li>
-            <li onclick="showDetail('showPL2')">Thông báo tình trạng đơn hàng</li>
-        </ul>
+        <%--        <li onclick="showDetail('manageList1'); showProductList(); selectItem(this)">Đơn hàng</li>--%>
+        <%--        <ul id="showProductList" class="nested-list">--%>
+        <li onclick="showDetail('showPL1')">Yêu cầu hoàn tiền/hủy đơn</li>
+        <%--        </ul>--%>
         <li onclick="showDetail('manageList2')">Khách hàng</li>
     </ul>
-    <button class="btn" onclick="showDetail('productsManagement'); changeColor(this)">Kho hàng</button>
+
     <button class="btn" onclick="showDetail('warranty-container');changeColor(this)">Bảo hành</button>
+    <a href="${pageContext.request.contextPath}/mod" class="btn">
+        </i> Mod
+    </a>
     <a href="${pageContext.request.contextPath}/logout" class="btn">
         </i> Đăng xuất
     </a>
+
+
 </div>
 <script src="../js/about-management.js"></script>
 <script src="../js/showDetail.js"></script>

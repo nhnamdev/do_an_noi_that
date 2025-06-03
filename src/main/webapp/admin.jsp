@@ -194,7 +194,8 @@
                                         </th>
                                         <td class="text-end">${item.paymentDate}</td>
                                         <td class="text-end"><fmt:formatNumber value="${item.finalAmount}"
-                                                                               type="number"/> VNĐ</td>
+                                                                               type="number"/> VNĐ
+                                        </td>
                                         <td class="text-end">
                                             <c:choose>
                                                 <c:when test="${item.status == 'success'}">
@@ -260,11 +261,9 @@
             <thead>
             <tr>
                 <th>Đổi/Trả</th>
-                <th>Hình ảnh</th>
                 <th>Mã đơn hàng</th>
                 <th>Ngày Mua</th>
                 <th>Lý Do</th>
-                <th>Mô tả thêm</th>
                 <th>Trạng Thái</th>
                 <th>Hành Động</th>
             </tr>
@@ -274,17 +273,15 @@
             <c:forEach items="${product}" var="rp">
                 <tr>
                     <td>${rp.status}</td>
-                    <td>${rp.imageLink}</td>
                     <td>${rp.orderCode}</td>
                     <td>${rp.purchaseDate}</td>
                     <td>${rp.reason}</td>
-                    <td>${rp.description}</td>
+
                     <td class="status">Đang chờ xử lý</td>
                     <td>
                         <div class="action-buttons">
                             <button class="btn approve" onclick="handleApprove(this)">Duyệt</button>
                             <button class="btn reject" onclick="handleReject(this)">Từ Chối</button>
-                            <button class="btn details" onclick="handleDetails(this)">Chi Tiết</button>
                         </div>
                     </td>
                 </tr>
@@ -439,7 +436,8 @@
                             </button>
                         </form>
                         <form method="get" action="admin" id="lockUnlockForm_<%= pr.getId() %>">
-                            <input type="hidden" name="<%= activeStatus == 1 ? "lockId" : "unlockId" %>" value="<%= pr.getId() %>">
+                            <input type="hidden" name="<%= activeStatus == 1 ? "lockId" : "unlockId" %>"
+                                   value="<%= pr.getId() %>">
                             <button type="submit" class="btn lock"
                                     style="background-color: <%= activeStatus == 1 ? "red" : "green" %>; color: white;"
                                     onclick="return confirm('<%= activeStatus == 1 ? "Bạn có chắc chắn muốn khóa tài khoản này?" : "Bạn có chắc chắn muốn mở khóa tài khoản này?" %>')">
@@ -464,7 +462,7 @@
                         <input type="hidden" name="promoteId" value="<%= pr.getId() %>">
                         <button type="submit" class="btn btn-warning"
                                 onclick="return confirm('Bạn có chắc chắn muốn nâng quyền tài khoản này không?')">
-                            Cấp quyền
+                            Nâng quyền
                         </button>
                     </form>
                     <% } %>

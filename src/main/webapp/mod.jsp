@@ -1,5 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <html>
 <head>
     <title>Mod</title>
@@ -30,7 +31,7 @@
 <jsp:include page="/mod/sidebarMod.jsp"/>
 <%--CONTENT MAIN ADMIN --%>
 <div class="content" style="margin-left: 18%">
-    <div class="page-inner" id="main_contentt" >
+    <div class="page-inner" id="main_contentt">
         <div class="d-flex align-items-left align-items-md-center flex-column flex-md-row pt-2 pb-4">
             <div>
                 <h3 class="fw-bold mb-3">Dashboard</h3>
@@ -49,8 +50,8 @@
                             </div>
                             <div class="col col-stats ms-3 ms-sm-0">
                                 <div class="numbers">
-                                    <p class="card-category">Tài Khoản</p>
-                                    <h4 class="card-title">1,294</h4>
+                                    <p class="card-category">Khách ghé thăm</p>
+                                    <h4 class="card-title">125</h4>
                                 </div>
                             </div>
                         </div>
@@ -68,8 +69,8 @@
                             </div>
                             <div class="col col-stats ms-3 ms-sm-0">
                                 <div class="numbers">
-                                    <p class="card-category">Bảo Hành</p>
-                                    <h4 class="card-title">1303</h4>
+                                    <p class="card-category">Tổng User</p>
+                                    <h4 class="card-title">${totalActiveUsers}</h4>
                                 </div>
                             </div>
                         </div>
@@ -87,9 +88,9 @@
                             </div>
                             <div class="col col-stats ms-3 ms-sm-0">
                                 <div class="numbers">
-                                    <%--   Lay tu hoa don--%>
-                                    <p class="card-category">Tổng Doanh Thu</p>
-                                    <h4 class="card-title">$ 1,345</h4>
+                                    <p class="card-category">Tổng doanh thu</p>
+                                    <h4 class="card-title"><fmt:formatNumber value="${totalSales}"
+                                                                             type="number"/> VNĐ</h4>
                                 </div>
                             </div>
                         </div>
@@ -107,9 +108,8 @@
                             </div>
                             <div class="col col-stats ms-3 ms-sm-0">
                                 <div class="numbers">
-                                    <%--   Lay tu Order--%>
-                                    <p class="card-category">Tổng Đơn Hàng</p>
-                                    <h4 class="card-title">576</h4>
+                                    <p class="card-category">Đơn hàng</p>
+                                    <h4 class="card-title">${totalOrders}</h4>
                                 </div>
                             </div>
                         </div>
@@ -130,7 +130,7 @@
                             <div class="col col-stats ms-3 ms-sm-0">
                                 <div class="numbers">
                                     <p class="card-category">Sản Phẩm Bán Chạy</p>
-                                    <h4 class="card-title">1,294</h4>
+                                    <h4 class="card-title">4</h4>
                                 </div>
                             </div>
                         </div>
@@ -149,7 +149,7 @@
                             <div class="col col-stats ms-3 ms-sm-0">
                                 <div class="numbers">
                                     <p class="card-category">Sản Phẩm Bán Ế</p>
-                                    <h4 class="card-title">1303</h4>
+                                    <h4 class="card-title">13</h4>
                                 </div>
                             </div>
                         </div>
@@ -197,7 +197,9 @@
                                             Payment from #${item.userName}
                                         </th>
                                         <td class="text-end">${item.paymentDate}</td>
-                                        <td class="text-end">$${item.finalAmount}</td>
+                                        <td class="text-end"><fmt:formatNumber value="${item.finalAmount}"
+                                                                               type="number"/> VNĐ
+                                        </td>
                                         <td class="text-end">
                                             <c:choose>
                                                 <c:when test="${item.status == 'success'}">
@@ -213,6 +215,7 @@
                                         </td>
                                     </tr>
                                 </c:forEach>
+
 
                                 </tbody>
                             </table>

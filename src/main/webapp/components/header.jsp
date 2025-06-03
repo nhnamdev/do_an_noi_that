@@ -29,13 +29,15 @@
                 <li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/shop">Cửa hàng</a>
                 </li>
                 <li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/news">Tin tức</a></li>
-                <li class="nav-item"><a class="nav-link" href="About_us.jsp">Thông tin</a></li>
-                <li class="nav-item"><a class="nav-link" href="contact.jsp">Liên hệ</a></li>
+                <li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/About_us.jsp">Thông
+                    tin</a></li>
+                <li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/contact.jsp">Liên
+                    hệ</a></li>
             </ul>
             <ul class="navbar-nav ms-auto">
                 <c:if test="${sessionScope.loginModel==null && sessionScope.googleAccount == null &&sessionScope.facebookAccount == null}">
                     <li class="nav-item">
-                        <a class="nav-link" href="login.jsp">
+                        <a class="nav-link" href="${pageContext.request.contextPath}/login.jsp">
                             <i class="fas fa-user"></i> Đăng nhập / Đăng ký
                         </a>
                     </li>
@@ -43,7 +45,8 @@
                 <c:if test="${sessionScope.loginModel!=null || sessionScope.googleAccount != null || sessionScope.facebookAccount != null}">
                     <li class="nav-item">
                         <a class="nav-link" href="${pageContext.request.contextPath}/personal.jsp">
-                            <img src="${pageContext.request.contextPath}/img/avt/avt.jpg" class="rounded-circle" width="22">
+                            <img src="${pageContext.request.contextPath}/img/avt/avt.jpg" class="rounded-circle"
+                                 width="22">
                         </a>
                     </li>
                     <li class="nav-item"><a class="nav-link"
