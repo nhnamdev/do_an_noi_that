@@ -17,7 +17,9 @@
     <!--quản lý -->
     <button class="btn" onclick="manageList();changeColor(this)">Quản lý</button>
     <ul id="manageList" class="nested-list">
-        <%--        <li onclick="showDetail('manageList1'); showProductList(); selectItem(this)">Đơn hàng</li>--%>
+        <li onclick="showDetail('orderManagement')">Đơn đặt hàng
+            <span class="badge badge-warning ms-2" id="pendingOrdersBadge">${pendingOrders}</span>
+        </li>
         <%--        <ul id="showProductList" class="nested-list">--%>
         <li onclick="showDetail('showPL1')">Yêu cầu hoàn tiền/hủy đơn</li>
         <%--        </ul>--%>
