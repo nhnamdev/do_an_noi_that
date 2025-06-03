@@ -37,11 +37,22 @@ document.addEventListener('DOMContentLoaded', function () {
             const hiddenInput = document.getElementById('quantity_' + productId);
 
             let value = parseInt(input.value);
-            if (!isNaN(value) && value > 1) {
-                value--;
-                input.value = value;
-                if (hiddenInput) {
-                    hiddenInput.value = value;
+            if (!isNaN(value)) {
+                if (value === 1) {
+                    // ktra nếu quantity = 1 và ấn giảm số lượng nữa thì xóa sản phẩm
+                    if (confirm('Bạn có chắc chắn muốn xóa sản phẩm này khỏi giỏ hàng?')) {
+                        const removeForm = document.getElementById('removeForm_' + productId);
+                        if (removeForm) {
+                            removeForm.submit();
+                        }
+                    }
+                } else if (value > 1) {
+                    // Giảm số lượng bình thường
+                    value--;
+                    input.value = value;
+                    if (hiddenInput) {
+                        hiddenInput.value = value;
+                    }
                 }
             }
         });
@@ -84,4 +95,22 @@ document.addEventListener('DOMContentLoaded', function () {
             cartForm.submit();
         });
     }
+
+    // XỬ LÝ NÚT XÓA SẢN PHẨM
+    const removeButtons = document.querySelectorAll('.remove-btn');
+    removeButtons.forEach(button => {
+        button.addEventListener('click', function (e) {
+            e.preventDefault();
+
+            const productId = this.getAttribute('data-product-id');
+
+            if (confirm('Bạn có chắc chắn muốn xóa sản phẩm này khỏi giỏ hàng?')) {
+                // Tìm form tương ứng và submit
+                const removeForm = document.getElementById('removeForm_' + productId);
+                if (removeForm) {
+                    removeForm.submit();
+                }
+            }
+        });
+    });
 });

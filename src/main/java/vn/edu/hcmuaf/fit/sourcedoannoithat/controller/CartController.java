@@ -35,10 +35,6 @@ public class CartController extends HttpServlet {
             case "/":
                 showCart(request, response);
                 break;
-//            default:
-//                System.out.println(action);
-//                response.sendRedirect(request.getContextPath() + "/");
-//                return;
         }
     }
 
@@ -55,6 +51,9 @@ public class CartController extends HttpServlet {
             case "/updateQuantity":
                 updateCartQuantity(request, response);
                 break;
+            case "/removeFromCart":
+                removeFromCart(request, response);
+                break;
             default:
                 System.out.println(action);
                 request.getRequestDispatcher("index.jsp").forward(request, response);
@@ -67,18 +66,15 @@ public class CartController extends HttpServlet {
         Integer userId = (Integer) session.getAttribute("userIdLogin");
 
         if (userId == null) {
-            // Nếu chưa đăng nhập, hiển thị cart trống
-            request.setAttribute("cart", null);
+            request.setAttribute("cart", new HashMap<String, CartDisplayItem>());
             request.getRequestDispatcher("/cart.jsp").forward(request, response);
             return;
         }
 
-        HashMap<String, CartDisplayItem> cart = (HashMap<String, CartDisplayItem>) session.getAttribute("cart");
-        // Tải giỏ hàng từ database
         List<Cart> cartItems = cartDao.getCartItems(userId);
+        HashMap<String, CartDisplayItem> cart = new HashMap<>();
 
         if (!cartItems.isEmpty()) {
-            cart = new HashMap<>();
             DetailDao detailDao = new DetailDao();
 
             for (Cart item : cartItems) {
@@ -90,14 +86,9 @@ public class CartController extends HttpServlet {
                     cart.put(String.valueOf(item.getProductID()), displayItem);
                 }
             }
-
-            session.setAttribute("cart", cart);
-        } else {
-            // Nếu database trống, clear session cart
-            cart = new HashMap<>();
-            session.setAttribute("cart", cart);
         }
 
+        session.setAttribute("cart", cart);
         request.setAttribute("cart", cart);
         request.getRequestDispatcher("/cart.jsp").forward(request, response);
     }
@@ -176,10 +167,6 @@ public class CartController extends HttpServlet {
         response.sendRedirect(request.getContextPath() + "/cart/");
     }
 
-    public void removeFromCart(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
-    }
-
     public void updateCartQuantity(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 //        phuong thuc nay se cap nhat lai toan bo gio hang khi nguoi dung nhan vao
         HttpSession session = request.getSession();
@@ -221,6 +208,36 @@ public class CartController extends HttpServlet {
                 session.setAttribute("cart", cart);
             }
         }
+        response.sendRedirect(request.getContextPath() + "/cart/");
+    }
+
+    public void removeFromCart(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        HttpSession session = request.getSession();
+        Integer userId = (Integer) session.getAttribute("userIdLogin");
+
+        if (userId == null) {
+            response.sendRedirect(request.getContextPath() + "/login.jsp");
+            return;
+        }
+
+        String productID = request.getParameter("productId");
+        if (productID == null || productID.isEmpty()) {
+            response.sendRedirect(request.getContextPath() + "/cart/");
+            return;
+        }
+
+        try {
+            int prodId = Integer.parseInt(productID);
+            boolean removed = cartDao.removeCartItem(userId, prodId);
+
+            if (removed) {
+                session.removeAttribute("cart");
+            }
+
+        } catch (NumberFormatException e) {
+            e.printStackTrace();
+        }
+
         response.sendRedirect(request.getContextPath() + "/cart/");
     }
 
