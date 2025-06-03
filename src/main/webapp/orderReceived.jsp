@@ -7,126 +7,161 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Đặt hàng thành công</title>
+    <title>
+        <c:choose>
+            <c:when test="${isFromOrderList}">Chi tiết đơn hàng</c:when>
+            <c:otherwise>Đặt hàng thành công</c:otherwise>
+        </c:choose>
+    </title>
     <link rel="stylesheet" href="css/orderReceived.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <body>
 <div id="wrapper">
     <jsp:include page="/components/header.jsp"/>
     <script src="js/showSearch.js"></script>
     <script src="js/actionOfProfile.js"></script>
-    <div class="overlay" id="overlay"></div>
-    <div class="info-box" id="infoBox">
-        <div class="container">
-            <h3>Thông tin giỏ hàng</h3>
-            <div class="listProduct">
-                <div class="row1">
-                    <div class="alpha">
-                        <img src="img/sofa15.jpg" alt>
-                    </div>
-                    <div class="omega">
-                        <div class="name">Asgaard sofa</div>
-                        <div class="sumPrice">
-                            <div class="quantity">1 X</div>
-                            <div class="price">220.000</div>
-                        </div>
-                    </div>
-                    <div class="beta">
-                        <button class="close-button">
-                            <i class="fa fa-times-circle"></i>
-                        </button>
-                    </div>
-                </div>
-                <div class="row2">
-                    <div class="alpha">
-                        <img src="img/sofa16.jpg" alt>
-                    </div>
-                    <div class="omega">
-                        <div class="name">Upholstered Sofa</div>
-                        <div class="sumPrice">
-                            <div class="quantity">2 X</div>
-                            <div class="price">450.000</div>
-                        </div>
-                    </div>
-                    <div class="beta">
-                        <button class="close-button">
-                            <i class="fa fa-times-circle"></i>
-                        </button>
-                    </div>
-                </div>
-            </div>
-            <div class="totalPrice">
-                <div class="title">Tổng tiền</div>
-                <div class="price">1.120.000đ</div>
-            </div>
-            <div class="other_choose">
-                <button class="view_cart" onclick="window.location.href='${pageContext.request.contextPath}/cart/'">Giỏ
-                    hàng
-                </button>
-                <button class="check_out" onclick="window.location.href='${pageContext.request.contextPath}/checkout/'">
-                    Thanh toán
-                </button>
-            </div>
-        </div>
-    </div>
     <script src="js/showCart.js"></script>
     <div id="content">
         <div class="container">
-            <div class="order-steps">
-                <div class="order-row">
-                    <div class="checkout-breadcrumb">
-                        <div class="title-cart">
-                            <a href="${pageContext.request.contextPath}/cart/">
-                                <div class="number-wrapper">
-                                    <h3 class="step-number">01</h3>
-                                </div>
-                                <div class="step-content">
-                                    <h4 class="step-title">GIỎ HÀNG</h4>
-                                    <p class="step-description">Quản lý danh sách sản phẩm</p>
-                                </div>
-                            </a>
-                        </div>
-                        <div class="title-checkout">
-                            <a href="${pageContext.request.contextPath}/checkout/">
-                                <div class="number-wrapper">
-                                    <h3 class="step-number">02</h3>
-                                </div>
-                                <div class="step-content">
-                                    <h4 class="step-title">CHI TIẾT THANH TOÁN</h4>
-                                    <p class="step-description">Thanh toán danh sách sản phẩm</p>
-                                </div>
-                            </a>
-                        </div>
-                        <div class="title-thankyou">
-                            <a href="">
-                                <div class="number-wrapper">
-                                    <h3 class="step-number">03</h3>
-                                </div>
-                                <div class="step-content">
-                                    <h4 class="step-title">HOÀN THÀNH ĐƠN HÀNG</h4>
-                                    <p class="step-description">Xem lại đơn hàng</p>
-                                </div>
-                            </a>
-                        </div>
-                    </div>
-                </div>
+            <!-- Back Navigation -->
+            <div class="back-navigation">
+                <c:choose>
+                    <c:when test="${isFromOrderList}">
+                        <a href="${pageContext.request.contextPath}/orderInformation" class="back-btn">
+                            <i class="fa fa-arrow-left"></i>
+                            Quay lại danh sách đơn hàng
+                        </a>
+                    </c:when>
+                    <c:otherwise>
+                        <a href="${pageContext.request.contextPath}/shop" class="back-btn">
+                            <i class="fa fa-arrow-left"></i>
+                            Tiếp tục mua sắm
+                        </a>
+                    </c:otherwise>
+                </c:choose>
             </div>
-            <div class="confirmation-card">
-                <div class="success-icon">
-                    <div class="circle-check">
-                        <i class="fa-regular fa-circle-check"></i>
-                    </div>
-                    <div>
-                        <h1 class="confirmation-title">Cảm ơn bạn đã đặt hàng</h1>
-                        <p class="confirmation-message">Một email xác nhận đã được gửi tới
-                            <b>${sessionScope.userEmail != null ? sessionScope.userEmail : orderInfo.customerEmail}</b>.<br>Xin
-                            vui lòng kiểm tra email của bạn</p>
+
+            <!-- Navigation Info -->
+            <c:if test="${isFromOrderList}">
+                <div class="navigation-info">
+                    <p class="info-text">
+                        <i class="fa fa-info-circle"></i>
+                        Bạn đang xem chi tiết đơn hàng từ danh sách đơn hàng của mình.
+                    </p>
+                </div>
+            </c:if>
+
+            <!-- Order Steps - Only show for new orders -->
+            <c:if test="${!isFromOrderList}">
+                <div class="order-steps">
+                    <div class="order-row">
+                        <div class="checkout-breadcrumb">
+                            <div class="title-cart">
+                                <a href="${pageContext.request.contextPath}/cart/">
+                                    <div class="number-wrapper">
+                                        <h3 class="step-number">01</h3>
+                                    </div>
+                                    <div class="step-content">
+                                        <h4 class="step-title">GIỎ HÀNG</h4>
+                                        <p class="step-description">Quản lý danh sách sản phẩm</p>
+                                    </div>
+                                </a>
+                            </div>
+                            <div class="title-checkout">
+                                <a href="${pageContext.request.contextPath}/checkout/">
+                                    <div class="number-wrapper">
+                                        <h3 class="step-number">02</h3>
+                                    </div>
+                                    <div class="step-content">
+                                        <h4 class="step-title">CHI TIẾT THANH TOÁN</h4>
+                                        <p class="step-description">Thanh toán danh sách sản phẩm</p>
+                                    </div>
+                                </a>
+                            </div>
+                            <div class="title-thankyou">
+                                <a href="">
+                                    <div class="number-wrapper">
+                                        <h3 class="step-number">03</h3>
+                                    </div>
+                                    <div class="step-content">
+                                        <h4 class="step-title">HOÀN THÀNH ĐƠN HÀNG</h4>
+                                        <p class="step-description">Xem lại đơn hàng</p>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
                     </div>
                 </div>
+            </c:if>
+
+            <div class="confirmation-card">
+                <!-- Success Icon - Only for new orders -->
+                <c:if test="${!isFromOrderList}">
+                    <div class="success-icon">
+                        <div class="circle-check">
+                            <i class="fa-regular fa-circle-check"></i>
+                        </div>
+                        <div>
+                            <h1 class="confirmation-title">Cảm ơn bạn đã đặt hàng</h1>
+                            <p class="confirmation-message">Một email xác nhận đã được gửi tới
+                                <b>${sessionScope.userEmail != null ? sessionScope.userEmail : orderInfo.customerEmail}</b>.<br>Xin
+                                vui lòng kiểm tra email của bạn</p>
+                        </div>
+                    </div>
+                </c:if>
+
+                <!-- Order Detail Title for existing orders -->
+                <c:if test="${isFromOrderList}">
+                    <div class="success-icon">
+                        <div class="circle-check">
+                            <i class="fa fa-file-text"></i>
+                        </div>
+                        <div>
+                            <h1 class="confirmation-title">Chi tiết đơn hàng</h1>
+                            <p class="confirmation-message">Thông tin chi tiết về đơn hàng của bạn</p>
+                        </div>
+                    </div>
+                </c:if>
+
                 <div class="confirm-form-container">
                     <div class="left-column">
                         <div class="order-info">
+                            <!-- Order Meta Information -->
+                            <c:if test="${isFromOrderList}">
+                                <div class="order-meta-info">
+                                    <div class="meta-item">
+                                        <span class="meta-label">Trạng thái:</span>
+                                        <span class="meta-value">
+                                            <c:choose>
+                                                <c:when test="${orderInfo.orderStatus == 'pending'}">Chờ xác nhận</c:when>
+                                                <c:when test="${orderInfo.orderStatus == 'confirmed'}">Đã xác nhận</c:when>
+                                                <c:when test="${orderInfo.orderStatus == 'shipping'}">Đang giao hàng</c:when>
+                                                <c:when test="${orderInfo.orderStatus == 'delivered'}">Đã giao hàng</c:when>
+                                                <c:when test="${orderInfo.orderStatus == 'cancelled'}">Đã hủy</c:when>
+                                                <c:otherwise>Chờ xử lý</c:otherwise>
+                                            </c:choose>
+                                            <span class="order-status-badge status-${orderInfo.orderStatus}">
+                                                    ${orderInfo.orderStatus}
+                                            </span>
+                                        </span>
+                                    </div>
+                                    <div class="meta-item">
+                                        <span class="meta-label">Ngày đặt:</span>
+                                        <span class="meta-value">
+                                            <f:formatDate value="${orderDateAsDate}" pattern="dd/MM/yyyy HH:mm"/>
+                                        </span>
+                                    </div>
+                                    <c:if test="${invoiceInfo != null}">
+                                        <div class="meta-item">
+                                            <span class="meta-label">Trạng thái thanh toán:</span>
+                                            <span class="meta-value">${invoiceInfo.status}</span>
+                                        </div>
+                                    </c:if>
+                                </div>
+                            </c:if>
+
                             <div class="info-section">
                                 <h2 class="section-title">Thông tin mua hàng</h2>
                                 <div class="info-item">${orderInfo.customerName}</div>
@@ -145,15 +180,33 @@
                                 <h2 class="section-title">Phương thức vận chuyển</h2>
                                 <div class="info-item">Giao hàng tận nơi</div>
                             </div>
-                            <div class="action-buttons">
-                                <button class="profile-order"
-                                        onclick="window.location.href='${pageContext.request.contextPath}/orderInformation'">
-                                    Xem đơn đặt hàng
-                                </button>
-                                <button class="print-button" onclick="window.print()">
-                                    <i class="fa-solid fa-print"></i>
-                                    <span>In</span>
-                                </button>
+
+                            <!-- Enhanced Action Buttons -->
+                            <div class="enhanced-action-buttons">
+                                <c:choose>
+                                    <c:when test="${isFromOrderList}">
+                                        <!-- Actions for viewing existing order -->
+                                        <c:if test="${orderInfo.orderStatus == 'pending'}">
+                                            <button class="btn btn-danger"
+                                                    onclick="cancelThisOrder(${orderInfo.orderId})">
+                                                <i class="fa fa-times"></i> Hủy đơn hàng
+                                            </button>
+                                        </c:if>
+                                        <button class="btn btn-outline" onclick="window.print()">
+                                            <i class="fa fa-print"></i> In đơn hàng
+                                        </button>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <!-- Actions for new order -->
+                                        <a href="${pageContext.request.contextPath}/orderInformation"
+                                           class="btn btn-primary">
+                                            <i class="fa fa-list"></i> Xem đơn đặt hàng
+                                        </a>
+                                        <button class="btn btn-outline" onclick="window.print()">
+                                            <i class="fa fa-print"></i> In
+                                        </button>
+                                    </c:otherwise>
+                                </c:choose>
                             </div>
                         </div>
                     </div>
@@ -161,14 +214,28 @@
                         <div class="order-details">
                             <div class="order-header">
                                 <div class="order-number">Đơn hàng
-                                    #${orderInfo.orderNumber != null ? orderInfo.orderNumber : sessionScope.lastOrderId}</div>
+                                    #${orderInfo.orderNumber != null ? orderInfo.orderNumber : sessionScope.lastOrderId}
+                                    <c:if test="${isFromOrderList}">
+                                        <span class="order-status-badge status-${orderInfo.orderStatus}">
+                                            <c:choose>
+                                                <c:when test="${orderInfo.orderStatus == 'pending'}">Chờ xác nhận</c:when>
+                                                <c:when test="${orderInfo.orderStatus == 'confirmed'}">Đã xác nhận</c:when>
+                                                <c:when test="${orderInfo.orderStatus == 'shipping'}">Đang giao hàng</c:when>
+                                                <c:when test="${orderInfo.orderStatus == 'delivered'}">Đã giao hàng</c:when>
+                                                <c:when test="${orderInfo.orderStatus == 'cancelled'}">Đã hủy</c:when>
+                                                <c:otherwise>Chờ xử lý</c:otherwise>
+                                            </c:choose>
+                                        </span>
+                                    </c:if>
+                                </div>
                             </div>
 
                             <!-- Hiển thị danh sách sản phẩm -->
                             <c:forEach var="item" items="${orderItems}">
                                 <div class="product-item">
                                     <div class="product-image">
-                                        <img src="/img/sanpham/${item.productImage}" alt="${item.productName}">
+                                        <img src="${pageContext.request.contextPath}/img/sanpham/${item.productImage}"
+                                             alt="${item.productName}">
                                     </div>
                                     <div class="product-details">
                                         <div class="product-name">
@@ -202,5 +269,71 @@
     </div>
     <jsp:include page="/components/footer.jsp"/>
 </div>
+
+<script>
+    $(document).ready(function () {
+        const isFromOrderList = ${isFromOrderList != null ? isFromOrderList : false};
+
+        if (isFromOrderList) {
+            $('.info-box').hide();
+
+            document.title = 'Chi tiết đơn hàng #${orderInfo.orderNumber}';
+        } else {
+            setTimeout(function () {
+                $('.info-box').fadeOut();
+            }, 3000);
+        }
+    });
+
+    function cancelThisOrder(orderId) {
+        if (!confirm('Bạn có chắc chắn muốn hủy đơn hàng này?\n\nHành động này không thể hoàn tác.')) {
+            return;
+        }
+
+        const cancelBtn = $(`button[onclick="cancelThisOrder(${orderId})"]`);
+        const originalText = cancelBtn.html();
+        cancelBtn.prop('disabled', true).html('<i class="fa fa-spinner fa-spin"></i> Đang hủy...');
+
+        $.ajax({
+            url: '${pageContext.request.contextPath}/orderInformation',
+            type: 'POST',
+            data: {
+                action: 'cancel',
+                orderId: orderId
+            },
+            timeout: 10000,
+            success: function (response) {
+                try {
+                    const result = typeof response === 'string' ? JSON.parse(response) : response;
+                    if (result.success) {
+                        // Show success message
+                        alert('Hủy đơn hàng thành công!');
+                        // Reload page to show updated status
+                        window.location.reload();
+                    } else {
+                        alert('Không thể hủy đơn hàng: ' + (result.message || 'Lỗi không xác định'));
+                        cancelBtn.prop('disabled', false).html(originalText);
+                    }
+                } catch (error) {
+                    alert('Có lỗi xảy ra khi xử lý phản hồi');
+                    cancelBtn.prop('disabled', false).html(originalText);
+                }
+            },
+            error: function (xhr, status, error) {
+                let errorMessage = 'Có lỗi xảy ra khi hủy đơn hàng!';
+                if (status === 'timeout') {
+                    errorMessage = 'Quá thời gian chờ, vui lòng thử lại';
+                }
+                alert(errorMessage);
+                cancelBtn.prop('disabled', false).html(originalText);
+            }
+        });
+    }
+
+    // Print functionality
+    function printOrder() {
+        window.print();
+    }
+</script>
 </body>
 </html>

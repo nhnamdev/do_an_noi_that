@@ -51,8 +51,7 @@ public class OrderDao {
             }
 
             // Lưu order items vào bảng order_items
-            String itemSql = "INSERT INTO order_items (order_id, product_id, product_name, product_image, " +
-                    "unit_price, quantity, total_price) VALUES (?, ?, ?, ?, ?, ?, ?)";
+            String itemSql = "INSERT INTO order_items (order_id, product_id, product_name, product_image, " + "unit_price, quantity, total_price) VALUES (?, ?, ?, ?, ?, ?, ?)";
 
             ps = conn.prepareStatement(itemSql);
 
@@ -147,6 +146,30 @@ public class OrderDao {
             return st.executeUpdate() > 0;
         } catch (Exception e) {
             throw new RuntimeException(e);
+        }
+    }
+
+    public boolean cancelOrder(int orderId, String newStatus) {
+        String sql = "UPDATE order_product SET order_status = ? WHERE order_id = ?";
+        try {
+            conn = new DBConnect().getConnection();
+            ps = conn.prepareStatement(sql);
+            ps.setString(1, newStatus);
+            ps.setInt(2, orderId);
+
+            int rowsAffected = ps.executeUpdate();
+            return rowsAffected > 0;
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        } finally {
+            try {
+                if (ps != null) ps.close();
+                if (conn != null) conn.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
         }
     }
 
@@ -245,11 +268,19 @@ public class OrderDao {
                 invoice.setDiscount(rs.getInt("discount_amount"));
                 invoice.setFinalAmount(rs.getDouble("final_amount"));
                 invoice.setPaymentMethod(rs.getInt("payment_method_id"));
-                invoice.setVoucherId(rs.getInt("voucher_id"));
+                invoice.setVoucherId(rs.getInt("voucher_id")); // Giữ nguyên
                 invoice.setIssueDate(rs.getTimestamp("issue_date"));
                 invoice.setStatus(rs.getString("status"));
-                invoice.setPaymentDate(rs.getTimestamp("payment_date"));
-                invoice.setTransactionCode(rs.getString("transaction_code"));
+                // Xử lý payment_date có thể NULL
+                Timestamp paymentDate = rs.getTimestamp("payment_date");
+                if (paymentDate != null) {
+                    invoice.setPaymentDate(paymentDate);
+                }
+                // Xử lý transaction_code có thể NULL
+                String transactionCode = rs.getString("transaction_code");
+                if (transactionCode != null && !transactionCode.trim().isEmpty()) {
+                    invoice.setTransactionCode(transactionCode);
+                }
                 return invoice;
             }
         } catch (Exception e) {
@@ -264,6 +295,134 @@ public class OrderDao {
             }
         }
         return null;
+    }
+
+    public List<Order> getOrdersByUserId(int userId) {
+        List<Order> orders = new ArrayList<>();
+        String query = "SELECT * FROM order_product WHERE user_id = ? ORDER BY order_date DESC";
+
+        try {
+            conn = new DBConnect().getConnection();
+            ps = conn.prepareStatement(query);
+            ps.setInt(1, userId);
+            rs = ps.executeQuery();
+
+            while (rs.next()) {
+                try {
+                    Order order = new Order();
+                    order.setOrderId(rs.getInt("order_id"));
+                    order.setUserId(rs.getInt("user_id"));
+                    order.setOrderNumber(rs.getString("order_number"));
+                    order.setCustomerName(rs.getString("customer_name"));
+                    order.setCustomerPhone(rs.getString("customer_phone"));
+                    order.setShippingAddress(rs.getString("shipping_address"));
+                    order.setTotalAmount(rs.getDouble("total_amount"));
+                    order.setOrderStatus(rs.getString("order_status"));
+                    order.setPaymentMethod(rs.getString("payment_method"));
+                    order.setNotes(rs.getString("notes"));
+                    try {
+                        Timestamp timestamp = rs.getTimestamp("order_date");
+                        if (timestamp != null) {
+                            order.setOrderDate(timestamp.toLocalDateTime());
+                        } else {
+                        }
+                    } catch (Exception dateEx) {
+                        dateEx.printStackTrace();
+                    }
+                    orders.add(order);
+
+                } catch (Exception orderEx) {
+                    orderEx.printStackTrace();
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (rs != null) rs.close();
+                if (ps != null) ps.close();
+                if (conn != null) conn.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        return orders;
+    }
+
+    public int getTotalOrdersByUserId(int userId) {
+        String sql = "SELECT COUNT(*) FROM order_product WHERE user_id = ?";
+        try {
+            conn = new DBConnect().getConnection();
+            ps = conn.prepareStatement(sql);
+            ps.setInt(1, userId);
+            rs = ps.executeQuery();
+
+            if (rs.next()) {
+                return rs.getInt(1);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (rs != null) rs.close();
+                if (ps != null) ps.close();
+                if (conn != null) conn.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        return 0;
+    }
+
+    public boolean cancelOrder(int orderId) {
+        return cancelOrder(orderId, "cancelled");
+    }
+
+    public List<Order> getOrdersByUserIdWithPagination(int userId, int offset, int limit) {
+        List<Order> orders = new ArrayList<>();
+        String sql = "SELECT * FROM order_product WHERE user_id = ? ORDER BY order_date DESC LIMIT ? OFFSET ?";
+
+        try {
+            conn = new DBConnect().getConnection();
+            ps = conn.prepareStatement(sql);
+            ps.setInt(1, userId);
+            ps.setInt(2, limit);
+            ps.setInt(3, offset);
+
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                Order order = new Order();
+                order.setOrderId(rs.getInt("order_id"));
+                order.setUserId(rs.getInt("user_id"));
+                order.setOrderNumber(rs.getString("order_number"));
+                order.setCustomerName(rs.getString("customer_name"));
+                order.setCustomerPhone(rs.getString("customer_phone"));
+                order.setShippingAddress(rs.getString("shipping_address"));
+                order.setTotalAmount(rs.getDouble("total_amount"));
+                order.setOrderStatus(rs.getString("order_status"));
+                order.setPaymentMethod(rs.getString("payment_method"));
+                order.setNotes(rs.getString("notes"));
+
+                // Xử lý order_date
+                Timestamp timestamp = rs.getTimestamp("order_date");
+                if (timestamp != null) {
+                    order.setOrderDate(timestamp.toLocalDateTime());
+                }
+
+                orders.add(order);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (rs != null) rs.close();
+                if (ps != null) ps.close();
+                if (conn != null) conn.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        return orders;
     }
 
     public static void main(String[] args) {
