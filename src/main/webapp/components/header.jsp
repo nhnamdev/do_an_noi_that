@@ -43,7 +43,7 @@
                 <c:if test="${sessionScope.loginModel!=null || sessionScope.googleAccount != null || sessionScope.facebookAccount != null}">
                     <li class="nav-item">
                         <a class="nav-link" href="${pageContext.request.contextPath}/personal.jsp">
-                            <img src="img/avt/avt.jpg" class="rounded-circle" width="22">
+                            <img src="${pageContext.request.contextPath}/img/avt/avt.jpg" class="rounded-circle" width="22">
                         </a>
                     </li>
                     <li class="nav-item"><a class="nav-link"

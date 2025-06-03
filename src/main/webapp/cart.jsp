@@ -128,7 +128,7 @@
                                         <tr class="cart-item">
                                             <td class="product-column">
                                                 <div class="product-info">
-                                                    <img src="/img/sanpham/${product.img}" alt="${product.name}"
+                                                    <img src="${pageContext.request.contextPath}/img/sanpham/${product.img}" alt="${product.name}"
                                                          class="product-image">
                                                     <div class="product-details">
                                                         <div class="product-name">${product.name}</div>

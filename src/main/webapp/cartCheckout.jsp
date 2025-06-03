@@ -165,7 +165,7 @@
                                     <c:set var="itemTotal" value="${product.price * order.quantity}"/>
                                     <div class="product-cart-item">
                                         <div class="product-info">
-                                            <img src="/img/sanpham/${product.img}" alt="${product.name}"
+                                            <img src="${pageContext.request.contextPath}/img/sanpham/${product.img}" alt="${product.name}"
                                                  class="product-image">
                                             <div class="product-details">
                                                 <h4 class="product-name">${product.name}</h4>
