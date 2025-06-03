@@ -28,7 +28,12 @@ public class OrderReceivedController extends HttpServlet {
         HttpSession session = request.getSession();
         Integer userID = (Integer) session.getAttribute("userIdLogin");
 
-        if (userID == null) {
+        // kiem tra neu day la admin dang xem don hang
+        Boolean isAdmin = (Boolean) session.getAttribute("isAdmin");
+        String adminMode = request.getParameter("adminMode");
+        boolean isAdminViewing = (isAdmin != null && isAdmin) && "true".equals(adminMode);
+
+        if (userID == null && !isAdminViewing) {
             response.sendRedirect(request.getContextPath() + "/login.jsp");
             return;
         }
@@ -42,7 +47,11 @@ public class OrderReceivedController extends HttpServlet {
                 orderId = Integer.parseInt(orderIdParam);
                 isFromOrderList = true;
             } catch (NumberFormatException e) {
-                response.sendRedirect(request.getContextPath() + "/orderInformation");
+                if (isAdminViewing) {
+                    response.sendRedirect(request.getContextPath() + "/admin");
+                } else {
+                    response.sendRedirect(request.getContextPath() + "/orderInformation");
+                }
                 return;
             }
         } else {
@@ -50,7 +59,9 @@ public class OrderReceivedController extends HttpServlet {
         }
 
         if (orderId == null) {
-            if (isFromOrderList) {
+            if (isAdminViewing) {
+                response.sendRedirect(request.getContextPath() + "/admin");
+            } else if (isFromOrderList) {
                 response.sendRedirect(request.getContextPath() + "/orderInformation");
             } else {
                 response.sendRedirect(request.getContextPath() + "/");
@@ -61,7 +72,9 @@ public class OrderReceivedController extends HttpServlet {
         try {
             Order orderInfo = orderDao.getOrderById(orderId);
             if (orderInfo == null) {
-                if (isFromOrderList) {
+                if (isAdminViewing) {
+                    response.sendRedirect(request.getContextPath() + "/admin");
+                } else if (isFromOrderList) {
                     response.sendRedirect(request.getContextPath() + "/orderInformation");
                 } else {
                     response.sendRedirect(request.getContextPath() + "/");
@@ -69,7 +82,8 @@ public class OrderReceivedController extends HttpServlet {
                 return;
             }
 
-            if (!Objects.equals(orderInfo.getUserId(), userID)) {
+            // bo qua buoc kiem tra nguoi dung neu la admin
+            if (!isAdminViewing && !Objects.equals(orderInfo.getUserId(), userID)) {
                 response.sendRedirect(request.getContextPath() + "/orderInformation");
                 return;
             }
@@ -91,15 +105,18 @@ public class OrderReceivedController extends HttpServlet {
             request.setAttribute("isFromOrderList", isFromOrderList);
             request.setAttribute("formattedOrderDate", formattedOrderDate);
             request.setAttribute("orderDateAsDate", orderDateAsDate);
+            request.setAttribute("isAdminViewing", isAdminViewing); //cho admin xem don
 
             request.getRequestDispatcher("/orderReceived.jsp").forward(request, response);
 
-            if (!isFromOrderList) {
+            if (!isFromOrderList && !isAdminViewing) {
                 handleNewOrderCleanup(session, userID);
             }
 
         } catch (Exception e) {
-            if (isFromOrderList) {
+            if (isAdminViewing) {
+                response.sendRedirect(request.getContextPath() + "/admin");
+            } else if (isFromOrderList) {
                 response.sendRedirect(request.getContextPath() + "/orderInformation");
             } else {
                 response.sendRedirect(request.getContextPath() + "/");

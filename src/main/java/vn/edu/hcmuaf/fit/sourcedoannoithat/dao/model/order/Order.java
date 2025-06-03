@@ -135,6 +135,14 @@ public class Order {
         this.orderItems = orderItems;
     }
 
+    // helper class chuyen localdatetime sang datetime
+    public java.util.Date getOrderDateAsDate() {
+        if (orderDate != null) {
+            return java.sql.Timestamp.valueOf(orderDate);
+        }
+        return null;
+    }
+
     @Override
     public String toString() {
         return "Order{" +

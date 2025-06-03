@@ -118,8 +118,10 @@
                             vi du nhu sau nay muon mo rong them la gio hang khong trong boi vi co san pham het hang
                             nam trong gio hang nen khong tinh la gio hang trong dc--%>
                             <c:choose>
-                                <c:when test="${cart == null}">
-                                    <td colspan="4" class="empty-cart-message">Giỏ hàng của bạn đang trống.</td>
+                                <c:when test="${cart == null || cart.size() == 0}">
+                                    <tr>
+                                        <td colspan="4" class="empty-cart-message">Giỏ hàng của bạn đang trống.</td>
+                                    </tr>
                                 </c:when>
                                 <c:otherwise>
                                     <c:forEach var="entry" items="${cart}">
@@ -137,8 +139,8 @@
                                                             <span class="product-variant">Kích thước: ${order.productDetail.width}x${order.productDetail.height}</span>
                                                             <span class="product-variant">Chất liệu: ${order.productDetail.material}</span>
                                                         </div>
-                                                        <button class="remove-btn"
-                                                                onclick="removeProduct(${product.id})">
+                                                        <button type="button" class="remove-btn"
+                                                                data-product-id="${product.id}">
                                                             <i class="fas fa-times"></i> Xóa
                                                         </button>
                                                     </div>
@@ -172,6 +174,17 @@
                             </tbody>
                         </table>
                     </form>
+                    <%--                    form xoá sản phẩm phải dc tách ra ko được lồng với form update quantity --%>
+                    <c:forEach var="entry" items="${cart}">
+                        <c:set var="product" value="${entry.value.product}"/>
+                        <form action="${pageContext.request.contextPath}/cart/removeFromCart"
+                              method="post"
+                              style="display: none;"
+                              id="removeForm_${product.id}">
+                            <input type="hidden" name="productId" value="${product.id}">
+                        </form>
+                    </c:forEach>
+
                     <div class="coupon-section">
                         <div class="coupon-form">
                             <div class="coupon-code">
@@ -196,9 +209,6 @@
                     <div class="cart-buttons">
                         <button class="continue-shopping">
                             <i class="fas fa-arrow-left"></i> TIẾP TỤC MUA HÀNG
-                        </button>
-                        <button class="clear-cart" id="clearCart">
-                            <i class="fas fa-trash-alt"></i> XÓA TẤT CẢ
                         </button>
                     </div>
                 </div>

@@ -504,6 +504,375 @@
             </table>
         </div>
     </div>
+    <%--        quan ly don dat hang--%>
+    <div id="orderManagement" class="detail">
+        <div class="page-inner">
+            <div class="d-flex align-items-left align-items-md-center flex-column flex-md-row pt-2 pb-4">
+                <div>
+                    <h3 class="fw-bold mb-3">Quản Lý Đơn Hàng</h3>
+                    <h6 class="op-7 mb-2">Duyệt và theo dõi đơn hàng</h6>
+                </div>
+            </div>
+            <!-- cac the trang thai don hang -->
+            <div class="row mb-4">
+                <div class="col-sm-6 col-md-2">
+                    <div class="card card-stats card-round">
+                        <div class="card-body">
+                            <div class="row align-items-center">
+                                <div class="col-icon">
+                                    <div class="icon-big text-center icon-warning bubble-shadow-small">
+                                        <i class="fas fa-clock"></i>
+                                    </div>
+                                </div>
+                                <div class="col col-stats ms-3 ms-sm-0">
+                                    <div class="numbers">
+                                        <p class="card-category">Chờ duyệt</p>
+                                        <h4 class="card-title">
+                                            <c:choose>
+                                                <c:when test="${not empty pendingOrders}">
+                                                    ${pendingOrders}
+                                                </c:when>
+                                                <c:otherwise>0</c:otherwise>
+                                            </c:choose>
+                                        </h4>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-sm-6 col-md-2">
+                    <div class="card card-stats card-round">
+                        <div class="card-body">
+                            <div class="row align-items-center">
+                                <div class="col-icon">
+                                    <div class="icon-big text-center icon-info bubble-shadow-small">
+                                        <i class="fas fa-check-circle"></i>
+                                    </div>
+                                </div>
+                                <div class="col col-stats ms-3 ms-sm-0">
+                                    <div class="numbers">
+                                        <p class="card-category">Đã duyệt</p>
+                                        <h4 class="card-title">
+                                            <c:choose>
+                                                <c:when test="${not empty confirmedOrders}">
+                                                    ${confirmedOrders}
+                                                </c:when>
+                                                <c:otherwise>0</c:otherwise>
+                                            </c:choose>
+                                        </h4>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-sm-6 col-md-2">
+                    <div class="card card-stats card-round">
+                        <div class="card-body">
+                            <div class="row align-items-center">
+                                <div class="col-icon">
+                                    <div class="icon-big text-center icon-primary bubble-shadow-small">
+                                        <i class="fas fa-shipping-fast"></i>
+                                    </div>
+                                </div>
+                                <div class="col col-stats ms-3 ms-sm-0">
+                                    <div class="numbers">
+                                        <p class="card-category">Đang giao</p>
+                                        <h4 class="card-title">
+                                            <c:choose>
+                                                <c:when test="${not empty shippingOrders}">
+                                                    ${shippingOrders}
+                                                </c:when>
+                                                <c:otherwise>0</c:otherwise>
+                                            </c:choose>
+                                        </h4>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-sm-6 col-md-2">
+                    <div class="card card-stats card-round">
+                        <div class="card-body">
+                            <div class="row align-items-center">
+                                <div class="col-icon">
+                                    <div class="icon-big text-center icon-success bubble-shadow-small">
+                                        <i class="fas fa-check-double"></i>
+                                    </div>
+                                </div>
+                                <div class="col col-stats ms-3 ms-sm-0">
+                                    <div class="numbers">
+                                        <p class="card-category">Hoàn thành</p>
+                                        <h4 class="card-title">
+                                            <c:choose>
+                                                <c:when test="${not empty deliveredOrders}">
+                                                    ${deliveredOrders}
+                                                </c:when>
+                                                <c:otherwise>0</c:otherwise>
+                                            </c:choose>
+                                        </h4>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-sm-6 col-md-2">
+                    <div class="card card-stats card-round">
+                        <div class="card-body">
+                            <div class="row align-items-center">
+                                <div class="col-icon">
+                                    <div class="icon-big text-center icon-secondary bubble-shadow-small">
+                                        <i class="fas fa-times-circle"></i>
+                                    </div>
+                                </div>
+                                <div class="col col-stats ms-3 ms-sm-0">
+                                    <div class="numbers">
+                                        <p class="card-category">Đã hủy</p>
+                                        <h4 class="card-title">
+                                            <c:choose>
+                                                <c:when test="${not empty cancelledOrders}">
+                                                    ${cancelledOrders}
+                                                </c:when>
+                                                <c:otherwise>0</c:otherwise>
+                                            </c:choose>
+                                        </h4>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- table don dat hang -->
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card card-round">
+                        <div class="card-header">
+                            <div class="card-head-row card-tools-still-right">
+                                <div class="card-title">Danh Sách Đơn Hàng</div>
+                                <div class="card-tools">
+                                    <button class="btn btn-info btn-sm" onclick="location.reload()">
+                                        <i class="fas fa-sync"></i> Làm mới
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-body p-0">
+                            <div class="table-responsive">
+                                <table class="table align-items-center mb-0">
+                                    <thead class="thead-light">
+                                    <tr>
+                                        <th scope="col">Mã đơn hàng</th>
+                                        <th scope="col">Khách hàng</th>
+                                        <th scope="col">Số điện thoại</th>
+                                        <th scope="col">Ngày đặt</th>
+                                        <th scope="col" class="text-end">Tổng tiền</th>
+                                        <th scope="col" class="text-center">Trạng thái</th>
+                                        <th scope="col" class="text-center">Hành động</th>
+                                        <th scope="col" class="text-center">Chi tiết</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <c:choose>
+                                        <c:when test="${not empty orders}">
+                                            <c:forEach var="order" items="${orders}">
+                                                <tr>
+                                                    <td>
+                                                        <strong>
+                                                            <c:choose>
+                                                                <c:when test="${not empty order.orderNumber}">
+                                                                    ${order.orderNumber}
+                                                                </c:when>
+                                                                <c:otherwise>
+                                                                    #${order.orderId}
+                                                                </c:otherwise>
+                                                            </c:choose>
+                                                        </strong>
+                                                    </td>
+                                                    <td>
+                                                        <div>
+                                                            <strong>
+                                                                <c:choose>
+                                                                    <c:when test="${not empty order.customerName}">
+                                                                        ${order.customerName}
+                                                                    </c:when>
+                                                                    <c:otherwise>
+                                                                        Không rõ
+                                                                    </c:otherwise>
+                                                                </c:choose>
+                                                            </strong>
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <c:choose>
+                                                            <c:when test="${not empty order.customerPhone}">
+                                                                ${order.customerPhone}
+                                                            </c:when>
+                                                            <c:otherwise>
+                                                                N/A
+                                                            </c:otherwise>
+                                                        </c:choose>
+                                                    </td>
+                                                    <td>
+                                                        <c:choose>
+                                                            <c:when test="${not empty order.orderDate}">
+                                                                <fmt:formatDate value="${order.orderDateAsDate}"
+                                                                                pattern="dd/MM/yyyy HH:mm"/>
+                                                            </c:when>
+                                                            <c:otherwise>
+                                                                N/A
+                                                            </c:otherwise>
+                                                        </c:choose>
+                                                    </td>
+                                                    <td class="text-end">
+                                                        <strong>
+                                                            <c:choose>
+                                                                <c:when test="${not empty order.totalAmount}">
+                                                                    <fmt:formatNumber value="${order.totalAmount}"
+                                                                                      type="number"/>
+                                                                </c:when>
+                                                                <c:otherwise>
+                                                                    0
+                                                                </c:otherwise>
+                                                            </c:choose>
+                                                            VNĐ
+                                                        </strong>
+                                                    </td>
+                                                    <td class="text-center">
+                                                        <c:choose>
+                                                            <c:when test="${order.orderStatus == 'pending'}">
+                                                                <span class="badge badge-warning">Chờ duyệt</span>
+                                                            </c:when>
+                                                            <c:when test="${order.orderStatus == 'confirmed'}">
+                                                                <span class="badge badge-info">Đã duyệt</span>
+                                                            </c:when>
+                                                            <c:when test="${order.orderStatus == 'shipping'}">
+                                                                <span class="badge badge-primary">Đang giao</span>
+                                                            </c:when>
+                                                            <c:when test="${order.orderStatus == 'delivered'}">
+                                                                <span class="badge badge-success">Đã giao</span>
+                                                            </c:when>
+                                                            <c:when test="${order.orderStatus == 'cancelled'}">
+                                                                <span class="badge badge-danger">Đã hủy</span>
+                                                            </c:when>
+                                                            <c:otherwise>
+                                                            <span class="badge badge-secondary">
+                                                                    ${not empty order.orderStatus ? order.orderStatus : 'N/A'}
+                                                            </span>
+                                                            </c:otherwise>
+                                                        </c:choose>
+                                                    </td>
+                                                    <td class="text-center">
+                                                        <div class="btn-group" role="group">
+                                                            <c:if test="${order.orderStatus == 'pending'}">
+                                                                <form action="admin" method="post"
+                                                                      style="display: inline;">
+                                                                    <input type="hidden" name="orderAction"
+                                                                           value="approve">
+                                                                    <input type="hidden" name="orderId"
+                                                                           value="${order.orderId}">
+                                                                    <button type="submit" class="btn btn-success btn-sm"
+                                                                            onclick="return confirm('Bạn có chắc muốn duyệt đơn hàng này?')">
+                                                                        <i class="fas fa-check"></i> Duyệt
+                                                                    </button>
+                                                                </form>
+                                                                <form action="admin" method="post"
+                                                                      style="display: inline;">
+                                                                    <input type="hidden" name="orderAction"
+                                                                           value="reject">
+                                                                    <input type="hidden" name="orderId"
+                                                                           value="${order.orderId}">
+                                                                    <button type="submit"
+                                                                            class="btn btn-danger btn-sm ms-1"
+                                                                            onclick="return confirm('Bạn có chắc muốn từ chối đơn hàng này?')">
+                                                                        <i class="fas fa-times"></i> Từ chối
+                                                                    </button>
+                                                                </form>
+                                                            </c:if>
+
+                                                            <c:if test="${order.orderStatus == 'confirmed'}">
+                                                                <form action="admin" method="post"
+                                                                      style="display: inline;">
+                                                                    <input type="hidden" name="orderAction"
+                                                                           value="ship">
+                                                                    <input type="hidden" name="orderId"
+                                                                           value="${order.orderId}">
+                                                                    <button type="submit" class="btn btn-primary btn-sm"
+                                                                            onclick="return confirm('Chuyển đơn hàng sang trạng thái vận chuyển?')">
+                                                                        <i class="fas fa-shipping-fast"></i> Giao hàng
+                                                                    </button>
+                                                                </form>
+                                                            </c:if>
+
+                                                            <c:if test="${order.orderStatus == 'shipping'}">
+                                                                <form action="admin" method="post"
+                                                                      style="display: inline;">
+                                                                    <input type="hidden" name="orderAction"
+                                                                           value="complete">
+                                                                    <input type="hidden" name="orderId"
+                                                                           value="${order.orderId}">
+                                                                    <button type="submit" class="btn btn-success btn-sm"
+                                                                            onclick="return confirm('Xác nhận đơn hàng đã được giao thành công?')">
+                                                                        <i class="fas fa-check-double"></i> Hoàn thành
+                                                                    </button>
+                                                                </form>
+                                                            </c:if>
+
+                                                            <c:if test="${order.orderStatus == 'delivered' || order.orderStatus == 'cancelled'}">
+                                                                <span class="text-muted">Không có hành động</span>
+                                                            </c:if>
+                                                        </div>
+                                                    </td>
+                                                    <td class="text-center">
+                                                        <button class="btn btn-info btn-sm"
+                                                                onclick="viewOrderDetails(${order.orderId})">
+                                                            <i class="fas fa-eye"></i> Xem chi tiết
+                                                        </button>
+                                                    </td>
+                                                </tr>
+                                            </c:forEach>
+                                        </c:when>
+                                        <c:otherwise>
+                                            <tr>
+                                                <td colspan="8" class="text-center py-4">
+                                                    <h5 class="text-muted">Không tìm thấy đơn hàng nào</h5>
+                                                </td>
+                                            </tr>
+                                        </c:otherwise>
+                                    </c:choose>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="orderDetailModal" tabindex="-1" aria-labelledby="orderDetailModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog modal-xl">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="orderDetailModalLabel">Chi Tiết Đơn Hàng</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body" id="orderDetailContent">
+                    <!-- Content will be loaded here -->
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 <script src="js/about-management.js"></script>
 <script src="js/showDetail.js"></script>
@@ -539,6 +908,12 @@
         doc.save("Transaction_History.pdf");
     });
 </script>
-
+<script>
+    function viewOrderDetails(orderId) {
+        const url = 'orderReceived?orderId=' + orderId + '&adminMode=true';
+        // Mở đơn trong cửa sổ mới
+        window.open(url, '_blank', 'width=1200,height=800,scrollbars=yes,resizable=yes,menubar=no,toolbar=no,location=no,status=no');
+    }
+</script>
 </body>
 </html>

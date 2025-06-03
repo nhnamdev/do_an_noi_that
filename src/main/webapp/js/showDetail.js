@@ -1,37 +1,47 @@
-// Hàm hiển thị một phần tử chi tiết cụ thể và ẩn các phần khác
-// function showDetail(sectionId) {
-//     const details = document.querySelectorAll('.detail');
-//     const  content = document.getElementById("main_contentt")
-//     content.style.display = 'none';
-//     details.forEach(detail => {
-//         detail.style.display = 'none';
-//
-//     });
-//
-//     const selectedDetail = document.getElementById(sectionId);
-//     if (selectedDetail) {
-//         selectedDetail.style.display = 'block';
-//     }
-// }
-function showDetail(sectionId) {
+function showDetail(target) {
+    // Ẩn tất cả các detail sections
     const details = document.querySelectorAll('.detail');
-    const content = document.getElementById("main_contentt");
-
-    // Kiểm tra xem có phần tử nào cần hiển thị không
-    if (sectionId) {
-        content.style.display = 'none'; // Chỉ ẩn nếu có phần khác hiển thị
-    } else {
-        content.style.display = 'block'; // Nếu không có, đảm bảo nội dung chính vẫn hiện
-    }
-
     details.forEach(detail => {
         detail.style.display = 'none';
     });
 
-    const selectedDetail = document.getElementById(sectionId);
-    if (selectedDetail) {
-        selectedDetail.style.display = 'block';
+    // Xóa class active khỏi tất cả buttons
+    const buttons = document.querySelectorAll('.btn');
+    buttons.forEach(btn => {
+        btn.classList.remove('active');
+    });
+
+    // Hiển thị section được chọn
+    switch (target) {
+        case 'main_contentt':
+            document.getElementById('main_contentt').style.display = 'block';
+            break;
+        case 'orderManagement':
+            document.getElementById('orderManagement').style.display = 'block';
+            // Refresh order counts when showing order management
+            if (window.orderManager) {
+                window.orderManager.refreshOrderCounts();
+            }
+            break;
+        case 'mailBox2':
+            document.getElementById('mailBox2').style.display = 'block';
+            break;
+        case 'showPL1':
+            document.getElementById('showPL1').style.display = 'block';
+            break;
+        case 'showPL2':
+            document.getElementById('showPL2').style.display = 'block';
+            break;
+        case 'manageList2':
+            document.getElementById('manageList2').style.display = 'block';
+            break;
+        case 'warranty-container':
+            document.getElementById('warranty-container').style.display = 'block';
+            break;
+        default:
+            document.getElementById('main_contentt').style.display = 'block';
     }
+    event.target.classList.add('active');
 }
 
 
