@@ -163,7 +163,6 @@
                                     <c:set var="order" value="${entry.value}"/>
                                     <c:set var="product" value="${order.product}"/>
                                     <c:set var="itemTotal" value="${product.price * order.quantity}"/>
-                                    <c:set var="totalAmount" value="${totalAmount + itemTotal}"/>
                                     <div class="product-cart-item">
                                         <div class="product-info">
                                             <img src="/img/sanpham/${product.img}" alt="${product.name}"
@@ -188,7 +187,7 @@
                             </div>
                             <div class="order-summary-total">
                                 <div>Tổng tiền hàng</div>
-                                <div id="total-product"><f:formatNumber type="currency" value="${totalAmount}"
+                                <div id="total-product"><f:formatNumber type="currency" value="${itemTotal}"
                                                                         pattern="#,###đ"/></div>
                             </div>
                             <div class="order-summary-total">
@@ -197,7 +196,7 @@
                             </div>
                             <div class="order-summary-total grand-total">
                                 <div>Tổng thanh toán</div>
-                                <div id="total-invoice"><f:formatNumber type="currency" value="${totalAmount}"
+                                <div id="total-invoice"><f:formatNumber type="currency" value="${itemTotal}"
                                                                         pattern="#,###đ"/></div>
                             </div>
                             <div class="payment-method">

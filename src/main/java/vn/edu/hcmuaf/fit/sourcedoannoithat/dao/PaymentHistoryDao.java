@@ -56,7 +56,7 @@ public class PaymentHistoryDao {
         List<Invoice> list = new ArrayList<>();
         String query = "SELECT i.*, pc.name AS user_name " +
                 "FROM invoice i " +
-                "JOIN order_product o ON i.order_id = o.id " +
+                "JOIN order_product o ON i.order_id = o.order_id " +
                 "JOIN profile_client pc ON o.user_id = pc.id " +
                 "WHERE i.status = 'success' " +  // Thanh toan thanh cong moi get
                 "ORDER BY i.issue_date DESC";
