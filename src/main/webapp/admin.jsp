@@ -193,7 +193,8 @@
                                             Payment from #${item.userName}
                                         </th>
                                         <td class="text-end">${item.paymentDate}</td>
-                                        <td class="text-end">$${item.finalAmount}</td>
+                                        <td class="text-end"><fmt:formatNumber value="${item.finalAmount}"
+                                                                               type="number"/> VNĐ</td>
                                         <td class="text-end">
                                             <c:choose>
                                                 <c:when test="${item.status == 'success'}">
