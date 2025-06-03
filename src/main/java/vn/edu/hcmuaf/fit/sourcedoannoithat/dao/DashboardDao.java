@@ -38,7 +38,7 @@ public class DashboardDao {
     }
 
     public double getTotalSales() {
-        String sql = "SELECT SUM(price * quantity) FROM order_product";
+        String sql = "SELECT SUM(total_amount) FROM order_product";
         try {
             conn = new DBConnect().getConnection();
             ps = conn.prepareStatement(sql);
