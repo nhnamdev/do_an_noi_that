@@ -12,9 +12,9 @@ import java.sql.Timestamp;
 public class Invoice {
     private int id;
     private int orderId;
-    private int total;
+    private double total;
     private int discount;
-    private int finalAmount;
+    private double finalAmount;
     private int paymentMethod;
     private int voucherId;
     private Timestamp issueDate;

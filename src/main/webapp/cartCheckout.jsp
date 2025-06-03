@@ -166,7 +166,8 @@
                                     <c:set var="totalAmount" value="${totalAmount + itemTotal}"/>
                                     <div class="product-cart-item">
                                         <div class="product-info">
-                                            <img src="${product.img}" alt="${product.name}" class="product-image">
+                                            <img src="/img/sanpham/${product.img}" alt="${product.name}"
+                                                 class="product-image">
                                             <div class="product-details">
                                                 <h4 class="product-name">${product.name}</h4>
                                                 <div class="product-meta">
@@ -200,10 +201,6 @@
                                                                         pattern="#,###đ"/></div>
                             </div>
                             <div class="payment-method">
-                                <div class="payment-option">
-                                    <input type="radio" id="bank-transfer" name="payment" value="bank" checked>
-                                    <label for="bank-transfer">Chuyển khoản ngân hàng</label>
-                                </div>
                                 <div class="payment-option">
                                     <input type="radio" id="vnpay-transfer" name="payment" value="vnpay">
                                     <label for="vnpay-transfer">Thanh toán qua VNPay</label>

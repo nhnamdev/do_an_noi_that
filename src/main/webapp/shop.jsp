@@ -390,9 +390,17 @@
                                                                 </span>
                                                             </div>
                                                             <div class="product-actions">
-                                                                <button class="add-to-cart-btn">
-                                                                    <i class="fa fa-shopping-cart"></i> Thêm vào giỏ
-                                                                </button>
+                                                                <form action="${pageContext.request.contextPath}/cart/addToCart"
+                                                                      method="post">
+                                                                    <input type="hidden" name="id"
+                                                                           value="${p.id}">
+                                                                    <input type="hidden" name="quantity"
+                                                                           id="quantityInput" value="1">
+                                                                    <button type="submit" class="add-to-cart-btn">
+                                                                        <i class="fas fa-cart-plus"></i> Thêm vào giỏ
+                                                                        hàng
+                                                                    </button>
+                                                                </form>
                                                             </div>
                                                         </div>
                                                     </div>

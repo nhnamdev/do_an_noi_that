@@ -10,45 +10,33 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
-// xu li gio hang cua ng dung, luu gio hang cua nguoi dung ve db voi user id tuong ung
 public class CartDao {
     Connection conn = null;
     PreparedStatement ps = null;
     ResultSet rs = null;
 
-    // phuong thuc them hoac cap nhat so luong san pham trong gio hang
     public boolean addOrUpdateCartItem(int userID, int productID, int quantity) {
-//        kiem tra coi san pham nay da co trong gio hang hay chua
-        String query = "SELECT *\n" +
-                "FROM cart\n" +
-                "WHERE user_id = ?\n" +
-                "AND product_id = ?;";
+        String query = "SELECT * FROM cart WHERE user_id = ? AND product_id = ?";
         try {
             conn = new DBConnect().getConnection();
             ps = conn.prepareStatement(query);
             ps.setInt(1, userID);
             ps.setInt(2, productID);
             rs = ps.executeQuery();
-//            neu san pham da ton tai, cap nhat so luong
+
             if (rs.next()) {
-                String updateQuery = "UPDATE cart\n" +
-                        "SET quantity = ?\n" +
-                        "WHERE user_id = ?\n" +
-                        "AND product_id = ?;";
+                String updateQuery = "UPDATE cart SET quantity = ? WHERE user_id = ? AND product_id = ?";
                 ps = conn.prepareStatement(updateQuery);
                 ps.setInt(1, quantity);
                 ps.setInt(2, userID);
                 ps.setInt(3, productID);
-
                 return ps.executeUpdate() > 0;
             } else {
-                String insertQuery = "INSERT INTO `cart`(user_id, product_id, quantity) \n" +
-                        "VALUES (?, ?, ?);";
+                String insertQuery = "INSERT INTO cart(user_id, product_id, quantity) VALUES (?, ?, ?)";
                 ps = conn.prepareStatement(insertQuery);
                 ps.setInt(1, userID);
                 ps.setInt(2, productID);
                 ps.setInt(3, quantity);
-
                 return ps.executeUpdate() > 0;
             }
 
@@ -59,9 +47,7 @@ public class CartDao {
 
     public List<Cart> getCartItems(int userID) {
         List<Cart> carts = new ArrayList<Cart>();
-        String query = "SELECT *\n" +
-                "FROM cart\n" +
-                "WHERE user_id = ?;";
+        String query = "SELECT * FROM cart WHERE user_id = ?";
         try {
             conn = new DBConnect().getConnection();
             ps = conn.prepareStatement(query);
@@ -85,9 +71,7 @@ public class CartDao {
     }
 
     public Product getProductById(String id) {
-        String query = "SELECT * \n" +
-                "FROM product_shop\n" +
-                "WHERE id=?;";
+        String query = "SELECT * FROM product_shop WHERE id=?";
         try {
             conn = new DBConnect().getConnection();
             ps = conn.prepareStatement(query);
@@ -108,6 +92,7 @@ public class CartDao {
         }
         return null;
     }
+
     public boolean clearCartByUserId(int userId) {
         String query = "DELETE FROM cart WHERE user_id = ?";
         try {
@@ -120,8 +105,24 @@ public class CartDao {
         }
     }
 
-    public static void main(String[] args) {
-        CartDao cartDao = new CartDao();
-        System.out.println(cartDao.addOrUpdateCartItem(3, 4, 2));
+    public boolean removeCartItem(int userId, int productId) {
+        String query = "DELETE FROM cart WHERE user_id = ? AND product_id = ?";
+        try {
+            conn = new DBConnect().getConnection();
+            ps = conn.prepareStatement(query);
+            ps.setInt(1, userId);
+            ps.setInt(2, productId);
+            return ps.executeUpdate() > 0;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        } finally {
+            try {
+                if (ps != null) ps.close();
+                if (conn != null) conn.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
     }
 }

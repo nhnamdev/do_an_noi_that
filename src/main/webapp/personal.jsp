@@ -54,7 +54,7 @@
                     </div>
                 </div>
                 <div class="address" id="homePage"><h5><i class="fa fa-home"></i>TRANG TÀI KHOẢN</h5></div>
-                <a href="cart.jsp" class="button">
+                <a href="orderInformation" class="button">
                     <div class="address"><h5><i class="fa fa-box"></i> ĐƠN HÀNG</h5>
                     </div>
                 </a>
@@ -155,7 +155,7 @@
                             <Strong>${sessionScope.userName}</Strong>? Hãy <u>thoát ra</u> và đăng nhập vào tài khoản
                             của bạn) </h5>
                         <div class="content">
-                            <a href="cart.jsp" class="button">
+                            <a href="orderInformation" class="button">
                                 <div class="box"><h5><i class="fa fa-box"></i> <br> ĐƠN HÀNG</h5></div>
                             </a>
                             <a href="contact.jsp" class="button">
